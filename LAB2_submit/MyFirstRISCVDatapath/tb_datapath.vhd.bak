@@ -1,0 +1,68 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity tb_datapath is end entity;
+architecture sim of tb_datapath is
+  constant T : time := 10 ns;
+
+  signal clk, rst, RegWrite, nAdd_Sub, ALUSrc : std_logic := '0';
+  signal rs1, rs2, rd : std_logic_vector(4 downto 0) := (others=>'0');
+  signal imm12        : std_logic_vector(11 downto 0) := (others=>'0');
+  signal r1, r2, y    : std_logic_vector(31 downto 0);
+
+begin
+  -- DUT
+  UUT: entity work.datapath
+    port map(
+      i_clk      => clk,
+      i_rst      => rst,
+      i_RegWrite => RegWrite,
+      i_nAdd_Sub => nAdd_Sub,
+      i_ALUSrc   => ALUSrc,
+      i_rs1      => rs1,
+      i_rs2      => rs2,
+      i_rd       => rd,
+      i_imm12    => imm12,
+      o_rdata1   => r1,
+      o_rdata2   => r2,
+      o_aluY     => y
+    );
+
+  -- clock
+  clk <= not clk after T/2;
+
+  -- stimulus (change inputs on falling edge; writes at next rising edge)
+  process
+  begin
+    -- reset
+    rst <= '1'; RegWrite <= '0';
+    wait for 3*T; rst <= '0';
+    wait for T;
+
+    -- addi x1, zero, 1
+    rs1 <= "00000"; rs2 <= "00000"; rd <= "00001";           -- rs1=zero, rd=x1
+    imm12 <= std_logic_vector(to_signed(1,12)); ALUSrc <= '1'; nAdd_Sub <= '0'; RegWrite <= '1';
+    wait until rising_edge(clk); RegWrite <= '0';
+
+    -- addi x2, zero, 2
+    rd <= "00010"; imm12 <= std_logic_vector(to_signed(2,12));
+    RegWrite <= '1'; wait until rising_edge(clk); RegWrite <= '0';
+
+    -- ? repeat for x3..x10 ?
+
+    -- add x11, x1, x2
+    rs1 <= "00001"; rs2 <= "00010"; rd <= "01011";
+    ALUSrc <= '0'; nAdd_Sub <= '0'; RegWrite <= '1';
+    wait until rising_edge(clk); RegWrite <= '0';
+
+    -- sub x12, x11, x3
+    rs1 <= "01011"; rs2 <= "00011"; rd <= "01100";
+    nAdd_Sub <= '1'; ALUSrc <= '0'; RegWrite <= '1';
+    wait until rising_edge(clk); RegWrite <= '0';
+
+    -- ?continue the rest of the sequence?
+    wait;
+  end process;
+end architecture;
+

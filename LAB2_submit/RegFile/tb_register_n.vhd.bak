@@ -1,0 +1,63 @@
+-----------------------------------------------------------------------------
+-- Entity: tb_register_n.vhd  
+-- Name: Austin Hunwardsen
+-- Description: N-bit register using flip-flop Testbench for file register_n.vhd
+-- Date: 9/11/25
+-----------------------------------------------------------------------------
+
+
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity tb_register_n is
+end entity;
+
+architecture sim of tb_register_n is
+  constant N : integer := 8;
+  constant T : time := 10 ns;  -- 100 MHz clock
+
+  signal clk : std_logic := '0';
+  signal rst : std_logic := '0';
+  signal we  : std_logic := '0';
+  signal d   : std_logic_vector(N-1 downto 0) := (others => '0');
+  signal q   : std_logic_vector(N-1 downto 0);
+begin
+  -- DUT
+  uut: entity work.register_n
+    generic map ( N => N )
+    port map (
+      i_CLK => clk,
+      i_RST => rst,
+      i_WE  => we,
+      i_D   => d,
+      o_Q   => q
+    );
+
+  -- Clock (toggle forever)
+  clk <= not clk after T/2;
+
+  -- Stimulus (use rising_edge to guarantee latching)
+  process
+  begin
+    -- async reset
+    rst <= '1'; we <= '0'; d <= (others => '0');
+    wait for 3*T;
+    rst <= '0';
+
+    -- Write 10101010
+    d  <= "10101010"; we <= '1';
+    wait until rising_edge(clk);  -- q updates here
+    we <= '0';
+
+    -- One idle cycle
+    wait until rising_edge(clk);
+
+    -- Write 11110000
+    d  <= "11110000"; we <= '1';
+    wait until rising_edge(clk);  -- q updates here
+    we <= '0';
+
+    wait;  -- stop sim
+  end process;
+end architecture;
