@@ -12,16 +12,18 @@ entity control is
 		o_regWrite:	out std_logic);
 end control;
 architecture dataflow of control is
+  begin	
+	process(i_opcode)
 	begin
 		-- default values
         	o_branch	<='0';
 		o_memRead	<='0';
 		o_memToReg	<='0';
-		o_ALUOp		<='000'; -- 000->loads,stores,jumps; 001->B-types; 010->R-types; 011->I-types, 100->lui, others can be implemented as necessary
+		o_ALUOp		<="000"; -- 000->loads,stores,jumps; 001->B-types; 010->R-types; 011->I-types, 100->lui, others can be implemented as necessary
 		o_memWrite	<='0';
-		o_ALUSrc	<='0ddddo_regWrite	<='0';
+		o_ALUSrc	<='0';
 
-        case opcode is
+          case i_opcode is
             	-- R-type: add, sub, and, or, xor, slt, sll, srl, sra
             	when "0110011" =>
 			o_ALUOp    <= "010";
@@ -84,6 +86,6 @@ architecture dataflow of control is
                 	o_memWrite <= '0';
                 	o_ALUSrc   <= '0';
                 	o_regWrite <= '0';
-        end case;
-    end process;
+	  end case;
+	end process;
 end dataflow;
