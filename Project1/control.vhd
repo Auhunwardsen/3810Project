@@ -6,7 +6,7 @@ entity control is
 		o_branch:	out std_logic;
 		o_memRead:	out std_logic;
 		o_memToReg:	out std_logic;
-		o_ALUOp:	out std_logic_vector(1 downto 0);
+		o_ALUOp:	out std_logic_vector(2 downto 0);
 		o_memWrite:	out std_logic;
 		o_ALUSrc:	out std_logic;
 		o_regWrite:	out std_logic);
