@@ -45,7 +45,7 @@ architecture structural of fetch is
     );
   end component;
 
-  component register_n
+  component reg_n
     generic (N : integer := 32);
     port (
       i_CLK : in  std_logic;
@@ -88,7 +88,7 @@ begin
     );
 
   -- [PC Register] Update PC on rising edge / reset to 0
-  u_pc_reg : register_n
+  u_pc_reg : reg_n
     port map (
       i_CLK => i_CLK,
       i_RST => i_RST,
