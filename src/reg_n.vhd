@@ -11,17 +11,31 @@ entity reg_n is
   );
 end entity;
 
-architecture rtl of reg_n is
-  signal s_Q : std_logic_vector(N-1 downto 0);
-begin
-  process(i_CLK, i_RST)
-  begin
-    if i_RST = '1' then
-      s_Q <= (others => '0');
-    elsif rising_edge(i_CLK) then
-      s_Q <= i_D;
-    end if;
-  end process;
+architecture structural of reg_n is
+  component dffg
+    port (
+      i_CLK : in  std_logic;
+      i_RST : in  std_logic;
+      i_WE  : in  std_logic;
+      i_D   : in  std_logic;
+      o_Q   : out std_logic
+    );
+  end component;
 
-  o_Q <= s_Q;
+  signal s_q : std_logic_vector(N-1 downto 0);
+begin
+  -- Generate N D flip-flops
+  gen_bits : for i in 0 to N-1 generate
+  begin
+    u_ff : dffg
+      port map (
+        i_CLK => i_CLK,
+        i_RST => i_RST,
+        i_WE  => '1',      -- Always enabled for PC register
+        i_D   => i_D(i),
+        o_Q   => s_q(i)
+      );
+  end generate;
+
+  o_Q <= s_q;
 end architecture;
