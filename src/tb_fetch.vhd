@@ -26,8 +26,6 @@ architecture sim of tb_fetch is
     return addr;  -- Return address as instruction for testing
   end function;
 
-
-
 begin
   -- 10 ns clock
   s_CLK <= not s_CLK after 5 ns;
