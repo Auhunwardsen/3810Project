@@ -1,0 +1,16 @@
+Reading pref.tcl
+
+# 2025.1_2
+
+# vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
+# Start time: 16:10:48 on Oct 23,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vsim-8611) Generating debug db.
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# ** Error (suppressible): ../../proj/src/fetch.vhd(91): (vopt-1130) Port "i_WE" of entity "reg_n" is not in the component being instantiated.
+# Optimization failed
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=1, Warnings=1.
+# Error loading design
+Error loading design
+# End time: 16:10:49 on Oct 23,2025, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 1
