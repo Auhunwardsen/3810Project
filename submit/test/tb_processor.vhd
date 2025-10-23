@@ -31,9 +31,9 @@ architecture behavior of tb_processor is
     signal s_IMemAddr  : std_logic_vector(31 downto 0);
     signal s_IMemData  : std_logic_vector(31 downto 0);
     signal s_DMemAddr  : std_logic_vector(31 downto 0);
-    signal s_DMemData  : std_logic_vector(31 downto 0);
+    signal s_DMemData_out : std_logic_vector(31 downto 0);
     signal s_DMemWr    : std_logic;
-    signal s_DMemData  : std_logic_vector(31 downto 0);
+    signal s_DMemData_in  : std_logic_vector(31 downto 0);
     signal s_PC        : std_logic_vector(31 downto 0);
     signal s_Inst      : std_logic_vector(31 downto 0);
     signal s_ALUResult : std_logic_vector(31 downto 0);
@@ -83,9 +83,9 @@ begin
             o_IMemAddr  => s_IMemAddr,
             i_IMemData  => s_IMemData,
             o_DMemAddr  => s_DMemAddr,
-            o_DMemData  => s_DMemData,
+            o_DMemData  => s_DMemData_out,
             o_DMemWr    => s_DMemWr,
-            i_DMemData  => s_DMemData,
+            i_DMemData  => s_DMemData_in,
             o_PC        => s_PC,
             o_Inst      => s_Inst,
             o_ALUResult => s_ALUResult
@@ -113,11 +113,11 @@ begin
         if rising_edge(s_CLK) then
             -- Memory write
             if s_DMemWr = '1' then
-                DMem(to_integer(unsigned(s_DMemAddr)) / 4) <= s_DMemData;
+                DMem(to_integer(unsigned(s_DMemAddr)) / 4) <= s_DMemData_out;
             end if;
         end if;
         -- Memory read (asynchronous)
-        s_DMemData <= DMem(to_integer(unsigned(s_DMemAddr)) / 4);
+        s_DMemData_in <= DMem(to_integer(unsigned(s_DMemAddr)) / 4);
     end process;
     
     -- Stimulus process
