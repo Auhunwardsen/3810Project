@@ -40,5 +40,5 @@ label1:
 label2:
     slt  x15, x1, x2     # x15 = (x1 < x2) ? 1 : 0 = 1
     
-    # Exit (implementation specific - might be wfi or just halt)
+    # Exit (might be wfi or just halt)
     wfi      
