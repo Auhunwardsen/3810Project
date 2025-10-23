@@ -189,7 +189,7 @@ begin
             o_ALUCtrl  => s_ALUCtrl
         );
     
-    -- Register file (you would need to implement this)
+    -- Register file
     u_regfile: regfile
         port map (
             i_CLK       => i_CLK,
