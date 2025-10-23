@@ -56,7 +56,8 @@ architecture mixed of tb_immgen is
 
 		-- Default case
         	s_instr <= (others => '0');
-        	wait;
-
+		wait for 100 ns;
+        	
+	wait;
     end process;
 end mixed;
