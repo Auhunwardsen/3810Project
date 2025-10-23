@@ -1,5 +1,4 @@
 # Basic RISC-V Test Program
-# This tests multiple basic instructions
 
 .data
 array: .word 5, 10, 15, 20, 25    # Array of 5 values
@@ -42,4 +41,4 @@ label2:
     slt  x15, x1, x2     # x15 = (x1 < x2) ? 1 : 0 = 1
     
     # Exit (implementation specific - might be wfi or just halt)
-    addi x0, x0, 0       # NOP/HALT
+    wfi      
