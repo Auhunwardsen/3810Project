@@ -3,31 +3,61 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity alu is
-    port(
-        i_ALUCtrl   : in std_logic_vector(3 downto 0);   -- Control signal for ALU operation
-        i_A         : in std_logic_vector(31 downto 0);  -- Input A
-        i_B         : in std_logic_vector(31 downto 0);  -- Input B
-        o_Result    : out std_logic_vector(31 downto 0); -- ALU result output
-        o_Zero      : out std_logic;                     -- Zero flag (1 if o_Result is 0)
-        o_Overflow  : out std_logic                      -- Overflow flag
-    );
+	port(	i_ALUCtrl	: in std_logic_vector(3 downto 0);   -- ALUOp control signal
+		i_A		: in std_logic_vector(31 downto 0);  -- Input A
+		i_B		: in std_logic_vector(31 downto 0);  -- Input B
+		o_Result	: out std_logic_vector(31 downto 0); -- ALU result
+		o_Zero		: out std_logic;                     -- Zero flag
+		o_Overflow	: out std_logic);                   -- Overflow flag
 end alu;
 
-architecture behavioral of alu is
-    -- Internal signals
-    signal s_Result  : std_logic_vector(31 downto 0);
-    signal s_Zero    : std_logic;
-    signal s_Overflow: std_logic;
+architecture structural of alu is
+	-- Barrel shifter component
+	component barrelshifter is
+		port(	i_data	: in  std_logic_vector(31 downto 0);  	-- data to shift
+			i_shift	: in  std_logic_vector(4 downto 0);   	-- shift amount
+			i_op    : in  std_logic_vector(1 downto 0);   	-- 00=SLL, 01=SRL, 10=SRA
+			o_result: out std_logic_vector(31 downto 0));   -- shifted output
+	end component;
+	
+	-- Internal signals
+	signal s_Result  	: std_logic_vector(31 downto 0);
+	signal s_Zero    	: std_logic;
+	signal s_Overflow	: std_logic;
+	signal s_ShiftOp 	: std_logic_vector(1 downto 0);
+	signal s_ShiftResult	: std_logic_vector(31 downto 0);
     
 begin
-    -- Calculate ALU operations based on control signal
-    process(i_ALUCtrl, i_A, i_B)
-        -- Variables to help with calculation
-        variable v_temp : std_logic_vector(31 downto 0);
-    begin
-        -- Default values
-        s_Result <= (others => '0');
-        s_Overflow <= '0';
+	-- Instantiate barrel shifter component
+	u_shifter: barrelshifter
+		port map(
+			i_data   => i_A,
+			i_shift  => i_B(4 downto 0),
+			i_op     => s_ShiftOp,
+			o_result => s_ShiftResult
+		);
+		
+	-- Determine shift operation based on ALU control
+	process(i_ALUCtrl)
+	begin
+		case i_ALUCtrl is
+			when "0110" | "1011" =>  -- SLL or SLLI
+				s_ShiftOp <= "00";   -- SLL operation
+			when "0111" | "1100" =>  -- SRL or SRLI
+				s_ShiftOp <= "01";   -- SRL operation
+			when "1000" | "1101" =>  -- SRA or SRAI
+				s_ShiftOp <= "10";   -- SRA operation
+			when others =>
+				s_ShiftOp <= "00";   -- Default
+		end case;
+	end process;
+		
+	-- Main ALU operations process
+	process(i_ALUCtrl, i_A, i_B, s_ShiftResult)
+	begin
+		-- Default values
+		s_Result <= (others => '0');
+		s_Overflow <= '0';
         
         case i_ALUCtrl is
             -- ADD (0000)
@@ -82,23 +112,20 @@ begin
             
             -- SLL - Shift Left Logical (0110)
             when "0110" =>
-                -- Placeholder for barrel shifter implementation
-                -- For now, basic implementation using numeric_std
-                s_Result <= std_logic_vector(shift_left(unsigned(i_A), to_integer(unsigned(i_B(4 downto 0)))));
+                -- Use barrel shifter result for SLL
+                s_Result <= s_ShiftResult;
                 s_Overflow <= '0';
             
             -- SRL - Shift Right Logical (0111)
             when "0111" =>
-                -- Placeholder for barrel shifter implementation
-                -- For now, basic implementation using numeric_std
-                s_Result <= std_logic_vector(shift_right(unsigned(i_A), to_integer(unsigned(i_B(4 downto 0)))));
+                -- Use barrel shifter result for SRL
+                s_Result <= s_ShiftResult;
                 s_Overflow <= '0';
             
             -- SRA - Shift Right Arithmetic (1000)
             when "1000" =>
-                -- Placeholder for barrel shifter implementation
-                -- For now, basic implementation using numeric_std
-                s_Result <= std_logic_vector(shift_right(signed(i_A), to_integer(unsigned(i_B(4 downto 0)))));
+                -- Use barrel shifter result for SRA
+                s_Result <= s_ShiftResult;
                 s_Overflow <= '0';
             
             -- SLT - Set Less Than (1001)
@@ -123,23 +150,20 @@ begin
             
             -- SLLI - Shift Left Logical Immediate (1011)
             when "1011" =>
-                -- Placeholder for barrel shifter implementation
-                -- For now, basic implementation using numeric_std
-                s_Result <= std_logic_vector(shift_left(unsigned(i_A), to_integer(unsigned(i_B(4 downto 0)))));
+                -- Use barrel shifter result for SLLI
+                s_Result <= s_ShiftResult;
                 s_Overflow <= '0';
                 
             -- SRLI - Shift Right Logical Immediate (1100)
             when "1100" =>
-                -- Placeholder for barrel shifter implementation
-                -- For now, basic implementation using numeric_std
-                s_Result <= std_logic_vector(shift_right(unsigned(i_A), to_integer(unsigned(i_B(4 downto 0)))));
+                -- Use barrel shifter result for SRLI
+                s_Result <= s_ShiftResult;
                 s_Overflow <= '0';
                 
             -- SRAI - Shift Right Arithmetic Immediate (1101)
             when "1101" =>
-                -- Placeholder for barrel shifter implementation
-                -- For now, basic implementation using numeric_std
-                s_Result <= std_logic_vector(shift_right(signed(i_A), to_integer(unsigned(i_B(4 downto 0)))));
+                -- Use barrel shifter result for SRAI
+                s_Result <= s_ShiftResult;
                 s_Overflow <= '0';
                 
             -- LUI - Load Upper Immediate (1110)
@@ -163,4 +187,4 @@ begin
     o_Zero <= s_Zero;
     o_Overflow <= s_Overflow;
 
-end behavioral;
+end structural;
