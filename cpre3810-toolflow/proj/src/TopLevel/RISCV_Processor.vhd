@@ -116,17 +116,11 @@ begin
       o_PC        => open, -- Could be connected if needed
       o_Inst      => open, -- Could be connected if needed
       o_ALUResult => oALUOut,
-      o_RegWr     => open, -- Ignore processor output
-      o_RegWrAddr => open, -- Ignore processor output  
-      o_RegWrData => open, -- Ignore processor output
+      o_RegWr     => s_RegWr,     -- Connect to testbench signal
+      o_RegWrAddr => s_RegWrAddr, -- Connect to testbench signal
+      o_RegWrData => s_RegWrData, -- Connect to testbench signal
       o_Halt      => s_Halt,
       o_Ovfl      => s_Ovfl
     );
-    
-  -- Force testbench signals for debugging
-  s_RegWr <= '1';
-  s_RegWrAddr <= "00001"; 
-  s_RegWrData <= x"00000005";
-
 end structure;
 
