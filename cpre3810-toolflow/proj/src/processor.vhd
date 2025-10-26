@@ -334,14 +334,5 @@ begin
     o_RegWrData <= s_WriteData;
     o_Halt <= s_Halt;
     o_Ovfl <= '0'; -- For now, no overflow detection
-    
-    -- Connect testbench expected signals (keep internal signals for testbench access)
-    s_RegWr <= s_RegWrite;
-    s_RegWrAddr <= s_Instr(11 downto 7); -- RD field
-    s_RegWrData <= s_WriteData;
-    s_DMemWr <= s_MemWrite;
-    s_DMemAddr <= o_DMemAddr;
-    s_DMemData <= o_DMemData;
-    s_Ovfl <= '0'; -- For now, no overflow detection
 
 end structural;
