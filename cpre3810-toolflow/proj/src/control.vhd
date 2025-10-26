@@ -9,7 +9,9 @@ entity control is
 		o_ALUOp:	out std_logic_vector(2 downto 0);
 		o_memWrite:	out std_logic;
 		o_ALUSrc:	out std_logic;
-		o_regWrite:	out std_logic);
+		o_regWrite:	out std_logic;
+		o_jump:		out std_logic;   -- Added for JAL/JALR
+		o_jalr:		out std_logic);  -- Added to distinguish JALR
 end control;
 architecture dataflow of control is
   begin	
@@ -22,6 +24,9 @@ architecture dataflow of control is
 		o_ALUOp		<="000"; -- 000->loads,stores,jumps; 001->B-types; 010->R-types; 011->I-types, 100->lui, others can be implemented as necessary
 		o_memWrite	<='0';
 		o_ALUSrc	<='0';
+		o_regWrite	<='0';
+		o_jump		<='0';
+		o_jalr		<='0';
 
           case i_opcode is
             	-- R-type: add, sub, and, or, xor, slt, sll, srl, sra
@@ -57,7 +62,8 @@ architecture dataflow of control is
             	-- JAL (jump and link)
             	when "1101111" =>
                 	o_regWrite <= '1';
-                	o_ALUSrc     <= '1';
+                	o_jump     <= '1';
+                	o_ALUSrc   <= '1';
                 	o_ALUOp    <= "000";
 
             	-- JALR (jump and link register)
@@ -65,6 +71,8 @@ architecture dataflow of control is
                 	o_ALUOp    <= "000";
                 	o_ALUSrc   <= '1';
                 	o_regWrite <= '1';
+                	o_jump     <= '1';
+                	o_jalr     <= '1';
 
             	-- LUI
             	when "0110111" =>
@@ -86,6 +94,8 @@ architecture dataflow of control is
                 	o_memWrite <= '0';
                 	o_ALUSrc   <= '0';
                 	o_regWrite <= '0';
+                	o_jump     <= '0';
+                	o_jalr     <= '0';
 	  end case;
 	end process;
 end dataflow;

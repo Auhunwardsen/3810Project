@@ -52,7 +52,9 @@ architecture structural of processor is
             o_ALUOp    : out std_logic_vector(2 downto 0);
             o_memWrite : out std_logic;
             o_ALUSrc   : out std_logic;
-            o_regWrite : out std_logic
+            o_regWrite : out std_logic;
+            o_jump     : out std_logic;
+            o_jalr     : out std_logic
         );
     end component;
 
@@ -145,6 +147,8 @@ architecture structural of processor is
     signal s_MemWrite   : std_logic;
     signal s_ALUSrc     : std_logic;
     signal s_RegWrite   : std_logic;
+    signal s_Jump       : std_logic;
+    signal s_JALR       : std_logic;
     
     -- ALU control signals
     signal s_ALUCtrl    : std_logic_vector(3 downto 0);
@@ -167,6 +171,8 @@ architecture structural of processor is
     -- Branch signals
     signal s_BranchTaken: std_logic;
     signal s_BranchAddr : std_logic_vector(31 downto 0);
+    signal s_JumpAddr   : std_logic_vector(31 downto 0);
+    signal s_RegWriteData : std_logic_vector(31 downto 0);
 
 begin
     -- WFI instruction detection for proper program termination
@@ -199,7 +205,9 @@ begin
             o_ALUOp    => s_ALUOp,
             o_memWrite => s_MemWrite,
             o_ALUSrc   => s_ALUSrc,
-            o_regWrite => s_RegWrite
+            o_regWrite => s_RegWrite,
+            o_jump     => s_Jump,
+            o_jalr     => s_JALR
         );
     
     -- ALU control unit
@@ -232,7 +240,7 @@ begin
             o_imm   => s_Immediate
         );
     
-    -- ALU source mux
+    -- ALU source mux (handle AUIPC specially)
     u_alu_src_mux: mux2t1_n
         port map (
             i_S  => s_ALUSrc,
@@ -241,8 +249,8 @@ begin
             o_O  => s_ALUIn2
         );
     
-    -- ALU
-    s_ALUIn1 <= s_RS1Data;
+    -- ALU input 1 (handle AUIPC which uses PC instead of RS1)
+    s_ALUIn1 <= s_PC when s_Instr(6 downto 0) = "0010111" else s_RS1Data; -- AUIPC opcode
     u_alu: alu
         port map (
             i_ALUCtrl  => s_ALUCtrl,
@@ -261,24 +269,56 @@ begin
             oSum => s_BranchAddr
         );
     
+    -- JAL/JALR jump address calculation
+    s_JumpAddr <= s_BranchAddr when s_JALR = '0' else 
+                  std_logic_vector(unsigned(s_RS1Data) + unsigned(s_Immediate));
+    
     -- Data memory write data
     o_DMemAddr <= s_ALUResult;
     o_DMemData <= s_RS2Data;
     o_DMemWr   <= s_MemWrite;
     
-    -- Memory to register mux
+    -- JAL/JALR data selection
+    s_RegWriteData <= s_PCplus4 when s_Jump = '1' else s_ALUResult;
+    
+    -- Memory to register mux 
     u_mem_to_reg_mux: mux2t1_n
         port map (
             i_S  => s_MemToReg,
-            i_D0 => s_ALUResult,
+            i_D0 => s_RegWriteData,
             i_D1 => i_DMemData,
             o_O  => s_WriteData
         );
     
-    -- Branch logic
-    s_BranchTaken <= s_Branch and s_Zero;
-    s_UseNextAdr <= s_BranchTaken;
-    s_NextAdr <= s_BranchAddr when s_BranchTaken = '1' else s_PCplus4;
+    -- Branch logic - need to handle different branch types
+    process(s_Branch, s_Zero, s_Instr, s_ALUResult)
+    begin
+        s_BranchTaken <= '0'; -- default
+        
+        if s_Branch = '1' then
+            case s_Instr(14 downto 12) is -- funct3 field
+                when "000" => -- BEQ
+                    s_BranchTaken <= s_Zero;
+                when "001" => -- BNE  
+                    s_BranchTaken <= not s_Zero;
+                when "100" => -- BLT
+                    s_BranchTaken <= s_ALUResult(0); -- SLT returns 1 in bit 0 if A < B signed
+                when "101" => -- BGE
+                    s_BranchTaken <= not s_ALUResult(0); -- SLT returns 0 in bit 0 if A >= B signed
+                when "110" => -- BLTU
+                    s_BranchTaken <= s_ALUResult(0); -- SLTU returns 1 in bit 0 if A < B unsigned
+                when "111" => -- BGEU
+                    s_BranchTaken <= not s_ALUResult(0); -- SLTU returns 0 in bit 0 if A >= B unsigned
+                when others =>
+                    s_BranchTaken <= '0';
+            end case;
+        end if;
+    end process;
+    
+    s_UseNextAdr <= s_BranchTaken or s_Jump;
+    s_NextAdr <= s_JumpAddr when s_Jump = '1' else 
+                 s_BranchAddr when s_BranchTaken = '1' else 
+                 s_PCplus4;
     
     -- Stall logic (not implemented yet)
     s_Stall <= '0';

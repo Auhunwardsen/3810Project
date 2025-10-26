@@ -50,6 +50,7 @@ architecture structural of fetch is
     port (
       i_CLK : in  std_logic;
       i_RST : in  std_logic;                          -- active-high reset
+      i_WE  : in  std_logic;                          -- write enable
       i_D   : in  std_logic_vector(N-1 downto 0);
       o_Q   : out std_logic_vector(N-1 downto 0)
     );
@@ -92,6 +93,7 @@ begin
     port map (
       i_CLK => i_CLK,
       i_RST => i_RST,
+      i_WE  => not i_Stall,  -- Enable writes when not stalled
       i_D   => s_NextPC,
       o_Q   => s_PC
     );
