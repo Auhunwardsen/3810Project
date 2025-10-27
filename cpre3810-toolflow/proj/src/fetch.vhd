@@ -93,7 +93,7 @@ begin
     port map (
       i_CLK => i_CLK,
       i_RST => i_RST,
-      i_WE  => not i_Stall,  -- Enable writes when not stalled
+      i_WE  => '1',          -- Always enable PC updates
       i_D   => s_NextPC,
       o_Q   => s_PC
     );

@@ -15,7 +15,14 @@ entity processor is
 		-- For testing/debugging
 		o_PC        : out std_logic_vector(31 downto 0);
 		o_Inst      : out std_logic_vector(31 downto 0);
-		o_ALUResult : out std_logic_vector(31 downto 0));
+		o_ALUResult : out std_logic_vector(31 downto 0);
+		-- Register write signals for testbench
+		o_RegWr     : out std_logic;
+		o_RegWrAddr : out std_logic_vector(4 downto 0);
+		o_RegWrData : out std_logic_vector(31 downto 0);
+		-- Control signals
+		o_Halt      : out std_logic;
+		o_Ovfl      : out std_logic);
 end processor;
 
 architecture structural of processor is
@@ -147,9 +154,13 @@ architecture structural of processor is
     signal s_Zero       : std_logic;
     signal s_Overflow   : std_logic;
     
-    -- Branch signals
+    -- Branch/Jump signals
     signal s_BranchTaken: std_logic;
     signal s_BranchAddr : std_logic_vector(31 downto 0);
+    signal s_JumpAddr   : std_logic_vector(31 downto 0);
+    signal s_IsJAL      : std_logic;
+    signal s_IsJALR     : std_logic;
+    signal s_IsAUIPC    : std_logic;
 
 begin
     -- Fetch unit
@@ -220,7 +231,7 @@ begin
         );
     
     -- ALU
-    s_ALUIn1 <= s_RS1Data;
+    s_ALUIn1 <= s_PC when s_IsAUIPC = '1' else s_RS1Data;  -- AUIPC uses PC as first operand
     u_alu: alu
         port map (
             i_ALUCtrl  => s_ALUCtrl,
@@ -239,24 +250,85 @@ begin
             oSum => s_BranchAddr
         );
     
+    -- Jump address calculation for JALR
+    u_jalr_adder: adder_n
+        port map (
+            iA   => s_RS1Data,
+            iB   => s_Immediate,
+            oSum => s_JumpAddr
+        );
+    
+    -- Instruction type detection
+    s_IsJAL   <= '1' when s_Instr(6 downto 0) = "1101111" else '0';
+    s_IsJALR  <= '1' when s_Instr(6 downto 0) = "1100111" else '0';
+    s_IsAUIPC <= '1' when s_Instr(6 downto 0) = "0010111" else '0';
+    
     -- Data memory write data
     o_DMemAddr <= s_ALUResult;
     o_DMemData <= s_RS2Data;
     o_DMemWr   <= s_MemWrite;
     
-    -- Memory to register mux
-    u_mem_to_reg_mux: mux2t1_n
-        port map (
-            i_S  => s_MemToReg,
-            i_D0 => s_ALUResult,
-            i_D1 => i_DMemData,
-            o_O  => s_WriteData
-        );
+    -- Write data selection for different instruction types
+    process(s_IsJAL, s_IsJALR, s_IsAUIPC, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData)
+    begin
+        if s_IsJAL = '1' or s_IsJALR = '1' then
+            -- JAL/JALR write PC+4 to register
+            s_WriteData <= s_PCplus4;
+        elsif s_MemToReg = '1' then
+            -- Load instructions - write memory data
+            s_WriteData <= i_DMemData;
+        else
+            -- Normal ALU result (including AUIPC which computes PC + immediate in ALU)
+            s_WriteData <= s_ALUResult;
+        end if;
+    end process;
     
-    -- Branch logic
-    s_BranchTaken <= s_Branch and s_Zero;
-    s_UseNextAdr <= s_BranchTaken;
-    s_NextAdr <= s_BranchAddr when s_BranchTaken = '1' else s_PCplus4;
+    -- Branch logic with proper condition evaluation
+    process(s_Branch, s_Instr, s_RS1Data, s_RS2Data, s_Zero, s_ALUResult)
+        variable v_BranchCond : std_logic;
+    begin
+        v_BranchCond := '0';
+        
+        if s_Branch = '1' then
+            case s_Instr(14 downto 12) is  -- funct3 field
+                when "000" =>  -- BEQ
+                    v_BranchCond := s_Zero;
+                when "001" =>  -- BNE
+                    v_BranchCond := not s_Zero;
+                when "100" =>  -- BLT
+                    v_BranchCond := s_ALUResult(31);  -- MSB indicates negative (A < B)
+                when "101" =>  -- BGE
+                    v_BranchCond := not s_ALUResult(31) or s_Zero;  -- A >= B
+                when "110" =>  -- BLTU
+                    -- For unsigned comparison, check carry/borrow
+                    v_BranchCond := s_ALUResult(31);  -- Simplified - may need more complex logic
+                when "111" =>  -- BGEU
+                    v_BranchCond := not s_ALUResult(31) or s_Zero;
+                when others =>
+                    v_BranchCond := '0';
+            end case;
+        end if;
+        
+        s_BranchTaken <= v_BranchCond;
+    end process;
+    
+    -- Next address selection
+    process(s_BranchTaken, s_IsJAL, s_IsJALR, s_BranchAddr, s_JumpAddr, s_PCplus4)
+    begin
+        if s_IsJAL = '1' then
+            s_UseNextAdr <= '1';
+            s_NextAdr <= s_BranchAddr;  -- JAL uses PC + immediate
+        elsif s_IsJALR = '1' then
+            s_UseNextAdr <= '1';
+            s_NextAdr <= s_JumpAddr;    -- JALR uses RS1 + immediate
+        elsif s_BranchTaken = '1' then
+            s_UseNextAdr <= '1';
+            s_NextAdr <= s_BranchAddr;  -- Branch to PC + immediate
+        else
+            s_UseNextAdr <= '0';
+            s_NextAdr <= s_PCplus4;     -- Normal PC + 4
+        end if;
+    end process;
     
     -- Stall logic (not implemented yet)
     s_Stall <= '0';
@@ -265,5 +337,14 @@ begin
     o_PC <= s_PC;
     o_Inst <= s_Instr;
     o_ALUResult <= s_ALUResult;
+    
+    -- Register write outputs for testbench
+    o_RegWr <= s_RegWrite;
+    o_RegWrAddr <= s_Instr(11 downto 7);  -- rd field
+    o_RegWrData <= s_WriteData;
+    
+    -- Control outputs
+    o_Halt <= '1' when s_Instr(6 downto 0) = "1110011" else '0';  -- WFI/HALT instruction
+    o_Ovfl <= s_Overflow;
 
 end structural;

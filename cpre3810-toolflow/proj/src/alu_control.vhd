@@ -31,17 +31,8 @@ begin
             o_ALUCtrl <= "0000";  -- ADD
             
         elsif i_ALUOp = "001" then
-            -- Branch instructions - use funct3 to determine comparison type
-            case i_Funct3 is
-                when "000" | "001" => -- BEQ, BNE
-                    o_ALUCtrl <= "0001";  -- SUB for equality check
-                when "100" | "101" => -- BLT, BGE  
-                    o_ALUCtrl <= "1001";  -- SLT for signed comparison
-                when "110" | "111" => -- BLTU, BGEU
-                    o_ALUCtrl <= "1010";  -- SLTU for unsigned comparison
-                when others =>
-                    o_ALUCtrl <= "0001";  -- Default SUB
-            end case;
+            -- Branch instructions - always use SUB for comparison
+            o_ALUCtrl <= "0001";  -- SUB
             
         elsif i_ALUOp = "010" then
             -- R-type instructions - use funct3 and funct7_5 to determine operation

@@ -7,7 +7,7 @@ entity barrelshifter is
         	i_shift	: in  std_logic_vector(4 downto 0);   	-- shift amount
         	i_op    : in  std_logic_vector(1 downto 0);   	-- 00=SLL, 01=SRL, 10=SRA
         	o_result: out std_logic_vector(31 downto 0));   -- shifted output
-end barrelshifter;
+end barrelShifter;
 
 architecture dataflow of barrelshifter is
 	signal s_shifted : std_logic_vector(31 downto 0);
