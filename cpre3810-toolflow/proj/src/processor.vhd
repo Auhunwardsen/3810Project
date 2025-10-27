@@ -192,7 +192,7 @@ begin
         );
     
     -- ALU control unit
-    u_alu_control: alu_control
+    u_alu_control: entity work.alu_control
         port map (
             i_ALUOp    => s_ALUOp,
             i_Funct3   => s_Instr(14 downto 12),
