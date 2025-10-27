@@ -336,6 +336,9 @@ begin
     
     -- Control outputs
     o_Halt <= '1' when s_Instr(6 downto 0) = "1110011" else '0';  -- WFI/HALT instruction
-    o_Ovfl <= s_Overflow and s_RegWrite;  -- Only report overflow for register-writing instructions
+    -- Only report overflow for ADD/SUB operations (R-type and I-type arithmetic)
+    o_Ovfl <= s_Overflow and s_RegWrite and 
+              ((s_Instr(6 downto 0) = "0110011" and s_Instr(14 downto 12) = "000") or  -- ADD/SUB
+               (s_Instr(6 downto 0) = "0010011" and s_Instr(14 downto 12) = "000"));   -- ADDI
 
 end structural;

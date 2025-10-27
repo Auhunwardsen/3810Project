@@ -22,6 +22,7 @@ architecture dataflow of control is
 		o_ALUOp		<="000"; -- 000->loads,stores,jumps; 001->B-types; 010->R-types; 011->I-types, 100->lui, others can be implemented as necessary
 		o_memWrite	<='0';
 		o_ALUSrc	<='0';
+		o_regWrite	<='0';  -- Default: no register write
 
           case i_opcode is
             	-- R-type: add, sub, and, or, xor, slt, sll, srl, sra
