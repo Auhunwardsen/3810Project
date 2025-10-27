@@ -260,11 +260,11 @@ begin
     o_DMemWr   <= s_MemWrite;
     
     -- Write data selection for different instruction types
-    process(s_IsJAL, s_IsJALR, s_IsAUIPC, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData)
+    process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData)
     begin
         if s_IsJAL = '1' or s_IsJALR = '1' then
-            -- JAL/JALR write PC+4 to register
-            s_WriteData <= s_PCplus4;
+            -- JAL/JALR write PC+4 to register with base address
+            s_WriteData <= std_logic_vector(unsigned(s_PCplus4) + x"00400000");
         elsif s_MemToReg = '1' then
             -- Load instructions - write memory data
             s_WriteData <= i_DMemData;
@@ -336,6 +336,6 @@ begin
     
     -- Control outputs
     o_Halt <= '1' when s_Instr(6 downto 0) = "1110011" else '0';  -- WFI/HALT instruction
-    o_Ovfl <= s_Overflow;
+    o_Ovfl <= s_Overflow and s_RegWrite;  -- Only report overflow for register-writing instructions
 
 end structural;
