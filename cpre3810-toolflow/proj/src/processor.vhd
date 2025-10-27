@@ -56,15 +56,6 @@ architecture structural of processor is
         );
     end component;
 
-    component alu_control is
-        port (
-            i_ALUOp     : in  std_logic_vector(2 downto 0);
-            i_Funct3    : in  std_logic_vector(2 downto 0);
-            i_Funct7_5  : in  std_logic;
-            o_ALUCtrl   : out std_logic_vector(3 downto 0)
-        );
-    end component;
-
     component alu is
         port (
             i_ALUCtrl   : in  std_logic_vector(3 downto 0);
