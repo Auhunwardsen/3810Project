@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 19:22:19 on Oct 26,2025
+Start time: 20:04:20 on Oct 26,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/processor.vhd proj/src/decoder5t32.vhd proj/src/mux32_1.vhd proj/src/dffg.vhd proj/src/addsub.vhd proj/src/mem.vhd proj/src/reg_n.vhd proj/src/sign_extender.vhd proj/src/zero_extender.vhd proj/src/immgen.vhd proj/src/mux2t1_n.vhd proj/src/adder_n.vhd proj/src/alu.vhd proj/src/RISCV_types.vhd proj/src/regfile.vhd proj/src/alu_control.vhd proj/src/fetch.vhd proj/src/control.vhd proj/src/barrelshifter.vhd proj/src/TopLevel/RISCV_Processor.vhd proj/src/TopLevel/mem.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -15,7 +15,8 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling entity processor
 -- Compiling architecture structural of processor
 -- Loading entity alu_control
-** Error (suppressible): proj/src/processor.vhd(195): (vcom-1141) Identifier "alu_control" does not identify a component declaration.
-** Note: proj/src/processor.vhd(350): VHDL Compiler exiting
-End time: 19:22:19 on Oct 26,2025, Elapsed time: 0:00:00
-Errors: 1, Warnings: 0
+** Error: proj/src/processor.vhd(341): (vcom-1581) No feasible entries for infix operator 'and'.
+** Error: proj/src/processor.vhd(341): Type error resolving infix expression "and" as type ieee.std_logic_1164.STD_LOGIC.
+** Note: proj/src/processor.vhd(344): VHDL Compiler exiting
+End time: 20:04:21 on Oct 26,2025, Elapsed time: 0:00:01
+Errors: 2, Warnings: 0
