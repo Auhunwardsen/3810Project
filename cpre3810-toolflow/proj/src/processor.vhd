@@ -263,8 +263,8 @@ begin
     process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData)
     begin
         if s_IsJAL = '1' or s_IsJALR = '1' then
-            -- JAL/JALR write PC+4 to register with base address
-            s_WriteData <= std_logic_vector(unsigned(s_PCplus4) + x"00400000");
+            -- JAL/JALR write PC+4 to register (return address)
+            s_WriteData <= s_PCplus4;
         elsif s_MemToReg = '1' then
             -- Load instructions - write memory data
             s_WriteData <= i_DMemData;
