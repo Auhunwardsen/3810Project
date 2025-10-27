@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 19:54:17 on Oct 26,2025
+# Start time: 20:00:07 on Oct 26,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Note: (vsim-8611) Generating debug db.
 # ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
@@ -71,5 +71,5 @@ Reading pref.tcl
 #    Time: 120 ns  Iteration: 1  Instance: /tb
 # Break in Process P_DUMP_STATE at /home/auhun47/project1/3810Project1/cpre3810-toolflow/internal/testpy/tb.vhd line 150
 # Stopped at /home/auhun47/project1/3810Project1/cpre3810-toolflow/internal/testpy/tb.vhd line 150
-# End time: 19:54:19 on Oct 26,2025, Elapsed time: 0:00:02
+# End time: 20:00:09 on Oct 26,2025, Elapsed time: 0:00:02
 # Errors: 0, Warnings: 9
