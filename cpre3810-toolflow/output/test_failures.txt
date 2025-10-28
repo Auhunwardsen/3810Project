@@ -2,11 +2,5 @@
 ../cpre3810_test_assembly_program_suite/bgeu_1.s
 ../cpre3810_test_assembly_program_suite/bgeu_2.s
 ../cpre3810_test_assembly_program_suite/bltu_test2.s
-../cpre3810_test_assembly_program_suite/lb_2.s
-../cpre3810_test_assembly_program_suite/lbu_1.s
-../cpre3810_test_assembly_program_suite/lbu_2.s
-../cpre3810_test_assembly_program_suite/lbu_3.s
-../cpre3810_test_assembly_program_suite/lh_2.s
-../cpre3810_test_assembly_program_suite/lh_3.s
 ../cpre3810_test_assembly_program_suite/sub_0.s
 ../cpre3810_test_assembly_program_suite/sub_01.s

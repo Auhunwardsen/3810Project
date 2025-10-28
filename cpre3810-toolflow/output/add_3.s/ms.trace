@@ -64,6 +64,7 @@ In clock cycle: 31
 Register Write to Reg: 0x02 Val: 0x40000000
 In clock cycle: 32
 Register Write to Reg: 0x03 Val: 0x80000000
+Arithmetic Overflow Detected
 In clock cycle: 33
 Register Write to Reg: 0x04 Val: 0x00000000
 Arithmetic Overflow Detected
