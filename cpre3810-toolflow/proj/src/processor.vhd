@@ -260,14 +260,43 @@ begin
     o_DMemWr   <= s_MemWrite;
     
     -- Write data selection for different instruction types
-    process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData)
+    process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData, s_Instr)
+        variable v_LoadData : std_logic_vector(31 downto 0);
     begin
         if s_IsJAL = '1' or s_IsJALR = '1' then
             -- JAL/JALR write PC+4 to register (return address)
             s_WriteData <= s_PCplus4;
         elsif s_MemToReg = '1' then
-            -- Load instructions - write memory data
-            s_WriteData <= i_DMemData;
+            -- Load instructions - handle different load types with proper sign extension
+            case s_Instr(14 downto 12) is  -- funct3 field for load instructions
+                when "000" =>  -- LB (Load Byte) - sign extend byte
+                    if i_DMemData(7) = '1' then
+                        v_LoadData := x"FFFFFF" & i_DMemData(7 downto 0);
+                    else
+                        v_LoadData := x"000000" & i_DMemData(7 downto 0);
+                    end if;
+                    s_WriteData <= v_LoadData;
+                    
+                when "001" =>  -- LH (Load Halfword) - sign extend halfword
+                    if i_DMemData(15) = '1' then
+                        v_LoadData := x"FFFF" & i_DMemData(15 downto 0);
+                    else
+                        v_LoadData := x"0000" & i_DMemData(15 downto 0);
+                    end if;
+                    s_WriteData <= v_LoadData;
+                    
+                when "010" =>  -- LW (Load Word) - full 32-bit word
+                    s_WriteData <= i_DMemData;
+                    
+                when "100" =>  -- LBU (Load Byte Unsigned) - zero extend byte
+                    s_WriteData <= x"000000" & i_DMemData(7 downto 0);
+                    
+                when "101" =>  -- LHU (Load Halfword Unsigned) - zero extend halfword
+                    s_WriteData <= x"0000" & i_DMemData(15 downto 0);
+                    
+                when others =>  -- Default to LW
+                    s_WriteData <= i_DMemData;
+            end case;
         else
             -- Normal ALU result (including AUIPC which computes PC + immediate in ALU)
             s_WriteData <= s_ALUResult;
@@ -337,6 +366,11 @@ begin
     -- Control outputs
     o_Halt <= '1' when s_Instr(6 downto 0) = "1110011" else '0';  -- WFI/HALT instruction
     -- Only report overflow for ADD/SUB operations (R-type only, not I-type)
-    o_Ovfl <= s_Overflow when (s_RegWrite = '1' and s_Instr(6 downto 0) = "0110011" and s_Instr(14 downto 12) = "000") else '0';  -- ADD/SUB only
+    -- ADD: opcode=0110011, funct3=000, funct7=0000000
+    -- SUB: opcode=0110011, funct3=000, funct7=0100000
+    o_Ovfl <= s_Overflow when (s_RegWrite = '1' and 
+                              s_Instr(6 downto 0) = "0110011" and 
+                              s_Instr(14 downto 12) = "000" and
+                              (s_Instr(31 downto 25) = "0000000" or s_Instr(31 downto 25) = "0100000")) else '0';
 
 end structural;
