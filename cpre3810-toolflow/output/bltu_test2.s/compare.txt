@@ -1,8 +1,8 @@
 Oh no...
 
 Cycle: na
-RARS instruction number: 1	Instruction: addi x10,x0,-1
-Expected:	Register Write to Reg: 0x0A Val: 0xFFFFFFFF
+RARS instruction number: 7	Instruction: lui x13,524288
+Expected:	Register Write to Reg: 0x0D Val: 0x80000000
 Got     :	Execution stopped
 Student execution ended prematurely
 

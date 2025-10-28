@@ -1,3 +1,57 @@
-Unable to find the license file.  It appears that your license file environment variable (SALT_LICENSE_SERVER) is not set correctly.
-Unable to checkout a license.  Vsim is closing.
-** Error: Invalid license environment. Application closing.
+Reading pref.tcl
+
+# 2025.1_2
+
+# vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
+# Start time: 18:30:06 on Oct 28,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2025.1_2 linux_x86_64 Apr  7 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_textio(body)
+# Loading std.env(body)
+# Loading work.tb(mixed)#1
+# Loading work.riscv_types(body)
+# Loading ieee.numeric_std(body)
+# Loading work.riscv_processor(structure)#1
+# Loading work.mem(rtl)#1
+# Loading work.processor(structural)#1
+# Loading work.fetch(structural)#1
+# Loading work.adder_n(rtl)#1
+# Loading work.mux2t1_n(rtl)#1
+# Loading work.control(dataflow)#1
+# Loading work.alu_control(dataflow)#1
+# Loading work.regfile(rtl)#1
+# Loading work.decoder5t32(dataflow)#1
+# Loading work.reg_n(structural)#1
+# Loading work.dffg(mixed)#1
+# Loading work.mux32_1(rtl)#1
+# Loading work.immgen(dataflow)#1
+# Loading work.alu(structural)#1
+# Loading work.barrelshifter(dataflow)#1
+# ** Note: (vsim-8716) Reusing existing debug database vsim.dbg.
+# do modelsim_framework.do
+# ** UI-Msg (Error): (vsim-7) Failed to open mem file "imem.hex" in read mode.
+# No such file or directory. (errno = ENOENT)
+# Error in macro ./modelsim_framework.do line 14
+# ** UI-Msg (Error): (vsim-7) Failed to open mem file "imem.hex" in read mode.
+# No such file or directory. (errno = ENOENT)
+#     while executing
+# "mem load -infile imem.hex -format hex /MyRiscv/IMem"
+VSIM 2> Signal SIGTERM caught... Closing vish.
+Fatal: vsim caught SIGTERM. Closing vsimk kernel.
+writing stack trace to vish_stacktrace.vstf
