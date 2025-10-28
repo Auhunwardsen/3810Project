@@ -21,7 +21,14 @@ architecture behavior of tb_processor is
             -- For testing/debugging
             o_PC        : out std_logic_vector(31 downto 0);
             o_Inst      : out std_logic_vector(31 downto 0);
-            o_ALUResult : out std_logic_vector(31 downto 0)
+            o_ALUResult : out std_logic_vector(31 downto 0);
+            -- Register write signals for testbench
+            o_RegWr     : out std_logic;
+            o_RegWrAddr : out std_logic_vector(4 downto 0);
+            o_RegWrData : out std_logic_vector(31 downto 0);
+            -- Control signals
+            o_Halt      : out std_logic;
+            o_Ovfl      : out std_logic
         );
     end component;
     
@@ -37,6 +44,11 @@ architecture behavior of tb_processor is
     signal s_PC        : std_logic_vector(31 downto 0);
     signal s_Inst      : std_logic_vector(31 downto 0);
     signal s_ALUResult : std_logic_vector(31 downto 0);
+    signal s_RegWr     : std_logic;
+    signal s_RegWrAddr : std_logic_vector(4 downto 0);
+    signal s_RegWrData : std_logic_vector(31 downto 0);
+    signal s_Halt      : std_logic;
+    signal s_Ovfl      : std_logic;
     
     -- Clock period definition
     constant c_CLK_PERIOD : time := 10 ns;
@@ -88,7 +100,12 @@ begin
             i_DMemData  => s_DMemData_in,
             o_PC        => s_PC,
             o_Inst      => s_Inst,
-            o_ALUResult => s_ALUResult
+            o_ALUResult => s_ALUResult,
+            o_RegWr     => s_RegWr,
+            o_RegWrAddr => s_RegWrAddr,
+            o_RegWrData => s_RegWrData,
+            o_Halt      => s_Halt,
+            o_Ovfl      => s_Ovfl
         );
     
     -- Clock process
@@ -133,6 +150,25 @@ begin
         
         -- End simulation
         wait;
+    end process;
+    
+    -- Trace output process for toolflow
+    trace_proc: process(s_CLK)
+    begin
+        if rising_edge(s_CLK) then
+            -- Output register write information when register write occurs
+            if s_RegWr = '1' and s_RegWrAddr /= "00000" then
+                report "Register Write to Reg: 0x" & 
+                       to_hstring("000" & s_RegWrAddr) & 
+                       " Val: 0x" & 
+                       to_hstring(s_RegWrData);
+            end if;
+            
+            -- Check for halt condition
+            if s_Halt = '1' then
+                report "Processor halted";
+            end if;
+        end if;
     end process;
     
 end behavior;
