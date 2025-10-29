@@ -11,13 +11,13 @@ Register Write to Reg: 0x07 Val: 0x00400010
 In clock cycle: 5
 Register Write to Reg: 0x07 Val: 0x0040001C
 In clock cycle: 6
-Register Write to Reg: 0x01 Val: 0x0000001C
+Register Write to Reg: 0x01 Val: 0x0040001C
 In clock cycle: 7
 Memory Write to Addr: 0x10010000 Val: 0x10010000
 In clock cycle: 8
 Register Write to Reg: 0x01 Val: 0x00400028
 In clock cycle: 9
-Register Write to Reg: 0x00 Val: 0x00400028
+Register Write to Reg: 0x00 Val: 0x00800028
 In clock cycle: 10
 Memory Write to Addr: 0x10010004 Val: 0x00400028
 Execution is stopping! Clock Cycle: 11
