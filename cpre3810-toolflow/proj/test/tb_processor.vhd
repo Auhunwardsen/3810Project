@@ -1,6 +1,8 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use IEEE.std_logic_textio.all;
+use STD.textio.all;
 
 entity tb_processor is
 end tb_processor;
@@ -53,10 +55,10 @@ architecture behavior of tb_processor is
     -- Clock period definition
     constant c_CLK_PERIOD : time := 10 ns;
     
-    -- Instruction memory simulation
-    type t_IMem is array(0 to 63) of std_logic_vector(31 downto 0);
+    -- Instruction memory simulation (larger to accommodate hex files)
+    type t_IMem is array(0 to 255) of std_logic_vector(31 downto 0);
     signal IMem : t_IMem := (
-        -- Simple program with addi instructions
+        -- Default simple program with addi instructions
         -- addi x1, x0, 5      # x1 = 5
         0 => x"00500093",
         -- addi x2, x0, 10     # x2 = 10
@@ -83,7 +85,7 @@ architecture behavior of tb_processor is
     );
     
     -- Data memory simulation
-    type t_DMem is array(0 to 63) of std_logic_vector(31 downto 0);
+    type t_DMem is array(0 to 255) of std_logic_vector(31 downto 0);
     signal DMem : t_DMem := (others => x"00000000");
     
 begin
@@ -107,6 +109,44 @@ begin
             o_Halt      => s_Halt,
             o_Ovfl      => s_Ovfl
         );
+    
+    -- Load instruction memory from hex file (if available)
+    IMEM_LOAD: process
+        file hex_file : text;
+        variable hex_line : line;
+        variable hex_data : std_logic_vector(31 downto 0);
+        variable i : integer := 0;
+        variable good : boolean;
+        variable file_status : file_open_status;
+    begin
+        -- Try to open hex file - first try the toolflow expected name
+        file_open(file_status, hex_file, "imem.hex", read_mode);
+        if file_status /= open_ok then
+            -- Try other common hex file names
+            file_open(file_status, hex_file, "instructions.hex", read_mode);
+        end if;
+        
+        if file_status = open_ok then
+            report "Loading instructions from hex file...";
+            -- Read each line from the hex file
+            while not endfile(hex_file) and i < 256 loop
+                readline(hex_file, hex_line);
+                -- Skip empty lines
+                if hex_line'length > 0 then
+                    hread(hex_line, hex_data, good);
+                    if good then
+                        IMem(i) <= hex_data;
+                        i := i + 1;
+                    end if;
+                end if;
+            end loop;
+            file_close(hex_file);
+            report "Loaded " & integer'image(i) & " instructions from hex file";
+        else
+            report "No hex file found, using hardcoded instructions";
+        end if;
+        wait;
+    end process;
     
     -- Clock process
     CLK_process: process
