@@ -222,7 +222,7 @@ begin
         );
     
     -- ALU
-    s_ALUIn1 <= s_PC when s_IsAUIPC = '1' else s_RS1Data;  -- AUIPC uses PC as first operand
+    s_ALUIn1 <= std_logic_vector(unsigned(s_PC) + x"00400000") when s_IsAUIPC = '1' else s_RS1Data;  -- AUIPC uses PC + base address as first operand
     u_alu: alu
         port map (
             i_ALUCtrl  => s_ALUCtrl,
@@ -298,7 +298,7 @@ begin
                     s_WriteData <= i_DMemData;
             end case;
         else
-            -- Normal ALU result (including AUIPC which computes PC + immediate in ALU)
+            -- Normal ALU result (including AUIPC which computes PC + base address + immediate in ALU)
             s_WriteData <= s_ALUResult;
         end if;
     end process;
@@ -315,15 +315,14 @@ begin
                     v_BranchCond := s_Zero;
                 when "001" =>  -- BNE
                     v_BranchCond := not s_Zero;
-                when "100" =>  -- BLT
-                    v_BranchCond := s_ALUResult(31);  -- MSB indicates negative (A < B)
-                when "101" =>  -- BGE
-                    v_BranchCond := not s_ALUResult(31) or s_Zero;  -- A >= B
-                when "110" =>  -- BLTU
-                    -- For unsigned comparison, check carry/borrow
-                    v_BranchCond := s_ALUResult(31);  -- Simplified - may need more complex logic
-                when "111" =>  -- BGEU
-                    v_BranchCond := not s_ALUResult(31) or s_Zero;
+                when "100" =>  -- BLT - uses SLT result
+                    v_BranchCond := s_ALUResult(0);  -- SLT returns 1 if A < B
+                when "101" =>  -- BGE - uses SLT result
+                    v_BranchCond := not s_ALUResult(0);  -- A >= B (NOT(A < B))
+                when "110" =>  -- BLTU - uses SLTU result  
+                    v_BranchCond := s_ALUResult(0);  -- SLTU returns 1 if A < B unsigned
+                when "111" =>  -- BGEU - uses SLTU result
+                    v_BranchCond := not s_ALUResult(0);  -- A >= B unsigned (NOT(A < B))
                 when others =>
                     v_BranchCond := '0';
             end case;
