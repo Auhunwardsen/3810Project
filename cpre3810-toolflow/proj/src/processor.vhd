@@ -222,7 +222,7 @@ begin
         );
     
     -- ALU
-    s_ALUIn1 <= std_logic_vector(unsigned(s_PC) + x"00400000") when s_IsAUIPC = '1' else s_RS1Data;  -- AUIPC uses PC + base address
+    s_ALUIn1 <= std_logic_vector(unsigned(s_PC) + x"00400000") when s_IsAUIPC = '1' else s_RS1Data;
     u_alu: alu
         port map (
             i_ALUCtrl  => s_ALUCtrl,
@@ -260,7 +260,7 @@ begin
     o_DMemWr   <= s_MemWrite;
     
     -- Write data selection for different instruction types
-    process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData, s_Instr)
+    process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData, s_Instr, s_PC)
         variable v_LoadData : std_logic_vector(31 downto 0);
     begin
         if s_IsJAL = '1' or s_IsJALR = '1' then
@@ -308,35 +308,56 @@ begin
         end if;
     end process;
     
-    -- Branch condition evaluation
-    process(s_Branch, s_Instr, s_RS1Data, s_RS2Data, s_Zero, s_ALUResult)
-        variable v_BranchCond : std_logic;
+    -- Branch condition evaluation (FIXED - removed sensitivity list issues)
+    process(s_Branch, s_Instr, s_Zero, s_ALUResult)
     begin
-        v_BranchCond := '0';
-        
         if s_Branch = '1' then
             case s_Instr(14 downto 12) is  -- funct3 field
                 when "000" =>  -- BEQ
-                    v_BranchCond := s_Zero;
+                    if s_Zero = '1' then
+                        s_BranchTaken <= '1';
+                    else
+                        s_BranchTaken <= '0';
+                    end if;
                 when "001" =>  -- BNE
-                    v_BranchCond := not s_Zero;
+                    if s_Zero = '0' then
+                        s_BranchTaken <= '1';
+                    else
+                        s_BranchTaken <= '0';
+                    end if;
                 when "100" =>  -- BLT
-                    v_BranchCond := s_ALUResult(0);
+                    if s_ALUResult(0) = '1' then
+                        s_BranchTaken <= '1';
+                    else
+                        s_BranchTaken <= '0';
+                    end if;
                 when "101" =>  -- BGE
-                    v_BranchCond := not s_ALUResult(0);
+                    if s_ALUResult(0) = '0' then
+                        s_BranchTaken <= '1';
+                    else
+                        s_BranchTaken <= '0';
+                    end if;
                 when "110" =>  -- BLTU
-                    v_BranchCond := s_ALUResult(0);
+                    if s_ALUResult(0) = '1' then
+                        s_BranchTaken <= '1';
+                    else
+                        s_BranchTaken <= '0';
+                    end if;
                 when "111" =>  -- BGEU
-                    v_BranchCond := not s_ALUResult(0);
+                    if s_ALUResult(0) = '0' then
+                        s_BranchTaken <= '1';
+                    else
+                        s_BranchTaken <= '0';
+                    end if;
                 when others =>
-                    v_BranchCond := '0';
+                    s_BranchTaken <= '0';
             end case;
+        else
+            s_BranchTaken <= '0';
         end if;
-        
-        s_BranchTaken <= v_BranchCond;
     end process;
     
-    -- Next address selection
+    -- Next address selection (FIXED - proper signal assignments)
     process(s_BranchTaken, s_IsJAL, s_IsJALR, s_BranchAddr, s_JumpAddr, s_PCplus4)
     begin
         if s_IsJAL = '1' then
@@ -369,7 +390,6 @@ begin
     
     -- Control outputs
     o_Halt <= '1' when s_Instr(6 downto 0) = "1110011" else '0';  -- WFI/HALT instruction
-    -- Temporarily disable overflow detection to debug other issues
-    o_Ovfl <= '0';
+    o_Ovfl <= '0';  -- Overflow detection disabled for now
 
 end structural;
