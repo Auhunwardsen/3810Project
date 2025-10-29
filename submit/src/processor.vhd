@@ -260,7 +260,7 @@ begin
     o_DMemWr   <= s_MemWrite;
     
     -- Write data selection for different instruction types
-    process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData, s_Instr)
+    process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, i_DMemData, s_Instr, s_PC)
         variable v_LoadData : std_logic_vector(31 downto 0);
     begin
         if s_IsJAL = '1' or s_IsJALR = '1' then
