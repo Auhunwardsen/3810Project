@@ -1,6 +1,6 @@
 
 # Proj1_mergesort.s
-#   Recursive Merge Sort implementation .
+#   Recursive Merge Sort implementation.
 # 
 # Expected behavior:
 #   Sorts the array in ascending order in-place.
@@ -9,7 +9,7 @@
 #   a0 - base address of array
 #   a1 - left index
 #   a2 - right index
-#   t0–t6, a3 - temporaries
+#   t0-t6, a3 - temporaries
 #   sp - stack pointer (grows downward)
 
 .data
@@ -86,7 +86,7 @@ ms_return:
 ##############################################################
 # merge(a0=array, a1=left, a2=right)
 # mid stored in t1
-#   Uses t0–t6 as temporaries.
+#   Uses t0ï¿½t6 as temporaries.
 #   Creates a local buffer on stack to hold merged elements.
 ##############################################################
 merge:

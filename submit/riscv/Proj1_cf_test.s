@@ -1,4 +1,4 @@
-# Proj1_cf_test.s  — simple control-flow test 
+# Proj1_cf_test.s - simple control-flow test 
 # Uses: BEQ, BNE, BLT, BGE, JAL, JALR
 # Depth: 5 (F1 -> F2 -> F3 -> F4 -> F5)
 # Signals to watch: PC, Inst, RegWrite, DMemAddr, DMemData_out, DMemData_in, DMemWr, ALUResult, branch/PC control

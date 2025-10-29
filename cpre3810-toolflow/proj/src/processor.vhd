@@ -264,8 +264,13 @@ begin
         variable v_LoadData : std_logic_vector(31 downto 0);
     begin
         if s_IsJAL = '1' or s_IsJALR = '1' then
-            -- JAL/JALR write PC+4 + base address to register
-            s_WriteData <= std_logic_vector(unsigned(s_PCplus4) + x"00400000");
+            -- JAL/JALR write PC+4 to register
+            -- Only add base address if PC is in low memory space
+            if unsigned(s_PC) < x"00400000" then
+                s_WriteData <= std_logic_vector(unsigned(s_PCplus4) + x"00400000");
+            else
+                s_WriteData <= s_PCplus4;
+            end if;
         elsif s_MemToReg = '1' then
             -- Load instructions - handle different load types with proper sign extension
             case s_Instr(14 downto 12) is  -- funct3 field for load instructions
