@@ -3,12 +3,12 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity alu is
-	port(	i_ALUCtrl	: in std_logic_vector(3 downto 0);   -- ALUOp control signal
-		i_A		: in std_logic_vector(31 downto 0);  -- Input A
-		i_B		: in std_logic_vector(31 downto 0);  -- Input B
-		o_Result	: out std_logic_vector(31 downto 0); -- ALU result
-		o_Zero		: out std_logic;                     -- Zero flag
-		o_Overflow	: out std_logic);                   -- Overflow flag
+    port(    i_ALUCtrl   : in std_logic_vector(3 downto 0);   -- ALU control signal
+        i_A         : in std_logic_vector(31 downto 0);  -- Input A
+        i_B         : in std_logic_vector(31 downto 0);  -- Input B
+        o_Result    : out std_logic_vector(31 downto 0); -- ALU result
+        o_Zero      : out std_logic;                     -- Zero flag
+        o_Overflow  : out std_logic);                   -- Overflow flag
 end alu;
 
 architecture structural of alu is

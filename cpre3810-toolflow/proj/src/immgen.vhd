@@ -2,15 +2,15 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity immgen is
-	port (	i_instr : in  std_logic_vector(31 downto 0);  	-- full instruction
-        	o_imm   : out std_logic_vector(31 downto 0));   -- 32-bit sign-extended immediate
+    port (    i_instr : in  std_logic_vector(31 downto 0);    -- full instruction
+            o_imm   : out std_logic_vector(31 downto 0));   -- 32-bit sign-extended immediate
 end immgen;
 
 architecture dataflow of immgen is
-	signal opcode : std_logic_vector(6 downto 0);
-    	signal imm    : std_logic_vector(31 downto 0);
+    signal opcode : std_logic_vector(6 downto 0);
+    signal imm    : std_logic_vector(31 downto 0);
 begin
-  opcode <= i_instr(6 downto 0);
+    opcode <= i_instr(6 downto 0);
 
   process(i_instr, opcode)
   begin

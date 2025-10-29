@@ -3,26 +3,26 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity processor is
-	port(	i_CLK       : in  std_logic;
-		i_RST       : in  std_logic;
-		-- Memory interfaces
-		o_IMemAddr  : out std_logic_vector(31 downto 0);
-		i_IMemData  : in  std_logic_vector(31 downto 0);
-		o_DMemAddr  : out std_logic_vector(31 downto 0);
-		o_DMemData  : out std_logic_vector(31 downto 0);
-		o_DMemWr    : out std_logic;
-		i_DMemData  : in  std_logic_vector(31 downto 0);
-		-- For testing/debugging
-		o_PC        : out std_logic_vector(31 downto 0);
-		o_Inst      : out std_logic_vector(31 downto 0);
-		o_ALUResult : out std_logic_vector(31 downto 0);
-		-- Register write signals for testbench
-		o_RegWr     : out std_logic;
-		o_RegWrAddr : out std_logic_vector(4 downto 0);
-		o_RegWrData : out std_logic_vector(31 downto 0);
-		-- Control signals
-		o_Halt      : out std_logic;
-		o_Ovfl      : out std_logic);
+    port(    i_CLK       : in  std_logic;
+        i_RST       : in  std_logic;
+        -- Memory interfaces
+        o_IMemAddr  : out std_logic_vector(31 downto 0);
+        i_IMemData  : in  std_logic_vector(31 downto 0);
+        o_DMemAddr  : out std_logic_vector(31 downto 0);
+        o_DMemData  : out std_logic_vector(31 downto 0);
+        o_DMemWr    : out std_logic;
+        i_DMemData  : in  std_logic_vector(31 downto 0);
+        -- For testing/debugging
+        o_PC        : out std_logic_vector(31 downto 0);
+        o_Inst      : out std_logic_vector(31 downto 0);
+        o_ALUResult : out std_logic_vector(31 downto 0);
+        -- Register write signals for testbench
+        o_RegWr     : out std_logic;
+        o_RegWrAddr : out std_logic_vector(4 downto 0);
+        o_RegWrData : out std_logic_vector(31 downto 0);
+        -- Control signals
+        o_Halt      : out std_logic;
+        o_Ovfl      : out std_logic);
 end processor;
 
 architecture structural of processor is
@@ -93,7 +93,7 @@ architecture structural of processor is
         );
     end component;
 
-    -- Register file component (you would need to implement this)
+    -- Register file component
     component regfile is
         port (
             i_CLK       : in  std_logic;
@@ -222,7 +222,7 @@ begin
         );
     
     -- ALU
-    s_ALUIn1 <= std_logic_vector(unsigned(s_PC) + x"00400000") when s_IsAUIPC = '1' else s_RS1Data;  -- AUIPC uses PC + base address as first operand
+    s_ALUIn1 <= std_logic_vector(unsigned(s_PC) + x"00400000") when s_IsAUIPC = '1' else s_RS1Data;  -- AUIPC uses PC + base address
     u_alu: alu
         port map (
             i_ALUCtrl  => s_ALUCtrl,
@@ -264,8 +264,8 @@ begin
         variable v_LoadData : std_logic_vector(31 downto 0);
     begin
         if s_IsJAL = '1' or s_IsJALR = '1' then
-            -- JAL/JALR write PC+4 to register with base address
-            s_WriteData <= std_logic_vector(unsigned(s_PCplus4) + x"00400000");
+            -- JAL/JALR write PC+4 to register
+            s_WriteData <= s_PCplus4;
         elsif s_MemToReg = '1' then
             -- Load instructions - handle different load types with proper sign extension
             case s_Instr(14 downto 12) is  -- funct3 field for load instructions
@@ -298,12 +298,12 @@ begin
                     s_WriteData <= i_DMemData;
             end case;
         else
-            -- Normal ALU result (including AUIPC which computes PC + base address + immediate in ALU)
+            -- ALU result for normal operations
             s_WriteData <= s_ALUResult;
         end if;
     end process;
     
-    -- Branch logic with proper condition evaluation
+    -- Branch condition evaluation
     process(s_Branch, s_Instr, s_RS1Data, s_RS2Data, s_Zero, s_ALUResult)
         variable v_BranchCond : std_logic;
     begin
@@ -315,14 +315,14 @@ begin
                     v_BranchCond := s_Zero;
                 when "001" =>  -- BNE
                     v_BranchCond := not s_Zero;
-                when "100" =>  -- BLT - uses SLT result
-                    v_BranchCond := s_ALUResult(0);  -- SLT returns 1 if A < B
-                when "101" =>  -- BGE - uses SLT result
-                    v_BranchCond := not s_ALUResult(0);  -- A >= B (NOT(A < B))
-                when "110" =>  -- BLTU - uses SLTU result  
-                    v_BranchCond := s_ALUResult(0);  -- SLTU returns 1 if A < B unsigned
-                when "111" =>  -- BGEU - uses SLTU result
-                    v_BranchCond := not s_ALUResult(0);  -- A >= B unsigned (NOT(A < B))
+                when "100" =>  -- BLT
+                    v_BranchCond := s_ALUResult(0);
+                when "101" =>  -- BGE
+                    v_BranchCond := not s_ALUResult(0);
+                when "110" =>  -- BLTU
+                    v_BranchCond := s_ALUResult(0);
+                when "111" =>  -- BGEU
+                    v_BranchCond := not s_ALUResult(0);
                 when others =>
                     v_BranchCond := '0';
             end case;

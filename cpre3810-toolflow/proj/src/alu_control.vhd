@@ -12,39 +12,31 @@ end alu_control;
 
 architecture dataflow of alu_control is
 begin
-    -- Process to determine ALU control signals based on ALUOp, Funct3, and Funct7_5
+    -- ALU control logic
     process(i_ALUOp, i_Funct3, i_Funct7_5)
     begin
-        -- Default ALU operation (add)
+        -- Default operation
         o_ALUCtrl <= "0000";
         
-        -- Main ALUOp decoder based on your existing control unit
-        -- ALUOp comes from the main control unit based on instruction type:
-        -- "000" for loads, stores, jumps
-        -- "001" for branch instructions
-        -- "010" for R-type instructions
-        -- "011" for I-type ALU instructions
-        -- "100" for LUI
-        
         if i_ALUOp = "000" then
-            -- Load/Store instructions - always use ADD for address calculation
+            -- Load/Store instructions
             o_ALUCtrl <= "0000";  -- ADD
             
         elsif i_ALUOp = "001" then
-            -- Branch instructions - use appropriate comparison based on funct3
+            -- Branch instructions
             case i_Funct3 is
-                when "000" | "001" =>  -- BEQ, BNE - use SUB for zero flag
+                when "000" | "001" =>  -- BEQ, BNE
                     o_ALUCtrl <= "0001";  -- SUB
-                when "100" | "101" =>  -- BLT, BGE - use signed comparison
-                    o_ALUCtrl <= "1001";  -- SLT (signed)
-                when "110" | "111" =>  -- BLTU, BGEU - use unsigned comparison
-                    o_ALUCtrl <= "1010";  -- SLTU (unsigned)
+                when "100" | "101" =>  -- BLT, BGE
+                    o_ALUCtrl <= "1001";  -- SLT
+                when "110" | "111" =>  -- BLTU, BGEU
+                    o_ALUCtrl <= "1010";  -- SLTU
                 when others =>
-                    o_ALUCtrl <= "0001";  -- Default to SUB
+                    o_ALUCtrl <= "0001";  -- Default SUB
             end case;
             
         elsif i_ALUOp = "010" then
-            -- R-type instructions - use funct3 and funct7_5 to determine operation
+            -- R-type instructions
             
             -- ADD/SUB (funct3 = 000)
             if i_Funct3 = "000" then
