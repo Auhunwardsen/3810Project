@@ -6,6 +6,7 @@ entity reg_n is
   port (
     i_CLK : in  std_logic;
     i_RST : in  std_logic;                         -- async, active-high reset
+    i_WE  : in  std_logic;                         -- write enable
     i_D   : in  std_logic_vector(N-1 downto 0);    -- data in
     o_Q   : out std_logic_vector(N-1 downto 0)     -- data out
   );
@@ -31,7 +32,7 @@ begin
       port map (
         i_CLK => i_CLK,
         i_RST => i_RST,
-        i_WE  => '1',      -- Always enabled for PC register
+        i_WE  => i_WE,     -- Use the write enable input
         i_D   => i_D(i),
         o_Q   => s_q(i)
       );

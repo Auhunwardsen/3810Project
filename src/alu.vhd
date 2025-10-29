@@ -54,6 +54,7 @@ begin
 		
 	-- Main ALU operations process
 	process(i_ALUCtrl, i_A, i_B, s_ShiftResult)
+		variable v_temp_result : std_logic_vector(31 downto 0);
 	begin
 		-- Default values
 		s_Result <= (others => '0');
@@ -63,11 +64,12 @@ begin
             -- ADD (0000)
             when "0000" =>
                 -- Simple addition
-                s_Result <= std_logic_vector(signed(i_A) + signed(i_B));
+                v_temp_result := std_logic_vector(signed(i_A) + signed(i_B));
+                s_Result <= v_temp_result;
                 
                 -- Overflow detection for signed addition
-                if ((i_A(31) = '0' and i_B(31) = '0' and s_Result(31) = '1') or
-                    (i_A(31) = '1' and i_B(31) = '1' and s_Result(31) = '0')) then
+                if ((i_A(31) = '0' and i_B(31) = '0' and v_temp_result(31) = '1') or
+                    (i_A(31) = '1' and i_B(31) = '1' and v_temp_result(31) = '0')) then
                     s_Overflow <= '1';
                 else
                     s_Overflow <= '0';
@@ -76,11 +78,12 @@ begin
             -- SUB (0001)
             when "0001" =>
                 -- Simple subtraction
-                s_Result <= std_logic_vector(signed(i_A) - signed(i_B));
+                v_temp_result := std_logic_vector(signed(i_A) - signed(i_B));
+                s_Result <= v_temp_result;
                 
                 -- Overflow detection for subtraction
-                if ((i_A(31) = '0' and i_B(31) = '1' and s_Result(31) = '1') or
-                    (i_A(31) = '1' and i_B(31) = '0' and s_Result(31) = '0')) then
+                if ((i_A(31) = '0' and i_B(31) = '1' and v_temp_result(31) = '1') or
+                    (i_A(31) = '1' and i_B(31) = '0' and v_temp_result(31) = '0')) then
                     s_Overflow <= '1';
                 else
                     s_Overflow <= '0';
