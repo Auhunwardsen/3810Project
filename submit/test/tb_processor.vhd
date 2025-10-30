@@ -1,6 +1,8 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use IEEE.std_logic_textio.all;
+use STD.textio.all;
 
 entity tb_processor is
 end tb_processor;
@@ -44,29 +46,39 @@ architecture behavior of tb_processor is
     -- Instruction memory simulation
     type t_IMem is array(0 to 63) of std_logic_vector(31 downto 0);
     signal IMem : t_IMem := (
-        -- Simple program with addi instructions
-        -- addi x1, x0, 5      # x1 = 5
-        0 => x"00500093",
-        -- addi x2, x0, 10     # x2 = 10
-        1 => x"00A00113",
-        -- addi x3, x1, x2     # x3 = x1 + x2 = 15
-        2 => x"00208193",
-        -- sw x3, 0(x0)        # Store x3 to memory address 0
-        3 => x"00302023",
-        -- lw x4, 0(x0)        # Load from memory address 0 into x4
-        4 => x"00002203",
-        -- addi x5, x4, 5      # x5 = x4 + 5 = 20
-        5 => x"00520293",
-        -- beq x1, x1, 2       # Branch to PC+2 if x1 == x1 (always)
-        6 => x"00108263",
-        -- addi x6, x0, 1      # (skipped)
-        7 => x"00100313",
-        -- addi x7, x0, 1      # (skipped)
-        8 => x"00100393",
-        -- addi x8, x0, 30     # x8 = 30
-        9 => x"01E00413",
-        -- halt or other terminating instruction
-        10 => x"00000000",
+        -- Test ADDI: Compute address
+        0 => x"01400093",  -- addi x1, x0, 20    # x1 = 20
+        
+        -- Test ADDI: Compute value to store
+        1 => x"00F00113",  -- addi x2, x0, 15    # x2 = 15
+        
+        -- Test SW: Store word to memory
+        2 => x"00202023",  -- sw x2, 0(x1)       # MEM[20] = 15
+        
+        -- Test LW: Load word from memory
+        3 => x"0000A183",  -- lw x3, 0(x1)       # x3 = MEM[20] = 15
+        
+        -- Test XORI: Transform data
+        4 => x"00F1C213",  -- xori x4, x3, 15    # x4 = 15 XOR 15 = 0 (Zero flag!)
+        
+        -- Test SLLI: Shift left logical immediate
+        5 => x"00209293",  -- slli x5, x1, 2     # x5 = 20 << 2 = 80
+        
+        -- Test SLT: Set less than
+        6 => x"00512333",  -- slt x6, x2, x5     # x6 = (15 < 80) = 1
+        
+        -- Test BNE: Branch not equal (won't branch)
+        7 => x"00631463",  -- bne x6, x6, 8      # Branch if x6 != x6 (false, no branch)
+        
+        -- This instruction executes (not skipped)
+        8 => x"00100393",  -- addi x7, x0, 1     # x7 = 1
+        
+        -- Test AND: Logical AND
+        9 => x"0020F433",  -- and x8, x1, x2     # x8 = 20 AND 15 = 4
+        
+        -- Halt
+        10 => x"00000000", -- nop/halt
+        
         others => x"00000000"
     );
     
@@ -123,15 +135,16 @@ begin
     -- Stimulus process
     stim_proc: process
     begin
-        -- Hold reset for 100 ns
+        -- Hold reset for 25 ns
         s_RST <= '1';
-        wait for 100 ns;
+        wait for 25 ns;
         s_RST <= '0';
         
-        -- Run for enough cycles to execute the program
-        wait for c_CLK_PERIOD * 20;
+        -- Run for enough cycles to execute the program (12 instructions)
+        wait for c_CLK_PERIOD * 15;
         
         -- End simulation
+        assert false report "Test Complete" severity note;
         wait;
     end process;
     
