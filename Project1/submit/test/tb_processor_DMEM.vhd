@@ -2,28 +2,25 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
+library work;
+use work.RISCV_types.all;
+
 entity tb_processor_DMEM is
 end tb_processor_DMEM;
 
 architecture behavior of tb_processor_DMEM is
     -------------------------------------------------------------------
-    -- Component Declaration
+    -- Component Declaration for RISCV_Processor
     -------------------------------------------------------------------
-    component processor
-        port (
-            i_CLK       : in  std_logic;
-            i_RST       : in  std_logic;
-            -- Memory interfaces
-            o_IMemAddr  : out std_logic_vector(31 downto 0);
-            i_IMemData  : in  std_logic_vector(31 downto 0);
-            o_DMemAddr  : out std_logic_vector(31 downto 0);
-            o_DMemData  : out std_logic_vector(31 downto 0);
-            o_DMemWr    : out std_logic;
-            i_DMemData  : in  std_logic_vector(31 downto 0);
-            -- Debug / observation
-            o_PC        : out std_logic_vector(31 downto 0);
-            o_Inst      : out std_logic_vector(31 downto 0);
-            o_ALUResult : out std_logic_vector(31 downto 0)
+    component RISCV_Processor
+        generic(N : integer := DATA_WIDTH);
+        port(
+            iCLK            : in std_logic;
+            iRST            : in std_logic;
+            iInstLd         : in std_logic;
+            iInstAddr       : in std_logic_vector(N-1 downto 0);
+            iInstExt        : in std_logic_vector(N-1 downto 0);
+            oALUOut         : out std_logic_vector(N-1 downto 0)
         );
     end component;
 
@@ -32,45 +29,56 @@ architecture behavior of tb_processor_DMEM is
     -------------------------------------------------------------------
     signal s_CLK          : std_logic := '0';
     signal s_RST          : std_logic := '0';
-    signal s_IMemAddr     : std_logic_vector(31 downto 0);
-    signal s_IMemData     : std_logic_vector(31 downto 0);
-    signal s_DMemAddr     : std_logic_vector(31 downto 0);
-    signal s_DMemData_out : std_logic_vector(31 downto 0);
-    signal s_DMemWr       : std_logic;
-    signal s_DMemData_in  : std_logic_vector(31 downto 0);
-    signal s_PC           : std_logic_vector(31 downto 0);
-    signal s_Inst         : std_logic_vector(31 downto 0);
+    signal s_InstLd       : std_logic := '0';
+    signal s_InstAddr     : std_logic_vector(31 downto 0) := (others => '0');
+    signal s_InstExt      : std_logic_vector(31 downto 0) := (others => '0');
     signal s_ALUResult    : std_logic_vector(31 downto 0);
 
     constant c_CLK_PERIOD : time := 10 ns;
 
+    begin
     -------------------------------------------------------------------
-    -- Simple Instruction Memory
+    -- Instantiate RISCV_Processor
     -------------------------------------------------------------------
-    type t_IMem is array(0 to 31) of std_logic_vector(31 downto 0);
-    signal IMem : t_IMem := (
-        -- ADDI: compute an address
-        0 => x"00500093", -- addi x1,x0,5
-        -- SW: store x1 to memory[0]
-        1 => x"00102023", -- sw x1,0(x0)
-        -- LW: load x2 from memory[0]
-        2 => x"00002103", -- lw x2,0(x0)
-        -- XORI: transform data
-        3 => x"0FF14113", -- xori x2,x2,0xFF
-        -- SLLI: shift left
-        4 => x"00111193", -- slli x3,x2,1
-        -- SLT: comparison (x3 < x1)
-        5 => x"0011A213", -- slt x4,x3,x1
-        -- BNE: branch if not equal (x4!=0) skip next ADDI
-        6 => x"00422463", -- bne x4,x0,8
-        -- ADDI (skipped if branch taken)
-        7 => x"00100293", -- addi x5,x0,1
-        -- ADDI (executed after branch)
-        8 => x"00A00293", -- addi x5,x0,10
-        -- NOP
-        9 => x"00000013",
-        others => x"00000000"
-    );
+    UUT: RISCV_Processor
+        generic map(N => 32)
+        port map (
+            iCLK      => s_CLK,
+            iRST      => s_RST,
+            iInstLd   => s_InstLd,
+            iInstAddr => s_InstAddr,
+            iInstExt  => s_InstExt,
+            oALUOut   => s_ALUResult
+        );
+
+    -------------------------------------------------------------------
+    -- Clock process
+    -------------------------------------------------------------------
+    CLK_process: process
+    begin
+        s_CLK <= '0';
+        wait for c_CLK_PERIOD/2;
+        s_CLK <= '1';
+        wait for c_CLK_PERIOD/2;
+    end process;
+
+    -------------------------------------------------------------------
+    -- Stimulus
+    -------------------------------------------------------------------
+    stim_proc: process
+    begin
+        s_RST <= '1';
+        wait for 20 ns;
+        s_RST <= '0';
+
+        -- Run simulation for enough cycles
+        wait for c_CLK_PERIOD * 40;
+        
+        assert false report "Test Complete - ALU Result: " & integer'image(to_integer(unsigned(s_ALUResult))) severity note;
+        wait;
+    end process;
+
+end behavior;
 
     -------------------------------------------------------------------
     -- Simple Data Memory
