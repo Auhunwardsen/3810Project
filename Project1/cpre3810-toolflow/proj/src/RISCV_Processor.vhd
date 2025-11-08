@@ -161,7 +161,6 @@ architecture structure of RISCV_Processor is
   -- Processor internal signals
   signal s_PC         : std_logic_vector(31 downto 0);
   signal s_PCplus4    : std_logic_vector(31 downto 0);
-  signal s_Instr      : std_logic_vector(31 downto 0);
   signal s_UseNextAdr : std_logic;
   signal s_NextAdr    : std_logic_vector(31 downto 0);
   signal s_Stall      : std_logic;
@@ -241,13 +240,13 @@ begin
       i_IMemData   => s_Inst,
       o_PC         => s_PC,
       o_PCplus4    => s_PCplus4,
-      o_Instr      => s_Instr
+      o_Instr      => open  -- Not needed, we use s_Inst directly
     );
   
   -- Control unit
   u_control: control
     port map (
-      i_opcode   => s_Instr(6 downto 0),
+      i_opcode   => s_Inst(6 downto 0),
       o_branch   => s_Branch,
       o_memRead  => s_MemRead,
       o_memToReg => s_MemToReg,
@@ -261,8 +260,8 @@ begin
   u_alu_control: alu_control
     port map (
       i_ALUOp    => s_ALUOp,
-      i_Funct3   => s_Instr(14 downto 12),
-      i_Funct7_5 => s_Instr(30),
+      i_Funct3   => s_Inst(14 downto 12),
+      i_Funct7_5 => s_Inst(30),
       o_ALUCtrl  => s_ALUCtrl
     );
   
@@ -272,9 +271,9 @@ begin
       i_CLK       => iCLK,
       i_RST       => iRST,
       i_WE        => s_RegWrite,
-      i_RS1       => s_Instr(19 downto 15),
-      i_RS2       => s_Instr(24 downto 20),
-      i_RD        => s_Instr(11 downto 7),
+      i_RS1       => s_Inst(19 downto 15),
+      i_RS2       => s_Inst(24 downto 20),
+      i_RD        => s_Inst(11 downto 7),
       i_WriteData => s_WriteData,
       o_RS1Data   => s_RS1Data,
       o_RS2Data   => s_RS2Data
@@ -283,7 +282,7 @@ begin
   -- Immediate generator
   u_immgen: immgen
     port map (
-      i_instr => s_Instr,
+      i_instr => s_Inst,
       o_imm   => s_Immediate
     );
   
@@ -325,9 +324,9 @@ begin
     );
   
   -- Instruction type detection
-  s_IsJAL   <= '1' when s_Instr(6 downto 0) = "1101111" else '0';
-  s_IsJALR  <= '1' when s_Instr(6 downto 0) = "1100111" else '0';
-  s_IsAUIPC <= '1' when s_Instr(6 downto 0) = "0010111" else '0';
+  s_IsJAL   <= '1' when s_Inst(6 downto 0) = "1101111" else '0';
+  s_IsJALR  <= '1' when s_Inst(6 downto 0) = "1100111" else '0';
+  s_IsAUIPC <= '1' when s_Inst(6 downto 0) = "0010111" else '0';
   
   -- Data memory connections
   s_DMemAddr <= s_ALUResult;
@@ -335,7 +334,7 @@ begin
   s_DMemWr   <= s_MemWrite;
   
   -- Write data selection for different instruction types
-  process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, s_DMemOut, s_Instr, s_PC)
+  process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, s_DMemOut, s_Inst, s_PC)
     variable v_LoadData : std_logic_vector(31 downto 0);
   begin
     if s_IsJAL = '1' or s_IsJALR = '1' then
@@ -348,7 +347,7 @@ begin
       end if;
     elsif s_MemToReg = '1' then
       -- Load instructions - handle different load types with proper sign extension
-      case s_Instr(14 downto 12) is  -- funct3 field for load instructions
+      case s_Inst(14 downto 12) is  -- funct3 field for load instructions
         when "000" =>  -- LB (Load Byte) - sign extend byte
           if s_DMemOut(7) = '1' then
             v_LoadData := x"FFFFFF" & s_DMemOut(7 downto 0);
@@ -384,13 +383,13 @@ begin
   end process;
   
   -- Branch condition evaluation
-  process(s_Branch, s_Instr, s_RS1Data, s_RS2Data, s_Zero, s_ALUResult)
+  process(s_Branch, s_Inst, s_RS1Data, s_RS2Data, s_Zero, s_ALUResult)
     variable v_BranchCond : std_logic;
   begin
     v_BranchCond := '0';
     
     if s_Branch = '1' then
-      case s_Instr(14 downto 12) is  -- funct3 field
+      case s_Inst(14 downto 12) is  -- funct3 field
         when "000" =>  -- BEQ
           v_BranchCond := s_Zero;
         when "001" =>  -- BNE
@@ -437,11 +436,11 @@ begin
   
   -- Register write outputs for testbench
   s_RegWr <= s_RegWrite;
-  s_RegWrAddr <= s_Instr(11 downto 7);  -- rd field
+  s_RegWrAddr <= s_Inst(11 downto 7);  -- rd field
   s_RegWrData <= s_WriteData;
   
   -- Control outputs
-  s_Halt <= '1' when s_Instr(6 downto 0) = "1110011" else '0';  -- WFI/HALT instruction
+  s_Halt <= '1' when s_Inst(6 downto 0) = "1110011" else '0';  -- WFI/HALT instruction
   s_Ovfl <= s_Overflow;
 end structure;
 
