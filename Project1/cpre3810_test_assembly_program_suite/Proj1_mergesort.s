@@ -24,6 +24,9 @@ n:      .word 8
 # - Initializes stack pointer and calls mergesort
 ##############################################################
 main:
+	# Initialize stack pointer
+	li   sp, 0x80000000     # Set stack pointer to high memory
+	
 	# load base address and indices
     	la   a0, array       # a0 = base address
     	li   a1, 0           # left = 0
