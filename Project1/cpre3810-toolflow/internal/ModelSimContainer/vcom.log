@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 15:50:41 on Nov 08,2025
+Start time: 16:04:58 on Nov 08,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/decoder5t32.vhd proj/src/mem.vhd proj/src/addsub.vhd proj/src/fetch.vhd proj/src/reg_n.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/alu.vhd proj/src/RISCV_Processor.vhd proj/src/dffg.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/control.vhd proj/src/mux2t1_n.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/RISCV_types.vhd proj/src/adder_n.vhd proj/src/regfile.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -31,10 +31,9 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Loading package RISCV_types
 -- Compiling entity RISCV_Processor
 -- Compiling architecture structure of RISCV_Processor
-** Error: proj/src/RISCV_Processor.vhd(198): near "begin": syntax error
 ** Error: (vcom-11) Could not find work.alu_control.
-** Error (suppressible): proj/src/RISCV_Processor.vhd(255): (vcom-1195) Cannot find expanded name "work.alu_control".
-** Error: proj/src/RISCV_Processor.vhd(255): Unknown expanded name.
-** Note: proj/src/RISCV_Processor.vhd(440): VHDL Compiler exiting
-End time: 15:50:41 on Nov 08,2025, Elapsed time: 0:00:00
-Errors: 4, Warnings: 0
+** Error (suppressible): proj/src/RISCV_Processor.vhd(261): (vcom-1195) Cannot find expanded name "work.alu_control".
+** Error: proj/src/RISCV_Processor.vhd(261): Unknown expanded name.
+** Note: proj/src/RISCV_Processor.vhd(446): VHDL Compiler exiting
+End time: 16:04:58 on Nov 08,2025, Elapsed time: 0:00:00
+Errors: 3, Warnings: 0
