@@ -441,6 +441,9 @@ begin
   
   -- Control outputs
   s_Halt <= '1' when s_Inst(6 downto 0) = "1110011" else '0';  -- WFI/HALT instruction
-  s_Ovfl <= s_Overflow;
+  
+  -- In RISC-V, arithmetic overflow does NOT generate exceptions for standard instructions
+  -- Only report overflow for specific instructions that need it (none in basic RISC-V)
+  s_Ovfl <= '0';  -- Always '0' for standard RISC-V instructions
 end structure;
 
