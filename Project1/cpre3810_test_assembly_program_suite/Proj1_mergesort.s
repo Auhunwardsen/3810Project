@@ -15,11 +15,6 @@
 .data
 array:  .word 8, 3, 5, 4, 7, 2, 6, 1   # unsorted array
 n:      .word 8
-msg_entry: .asciiz "Entering mergesort(left="
-msg_exit:  .asciiz "Leaving mergesort\n"
-msg_merge: .asciiz "Merging...\n"
-msg_sp:    .asciiz " SP="
-newline:   .asciiz "\n"
 
 .text
 .globl main
