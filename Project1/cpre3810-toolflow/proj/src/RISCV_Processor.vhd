@@ -109,6 +109,15 @@ architecture structure of RISCV_Processor is
     );
   end component;
 
+  component alu_control is
+    port (
+      i_ALUOp     : in  std_logic_vector(2 downto 0);
+      i_Funct3    : in  std_logic_vector(2 downto 0);
+      i_Funct7_5  : in  std_logic;
+      o_ALUCtrl   : out std_logic_vector(3 downto 0)
+    );
+  end component;
+
   component immgen is
     port (
       i_instr     : in  std_logic_vector(31 downto 0);
@@ -192,9 +201,6 @@ architecture structure of RISCV_Processor is
   signal s_IsJALR     : std_logic;
   signal s_IsAUIPC    : std_logic;
 
-begin
-
-  -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
 begin
 
   -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.

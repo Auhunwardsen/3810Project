@@ -9,147 +9,39 @@ end tb_processor;
 
 architecture behavior of tb_processor is
     -- Component Declaration
-    component processor
+    component RISCV_Processor
         port (
-            i_CLK       : in  std_logic;
-            i_RST       : in  std_logic;
-            -- Memory interfaces
-            o_IMemAddr  : out std_logic_vector(31 downto 0);
-            i_IMemData  : in  std_logic_vector(31 downto 0);
-            o_DMemAddr  : out std_logic_vector(31 downto 0);
-            o_DMemData  : out std_logic_vector(31 downto 0);
-            o_DMemWr    : out std_logic;
-            i_DMemData  : in  std_logic_vector(31 downto 0);
-            -- For testing/debugging
-            o_PC        : out std_logic_vector(31 downto 0);
-            o_Inst      : out std_logic_vector(31 downto 0);
-            o_ALUResult : out std_logic_vector(31 downto 0);
-            -- Register write signals for testbench
-            o_RegWr     : out std_logic;
-            o_RegWrAddr : out std_logic_vector(4 downto 0);
-            o_RegWrData : out std_logic_vector(31 downto 0);
-            -- Control signals
-            o_Halt      : out std_logic;
-            o_Ovfl      : out std_logic
+            iCLK        : in  std_logic;
+            iRST        : in  std_logic;
+            iInstLd     : in  std_logic;
+            iInstAddr   : in  std_logic_vector(31 downto 0);
+            iInstExt    : in  std_logic_vector(31 downto 0);
+            oALUOut     : out std_logic_vector(31 downto 0)
         );
     end component;
     
     -- Signals for processor
     signal s_CLK       : std_logic := '0';
     signal s_RST       : std_logic := '0';
-    signal s_IMemAddr  : std_logic_vector(31 downto 0);
-    signal s_IMemData  : std_logic_vector(31 downto 0);
-    signal s_DMemAddr  : std_logic_vector(31 downto 0);
-    signal s_DMemData_out : std_logic_vector(31 downto 0);
-    signal s_DMemWr    : std_logic;
-    signal s_DMemData_in  : std_logic_vector(31 downto 0);
-    signal s_PC        : std_logic_vector(31 downto 0);
-    signal s_Inst      : std_logic_vector(31 downto 0);
     signal s_ALUResult : std_logic_vector(31 downto 0);
-    signal s_RegWr     : std_logic;
-    signal s_RegWrAddr : std_logic_vector(4 downto 0);
-    signal s_RegWrData : std_logic_vector(31 downto 0);
-    signal s_Halt      : std_logic;
-    signal s_Ovfl      : std_logic;
     
     -- Clock period definition
     constant c_CLK_PERIOD : time := 10 ns;
     
-    -- Instruction memory simulation (larger to accommodate hex files)
-    type t_IMem is array(0 to 255) of std_logic_vector(31 downto 0);
-    signal IMem : t_IMem := (
-        -- Default simple program with addi instructions
-        -- addi x1, x0, 5      # x1 = 5
-        0 => x"00500093",
-        -- addi x2, x0, 10     # x2 = 10
-        1 => x"00A00113",
-        -- addi x3, x1, x2     # x3 = x1 + x2 = 15
-        2 => x"00208193",
-        -- sw x3, 0(x0)        # Store x3 to memory address 0
-        3 => x"00302023",
-        -- lw x4, 0(x0)        # Load from memory address 0 into x4
-        4 => x"00002203",
-        -- addi x5, x4, 5      # x5 = x4 + 5 = 20
-        5 => x"00520293",
-        -- beq x1, x1, 2       # Branch to PC+2 if x1 == x1 (always)
-        6 => x"00108263",
-        -- addi x6, x0, 1      # (skipped)
-        7 => x"00100313",
-        -- addi x7, x0, 1      # (skipped)
-        8 => x"00100393",
-        -- addi x8, x0, 30     # x8 = 30
-        9 => x"01E00413",
-        -- halt or other terminating instruction
-        10 => x"00000000",
-        others => x"00000000"
-    );
-    
-    -- Data memory simulation
-    type t_DMem is array(0 to 255) of std_logic_vector(31 downto 0);
-    signal DMem : t_DMem := (others => x"00000000");
-    
 begin
     -- Instantiate the processor
-    UUT: processor
+    UUT: RISCV_Processor
         port map (
-            i_CLK       => s_CLK,
-            i_RST       => s_RST,
-            o_IMemAddr  => s_IMemAddr,
-            i_IMemData  => s_IMemData,
-            o_DMemAddr  => s_DMemAddr,
-            o_DMemData  => s_DMemData_out,
-            o_DMemWr    => s_DMemWr,
-            i_DMemData  => s_DMemData_in,
-            o_PC        => s_PC,
-            o_Inst      => s_Inst,
-            o_ALUResult => s_ALUResult,
-            o_RegWr     => s_RegWr,
-            o_RegWrAddr => s_RegWrAddr,
-            o_RegWrData => s_RegWrData,
-            o_Halt      => s_Halt,
-            o_Ovfl      => s_Ovfl
+            iCLK        => s_CLK,
+            iRST        => s_RST,
+            iInstLd     => '0',  -- Normal operation
+            iInstAddr   => (others => '0'),  -- Not used when iInstLd = '0'
+            iInstExt    => (others => '0'),  -- Not used when iInstLd = '0'
+            oALUOut     => s_ALUResult
         );
     
-    -- Load instruction memory from hex file (if available)
-    IMEM_LOAD: process
-        file hex_file : text;
-        variable hex_line : line;
-        variable hex_data : std_logic_vector(31 downto 0);
-        variable i : integer := 0;
-        variable good : boolean;
-        variable file_status : file_open_status;
-    begin
-        -- Try to open hex file - first try the toolflow expected name
-        file_open(file_status, hex_file, "imem.hex", read_mode);
-        if file_status /= open_ok then
-            -- Try other common hex file names
-            file_open(file_status, hex_file, "instructions.hex", read_mode);
-        end if;
-        
-        if file_status = open_ok then
-            report "Loading instructions from hex file...";
-            -- Read each line from the hex file
-            while not endfile(hex_file) and i < 256 loop
-                readline(hex_file, hex_line);
-                -- Skip empty lines
-                if hex_line'length > 0 then
-                    hread(hex_line, hex_data, good);
-                    if good then
-                        IMem(i) <= hex_data;
-                        i := i + 1;
-                    end if;
-                end if;
-            end loop;
-            file_close(hex_file);
-            report "Loaded " & integer'image(i) & " instructions from hex file";
-        else
-            report "No hex file found, using hardcoded instructions";
-        end if;
-        wait;
-    end process;
-    
-    -- Clock process
-    CLK_process: process
+    -- Clock generation
+    clk_process: process
     begin
         s_CLK <= '0';
         wait for c_CLK_PERIOD/2;
@@ -157,58 +49,21 @@ begin
         wait for c_CLK_PERIOD/2;
     end process;
     
-    -- Instruction memory read process
-    IMem_process: process(s_IMemAddr)
-    begin
-        -- Convert byte address to word address by dividing by 4
-        s_IMemData <= IMem(to_integer(unsigned(s_IMemAddr)) / 4);
-    end process;
-    
-    -- Data memory read/write process
-    DMem_process: process(s_CLK)
-    begin
-        if rising_edge(s_CLK) then
-            -- Memory write
-            if s_DMemWr = '1' then
-                DMem(to_integer(unsigned(s_DMemAddr)) / 4) <= s_DMemData_out;
-            end if;
-        end if;
-        -- Memory read (asynchronous)
-        s_DMemData_in <= DMem(to_integer(unsigned(s_DMemAddr)) / 4);
-    end process;
-    
-    -- Stimulus process
-    stim_proc: process
+    -- Simple test process
+    test_proc: process
     begin
         -- Hold reset for 100 ns
         s_RST <= '1';
         wait for 100 ns;
         s_RST <= '0';
         
-        -- Run for enough cycles to execute the program
-        wait for c_CLK_PERIOD * 20;
+        -- Run simulation for enough cycles to execute program
+        wait for c_CLK_PERIOD * 100;
         
-        -- End simulation
+        report "Test completed - ALU output: " & to_hstring(s_ALUResult);
         wait;
     end process;
     
-    -- Trace output process for toolflow
-    trace_proc: process(s_CLK)
-    begin
-        if rising_edge(s_CLK) then
-            -- Output register write information when register write occurs
-            if s_RegWr = '1' and s_RegWrAddr /= "00000" then
-                report "Register Write to Reg: 0x" & 
-                       to_hstring("000" & s_RegWrAddr) & 
-                       " Val: 0x" & 
-                       to_hstring(s_RegWrData);
-            end if;
-            
-            -- Check for halt condition
-            if s_Halt = '1' then
-                report "Processor halted";
-            end if;
-        end if;
-    end process;
+
     
 end behavior;
