@@ -1,10 +1,2 @@
 ../cpre3810_test_assembly_program_suite/Proj1_cf_test.s
 ../cpre3810_test_assembly_program_suite/Proj1_mergesort.s
-../cpre3810_test_assembly_program_suite/add_3.s
-../cpre3810_test_assembly_program_suite/auipc_2.s
-../cpre3810_test_assembly_program_suite/bltu_test2.s
-../cpre3810_test_assembly_program_suite/bne_2.s
-../cpre3810_test_assembly_program_suite/slt_3.s
-../cpre3810_test_assembly_program_suite/srai_3.s
-../cpre3810_test_assembly_program_suite/sub_0.s
-../cpre3810_test_assembly_program_suite/sub_01.s
