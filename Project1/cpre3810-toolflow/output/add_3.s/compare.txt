@@ -1,12 +1,18 @@
 Oh no...
 
-Cycle: na
-RARS instruction number: 1	Instruction: addi x1,x0,1
-Expected:	Register Write to Reg: 0x01 Val: 0x00000001
-Got     :	Execution stopped
-Student execution ended prematurely
+Cycle: 32
+RARS instruction number: 33	Instruction: add x3,x1,x2
+Expected:	No Overflow
+Got     :	Overflow
+Overflow is incorrect
 
-Almost! your processor completed the program with  1/3 allowed mismatches
+Cycle: 33
+RARS instruction number: 34	Instruction: add x4,x3,x3
+Expected:	No Overflow
+Got     :	Overflow
+Overflow is incorrect
+
+Almost! your processor completed the program with  2/3 allowed mismatches
 
 Helpful resources for Debugging:
 ms.trace : output from the VHDL testbench during program execution on your processor
