@@ -1,2 +1,1 @@
-../cpre3810_test_assembly_program_suite/Proj1_cf_test.s
 ../cpre3810_test_assembly_program_suite/Proj1_mergesort.s
