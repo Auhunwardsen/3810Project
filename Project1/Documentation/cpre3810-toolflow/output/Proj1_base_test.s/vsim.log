@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 21:37:08 on Oct 28,2025
+# Start time: 15:36:51 on Nov 08,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Note: (vsim-8611) Generating debug db.
 # ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
@@ -49,13 +49,27 @@ Reading pref.tcl
 # Loading work.barrelshifter(dataflow)#1
 # ** Note: (vsim-8900) Creating design debug database vsim.dbg.
 # do modelsim_framework.do
-# ** UI-Msg (Error): (vsim-7) Failed to open mem file "imem.hex" in read mode.
-# No such file or directory. (errno = ENOENT)
-# Error in macro ./modelsim_framework.do line 14
-# ** UI-Msg (Error): (vsim-7) Failed to open mem file "imem.hex" in read mode.
-# No such file or directory. (errno = ENOENT)
-#     while executing
-# "mem load -infile imem.hex -format hex /MyRiscv/IMem"
-VSIM 2> Signal SIGTERM caught... Closing vish.
-Fatal: vsim caught SIGTERM. Closing vsimk kernel.
-writing stack trace to vish_stacktrace.vstf
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/u_processor/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/u_processor/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/DMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/IMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv/u_processor/u_alu/u_shifter
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv/u_processor/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv/u_processor/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 4  Instance: /tb/MyRiscv/DMem
+# ** Note: Data structure takes 53476368 bytes of memory
+#          Process time 0.05 seconds
+#          stop
+#    Time: 400 ns  Iteration: 1  Instance: /tb
+# Break in Process P_DUMP_STATE at /home/auhun47/project1/3810Project1/Project1/Documentation/cpre3810-toolflow/internal/testpy/tb.vhd line 150
+# Stopped at /home/auhun47/project1/3810Project1/Project1/Documentation/cpre3810-toolflow/internal/testpy/tb.vhd line 150
+# End time: 15:36:54 on Nov 08,2025, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 9
