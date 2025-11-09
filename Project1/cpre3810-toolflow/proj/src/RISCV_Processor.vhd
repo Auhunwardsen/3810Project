@@ -295,8 +295,8 @@ begin
       o_O  => s_ALUIn2
     );
   
-  -- ALU input selection  
-  s_ALUIn1 <= s_PC when s_IsAUIPC = '1' else s_RS1Data;
+  -- ALU input selection
+  s_ALUIn1 <= std_logic_vector(unsigned(s_PC) + x"00400000") when s_IsAUIPC = '1' else s_RS1Data;
   s_ALUIn2_sel <= s_Immediate when (s_IsAUIPC = '1' or s_IsJALR = '1') else s_ALUIn2;
   
   -- ALU
@@ -333,8 +333,8 @@ begin
     variable v_LoadData : std_logic_vector(31 downto 0);
   begin
     if s_IsJAL = '1' or s_IsJALR = '1' then
-      -- JAL/JALR write PC+4 to register (return address)
-      s_WriteData <= s_PCplus4;
+      -- JAL/JALR write PC+4 to register (return address) with base address correction
+      s_WriteData <= std_logic_vector(unsigned(s_PCplus4) + x"00400000");
     elsif s_MemToReg = '1' then
       -- Load instructions - handle different load types with proper sign extension
       case s_Inst(14 downto 12) is  -- funct3 field for load instructions
