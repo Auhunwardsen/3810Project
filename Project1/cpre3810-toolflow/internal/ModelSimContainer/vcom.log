@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 18:41:26 on Nov 08,2025
+Start time: 18:45:24 on Nov 08,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/decoder5t32.vhd proj/src/mem.vhd proj/src/addsub.vhd proj/src/fetch.vhd proj/src/reg_n.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/alu.vhd proj/src/RISCV_Processor.vhd proj/src/dffg.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/control.vhd proj/src/mux2t1_n.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/RISCV_types.vhd proj/src/adder_n.vhd proj/src/regfile.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -31,10 +31,28 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Loading package RISCV_types
 -- Compiling entity RISCV_Processor
 -- Compiling architecture structure of RISCV_Processor
-** Error: proj/src/RISCV_Processor.vhd(198): (vcom-1294) Declaration with designator "s_UseNextAdr" already exists in this region.
-** =====> Prior declaration of "s_UseNextAdr" is at proj/src/RISCV_Processor.vhd(164).
-** Error: proj/src/RISCV_Processor.vhd(199): (vcom-1294) Declaration with designator "s_NextAdr" already exists in this region.
-** =====> Prior declaration of "s_NextAdr" is at proj/src/RISCV_Processor.vhd(165).
-** Note: proj/src/RISCV_Processor.vhd(382): VHDL Compiler exiting
-End time: 18:41:26 on Nov 08,2025, Elapsed time: 0:00:00
-Errors: 2, Warnings: 0
+-- Compiling entity dffg
+-- Compiling architecture mixed of dffg
+-- Compiling entity immgen
+-- Compiling architecture dataflow of immgen
+-- Compiling entity alu_control
+-- Compiling architecture dataflow of alu_control
+-- Compiling entity control
+-- Compiling architecture dataflow of control
+-- Compiling entity mux2t1_n
+-- Compiling architecture rtl of mux2t1_n
+-- Compiling entity zero_extender
+-- Compiling architecture rtl of zero_extender
+-- Compiling entity sign_extender
+-- Compiling architecture rtl of sign_extender
+** Warning: proj/src/RISCV_types.vhd(15): (vcom-1615) Existing package 'RISCV_types' at line 18 will be overwritten.
+-- Compiling package RISCV_types
+** Warning: proj/src/RISCV_types.vhd(29): (vcom-1615) Existing package body 'RISCV_types(body)' at line 29 will be overwritten.
+-- Compiling package body RISCV_types
+-- Loading package RISCV_types
+-- Compiling entity adder_n
+-- Compiling architecture rtl of adder_n
+-- Compiling entity regfile
+-- Compiling architecture rtl of regfile
+End time: 18:45:24 on Nov 08,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 2
