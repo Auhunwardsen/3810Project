@@ -195,6 +195,9 @@ architecture structure of RISCV_Processor is
   -- Branch/Jump signals
   signal s_BranchTaken: std_logic;
   signal s_BranchAddr : std_logic_vector(31 downto 0);
+  signal s_IsAUIPC    : std_logic;
+  signal s_IsJAL      : std_logic;
+  signal s_IsJALR     : std_logic;
 
 begin
 
@@ -295,8 +298,8 @@ begin
   u_alu: alu
     port map (
       i_ALUCtrl  => s_ALUCtrl,
-      i_A        => s_RS1Data,
-      i_B        => s_ALUIn2,
+      i_A        => s_PC when s_IsAUIPC = '1' else s_RS1Data,
+      i_B        => s_Immediate when (s_IsAUIPC = '1' or s_IsJALR = '1') else s_ALUIn2,
       o_Result   => s_ALUResult,
       o_Zero     => s_Zero,
       o_Overflow => s_Overflow
@@ -310,7 +313,10 @@ begin
       oSum => s_BranchAddr
     );
   
-
+  -- Instruction type detection  
+  s_IsAUIPC <= '1' when s_Inst(6 downto 0) = "0010111" else '0';
+  s_IsJAL   <= '1' when s_Inst(6 downto 0) = "1101111" else '0';
+  s_IsJALR  <= '1' when s_Inst(6 downto 0) = "1100111" else '0';
   
   -- Data memory connections
   s_DMemAddr <= s_ALUResult;
@@ -318,7 +324,9 @@ begin
   s_DMemWr   <= s_MemWrite;
   
   -- Write data selection
-  s_WriteData <= s_DMemOut when s_MemToReg = '1' else s_ALUResult;
+  s_WriteData <= s_PCplus4 when (s_IsJAL = '1' or s_IsJALR = '1') else
+                 s_DMemOut when s_MemToReg = '1' else 
+                 s_ALUResult;
   
   -- Branch condition evaluation
   process(s_Branch, s_Inst, s_RS1Data, s_RS2Data, s_Zero, s_ALUResult)
@@ -349,9 +357,15 @@ begin
   end process;
   
   -- Next address selection
-  process(s_BranchTaken, s_BranchAddr)
+  process(s_BranchTaken, s_BranchAddr, s_IsJAL, s_IsJALR, s_ALUResult)
   begin
-    if s_BranchTaken = '1' then
+    if s_IsJAL = '1' then
+      s_UseNextAdr <= '1';
+      s_NextAdr <= s_BranchAddr;  -- JAL: PC + immediate
+    elsif s_IsJALR = '1' then
+      s_UseNextAdr <= '1';
+      s_NextAdr <= s_ALUResult;   -- JALR: RS1 + immediate (computed by ALU)
+    elsif s_BranchTaken = '1' then
       s_UseNextAdr <= '1';
       s_NextAdr <= s_BranchAddr;  -- Branch to PC + immediate
     else
