@@ -1,9 +1,9 @@
 Oh no...
 
-Cycle: 10
-RARS instruction number: 11	Instruction: jalr x1,x4,0
-Expected:	Register Write to Reg: 0x01 Val: 0x00400034
-Got     :	Register Write to Reg: 0x01 Val: 0x00800034
+Cycle: 5
+RARS instruction number: 6	Instruction: jalr x1,x4,0
+Expected:	Register Write to Reg: 0x01 Val: 0x00400018
+Got     :	Register Write to Reg: 0x01 Val: 0x00000018
 Incorrect write
 
 Almost! your processor completed the program with  1/3 allowed mismatches

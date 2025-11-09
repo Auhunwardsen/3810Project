@@ -1,2 +1,8 @@
+../cpre3810_test_assembly_program_suite/Proj1_cf_test.s
 ../cpre3810_test_assembly_program_suite/Proj1_mergesort.s
+../cpre3810_test_assembly_program_suite/jal_1.s
+../cpre3810_test_assembly_program_suite/jal_2.s
+../cpre3810_test_assembly_program_suite/jal_3.s
+../cpre3810_test_assembly_program_suite/jalr_1.s
 ../cpre3810_test_assembly_program_suite/jalr_2.s
+../cpre3810_test_assembly_program_suite/jalr_3.s
