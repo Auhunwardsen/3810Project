@@ -17,6 +17,7 @@ package RISCV_types is
   -- Example Constants. Declare more as needed
   constant DATA_WIDTH : integer := 32;
   constant ADDR_WIDTH : integer := 10;
+  constant PC_BASE_ADDR : std_logic_vector(31 downto 0) := x"00400000";
 
   -- Example record type. Declare whatever types you need here
   type control_t is record
