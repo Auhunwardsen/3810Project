@@ -195,10 +195,8 @@ architecture structure of RISCV_Processor is
   -- Branch/Jump signals
   signal s_BranchTaken: std_logic;
   signal s_BranchAddr : std_logic_vector(31 downto 0);
-  signal s_JumpAddr   : std_logic_vector(31 downto 0);
-  signal s_IsJAL      : std_logic;
-  signal s_IsJALR     : std_logic;
-  signal s_IsAUIPC    : std_logic;
+  signal s_UseNextAdr : std_logic;
+  signal s_NextAdr    : std_logic_vector(31 downto 0);
 
 begin
 
@@ -314,67 +312,15 @@ begin
       oSum => s_BranchAddr
     );
   
-  -- Jump address calculation for JALR
-  u_jalr_adder: adder_n
-    port map (
-      iA   => s_RS1Data,
-      iB   => s_Immediate,
-      oSum => s_JumpAddr
-    );
-  
-  -- Instruction type detection
-  s_IsJAL   <= '1' when s_Inst(6 downto 0) = "1101111" else '0';
-  s_IsJALR  <= '1' when s_Inst(6 downto 0) = "1100111" else '0';
-  s_IsAUIPC <= '1' when s_Inst(6 downto 0) = "0010111" else '0';
+
   
   -- Data memory connections
   s_DMemAddr <= s_ALUResult;
   s_DMemData <= s_RS2Data;
   s_DMemWr   <= s_MemWrite;
   
-  -- Write data selection for different instruction types
-  process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, s_DMemOut, s_Inst, s_PC)
-    variable v_LoadData : std_logic_vector(31 downto 0);
-  begin
-    if s_IsJAL = '1' or s_IsJALR = '1' then
-      -- JAL/JALR write PC+4 to register (return address)
-      s_WriteData <= s_PCplus4;
-    elsif s_MemToReg = '1' then
-      -- Load instructions - handle different load types with proper sign extension
-      case s_Inst(14 downto 12) is  -- funct3 field for load instructions
-        when "000" =>  -- LB (Load Byte) - sign extend byte
-          if s_DMemOut(7) = '1' then
-            v_LoadData := x"FFFFFF" & s_DMemOut(7 downto 0);
-          else
-            v_LoadData := x"000000" & s_DMemOut(7 downto 0);
-          end if;
-          s_WriteData <= v_LoadData;
-          
-        when "001" =>  -- LH (Load Halfword) - sign extend halfword
-          if s_DMemOut(15) = '1' then
-            v_LoadData := x"FFFF" & s_DMemOut(15 downto 0);
-          else
-            v_LoadData := x"0000" & s_DMemOut(15 downto 0);
-          end if;
-          s_WriteData <= v_LoadData;
-          
-        when "010" =>  -- LW (Load Word) - full 32-bit word
-          s_WriteData <= s_DMemOut;
-          
-        when "100" =>  -- LBU (Load Byte Unsigned) - zero extend byte
-          s_WriteData <= x"000000" & s_DMemOut(7 downto 0);
-          
-        when "101" =>  -- LHU (Load Halfword Unsigned) - zero extend halfword
-          s_WriteData <= x"0000" & s_DMemOut(15 downto 0);
-          
-        when others =>  -- Default to LW
-          s_WriteData <= s_DMemOut;
-      end case;
-    else
-      -- ALU result for normal operations
-      s_WriteData <= s_ALUResult;
-    end if;
-  end process;
+  -- Write data selection
+  s_WriteData <= s_DMemOut when s_MemToReg = '1' else s_ALUResult;
   
   -- Branch condition evaluation
   process(s_Branch, s_Inst, s_RS1Data, s_RS2Data, s_Zero, s_ALUResult)
@@ -405,15 +351,9 @@ begin
   end process;
   
   -- Next address selection
-  process(s_BranchTaken, s_IsJAL, s_IsJALR, s_BranchAddr, s_JumpAddr, s_PCplus4)
+  process(s_BranchTaken, s_BranchAddr)
   begin
-    if s_IsJAL = '1' then
-      s_UseNextAdr <= '1';
-      s_NextAdr <= s_BranchAddr;  -- JAL uses PC + immediate
-    elsif s_IsJALR = '1' then
-      s_UseNextAdr <= '1';
-      s_NextAdr <= s_JumpAddr;    -- JALR uses RS1 + immediate
-    elsif s_BranchTaken = '1' then
+    if s_BranchTaken = '1' then
       s_UseNextAdr <= '1';
       s_NextAdr <= s_BranchAddr;  -- Branch to PC + immediate
     else
