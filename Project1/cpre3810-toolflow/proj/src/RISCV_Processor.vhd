@@ -195,8 +195,6 @@ architecture structure of RISCV_Processor is
   -- Branch/Jump signals
   signal s_BranchTaken: std_logic;
   signal s_BranchAddr : std_logic_vector(31 downto 0);
-  signal s_UseNextAdr : std_logic;
-  signal s_NextAdr    : std_logic_vector(31 downto 0);
 
 begin
 
