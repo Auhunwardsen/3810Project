@@ -1,2 +1,0 @@
-../cpre3810_test_assembly_program_suite/Proj1_mergesort.s
-../cpre3810_test_assembly_program_suite/jalr_2.s
