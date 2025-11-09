@@ -9,9 +9,8 @@
 
 main:
 _start:
-    # set up a small stack
-    auipc   sp, 0
-    addi    sp, sp, 0x200
+    # set up a small stack in safe memory region
+    li      sp, 0x80000000  # Set stack pointer to high memory like other tests
 
     # choose values to make some branches taken
     addi    s0, x0, 10      # s0 = 10
