@@ -334,7 +334,12 @@ begin
   begin
     if s_IsJAL = '1' or s_IsJALR = '1' then
       -- JAL/JALR write PC+4 to register (return address) with base address correction
-      s_WriteData <= std_logic_vector(unsigned(s_PC) + x"00400004");
+      -- Check if PC already has base address to avoid double-adding
+      if unsigned(s_PC) < x"00400000" then
+        s_WriteData <= std_logic_vector(unsigned(s_PCplus4) + x"00400000");
+      else
+        s_WriteData <= s_PCplus4;
+      end if;
     elsif s_MemToReg = '1' then
       -- Load instructions - handle different load types with proper sign extension
       case s_Inst(14 downto 12) is  -- funct3 field for load instructions
