@@ -15,7 +15,7 @@ Incorrect write
 Cycle: 2
 RARS instruction number: 3	Instruction: jalr x1,x4,8
 Expected:	Register Write to Reg: 0x01 Val: 0x0040000C
-Got     :	Register Write to Reg: 0x01 Val: 0x00000014
+Got     :	Register Write to Reg: 0x01 Val: 0x0000000C
 Incorrect write
 
 You have reached the maximum mismatches (3)

@@ -9,13 +9,13 @@ Incorrect write
 Cycle: 1
 RARS instruction number: 2	Instruction: auipc x6,-1
 Expected:	Register Write to Reg: 0x06 Val: 0x003FF004
-Got     :	Register Write to Reg: 0x06 Val: 0xFFFFF000
+Got     :	Register Write to Reg: 0x06 Val: 0xFFFFF004
 Incorrect write
 
 Cycle: 2
 RARS instruction number: 3	Instruction: auipc x7,524288
 Expected:	Register Write to Reg: 0x07 Val: 0x80400008
-Got     :	Register Write to Reg: 0x07 Val: 0x80000000
+Got     :	Register Write to Reg: 0x07 Val: 0x80000008
 Incorrect write
 
 You have reached the maximum mismatches (3)

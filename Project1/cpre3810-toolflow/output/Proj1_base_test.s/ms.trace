@@ -17,17 +17,17 @@ Register Write to Reg: 0x08 Val: 0x00000014
 In clock cycle: 8
 Register Write to Reg: 0x09 Val: 0x0000000A
 In clock cycle: 9
-Register Write to Reg: 0x0A Val: 0x0FC1000A
+Register Write to Reg: 0x0A Val: 0x0FC10024
 In clock cycle: 10
-Register Write to Reg: 0x0A Val: 0x0FC0FFE6
+Register Write to Reg: 0x0A Val: 0x0FC10000
 In clock cycle: 11
-Register Write to Reg: 0x0B Val: 0x00000000
+Register Write to Reg: 0x0B Val: 0x00000005
 In clock cycle: 12
-Register Write to Reg: 0x0C Val: 0x00000000
+Register Write to Reg: 0x0C Val: 0x0000000A
 In clock cycle: 13
-Register Write to Reg: 0x0D Val: 0x00000000
+Register Write to Reg: 0x0D Val: 0x0000000F
 In clock cycle: 14
-Memory Write to Addr: 0x0FC0FFFA Val: 0x00000000
+Memory Write to Addr: 0x0FC10014 Val: 0x0000000F
 In clock cycle: 17
 Register Write to Reg: 0x0F Val: 0x00000001
 Execution is stopping! Clock Cycle: 18

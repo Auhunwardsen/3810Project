@@ -35,7 +35,5 @@ Register Write to Reg: 0x1C Val: 0xFFFF0000
 In clock cycle: 21
 Register Write to Reg: 0x1E Val: 0x00000001
 In clock cycle: 22
-Register Write to Reg: 0x00 Val: 0x00000008
-In clock cycle: 23
-Register Write to Reg: 0x1E Val: 0x00000002
-Execution is stopping! Clock Cycle: 24
+Register Write to Reg: 0x00 Val: 0x0000005C
+Execution is stopping! Clock Cycle: 23

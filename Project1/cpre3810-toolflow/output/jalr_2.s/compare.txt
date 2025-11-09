@@ -15,7 +15,7 @@ Incorrect write
 Cycle: 2
 RARS instruction number: 3	Instruction: auipc x4,0
 Expected:	Register Write to Reg: 0x04 Val: 0x00400008
-Got     :	Register Write to Reg: 0x04 Val: 0x00000000
+Got     :	Register Write to Reg: 0x04 Val: 0x00000008
 Incorrect write
 
 You have reached the maximum mismatches (3)

@@ -3,19 +3,19 @@ Oh no...
 Cycle: 2
 RARS instruction number: 3	Instruction: jal x1,8
 Expected:	Register Write to Reg: 0x01 Val: 0x0040000C
-Got     :	Register Write to Reg: 0x01 Val: 0x00000008
-Incorrect write
-
-Cycle: 3
-RARS instruction number: 4	Instruction: addi x6,x6,1
-Expected:	Register Write to Reg: 0x06 Val: 0x00000001
-Got     :	Register Write to Reg: 0x05 Val: 0x00000001
+Got     :	Register Write to Reg: 0x01 Val: 0x0000000C
 Incorrect write
 
 Cycle: 4
 RARS instruction number: 5	Instruction: jal x1,8
 Expected:	Register Write to Reg: 0x01 Val: 0x00400018
-Got     :	Register Write to Reg: 0x06 Val: 0x00000001
+Got     :	Register Write to Reg: 0x01 Val: 0x00000018
+Incorrect write
+
+Cycle: 6
+RARS instruction number: 7	Instruction: jal x1,8
+Expected:	Register Write to Reg: 0x01 Val: 0x00400024
+Got     :	Register Write to Reg: 0x01 Val: 0x00000024
 Incorrect write
 
 You have reached the maximum mismatches (3)
