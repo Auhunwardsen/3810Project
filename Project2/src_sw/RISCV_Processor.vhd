@@ -394,10 +394,10 @@ begin
       o_Instr      => open  -- Not needed, we use s_Inst directly
     );
   
-  -- Control unit -- Update by the group: use s_IFID_Instr instead of s_Inst for pipelined operation
+  -- Control unit 
   u_control: control
     port map (
-      i_opcode   => s_Inst(6 downto 0), -- Update by the group: change to s_IFID_Instr(6 downto 0)
+      i_opcode   => s_IFID_Inst(6 downto 0), 
       o_branch   => s_Branch,
       o_memRead  => s_MemRead,
       o_memToReg => s_MemToReg,
@@ -410,9 +410,9 @@ begin
   -- ALU control unit -- Update by the group: use pipelined signals from ID/EX register
   u_alu_control: alu_control
     port map (
-      i_ALUOp    => s_ALUOp, -- Update by the group: change to s_IDEX_ALUOp for EX stage
-      i_Funct3   => s_Inst(14 downto 12), -- Update by the group: change to s_IDEX_Instr(14 downto 12)
-      i_Funct7_5 => s_Inst(30), -- Update by the group: change to s_IDEX_Instr(30)
+      i_ALUOp    => s_IDEX_ALUOp, 
+      i_Funct3   => s_IDEX_Inst(14 downto 12), 
+      i_Funct7_5 => s_IDEX_Inst(30), 
       o_ALUCtrl  => s_ALUCtrl
     );
   
@@ -421,10 +421,10 @@ begin
     port map (
       i_CLK       => iCLK,
       i_RST       => iRST,
-      i_WE        => s_RegWrite, -- Update by the group: change to s_MEMWB_RegWrite from WB stage
-      i_RS1       => s_Inst(19 downto 15), -- Update by the group: change to s_IFID_Instr(19 downto 15) 
-      i_RS2       => s_Inst(24 downto 20), -- Update by the group: change to s_IFID_Instr(24 downto 20)
-      i_RD        => s_Inst(11 downto 7), -- Update by the group: change to s_MEMWB_RDAddr from WB stage
+      i_WE        => s_MEMWB_RegWrite, 
+      i_RS1       => s_IFID_Inst(19 downto 15),  
+      i_RS2       => s_IFID_Inst(24 downto 20), 
+      i_RD        => s_MEMWB_RDAddr, 
       i_WriteData => s_WriteData, -- Update by the group: ensure this uses WB stage data
       o_RS1Data   => s_RS1Data,
       o_RS2Data   => s_RS2Data
@@ -433,7 +433,7 @@ begin
   -- Immediate generator -- Update by the group: use IF/ID register output
   u_immgen: immgen
     port map (
-      i_instr => s_Inst, -- Update by the group: change to s_IFID_Instr for ID stage
+      i_instr => s_IFID_Inst, -- Update by the group: change to s_IFID_Instr for ID stage
       o_imm   => s_Immediate
     );
   
@@ -447,8 +447,8 @@ begin
     );
   
   -- ALU input selection -- Update by the group: use ID/EX register outputs for EX stage
-  s_ALUIn1 <= std_logic_vector(unsigned(s_PC) + x"00400000") when s_IsAUIPC = '1' else s_RS1Data; -- Update by the group: use s_IDEX_PC and s_IDEX_RS1Data
-  s_ALUIn2_sel <= s_Immediate when (s_IsAUIPC = '1' or s_IsJALR = '1') else s_ALUIn2; -- Update by the group: use s_IDEX_Immediate
+  s_ALUIn1 <= std_logic_vector(unsigned(s_IDEX_PC) + x"00400000") when s_IsAUIPC = '1' else s_IDEX_RS1Data;
+  s_ALUIn2_sel <= s_IDEX_Immediate when (s_IsAUIPC = '1' or s_IsJALR = '1') else s_ALUIn2; 
   
   -- ALU -- Update by the group: operates in EX stage with ID/EX register data
   u_alu: alu
@@ -475,9 +475,9 @@ begin
   s_IsJALR  <= '1' when s_Inst(6 downto 0) = "1100111" else '0';
   
   -- Data memory connections -- Update by the group: use EX/MEM register outputs for MEM stage
-  s_DMemAddr <= s_ALUResult; -- Update by the group: change to s_EXMEM_ALUResult
-  s_DMemData <= s_RS2Data; -- Update by the group: change to s_EXMEM_RS2Data  
-  s_DMemWr   <= s_MemWrite; -- Update by the group: change to s_EXMEM_MemWrite
+  s_DMemAddr <= s_EXMEM_ALUResult;
+  s_DMemData <= s_EXMEM_RS2Data;
+  s_DMemWr   <= s_EXMEM_MemWrite;
   
   -- Write data selection with proper load handling -- Update by the group: use MEM/WB register signals for WB stage
   process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, s_DMemOut, s_Inst, s_PC) -- Update by the group: change signals to MEM/WB outputs
@@ -578,15 +578,15 @@ begin
   s_Stall <= '0';
   
   -- Output connections -- Update by the group: use pipelined ALU result
-  oALUOut <= s_ALUResult; -- Update by the group: consider using s_EXMEM_ALUResult for final ALU output
+  oALUOut <= s_EXMEM_ALUResult; 
   
   -- Register write outputs for testbench -- Update by the group: use WB stage signals
-  s_RegWr <= s_RegWrite; -- Update by the group: change to s_MEMWB_RegWrite  
-  s_RegWrAddr <= s_Inst(11 downto 7);  -- Update by the group: change to s_MEMWB_RDAddr
+  s_RegWr <= s_MEMWB_RegWrite; 
+  s_RegWrAddr <= s_MEMWB_RDAddr;  -- Update by the group: change to s_MEMWB_RDAddr
   s_RegWrData <= s_WriteData; -- Update by the group: ensure this uses final WB stage data
   
   -- Control outputs -- Update by the group: determine which stage instruction to use
-  s_Halt <= '1' when s_Inst(6 downto 0) = "1110011" else '0';  -- Update by the group: consider using s_IFID_Instr or appropriate stage
+  s_Halt <= '1' when s_IFID_Inst(6 downto 0) = "1110011" else '0';
   
   -- In RISC-V, arithmetic overflow does NOT generate exceptions for standard instructions
   -- Only report overflow for specific instructions that need it (none in basic RISC-V)
