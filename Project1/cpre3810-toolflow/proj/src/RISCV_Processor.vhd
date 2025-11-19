@@ -295,9 +295,8 @@ begin
       o_O  => s_ALUIn2
     );
   
-  -- ALU input selection  
-  -- For AUIPC, use PC relative to base address (subtract base to get offset)
-  s_ALUIn1 <= std_logic_vector(unsigned(s_PC) - unsigned(PC_BASE_ADDR)) when s_IsAUIPC = '1' else s_RS1Data;
+  -- ALU input selection
+  s_ALUIn1 <= s_PC when s_IsAUIPC = '1' else s_RS1Data;
   s_ALUIn2_sel <= s_Immediate when (s_IsAUIPC = '1' or s_IsJALR = '1') else s_ALUIn2;
   
   -- ALU
