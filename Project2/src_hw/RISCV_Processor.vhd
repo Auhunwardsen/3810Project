@@ -158,12 +158,122 @@ architecture structure of RISCV_Processor is
     );
   end component;
 
-  -- Processor internal signals
+  component hazard_detection is
+    port(
+      i_IDEX_MemRead  : in std_logic;
+      i_IDEX_RD       : in std_logic_vector(4 downto 0);
+      i_IFID_RS1      : in std_logic_vector(4 downto 0);
+      i_IFID_RS2      : in std_logic_vector(4 downto 0);
+      i_Branch        : in std_logic;
+      i_Jump          : in std_logic;
+      o_PCWrite       : out std_logic;
+      o_IFID_Write    : out std_logic;
+      o_ControlMux    : out std_logic;
+      o_IFID_Flush    : out std_logic;
+      o_IDEX_Flush    : out std_logic
+    );
+  end component;
+
+  component forwarding_unit is
+    port(
+      i_IDEX_RS1      : in std_logic_vector(4 downto 0);
+      i_IDEX_RS2      : in std_logic_vector(4 downto 0);
+      i_EXMEM_RD      : in std_logic_vector(4 downto 0);
+      i_MEMWB_RD      : in std_logic_vector(4 downto 0);
+      i_EXMEM_RegWrite : in std_logic;
+      i_MEMWB_RegWrite : in std_logic;
+      o_Forward_A     : out std_logic_vector(1 downto 0);
+      o_Forward_B     : out std_logic_vector(1 downto 0)
+    );
+  end component;
+
+  component mux3t1_n is
+    generic(N : integer := 32);
+    port(
+      i_S   : in  std_logic_vector(1 downto 0);
+      i_D0  : in  std_logic_vector(N-1 downto 0);
+      i_D1  : in  std_logic_vector(N-1 downto 0);
+      i_D2  : in  std_logic_vector(N-1 downto 0);
+      o_O   : out std_logic_vector(N-1 downto 0)
+    );
+  end component;
+
+  -- Pipeline stage signals
+  -- IF stage
   signal s_PC         : std_logic_vector(31 downto 0);
   signal s_PCplus4    : std_logic_vector(31 downto 0);
   signal s_UseNextAdr : std_logic;
   signal s_NextAdr    : std_logic_vector(31 downto 0);
   signal s_Stall      : std_logic;
+  signal s_PCWrite    : std_logic;
+  signal s_Instr_IF   : std_logic_vector(31 downto 0);
+  
+  -- IF/ID pipeline register signals
+  signal s_IFID_Write    : std_logic;
+  signal s_IFID_Flush    : std_logic;
+  signal s_IFID_PC       : std_logic_vector(31 downto 0);
+  signal s_IFID_PCplus4  : std_logic_vector(31 downto 0);
+  signal s_IFID_Instr    : std_logic_vector(31 downto 0);
+  
+  -- ID stage signals
+  signal s_RS1Data_ID    : std_logic_vector(31 downto 0);
+  signal s_RS2Data_ID    : std_logic_vector(31 downto 0);
+  signal s_Immediate_ID  : std_logic_vector(31 downto 0);
+  
+  -- ID/EX pipeline register signals
+  signal s_IDEX_Flush    : std_logic;
+  signal s_IDEX_RegWrite : std_logic;
+  signal s_IDEX_MemToReg : std_logic;
+  signal s_IDEX_MemWrite : std_logic;
+  signal s_IDEX_MemRead  : std_logic;
+  signal s_IDEX_Branch   : std_logic;
+  signal s_IDEX_ALUSrc   : std_logic;
+  signal s_IDEX_ALUOp    : std_logic_vector(2 downto 0);
+  signal s_IDEX_PC       : std_logic_vector(31 downto 0);
+  signal s_IDEX_PCplus4  : std_logic_vector(31 downto 0);
+  signal s_IDEX_RS1Data  : std_logic_vector(31 downto 0);
+  signal s_IDEX_RS2Data  : std_logic_vector(31 downto 0);
+  signal s_IDEX_Immediate: std_logic_vector(31 downto 0);
+  signal s_IDEX_RS1Addr  : std_logic_vector(4 downto 0);
+  signal s_IDEX_RS2Addr  : std_logic_vector(4 downto 0);
+  signal s_IDEX_RDAddr   : std_logic_vector(4 downto 0);
+  signal s_IDEX_Instr    : std_logic_vector(31 downto 0);
+  
+  -- EX stage signals
+  signal s_ALU_Input_A   : std_logic_vector(31 downto 0);
+  signal s_ALU_Input_B   : std_logic_vector(31 downto 0);
+  signal s_Forward_A     : std_logic_vector(1 downto 0);
+  signal s_Forward_B     : std_logic_vector(1 downto 0);
+  signal s_ALUResult_EX  : std_logic_vector(31 downto 0);
+  signal s_Zero_EX       : std_logic;
+  signal s_BranchAddr_EX : std_logic_vector(31 downto 0);
+  signal s_PCSrc_EX      : std_logic;
+  
+  -- EX/MEM pipeline register signals
+  signal s_EXMEM_RegWrite : std_logic;
+  signal s_EXMEM_MemToReg : std_logic;
+  signal s_EXMEM_MemWrite : std_logic;
+  signal s_EXMEM_MemRead  : std_logic;
+  signal s_EXMEM_PCplus4  : std_logic_vector(31 downto 0);
+  signal s_EXMEM_PCBranch : std_logic_vector(31 downto 0);
+  signal s_EXMEM_PCSrc    : std_logic;
+  signal s_EXMEM_ALUResult: std_logic_vector(31 downto 0);
+  signal s_EXMEM_RS2Data  : std_logic_vector(31 downto 0);
+  signal s_EXMEM_RDAddr   : std_logic_vector(4 downto 0);
+  
+  -- MEM stage signals
+  signal s_MemData_MEM   : std_logic_vector(31 downto 0);
+  
+  -- MEM/WB pipeline register signals
+  signal s_MEMWB_RegWrite : std_logic;
+  signal s_MEMWB_MemToReg : std_logic;
+  signal s_MEMWB_PCplus4  : std_logic_vector(31 downto 0);
+  signal s_MEMWB_ALUResult: std_logic_vector(31 downto 0);
+  signal s_MEMWB_MemData  : std_logic_vector(31 downto 0);
+  signal s_MEMWB_RDAddr   : std_logic_vector(4 downto 0);
+  
+  -- WB stage signals
+  signal s_WriteData_WB  : std_logic_vector(31 downto 0);
   
   -- Control signals
   signal s_Branch     : std_logic;

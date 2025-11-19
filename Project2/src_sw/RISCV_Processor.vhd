@@ -311,7 +311,7 @@ architecture structure of RISCV_Processor is
   -- IF/ID pipeline register outputs
   signal s_IFID_PC      : std_logic_vector(31 downto 0);
   signal s_IFID_PCplus4 : std_logic_vector(31 downto 0);
-  signal s_IFID_Instr   : std_logic_vector(31 downto 0);
+  signal s_IFID_Inst    : std_logic_vector(31 downto 0);
   
   -- ID/EX pipeline register outputs  
   signal s_IDEX_RegWrite  : std_logic;
@@ -393,6 +393,112 @@ begin
       o_PCplus4    => s_PCplus4,
       o_Instr      => open  -- Not needed, we use s_Inst directly
     );
+
+  -- IF/ID Pipeline Register
+  u_IFID: IFID_reg
+    port map (
+      i_CLK     => iCLK,
+      i_RST     => iRST,
+      i_WE      => '1',  -- Always enabled for software-scheduled pipeline
+      i_flush   => '0',  -- No flushing in software-scheduled pipeline
+      i_PC      => s_PC,
+      i_PCplus4 => s_PCplus4,
+      i_Instr   => s_Inst,
+      o_PC      => s_IFID_PC,
+      o_PCplus4 => s_IFID_PCplus4,
+      o_Instr   => s_IFID_Inst
+    );
+
+  -- ID/EX Pipeline Register
+  u_IDEX: IDEX_reg
+    port map (
+      i_CLK       => iCLK,
+      i_RST       => iRST,
+      i_WE        => '1',  -- Always enabled for software-scheduled pipeline
+      i_flush     => '0',  -- No flushing in software-scheduled pipeline
+      i_RegWrite  => s_RegWrite,
+      i_MemToReg  => s_MemToReg,
+      i_MemWrite  => s_MemWrite,
+      i_MemRead   => s_MemRead,
+      i_Branch    => s_Branch,
+      i_ALUSrc    => s_ALUSrc,
+      i_ALUOp     => s_ALUOp,
+      i_PC        => s_IFID_PC,
+      i_PCplus4   => s_IFID_PCplus4,
+      i_RS1Data   => s_RS1Data,
+      i_RS2Data   => s_RS2Data,
+      i_Immediate => s_Immediate,
+      i_RS1Addr   => s_IFID_Inst(19 downto 15),
+      i_RS2Addr   => s_IFID_Inst(24 downto 20),
+      i_RDAddr    => s_IFID_Inst(11 downto 7),
+      i_Instr     => s_IFID_Inst,
+      o_RegWrite  => s_IDEX_RegWrite,
+      o_MemToReg  => s_IDEX_MemToReg,
+      o_MemWrite  => s_IDEX_MemWrite,
+      o_MemRead   => s_IDEX_MemRead,
+      o_Branch    => s_IDEX_Branch,
+      o_ALUSrc    => s_IDEX_ALUSrc,
+      o_ALUOp     => s_IDEX_ALUOp,
+      o_PC        => s_IDEX_PC,
+      o_PCplus4   => s_IDEX_PCplus4,
+      o_RS1Data   => s_IDEX_RS1Data,
+      o_RS2Data   => s_IDEX_RS2Data,
+      o_Immediate => s_IDEX_Immediate,
+      o_RS1Addr   => s_IDEX_RS1Addr,
+      o_RS2Addr   => s_IDEX_RS2Addr,
+      o_RDAddr    => s_IDEX_RDAddr,
+      o_Instr     => s_IDEX_Inst
+    );
+
+  -- EX/MEM Pipeline Register
+  u_EXMEM: EXMEM_reg
+    port map (
+      i_CLK        => iCLK,
+      i_RST        => iRST,
+      i_WE         => '1',  -- Always enabled for software-scheduled pipeline
+      i_flush      => '0',  -- No flushing in software-scheduled pipeline
+      i_RegWrite   => s_IDEX_RegWrite,
+      i_MemToReg   => s_IDEX_MemToReg,
+      i_MemWrite   => s_IDEX_MemWrite,
+      i_MemRead    => s_IDEX_MemRead,
+      i_PCplus4    => s_IDEX_PCplus4,
+      i_ALUResult  => s_ALUResult,
+      i_RS2Data    => s_IDEX_RS2Data,
+      i_RDAddr     => s_IDEX_RDAddr,
+      i_Instr      => s_IDEX_Inst,
+      o_RegWrite   => s_EXMEM_RegWrite,
+      o_MemToReg   => s_EXMEM_MemToReg,
+      o_MemWrite   => s_EXMEM_MemWrite,
+      o_MemRead    => s_EXMEM_MemRead,
+      o_PCplus4    => s_EXMEM_PCplus4,
+      o_ALUResult  => s_EXMEM_ALUResult,
+      o_RS2Data    => s_EXMEM_RS2Data,
+      o_RDAddr     => s_EXMEM_RDAddr,
+      o_Instr      => s_EXMEM_Inst
+    );
+
+  -- MEM/WB Pipeline Register
+  u_MEMWB: MEMWB_reg
+    port map (
+      i_CLK        => iCLK,
+      i_RST        => iRST,
+      i_WE         => '1',  -- Always enabled for software-scheduled pipeline
+      i_flush      => '0',  -- No flushing in software-scheduled pipeline
+      i_RegWrite   => s_EXMEM_RegWrite,
+      i_MemToReg   => s_EXMEM_MemToReg,
+      i_PCplus4    => s_EXMEM_PCplus4,
+      i_ALUResult  => s_EXMEM_ALUResult,
+      i_MemData    => s_DMemOut,
+      i_RDAddr     => s_EXMEM_RDAddr,
+      i_Instr      => s_EXMEM_Inst,
+      o_RegWrite   => s_MEMWB_RegWrite,
+      o_MemToReg   => s_MEMWB_MemToReg,
+      o_PCplus4    => s_MEMWB_PCplus4,
+      o_ALUResult  => s_MEMWB_ALUResult,
+      o_MemData    => s_MEMWB_MemData,
+      o_RDAddr     => s_MEMWB_RDAddr,
+      o_Instr      => s_MEMWB_Inst
+    );
   
   -- Control unit 
   u_control: control
@@ -437,117 +543,124 @@ begin
       o_imm   => s_Immediate
     );
   
-  -- ALU source mux
+  -- ALU source mux (operates in EX stage with ID/EX register data)
   u_alu_src_mux: mux2t1_n
+    generic map(N => 32)
     port map (
-      i_S  => s_ALUSrc,
-      i_D0 => s_RS2Data,
-      i_D1 => s_Immediate,
+      i_S  => s_IDEX_ALUSrc,
+      i_D0 => s_IDEX_RS2Data,
+      i_D1 => s_IDEX_Immediate,
       o_O  => s_ALUIn2
     );
   
-  -- ALU input selection -- Update by the group: use ID/EX register outputs for EX stage
-  s_ALUIn1 <= std_logic_vector(unsigned(s_IDEX_PC) + x"00400000") when s_IsAUIPC = '1' else s_IDEX_RS1Data;
-  s_ALUIn2_sel <= s_IDEX_Immediate when (s_IsAUIPC = '1' or s_IsJALR = '1') else s_ALUIn2; 
+  -- ALU input selection (EX stage logic)
+  s_IsAUIPC <= '1' when s_IDEX_Inst(6 downto 0) = "0010111" else '0';
+  s_IsJAL   <= '1' when s_IDEX_Inst(6 downto 0) = "1101111" else '0';
+  s_IsJALR  <= '1' when s_IDEX_Inst(6 downto 0) = "1100111" else '0';
   
-  -- ALU -- Update by the group: operates in EX stage with ID/EX register data
+  -- For AUIPC, use PC + base address; otherwise use RS1 data
+  s_ALUIn1 <= std_logic_vector(unsigned(s_IDEX_PC) + x"00400000") when s_IsAUIPC = '1' else s_IDEX_RS1Data;
+  
+  -- ALU (operates in EX stage)
   u_alu: alu
     port map (
       i_ALUCtrl  => s_ALUCtrl,
-      i_A        => s_ALUIn1, -- Update by the group: use pipelined data from ID/EX register
-      i_B        => s_ALUIn2_sel, -- Update by the group: use pipelined data from ID/EX register
+      i_A        => s_ALUIn1,
+      i_B        => s_ALUIn2,
       o_Result   => s_ALUResult,
       o_Zero     => s_Zero,
       o_Overflow => s_Overflow
     );
   
-  -- Branch address adder
+  -- Branch address adder (ID stage - for software scheduled, branches resolved early)
   u_branch_adder: adder_n
+    generic map(N => 32)
     port map (
-      iA   => s_PC,
+      iA   => s_IFID_PC,
       iB   => s_Immediate,
       oSum => s_BranchAddr
     );
-  
-  -- Instruction type detection  
-  s_IsAUIPC <= '1' when s_Inst(6 downto 0) = "0010111" else '0';
-  s_IsJAL   <= '1' when s_Inst(6 downto 0) = "1101111" else '0';
-  s_IsJALR  <= '1' when s_Inst(6 downto 0) = "1100111" else '0';
   
   -- Data memory connections -- Update by the group: use EX/MEM register outputs for MEM stage
   s_DMemAddr <= s_EXMEM_ALUResult;
   s_DMemData <= s_EXMEM_RS2Data;
   s_DMemWr   <= s_EXMEM_MemWrite;
   
-  -- Write data selection with proper load handling -- Update by the group: use MEM/WB register signals for WB stage
-  process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, s_DMemOut, s_Inst, s_PC) -- Update by the group: change signals to MEM/WB outputs
+  -- Write data selection with proper load handling (WB stage)
+  process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_PCplus4, s_MEMWB_ALUResult, s_MEMWB_MemData)
     variable v_LoadData : std_logic_vector(31 downto 0);
+    variable v_IsJAL : std_logic;
+    variable v_IsJALR : std_logic;
   begin
-    if s_IsJAL = '1' or s_IsJALR = '1' then
-      -- JAL/JALR write PC+4 to register (return address) with base address correction
-      -- Check if PC already has base address to avoid double-adding
-      if unsigned(s_PC) < x"00400000" then
-        s_WriteData <= std_logic_vector(unsigned(s_PCplus4) + x"00400000");
-      else
-        s_WriteData <= s_PCplus4;
-      end if;
-    elsif s_MemToReg = '1' then
+    v_IsJAL := '1' when s_MEMWB_Inst(6 downto 0) = "1101111" else '0';
+    v_IsJALR := '1' when s_MEMWB_Inst(6 downto 0) = "1100111" else '0';
+    
+    if v_IsJAL = '1' or v_IsJALR = '1' then
+      -- JAL/JALR write PC+4 to register (return address)
+      s_WriteData <= s_MEMWB_PCplus4;
+    elsif s_MEMWB_MemToReg = '1' then
       -- Load instructions - handle different load types with proper sign extension
-      case s_Inst(14 downto 12) is  -- funct3 field for load instructions
+      case s_MEMWB_Inst(14 downto 12) is  -- funct3 field for load instructions
         when "000" =>  -- LB (Load Byte) - sign extend byte
-          if s_DMemOut(7) = '1' then
-            v_LoadData := x"FFFFFF" & s_DMemOut(7 downto 0);
+          if s_MEMWB_MemData(7) = '1' then
+            v_LoadData := x"FFFFFF" & s_MEMWB_MemData(7 downto 0);
           else
-            v_LoadData := x"000000" & s_DMemOut(7 downto 0);
+            v_LoadData := x"000000" & s_MEMWB_MemData(7 downto 0);
           end if;
           s_WriteData <= v_LoadData;
           
         when "001" =>  -- LH (Load Halfword) - sign extend halfword
-          if s_DMemOut(15) = '1' then
-            v_LoadData := x"FFFF" & s_DMemOut(15 downto 0);
+          if s_MEMWB_MemData(15) = '1' then
+            v_LoadData := x"FFFF" & s_MEMWB_MemData(15 downto 0);
           else
-            v_LoadData := x"0000" & s_DMemOut(15 downto 0);
+            v_LoadData := x"0000" & s_MEMWB_MemData(15 downto 0);
           end if;
           s_WriteData <= v_LoadData;
           
         when "010" =>  -- LW (Load Word) - full 32-bit word
-          s_WriteData <= s_DMemOut;
+          s_WriteData <= s_MEMWB_MemData;
           
         when "100" =>  -- LBU (Load Byte Unsigned) - zero extend byte
-          s_WriteData <= x"000000" & s_DMemOut(7 downto 0);
+          s_WriteData <= x"000000" & s_MEMWB_MemData(7 downto 0);
           
         when "101" =>  -- LHU (Load Halfword Unsigned) - zero extend halfword
-          s_WriteData <= x"0000" & s_DMemOut(15 downto 0);
+          s_WriteData <= x"0000" & s_MEMWB_MemData(15 downto 0);
           
         when others =>  -- Default to LW
-          s_WriteData <= s_DMemOut;
+          s_WriteData <= s_MEMWB_MemData;
       end case;
     else
       -- ALU result for normal operations
-      s_WriteData <= s_ALUResult;
+      s_WriteData <= s_MEMWB_ALUResult;
     end if;
   end process;
   
-  -- Branch condition evaluation
-  process(s_Branch, s_Inst, s_RS1Data, s_RS2Data, s_Zero, s_ALUResult)
+  -- Branch condition evaluation (ID stage for software-scheduled pipeline)
+  process(s_Branch, s_IFID_Inst, s_RS1Data, s_RS2Data)
     variable v_BranchCond : std_logic;
+    variable v_Zero : std_logic;
+    variable v_LT : std_logic;
+    variable v_LTU : std_logic;
   begin
     v_BranchCond := '0';
+    v_Zero := '1' when s_RS1Data = s_RS2Data else '0';
+    v_LT := '1' when signed(s_RS1Data) < signed(s_RS2Data) else '0';
+    v_LTU := '1' when unsigned(s_RS1Data) < unsigned(s_RS2Data) else '0';
     
     if s_Branch = '1' then
-      case s_Inst(14 downto 12) is  -- funct3 field
+      case s_IFID_Inst(14 downto 12) is  -- funct3 field
         when "000" =>  -- BEQ
-          v_BranchCond := s_Zero;
+          v_BranchCond := v_Zero;
         when "001" =>  -- BNE
-          v_BranchCond := not s_Zero;
+          v_BranchCond := not v_Zero;
         when "100" =>  -- BLT
-          v_BranchCond := s_ALUResult(0);
+          v_BranchCond := v_LT;
         when "101" =>  -- BGE
-          v_BranchCond := not s_ALUResult(0);
+          v_BranchCond := not v_LT;
         when "110" =>  -- BLTU
-          v_BranchCond := s_ALUResult(0);
+          v_BranchCond := v_LTU;
         when "111" =>  -- BGEU
-          v_BranchCond := not s_ALUResult(0);
+          v_BranchCond := not v_LTU;
         when others =>
           v_BranchCond := '0';
       end case;
@@ -556,15 +669,22 @@ begin
     s_BranchTaken <= v_BranchCond;
   end process;
   
-  -- Next address selection
-  process(s_BranchTaken, s_BranchAddr, s_IsJAL, s_IsJALR, s_ALUResult)
+  -- Next address selection (ID stage for software-scheduled pipeline)
+  process(s_BranchTaken, s_BranchAddr, s_IFID_Inst, s_RS1Data, s_Immediate, s_PCplus4)
+    variable v_IsJAL : std_logic;
+    variable v_IsJALR : std_logic;
+    variable v_JALRTarget : std_logic_vector(31 downto 0);
   begin
-    if s_IsJAL = '1' then
+    v_IsJAL := '1' when s_IFID_Inst(6 downto 0) = "1101111" else '0';
+    v_IsJALR := '1' when s_IFID_Inst(6 downto 0) = "1100111" else '0';
+    v_JALRTarget := std_logic_vector(unsigned(s_RS1Data) + unsigned(s_Immediate));
+    
+    if v_IsJAL = '1' then
       s_UseNextAdr <= '1';
       s_NextAdr <= s_BranchAddr;  -- JAL: PC + immediate
-    elsif s_IsJALR = '1' then
+    elsif v_IsJALR = '1' then
       s_UseNextAdr <= '1';
-      s_NextAdr <= s_ALUResult;   -- JALR: RS1 + immediate (computed by ALU)
+      s_NextAdr <= v_JALRTarget;  -- JALR: RS1 + immediate
     elsif s_BranchTaken = '1' then
       s_UseNextAdr <= '1';
       s_NextAdr <= s_BranchAddr;  -- Branch to PC + immediate
@@ -585,8 +705,8 @@ begin
   s_RegWrAddr <= s_MEMWB_RDAddr;  -- Update by the group: change to s_MEMWB_RDAddr
   s_RegWrData <= s_WriteData; -- Update by the group: ensure this uses final WB stage data
   
-  -- Control outputs -- Update by the group: determine which stage instruction to use
-  s_Halt <= '1' when s_IFID_Inst(6 downto 0) = "1110011" else '0';
+  -- Control outputs (halt should be detected when WFI reaches WB stage)
+  s_Halt <= '1' when s_MEMWB_Inst(6 downto 0) = "1110011" else '0';
   
   -- In RISC-V, arithmetic overflow does NOT generate exceptions for standard instructions
   -- Only report overflow for specific instructions that need it (none in basic RISC-V)
