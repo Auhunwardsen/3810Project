@@ -85,7 +85,7 @@ trucks:
         nop                        # Allow previous computation to complete
         nop
         nop
-        bne  v0, x0, skip_node     # If visited, skip this node
+        bne  t3, x0, skip_node     # If visited, skip this node
         nop                        # Control hazard avoidance  
         nop
         
@@ -153,8 +153,8 @@ main_loop_control:
 
 is_visited:
         # Check if node is visited (simplified for software scheduling)
-        # Return 0 in v0 if not visited, 1 if visited
-        addi v0, x0, 0             # Assume not visited for simplicity
+        # Return 0 in t3 if not visited, 1 if visited
+        addi t3, x0, 0             # Assume not visited for simplicity
         nop                        # Data hazard avoidance
         nop
         nop
