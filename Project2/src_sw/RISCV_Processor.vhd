@@ -558,8 +558,8 @@ begin
   s_IsJAL   <= '1' when s_IDEX_Inst(6 downto 0) = "1101111" else '0';
   s_IsJALR  <= '1' when s_IDEX_Inst(6 downto 0) = "1100111" else '0';
   
-  -- For AUIPC, use PC + base address; otherwise use RS1 data
-  s_ALUIn1 <= std_logic_vector(unsigned(s_IDEX_PC) + x"00400000") when s_IsAUIPC = '1' else s_IDEX_RS1Data;
+  -- For AUIPC, use PC directly (already includes base address); otherwise use RS1 data
+  s_ALUIn1 <= s_IDEX_PC when s_IsAUIPC = '1' else s_IDEX_RS1Data;
   
   -- ALU (operates in EX stage)
   u_alu: alu
