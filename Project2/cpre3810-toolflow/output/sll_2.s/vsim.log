@@ -1,0 +1,68 @@
+Reading pref.tcl
+
+# 2025.1_2
+
+# vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
+# Start time: 17:26:14 on Nov 19,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2025.1_2 linux_x86_64 Apr  7 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_textio(body)
+# Loading std.env(body)
+# Loading work.tb(mixed)#1
+# Loading ieee.numeric_std(body)
+# Loading work.riscv_types(body)
+# Loading work.riscv_processor(structure)#1
+# Loading work.mem(rtl)#1
+# Loading work.fetch(structural)#1
+# Loading work.adder_n(rtl)#1
+# Loading work.mux2t1_n(rtl)#1
+# Loading work.control(dataflow)#1
+# Loading work.alu_control(dataflow)#1
+# Loading work.regfile(rtl)#1
+# Loading work.decoder5t32(dataflow)#1
+# Loading work.reg_n(structural)#1
+# Loading work.dffg(mixed)#1
+# Loading work.mux32_1(rtl)#1
+# Loading work.immgen(dataflow)#1
+# Loading work.alu(structural)#1
+# Loading work.barrelshifter(dataflow)#1
+# ** Note: (vsim-8716) Reusing existing debug database vsim.dbg.
+# do modelsim_framework.do
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/DMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/IMem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv/u_alu/u_shifter
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 3  Instance: /tb/MyRiscv/u_alu/u_shifter
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 4  Instance: /tb/MyRiscv/DMem
+# ** Note: Data structure takes 52786912 bytes of memory
+#          Process time 0.05 seconds
+#          stop
+#    Time: 220 ns  Iteration: 1  Instance: /tb
+# Break in Process P_DUMP_STATE at /home/auhun47/project1/3810Project1/Project1/cpre3810-toolflow/internal/testpy/tb.vhd line 150
+# Stopped at /home/auhun47/project1/3810Project1/Project1/cpre3810-toolflow/internal/testpy/tb.vhd line 150
+# End time: 17:26:14 on Nov 19,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 7
