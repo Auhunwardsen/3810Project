@@ -1,0 +1,1239 @@
+# Start time: 14:48:06 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Loading package NUMERIC_STD
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(6): VHDL Compiler exiting
+# End time: 14:48:06 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:48:47 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Loading package NUMERIC_STD
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(97): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(108): VHDL Compiler exiting
+# End time: 14:48:47 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+
+
+
+ End time: 14:48:47 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:56:32 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity MEMWB_reg
+# -- Compiling architecture behavioral of MEMWB_reg
+# -- Compiling entity mux2t1_n
+# -- Compiling architecture rtl of mux2t1_n
+# -- Loading package NUMERIC_STD
+# -- Compiling entity mux32_1
+# -- Compiling architecture rtl of mux32_1
+# -- Compiling entity reg_n
+# -- Compiling architecture structural of reg_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(5): (vcom-1615) Existing entity 'regfile' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(5) will be overwritten.
+# -- Compiling entity regfile
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(19): (vcom-1615) Existing architecture 'regfile(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(19) will be overwritten.
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:56:32 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 2
+
+
+
+
+
+
+
+# //  Questa Sim-64
+# //  Version 2025.1_2 linux_x86_64 Apr  7 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:36:41 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 14:36:41 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:36:44 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:36:44 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:37:22 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 14:37:22 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:37:25 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:37:25 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:37:53 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:37:53 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:38:19 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd(6): (vcom-1615) Existing entity 'adder_n' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd(6) will be overwritten.
+# -- Compiling entity adder_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd(15): (vcom-1615) Existing architecture 'adder_n(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd(15) will be overwritten.
+# -- Compiling architecture rtl of adder_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd(5): (vcom-1615) Existing entity 'addsub' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd(5) will be overwritten.
+# -- Compiling entity addsub
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd(13): (vcom-1615) Existing architecture 'addsub(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd(13) will be overwritten.
+# -- Compiling architecture rtl of addsub
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd(5): (vcom-1615) Existing entity 'alu' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd(5) will be overwritten.
+# -- Compiling entity alu
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd(14): (vcom-1615) Existing architecture 'alu(structural)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd(14) will be overwritten.
+# -- Compiling architecture structural of alu
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd(4): (vcom-1615) Existing entity 'alu_control' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd(4) will be overwritten.
+# -- Compiling entity alu_control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd(13): (vcom-1615) Existing architecture 'alu_control(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd(13) will be overwritten.
+# -- Compiling architecture dataflow of alu_control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd(5): (vcom-1615) Existing entity 'barrelshifter' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd(5) will be overwritten.
+# -- Compiling entity barrelshifter
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd(12): (vcom-1615) Existing architecture 'barrelshifter(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd(12) will be overwritten.
+# -- Compiling architecture dataflow of barrelshifter
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd(4): (vcom-1615) Existing entity 'control' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd(4) will be overwritten.
+# -- Compiling entity control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd(14): (vcom-1615) Existing architecture 'control(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd(14) will be overwritten.
+# -- Compiling architecture dataflow of control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd(13): (vcom-1615) Existing entity 'decoder5t32' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd(13) will be overwritten.
+# -- Compiling entity decoder5t32
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd(21): (vcom-1615) Existing architecture 'decoder5t32(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd(21) will be overwritten.
+# -- Compiling architecture dataflow of decoder5t32
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd(23): (vcom-1615) Existing entity 'dffg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd(23) will be overwritten.
+# -- Compiling entity dffg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd(33): (vcom-1615) Existing architecture 'dffg(mixed)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd(33) will be overwritten.
+# -- Compiling architecture mixed of dffg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd(6): (vcom-1615) Existing entity 'EXMEM_reg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd(6) will be overwritten.
+# -- Compiling entity EXMEM_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd(46): (vcom-1615) Existing architecture 'EXMEM_reg(behavioral)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd(46) will be overwritten.
+# -- Compiling architecture behavioral of EXMEM_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(5): (vcom-1615) Existing entity 'fetch' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(5) will be overwritten.
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 14:38:19 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 19
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:38:21 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity sign_extender
+# -- Compiling architecture rtl of sign_extender
+# -- Compiling entity zero_extender
+# -- Compiling architecture rtl of zero_extender
+# End time: 14:38:21 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:13 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(7): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(7): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(9): VHDL Compiler exiting
+# End time: 14:41:13 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:17 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity sign_extender
+# -- Compiling architecture rtl of sign_extender
+# -- Compiling entity zero_extender
+# -- Compiling architecture rtl of zero_extender
+# End time: 14:41:17 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:28 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity sign_extender
+# -- Compiling architecture rtl of sign_extender
+# -- Compiling entity zero_extender
+# -- Compiling architecture rtl of zero_extender
+# End time: 14:41:28 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:32 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(7): (vcom-1136) Unknown identifier "RISCV_types".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(9): VHDL Compiler exiting
+# End time: 14:41:33 on Nov 20,2025, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:54 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(6): VHDL Compiler exiting
+# End time: 14:41:54 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:48:02 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# End time: 14:48:02 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:48:06 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Loading package NUMERIC_STD
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(6): VHDL Compiler exiting
+# End time: 14:48:06 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:48:47 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Loading package NUMERIC_STD
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(97): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(108): VHDL Compiler exiting
+# End time: 14:48:47 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:56:32 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity MEMWB_reg
+# -- Compiling architecture behavioral of MEMWB_reg
+# -- Compiling entity mux2t1_n
+# -- Compiling architecture rtl of mux2t1_n
+# -- Loading package NUMERIC_STD
+# -- Compiling entity mux32_1
+# -- Compiling architecture rtl of mux32_1
+# -- Compiling entity reg_n
+# -- Compiling architecture structural of reg_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(5): (vcom-1615) Existing entity 'regfile' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(5) will be overwritten.
+# -- Compiling entity regfile
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(19): (vcom-1615) Existing architecture 'regfile(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(19) will be overwritten.
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:56:32 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 2
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:57:20 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd(6): (vcom-1615) Existing entity 'adder_n' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd(6) will be overwritten.
+# -- Compiling entity adder_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd(15): (vcom-1615) Existing architecture 'adder_n(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd(15) will be overwritten.
+# -- Compiling architecture rtl of adder_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd(5): (vcom-1615) Existing entity 'addsub' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd(5) will be overwritten.
+# -- Compiling entity addsub
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd(13): (vcom-1615) Existing architecture 'addsub(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd(13) will be overwritten.
+# -- Compiling architecture rtl of addsub
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd(5): (vcom-1615) Existing entity 'alu' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd(5) will be overwritten.
+# -- Compiling entity alu
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd(14): (vcom-1615) Existing architecture 'alu(structural)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd(14) will be overwritten.
+# -- Compiling architecture structural of alu
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd(4): (vcom-1615) Existing entity 'alu_control' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd(4) will be overwritten.
+# -- Compiling entity alu_control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd(13): (vcom-1615) Existing architecture 'alu_control(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd(13) will be overwritten.
+# -- Compiling architecture dataflow of alu_control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd(5): (vcom-1615) Existing entity 'barrelshifter' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd(5) will be overwritten.
+# -- Compiling entity barrelshifter
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd(12): (vcom-1615) Existing architecture 'barrelshifter(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd(12) will be overwritten.
+# -- Compiling architecture dataflow of barrelshifter
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd(4): (vcom-1615) Existing entity 'control' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd(4) will be overwritten.
+# -- Compiling entity control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd(14): (vcom-1615) Existing architecture 'control(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd(14) will be overwritten.
+# -- Compiling architecture dataflow of control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd(13): (vcom-1615) Existing entity 'decoder5t32' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd(13) will be overwritten.
+# -- Compiling entity decoder5t32
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd(21): (vcom-1615) Existing architecture 'decoder5t32(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd(21) will be overwritten.
+# -- Compiling architecture dataflow of decoder5t32
+# End time: 14:57:20 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 14
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:57:24 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd(23): (vcom-1615) Existing entity 'dffg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd(23) will be overwritten.
+# -- Compiling entity dffg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd(33): (vcom-1615) Existing architecture 'dffg(mixed)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd(33) will be overwritten.
+# -- Compiling architecture mixed of dffg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd(6): (vcom-1615) Existing entity 'EXMEM_reg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd(6) will be overwritten.
+# -- Compiling entity EXMEM_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd(46): (vcom-1615) Existing architecture 'EXMEM_reg(behavioral)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd(46) will be overwritten.
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Loading package NUMERIC_STD
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(5): (vcom-1615) Existing entity 'fetch' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(6) will be overwritten.
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 14:57:24 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 5
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:57:37 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Compiling entity forwarding_unit
+# -- Compiling architecture behavioral of forwarding_unit
+# -- Compiling entity hazard_detection
+# -- Compiling architecture behavioral of hazard_detection
+# -- Compiling entity IFID_reg
+# -- Compiling architecture behavioral of IFID_reg
+# -- Compiling entity IDEX_reg
+# -- Compiling architecture behavioral of IDEX_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd(4): (vcom-1615) Existing entity 'reg_n' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd(4) will be overwritten.
+# -- Compiling entity reg_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd(15): (vcom-1615) Existing architecture 'reg_n(structural)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd(15) will be overwritten.
+# -- Compiling architecture structural of reg_n
+# -- Loading package NUMERIC_STD
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd(6): (vcom-1615) Existing entity 'mux32_1' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd(6) will be overwritten.
+# -- Compiling entity mux32_1
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd(14): (vcom-1615) Existing architecture 'mux32_1(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd(14) will be overwritten.
+# -- Compiling architecture rtl of mux32_1
+# -- Compiling entity mux3t1_n
+# -- Compiling architecture dataflow of mux3t1_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd(5): (vcom-1615) Existing entity 'mux2t1_n' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd(5) will be overwritten.
+# -- Compiling entity mux2t1_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd(15): (vcom-1615) Existing architecture 'mux2t1_n(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd(15) will be overwritten.
+# -- Compiling architecture rtl of mux2t1_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd(6): (vcom-1615) Existing entity 'MEMWB_reg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd(6) will be overwritten.
+# -- Compiling entity MEMWB_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd(32): (vcom-1615) Existing architecture 'MEMWB_reg(behavioral)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd(32) will be overwritten.
+# -- Compiling architecture behavioral of MEMWB_reg
+# -- Compiling entity mem
+# -- Compiling architecture rtl of mem
+# -- Compiling entity immgen
+# -- Compiling architecture dataflow of immgen
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(5): (vcom-1615) Existing entity 'regfile' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(5) will be overwritten.
+# -- Compiling entity regfile
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(19): (vcom-1615) Existing architecture 'regfile(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(19) will be overwritten.
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:57:37 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 10
+
+
+# //  Questa Sim-64
+# //  Version 2025.1_2 linux_x86_64 Apr  7 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:36:41 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 14:36:41 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:36:44 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:36:44 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:37:22 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 14:37:22 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:37:25 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:37:25 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:37:53 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:37:53 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:38:19 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd(6): (vcom-1615) Existing entity 'adder_n' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd(6) will be overwritten.
+# -- Compiling entity adder_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd(15): (vcom-1615) Existing architecture 'adder_n(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd(15) will be overwritten.
+# -- Compiling architecture rtl of adder_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd(5): (vcom-1615) Existing entity 'addsub' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd(5) will be overwritten.
+# -- Compiling entity addsub
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd(13): (vcom-1615) Existing architecture 'addsub(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd(13) will be overwritten.
+# -- Compiling architecture rtl of addsub
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd(5): (vcom-1615) Existing entity 'alu' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd(5) will be overwritten.
+# -- Compiling entity alu
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd(14): (vcom-1615) Existing architecture 'alu(structural)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd(14) will be overwritten.
+# -- Compiling architecture structural of alu
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd(4): (vcom-1615) Existing entity 'alu_control' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd(4) will be overwritten.
+# -- Compiling entity alu_control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd(13): (vcom-1615) Existing architecture 'alu_control(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd(13) will be overwritten.
+# -- Compiling architecture dataflow of alu_control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd(5): (vcom-1615) Existing entity 'barrelshifter' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd(5) will be overwritten.
+# -- Compiling entity barrelshifter
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd(12): (vcom-1615) Existing architecture 'barrelshifter(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd(12) will be overwritten.
+# -- Compiling architecture dataflow of barrelshifter
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd(4): (vcom-1615) Existing entity 'control' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd(4) will be overwritten.
+# -- Compiling entity control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd(14): (vcom-1615) Existing architecture 'control(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd(14) will be overwritten.
+# -- Compiling architecture dataflow of control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd(13): (vcom-1615) Existing entity 'decoder5t32' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd(13) will be overwritten.
+# -- Compiling entity decoder5t32
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd(21): (vcom-1615) Existing architecture 'decoder5t32(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd(21) will be overwritten.
+# -- Compiling architecture dataflow of decoder5t32
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd(23): (vcom-1615) Existing entity 'dffg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd(23) will be overwritten.
+# -- Compiling entity dffg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd(33): (vcom-1615) Existing architecture 'dffg(mixed)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd(33) will be overwritten.
+# -- Compiling architecture mixed of dffg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd(6): (vcom-1615) Existing entity 'EXMEM_reg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd(6) will be overwritten.
+# -- Compiling entity EXMEM_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd(46): (vcom-1615) Existing architecture 'EXMEM_reg(behavioral)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd(46) will be overwritten.
+# -- Compiling architecture behavioral of EXMEM_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(5): (vcom-1615) Existing entity 'fetch' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(5) will be overwritten.
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 14:38:19 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 19
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:38:21 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity sign_extender
+# -- Compiling architecture rtl of sign_extender
+# -- Compiling entity zero_extender
+# -- Compiling architecture rtl of zero_extender
+# End time: 14:38:21 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:13 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(7): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(7): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(9): VHDL Compiler exiting
+# End time: 14:41:13 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:17 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity sign_extender
+# -- Compiling architecture rtl of sign_extender
+# -- Compiling entity zero_extender
+# -- Compiling architecture rtl of zero_extender
+# End time: 14:41:17 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:28 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity sign_extender
+# -- Compiling architecture rtl of sign_extender
+# -- Compiling entity zero_extender
+# -- Compiling architecture rtl of zero_extender
+# End time: 14:41:28 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:32 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(7): (vcom-1136) Unknown identifier "RISCV_types".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(9): VHDL Compiler exiting
+# End time: 14:41:33 on Nov 20,2025, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:41:54 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(6): VHDL Compiler exiting
+# End time: 14:41:54 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:48:02 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# End time: 14:48:02 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:48:06 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Loading package NUMERIC_STD
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(4): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(6): VHDL Compiler exiting
+# End time: 14:48:06 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:48:47 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mem.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Loading package NUMERIC_STD
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(97): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(108): VHDL Compiler exiting
+# End time: 14:48:47 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:56:32 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_types.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity MEMWB_reg
+# -- Compiling architecture behavioral of MEMWB_reg
+# -- Compiling entity mux2t1_n
+# -- Compiling architecture rtl of mux2t1_n
+# -- Loading package NUMERIC_STD
+# -- Compiling entity mux32_1
+# -- Compiling architecture rtl of mux32_1
+# -- Compiling entity reg_n
+# -- Compiling architecture structural of reg_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(5): (vcom-1615) Existing entity 'regfile' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(5) will be overwritten.
+# -- Compiling entity regfile
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(19): (vcom-1615) Existing architecture 'regfile(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(19) will be overwritten.
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:56:32 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 2
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:57:20 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd(6): (vcom-1615) Existing entity 'adder_n' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd(6) will be overwritten.
+# -- Compiling entity adder_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd(15): (vcom-1615) Existing architecture 'adder_n(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/adder_n.vhd(15) will be overwritten.
+# -- Compiling architecture rtl of adder_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd(5): (vcom-1615) Existing entity 'addsub' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd(5) will be overwritten.
+# -- Compiling entity addsub
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd(13): (vcom-1615) Existing architecture 'addsub(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/addsub.vhd(13) will be overwritten.
+# -- Compiling architecture rtl of addsub
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd(5): (vcom-1615) Existing entity 'alu' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd(5) will be overwritten.
+# -- Compiling entity alu
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd(14): (vcom-1615) Existing architecture 'alu(structural)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu.vhd(14) will be overwritten.
+# -- Compiling architecture structural of alu
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd(4): (vcom-1615) Existing entity 'alu_control' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd(4) will be overwritten.
+# -- Compiling entity alu_control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd(13): (vcom-1615) Existing architecture 'alu_control(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/alu_control.vhd(13) will be overwritten.
+# -- Compiling architecture dataflow of alu_control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd(5): (vcom-1615) Existing entity 'barrelshifter' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd(5) will be overwritten.
+# -- Compiling entity barrelshifter
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd(12): (vcom-1615) Existing architecture 'barrelshifter(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/barrelshifter.vhd(12) will be overwritten.
+# -- Compiling architecture dataflow of barrelshifter
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd(4): (vcom-1615) Existing entity 'control' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd(4) will be overwritten.
+# -- Compiling entity control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd(14): (vcom-1615) Existing architecture 'control(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/control.vhd(14) will be overwritten.
+# -- Compiling architecture dataflow of control
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd(13): (vcom-1615) Existing entity 'decoder5t32' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd(13) will be overwritten.
+# -- Compiling entity decoder5t32
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd(21): (vcom-1615) Existing architecture 'decoder5t32(dataflow)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/decoder5t32.vhd(21) will be overwritten.
+# -- Compiling architecture dataflow of decoder5t32
+# End time: 14:57:20 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 14
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:57:24 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd(23): (vcom-1615) Existing entity 'dffg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd(23) will be overwritten.
+# -- Compiling entity dffg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd(33): (vcom-1615) Existing architecture 'dffg(mixed)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/dffg.vhd(33) will be overwritten.
+# -- Compiling architecture mixed of dffg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd(6): (vcom-1615) Existing entity 'EXMEM_reg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd(6) will be overwritten.
+# -- Compiling entity EXMEM_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd(46): (vcom-1615) Existing architecture 'EXMEM_reg(behavioral)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/EXMEM_reg.vhd(46) will be overwritten.
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Loading package NUMERIC_STD
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(5): (vcom-1615) Existing entity 'fetch' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/fetch.vhd(6) will be overwritten.
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 14:57:24 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 5
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 14:57:37 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Compiling entity forwarding_unit
+# -- Compiling architecture behavioral of forwarding_unit
+# -- Compiling entity hazard_detection
+# -- Compiling architecture behavioral of hazard_detection
+# -- Compiling entity IFID_reg
+# -- Compiling architecture behavioral of IFID_reg
+# -- Compiling entity IDEX_reg
+# -- Compiling architecture behavioral of IDEX_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd(4): (vcom-1615) Existing entity 'reg_n' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd(4) will be overwritten.
+# -- Compiling entity reg_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd(15): (vcom-1615) Existing architecture 'reg_n(structural)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/reg_n.vhd(15) will be overwritten.
+# -- Compiling architecture structural of reg_n
+# -- Loading package NUMERIC_STD
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd(6): (vcom-1615) Existing entity 'mux32_1' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd(6) will be overwritten.
+# -- Compiling entity mux32_1
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd(14): (vcom-1615) Existing architecture 'mux32_1(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux32_1.vhd(14) will be overwritten.
+# -- Compiling architecture rtl of mux32_1
+# -- Compiling entity mux3t1_n
+# -- Compiling architecture dataflow of mux3t1_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd(5): (vcom-1615) Existing entity 'mux2t1_n' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd(5) will be overwritten.
+# -- Compiling entity mux2t1_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd(15): (vcom-1615) Existing architecture 'mux2t1_n(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/mux2t1_n.vhd(15) will be overwritten.
+# -- Compiling architecture rtl of mux2t1_n
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd(6): (vcom-1615) Existing entity 'MEMWB_reg' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd(6) will be overwritten.
+# -- Compiling entity MEMWB_reg
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd(32): (vcom-1615) Existing architecture 'MEMWB_reg(behavioral)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/MEMWB_reg.vhd(32) will be overwritten.
+# -- Compiling architecture behavioral of MEMWB_reg
+# -- Compiling entity mem
+# -- Compiling architecture rtl of mem
+# -- Compiling entity immgen
+# -- Compiling architecture dataflow of immgen
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(5): (vcom-1615) Existing entity 'regfile' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(5) will be overwritten.
+# -- Compiling entity regfile
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd(19): (vcom-1615) Existing architecture 'regfile(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/regfile.vhd(19) will be overwritten.
+# -- Compiling architecture rtl of regfile
+# ** Error: (vcom-11) Could not find work.riscv_types.
+# ** Error (suppressible): /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): (vcom-1195) Cannot find expanded name "work.RISCV_types".
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(23): Unknown expanded name.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(25): VHDL Compiler exiting
+# End time: 14:57:37 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 10
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 15:01:44 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Compiling entity immgen
+# -- Compiling architecture dataflow of immgen
+# -- Loading package NUMERIC_STD
+# -- Compiling entity mem
+# -- Compiling architecture rtl of mem
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# -- Compiling package RISCV_types
+# -- Compiling package body RISCV_types
+# -- Loading package RISCV_types
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd(5): (vcom-1615) Existing entity 'sign_extender' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd(5) will be overwritten.
+# -- Compiling entity sign_extender
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd(12): (vcom-1615) Existing architecture 'sign_extender(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/sign_extender.vhd(12) will be overwritten.
+# -- Compiling architecture rtl of sign_extender
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd(5): (vcom-1615) Existing entity 'zero_extender' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd(5) will be overwritten.
+# -- Compiling entity zero_extender
+# ** Warning: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd(12): (vcom-1615) Existing architecture 'zero_extender(rtl)' at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_sw/zero_extender.vhd(12) will be overwritten.
+# -- Compiling architecture rtl of zero_extender
+# -- Compiling entity reg_n
+# -- Compiling architecture structural of reg_n
+# -- Compiling entity mux32_1
+# -- Compiling architecture rtl of mux32_1
+# -- Compiling entity mux3t1_n
+# -- Compiling architecture dataflow of mux3t1_n
+# -- Compiling entity mux2t1_n
+# -- Compiling architecture rtl of mux2t1_n
+# -- Compiling entity MEMWB_reg
+# -- Compiling architecture behavioral of MEMWB_reg
+# -- Compiling entity forwarding_unit
+# -- Compiling architecture behavioral of forwarding_unit
+# -- Compiling entity hazard_detection
+# -- Compiling architecture behavioral of hazard_detection
+# -- Compiling entity IFID_reg
+# -- Compiling architecture behavioral of IFID_reg
+# -- Compiling entity IDEX_reg
+# -- Compiling architecture behavioral of IDEX_reg
+# End time: 15:01:44 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 4
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 15:01:53 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/adder_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/addsub.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/alu_control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/barrelshifter.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/control.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/decoder5t32.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/dffg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/EXMEM_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/forwarding_unit.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/hazard_detection.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IDEX_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/IFID_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/immgen.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mem.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/MEMWB_reg.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux2t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux3t1_n.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/mux32_1.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/reg_n.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder_n
+# -- Compiling architecture rtl of adder_n
+# -- Compiling entity addsub
+# -- Compiling architecture rtl of addsub
+# -- Compiling entity alu
+# -- Compiling architecture structural of alu
+# -- Compiling entity alu_control
+# -- Compiling architecture dataflow of alu_control
+# -- Compiling entity barrelshifter
+# -- Compiling architecture dataflow of barrelshifter
+# -- Compiling entity control
+# -- Compiling architecture dataflow of control
+# -- Compiling entity decoder5t32
+# -- Compiling architecture dataflow of decoder5t32
+# -- Compiling entity dffg
+# -- Compiling architecture mixed of dffg
+# -- Compiling entity EXMEM_reg
+# -- Compiling architecture behavioral of EXMEM_reg
+# -- Compiling entity fetch
+# -- Compiling architecture structural of fetch
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(96): (vcom-1136) Unknown identifier "PC_BASE_ADDR".
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/fetch.vhd(107): VHDL Compiler exiting
+# End time: 15:01:53 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 15:01:59 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# -- Loading package RISCV_types
+# -- Compiling entity RISCV_Processor
+# -- Compiling architecture structure of RISCV_Processor
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(421): (vcom-1294) Declaration with designator "s_PCWrite" already exists in this region.
+# ** =====> Prior declaration of "s_PCWrite" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(315).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(422): (vcom-1294) Declaration with designator "s_IFID_Write" already exists in this region.
+# ** =====> Prior declaration of "s_IFID_Write" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(319).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(424): (vcom-1294) Declaration with designator "s_IFID_Flush" already exists in this region.
+# ** =====> Prior declaration of "s_IFID_Flush" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(320).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(425): (vcom-1294) Declaration with designator "s_IDEX_Flush" already exists in this region.
+# ** =====> Prior declaration of "s_IDEX_Flush" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(331).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(428): (vcom-1294) Declaration with designator "s_Forward_A" already exists in this region.
+# ** =====> Prior declaration of "s_Forward_A" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(352).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(429): (vcom-1294) Declaration with designator "s_Forward_B" already exists in this region.
+# ** =====> Prior declaration of "s_Forward_B" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(353).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(776): (vcom-1436) Actual expression (infix expression) of formal "i_Jump" is not globally static.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(836): VHDL Compiler exiting
+# End time: 15:01:59 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 7, Warnings: 0
+vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd
+# QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+# Start time: 15:04:00 on Nov 20,2025
+# vcom -reportprogress 300 -work work /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/regfile.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_types.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/sign_extender.vhd /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/zero_extender.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity regfile
+# -- Compiling architecture rtl of regfile
+# -- Loading package RISCV_types
+# -- Compiling entity RISCV_Processor
+# -- Compiling architecture structure of RISCV_Processor
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(421): (vcom-1294) Declaration with designator "s_PCWrite" already exists in this region.
+# ** =====> Prior declaration of "s_PCWrite" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(315).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(422): (vcom-1294) Declaration with designator "s_IFID_Write" already exists in this region.
+# ** =====> Prior declaration of "s_IFID_Write" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(319).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(424): (vcom-1294) Declaration with designator "s_IFID_Flush" already exists in this region.
+# ** =====> Prior declaration of "s_IFID_Flush" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(320).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(425): (vcom-1294) Declaration with designator "s_IDEX_Flush" already exists in this region.
+# ** =====> Prior declaration of "s_IDEX_Flush" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(331).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(428): (vcom-1294) Declaration with designator "s_Forward_A" already exists in this region.
+# ** =====> Prior declaration of "s_Forward_A" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(352).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(429): (vcom-1294) Declaration with designator "s_Forward_B" already exists in this region.
+# ** =====> Prior declaration of "s_Forward_B" is at /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(353).
+# ** Error: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(776): (vcom-1436) Actual expression (infix expression) of formal "i_Jump" is not globally static.
+# ** Note: /home/auhun47/project1/3810Project1/Project2/cpre3810-toolflow/proj/src_hw/RISCV_Processor.vhd(836): VHDL Compiler exiting
+# End time: 15:04:00 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 7, Warnings: 0
+
+
+
+
+
+
+
+
