@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 15:25:26 on Nov 20,2025
+Start time: 15:36:05 on Nov 20,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/decoder5t32.vhd proj/src/reg_n.vhd proj/src/sign_extender.vhd proj/src/IFID_reg.vhd proj/src/zero_extender.vhd proj/src/MEMWB_reg.vhd proj/src/RISCV_Processor.vhd proj/src/fetch.vhd proj/src/alu.vhd proj/src/barrelshifter.vhd proj/src/immgen.vhd proj/src/mux32_1.vhd proj/src/mux2t1_n.vhd proj/src/addsub.vhd proj/src/IDEX_reg.vhd proj/src/control.vhd proj/src/dffg.vhd proj/src/alu_control.vhd proj/src/regfile.vhd proj/src/RISCV_types.vhd proj/src/mem.vhd proj/src/EXMEM_reg.vhd proj/src/adder_n.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -62,5 +62,5 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling architecture behavioral of EXMEM_reg
 -- Compiling entity adder_n
 -- Compiling architecture rtl of adder_n
-End time: 15:25:26 on Nov 20,2025, Elapsed time: 0:00:00
+End time: 15:36:05 on Nov 20,2025, Elapsed time: 0:00:00
 Errors: 0, Warnings: 2
