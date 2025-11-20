@@ -84,7 +84,7 @@ ms_return:
 ##############################################################
 # merge(a0=array, a1=left, a2=right)
 # mid stored in t1
-#   Uses t0�t6 as temporaries.
+#   Uses t0-t6 as temporaries.
 #   Creates a local buffer on stack to hold merged elements.
 ##############################################################
 merge:
