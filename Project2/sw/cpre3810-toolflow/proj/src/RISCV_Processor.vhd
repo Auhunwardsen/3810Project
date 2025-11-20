@@ -226,8 +226,6 @@ architecture structure of RISCV_Processor is
       i_MemWrite  : in  std_logic;
       i_MemRead   : in  std_logic;
       i_PCplus4   : in  std_logic_vector(31 downto 0);
-      i_PCBranch  : in  std_logic_vector(31 downto 0);
-      i_PCSrc     : in  std_logic;
       i_ALUResult : in  std_logic_vector(31 downto 0);
       i_RS2Data   : in  std_logic_vector(31 downto 0);
       i_RDAddr    : in  std_logic_vector(4 downto 0);
