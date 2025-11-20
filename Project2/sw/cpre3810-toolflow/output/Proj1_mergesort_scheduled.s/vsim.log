@@ -1,0 +1,21 @@
+Reading pref.tcl
+
+# 2025.1_2
+
+# vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
+# Start time: 15:25:27 on Nov 20,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vsim-8611) Generating debug db.
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# ** Error (suppressible): ../../proj/src/RISCV_Processor.vhd(457): (vopt-1270) Bad default binding for component instance "u_EXMEM: EXMEM_reg".
+#  (Component port "o_PCBranch" is not on the entity "work.EXMEM_reg".)
+#  (Entity is selected because it is in the same library as the design unit that contains the component.)
+# ** Error (suppressible): ../../proj/src/RISCV_Processor.vhd(484): (vopt-1270) Bad default binding for component instance "u_MEMWB: MEMWB_reg".
+#  (Component port "i_PCplus4" is not on the entity "work.MEMWB_reg".)
+#  (Entity is selected because it is in the same library as the design unit that contains the component.)
+# Optimization failed
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=2, Warnings=1.
+# Error loading design
+Error loading design
+# End time: 15:25:27 on Nov 20,2025, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 1

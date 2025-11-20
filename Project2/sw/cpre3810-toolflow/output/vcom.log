@@ -1,0 +1,33 @@
+QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
+Start time: 15:25:11 on Nov 20,2025
+vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/decoder5t32.vhd proj/src/reg_n.vhd proj/src/sign_extender.vhd proj/src/IFID_reg.vhd proj/src/zero_extender.vhd proj/src/MEMWB_reg.vhd proj/src/RISCV_Processor.vhd proj/src/fetch.vhd proj/src/alu.vhd proj/src/barrelshifter.vhd proj/src/immgen.vhd proj/src/mux32_1.vhd proj/src/mux2t1_n.vhd proj/src/addsub.vhd proj/src/IDEX_reg.vhd proj/src/control.vhd proj/src/dffg.vhd proj/src/alu_control.vhd proj/src/regfile.vhd proj/src/RISCV_types.vhd proj/src/mem.vhd proj/src/EXMEM_reg.vhd proj/src/adder_n.vhd 
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling package RISCV_types
+-- Compiling package body RISCV_types
+-- Loading package RISCV_types
+-- Loading package std_logic_textio
+-- Loading package ENV
+-- Compiling entity tb
+-- Compiling architecture mixed of tb
+-- Loading package NUMERIC_STD
+-- Compiling entity decoder5t32
+-- Compiling architecture dataflow of decoder5t32
+-- Compiling entity reg_n
+-- Compiling architecture structural of reg_n
+-- Compiling entity sign_extender
+-- Compiling architecture rtl of sign_extender
+-- Compiling entity IFID_reg
+-- Compiling architecture behavioral of IFID_reg
+-- Compiling entity zero_extender
+-- Compiling architecture rtl of zero_extender
+-- Compiling entity MEMWB_reg
+-- Compiling architecture behavioral of MEMWB_reg
+-- Loading package RISCV_types
+-- Compiling entity RISCV_Processor
+-- Compiling architecture structure of RISCV_Processor
+** Error: proj/src/RISCV_Processor.vhd(499): (vcom-1484) Unknown formal identifier "o_PCplus4".
+** Note: proj/src/RISCV_Processor.vhd(504): VHDL Compiler exiting
+End time: 15:25:11 on Nov 20,2025, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
