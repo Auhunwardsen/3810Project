@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 15:18:18 on Nov 13,2025
+Start time: 17:23:00 on Nov 19,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/decoder5t32.vhd proj/src/mem.vhd proj/src/addsub.vhd proj/src/fetch.vhd proj/src/reg_n.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/alu.vhd proj/src/RISCV_Processor.vhd proj/src/dffg.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/control.vhd proj/src/mux2t1_n.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/RISCV_types.vhd proj/src/adder_n.vhd proj/src/regfile.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -18,6 +18,7 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling architecture rtl of mem
 -- Compiling entity addsub
 -- Compiling architecture rtl of addsub
+-- Loading package RISCV_types
 -- Compiling entity fetch
 -- Compiling architecture structural of fetch
 -- Compiling entity reg_n
@@ -28,7 +29,6 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling architecture dataflow of barrelshifter
 -- Compiling entity alu
 -- Compiling architecture structural of alu
--- Loading package RISCV_types
 -- Compiling entity RISCV_Processor
 -- Compiling architecture structure of RISCV_Processor
 -- Compiling entity dffg
@@ -54,5 +54,5 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling architecture rtl of adder_n
 -- Compiling entity regfile
 -- Compiling architecture rtl of regfile
-End time: 15:18:18 on Nov 13,2025, Elapsed time: 0:00:00
+End time: 17:23:00 on Nov 19,2025, Elapsed time: 0:00:00
 Errors: 0, Warnings: 2

@@ -1,0 +1,36 @@
+
+#
+# CprE 381 Generated Quartus Settings File
+#
+
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 21.1.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "19:07:08  JANUARY 28, 2019"
+set_global_assignment -name LAST_QUARTUS_VERSION "21.1.1 Standard Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name TOP_LEVEL_ENTITY RISCV_Processor
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/RISCV_Processor.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/RISCV_types.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/adder_n.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/addsub.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/alu.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/alu_control.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/barrelshifter.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/control.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/decoder5t32.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/dffg.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/fetch.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/immgen.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/mem.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/mux2t1_n.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/mux32_1.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/processor.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/reg_n.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/regfile.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/sign_extender.vhd"
+set_global_assignment -name VHDL_FILE "/home/auhun47/project1/3810Project1/cpre3810-toolflow/proj/src/zero_extender.vhd"

@@ -2,6 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+library work;
+use work.RISCV_types.all;
+
 entity fetch is
   port (
     -- clocking
@@ -88,15 +91,16 @@ begin
       o_O  => s_NextPC
     );
 
-  -- [PC Register] Update PC on rising edge / reset to 0
-  u_pc_reg : reg_n
-    port map (
-      i_CLK => i_CLK,
-      i_RST => i_RST,
-      i_WE  => '1',          -- Always enable PC updates
-      i_D   => s_NextPC,
-      o_Q   => s_PC
-    );
+  -- [PC Register] Update PC on rising edge / reset to base address
+  -- Custom process to reset PC to 0x00400000 instead of 0x00000000
+  process(i_CLK, i_RST)
+  begin
+    if (i_RST = '1') then
+      s_PC <= PC_BASE_ADDR;  -- Reset to 0x00400000
+    elsif (rising_edge(i_CLK)) then
+      s_PC <= s_NextPC;
+    end if;
+  end process;
 
   -- [Outputs / IMEM]
   o_PC      <= s_PC;
