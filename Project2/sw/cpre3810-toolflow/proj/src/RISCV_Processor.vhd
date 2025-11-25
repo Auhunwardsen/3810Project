@@ -259,14 +259,12 @@ architecture structure of RISCV_Processor is
       i_flush     : in  std_logic;
       i_RegWrite  : in  std_logic;
       i_MemToReg  : in  std_logic;
-      i_PCplus4   : in  std_logic_vector(31 downto 0);
       i_ALUResult : in  std_logic_vector(31 downto 0);
       i_MemData   : in  std_logic_vector(31 downto 0);
       i_RDAddr    : in  std_logic_vector(4 downto 0);
-      i_Instr   : in  std_logic_vector(31 downto 0);
+      i_Instr     : in  std_logic_vector(31 downto 0);
       o_RegWrite  : out std_logic;
       o_MemToReg  : out std_logic;
-      o_PCplus4   : out std_logic_vector(31 downto 0);
       o_ALUResult : out std_logic_vector(31 downto 0);
       o_MemData   : out std_logic_vector(31 downto 0);
       o_RDAddr    : out std_logic_vector(4 downto 0);
@@ -280,6 +278,7 @@ architecture structure of RISCV_Processor is
   signal s_UseNextAdr : std_logic;
   signal s_NextAdr    : std_logic_vector(31 downto 0);
   signal s_Stall      : std_logic;
+  signal s_Instr_Fetch: std_logic_vector(31 downto 0);
   
   -- Control signals
   signal s_Branch     : std_logic;
@@ -358,7 +357,6 @@ architecture structure of RISCV_Processor is
   -- MEM/WB pipeline register outputs
   signal s_MEMWB_RegWrite  : std_logic;
   signal s_MEMWB_MemToReg  : std_logic;
-  signal s_MEMWB_PCplus4   : std_logic_vector(31 downto 0);
   signal s_MEMWB_ALUResult : std_logic_vector(31 downto 0);
   signal s_MEMWB_MemData   : std_logic_vector(31 downto 0);
   signal s_MEMWB_RDAddr    : std_logic_vector(4 downto 0);
@@ -401,10 +399,10 @@ begin
       i_Stall      => s_Stall,
       i_NextAdr    => s_NextAdr,
       o_IMemAdr    => s_NextInstAddr,
-      i_IMemData   => s_Inst,
+      i_IMemData   => s_Inst,  -- Instruction from memory
       o_PC         => s_PC,
       o_PCplus4    => s_PCplus4,
-      o_Instr      => open  -- Not needed, we use s_Inst directly
+      o_Instr      => s_Instr_Fetch  -- Fetch unit output instruction
     );
 
   -- IF/ID Pipeline Register
@@ -416,7 +414,7 @@ begin
       i_flush   => '0',  -- No flushing in software-scheduled pipeline
       i_PC      => s_PC,
       i_PCplus4 => s_PCplus4,
-      i_Instr   => s_Inst,
+      i_Instr   => s_Instr_Fetch,
       o_PC      => s_IFID_PC,
       o_PCplus4 => s_IFID_PCplus4,
       o_Instr   => s_IFID_Inst
@@ -507,14 +505,12 @@ begin
       i_flush      => '0',  -- No flushing in software-scheduled pipeline
       i_RegWrite   => s_EXMEM_RegWrite,
       i_MemToReg   => s_EXMEM_MemToReg,
-      i_PCplus4    => s_EXMEM_PCplus4,
       i_ALUResult  => s_EXMEM_ALUResult,
       i_MemData    => s_DMemOut,
       i_RDAddr     => s_EXMEM_RDAddr,
       i_Instr      => s_EXMEM_Inst,
       o_RegWrite   => s_MEMWB_RegWrite,
       o_MemToReg   => s_MEMWB_MemToReg,
-      o_PCplus4    => s_MEMWB_PCplus4,
       o_ALUResult  => s_MEMWB_ALUResult,
       o_MemData    => s_MEMWB_MemData,
       o_RDAddr     => s_MEMWB_RDAddr,
@@ -619,8 +615,8 @@ begin
     v_IsJALR := '1' when s_MEMWB_Inst(6 downto 0) = "1100111" else '0';
     
     if v_IsJAL = '1' or v_IsJALR = '1' then
-      -- JAL/JALR write PC+4 to register (return address)
-      s_WriteData <= s_MEMWB_PCplus4;
+      -- JAL/JALR write PC+4 to register (return address) - stored in ALU result
+      s_WriteData <= s_MEMWB_ALUResult;
     elsif s_MEMWB_MemToReg = '1' then
       -- Load instructions - handle different load types with proper sign extension
       case s_MEMWB_Inst(14 downto 12) is  -- funct3 field for load instructions
