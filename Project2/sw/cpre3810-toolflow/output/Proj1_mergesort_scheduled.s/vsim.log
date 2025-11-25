@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 15:45:55 on Nov 25,2025
+# Start time: 15:53:59 on Nov 25,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Note: (vsim-8611) Generating debug db.
 # ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
@@ -78,5 +78,5 @@ Reading pref.tcl
 #    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv
 # ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
 #    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv
-# End time: 15:46:07 on Nov 25,2025, Elapsed time: 0:00:12
+# End time: 15:54:10 on Nov 25,2025, Elapsed time: 0:00:11
 # Errors: 0, Warnings: 14
