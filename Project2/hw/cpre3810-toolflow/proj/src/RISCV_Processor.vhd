@@ -357,16 +357,18 @@ architecture structure of RISCV_Processor is
   signal s_PCSrc_EX      : std_logic;
   
   -- EX/MEM pipeline register signals
-  signal s_EXMEM_RegWrite : std_logic;
-  signal s_EXMEM_MemToReg : std_logic;
-  signal s_EXMEM_MemWrite : std_logic;
-  signal s_EXMEM_MemRead  : std_logic;
-  signal s_EXMEM_PCplus4  : std_logic_vector(31 downto 0);
-  signal s_EXMEM_PCBranch : std_logic_vector(31 downto 0);
-  signal s_EXMEM_PCSrc    : std_logic;
-  signal s_EXMEM_ALUResult: std_logic_vector(31 downto 0);
-  signal s_EXMEM_RS2Data  : std_logic_vector(31 downto 0);
-  signal s_EXMEM_RDAddr   : std_logic_vector(4 downto 0);
+  signal s_EXMEM_RegWrite   : std_logic;
+  signal s_EXMEM_MemToReg   : std_logic;
+  signal s_EXMEM_MemWrite   : std_logic;
+  signal s_EXMEM_MemRead    : std_logic;
+  signal s_EXMEM_Branch     : std_logic;
+  signal s_EXMEM_BranchAddr : std_logic_vector(31 downto 0);
+  signal s_EXMEM_BranchTaken: std_logic;
+  signal s_EXMEM_WriteData  : std_logic_vector(31 downto 0);
+  signal s_EXMEM_PCplus4    : std_logic_vector(31 downto 0);
+  signal s_EXMEM_ALUResult  : std_logic_vector(31 downto 0);
+  signal s_EXMEM_RS2Data    : std_logic_vector(31 downto 0);
+  signal s_EXMEM_RDAddr     : std_logic_vector(4 downto 0);
   
   -- MEM stage signals
   signal s_MemData_MEM   : std_logic_vector(31 downto 0);
@@ -418,15 +420,8 @@ architecture structure of RISCV_Processor is
   signal s_IsJALR     : std_logic;
   
   -- Hazard detection signals
-  signal s_PCWrite     : std_logic;
-  signal s_IFID_Write  : std_logic;
   signal s_ControlMux  : std_logic;
-  signal s_IFID_Flush  : std_logic;
   signal s_IDEX_Flush  : std_logic;
-  
-  -- Forwarding unit signals
-  signal s_Forward_A   : std_logic_vector(1 downto 0);
-  signal s_Forward_B   : std_logic_vector(1 downto 0);
   
   -- Forwarding mux outputs
   signal s_ForwardA_Out: std_logic_vector(31 downto 0);
@@ -542,19 +537,23 @@ begin
       i_MemToReg    => s_IDEX_MemToReg,
       i_MemWrite    => s_IDEX_MemWrite,
       i_MemRead     => s_IDEX_MemRead,
-      i_PCplus4     => s_IDEX_PCplus4,
-      i_PCBranch    => s_BranchAddr,
-      i_PCSrc       => s_BranchTaken,
+      i_Branch      => s_IDEX_Branch,
+      i_BranchAddr  => s_BranchAddr,
+      i_BranchTaken => s_BranchTaken,
       i_ALUResult   => s_ALUResult,
+      i_WriteData   => s_ForwardB_Out,  -- For store instructions
       i_RS2Data     => s_ForwardB_Out,  -- Use forwarded data
       i_RDAddr      => s_IDEX_RDAddr,
+      i_PCplus4     => s_IDEX_PCplus4,
       o_RegWrite    => s_EXMEM_RegWrite,
       o_MemToReg    => s_EXMEM_MemToReg,
       o_MemWrite    => s_EXMEM_MemWrite,
       o_MemRead     => s_EXMEM_MemRead,
+      o_Branch      => s_EXMEM_Branch,
+      o_BranchAddr  => s_EXMEM_BranchAddr,
+      o_BranchTaken => s_EXMEM_BranchTaken,
+      o_WriteData   => s_EXMEM_WriteData,
       o_PCplus4     => s_EXMEM_PCplus4,
-      o_PCBranch    => s_EXMEM_PCBranch,
-      o_PCSrc       => s_EXMEM_PCSrc,
       o_ALUResult   => s_EXMEM_ALUResult,
       o_RS2Data     => s_EXMEM_RS2Data,
       o_RDAddr      => s_EXMEM_RDAddr
