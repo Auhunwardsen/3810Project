@@ -66,17 +66,11 @@ not_equal:
     # Test JAL instruction
     nop                     # Prepare for jump
     nop
-    jal  x12, subroutine    # Jump and link
-    nop                     # Control hazard slot
+    jal  x12, subroutine    # Jump and link, save return in x12
+    nop                     # Control hazard slot  
     nop
-    addi x13, x0, 777       # Should not execute
-    
-return_here:
-    # Final test - JALR
-    nop
-    nop
-    nop
-    jalr x0, x12, 0         # Return using saved address
+    # Program continues here after subroutine returns
+    j    done              # Jump to end
     nop                     # Control hazard slot
     nop
     
@@ -85,7 +79,7 @@ subroutine:
     nop
     nop
     nop
-    j    return_here        # Jump back
+    jalr x0, x12, 0         # Return to caller using saved address
     nop                     # Control hazard slot
     nop
     

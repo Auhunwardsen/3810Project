@@ -314,6 +314,7 @@ architecture structure of RISCV_Processor is
   signal s_IsAUIPC    : std_logic;
   signal s_IsJAL      : std_logic;
   signal s_IsJALR     : std_logic;
+  signal s_IsLUI      : std_logic;
 
   -- Pipeline register signals
   -- IF/ID pipeline register outputs
@@ -574,9 +575,12 @@ begin
   s_IsAUIPC <= '1' when s_IDEX_Instr(6 downto 0) = "0010111" else '0';
   s_IsJAL   <= '1' when s_IDEX_Instr(6 downto 0) = "1101111" else '0';
   s_IsJALR  <= '1' when s_IDEX_Instr(6 downto 0) = "1100111" else '0';
+  s_IsLUI   <= '1' when s_IDEX_Instr(6 downto 0) = "0110111" else '0';
   
-  -- For AUIPC, use PC directly (already includes base address); otherwise use RS1 data
-  s_ALUIn1 <= s_IDEX_PC when s_IsAUIPC = '1' else s_IDEX_RS1Data;
+  -- For AUIPC, use PC; for LUI, use 0; otherwise use RS1 data
+  s_ALUIn1 <= s_IDEX_PC when s_IsAUIPC = '1' else
+              x"00000000" when s_IsLUI = '1' else
+              s_IDEX_RS1Data;
   
   -- ALU (operates in EX stage)
   u_alu: alu
