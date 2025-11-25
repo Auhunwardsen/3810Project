@@ -225,19 +225,25 @@ architecture structure of RISCV_Processor is
       i_MemToReg  : in  std_logic;
       i_MemWrite  : in  std_logic;
       i_MemRead   : in  std_logic;
+      i_Branch    : in  std_logic;
+      i_BranchAddr: in  std_logic_vector(31 downto 0);
+      i_BranchTaken: in std_logic;
       i_PCplus4   : in  std_logic_vector(31 downto 0);
       i_ALUResult : in  std_logic_vector(31 downto 0);
+      i_WriteData : in  std_logic_vector(31 downto 0);
       i_RS2Data   : in  std_logic_vector(31 downto 0);
       i_RDAddr    : in  std_logic_vector(4 downto 0);
-      i_Instr   : in  std_logic_vector(31 downto 0);
+      i_Instr     : in  std_logic_vector(31 downto 0);
       
       o_RegWrite  : out std_logic;
       o_MemToReg  : out std_logic;
       o_MemWrite  : out std_logic;
       o_MemRead   : out std_logic;
+      o_Branch    : out std_logic;
+      o_BranchAddr: out std_logic_vector(31 downto 0);
+      o_BranchTaken: out std_logic;
+      o_WriteData : out std_logic_vector(31 downto 0);
       o_PCplus4   : out std_logic_vector(31 downto 0);
-      o_PCBranch  : out std_logic_vector(31 downto 0);
-      o_PCSrc     : out std_logic;
       o_ALUResult : out std_logic_vector(31 downto 0);
       o_RS2Data   : out std_logic_vector(31 downto 0);
       o_RDAddr    : out std_logic_vector(4 downto 0);
@@ -335,17 +341,19 @@ architecture structure of RISCV_Processor is
   signal s_IDEX_Instr     : std_logic_vector(31 downto 0);
   
   -- EX/MEM pipeline register outputs
-  signal s_EXMEM_RegWrite  : std_logic;
-  signal s_EXMEM_MemToReg  : std_logic;
-  signal s_EXMEM_MemWrite  : std_logic;
-  signal s_EXMEM_MemRead   : std_logic;
-  signal s_EXMEM_PCplus4   : std_logic_vector(31 downto 0);
-  signal s_EXMEM_PCBranch  : std_logic_vector(31 downto 0);
-  signal s_EXMEM_PCSrc     : std_logic;
-  signal s_EXMEM_ALUResult : std_logic_vector(31 downto 0);
-  signal s_EXMEM_RS2Data   : std_logic_vector(31 downto 0);
-  signal s_EXMEM_RDAddr    : std_logic_vector(4 downto 0);
-  signal s_EXMEM_Inst    : std_logic_vector(31 downto 0);
+  signal s_EXMEM_RegWrite   : std_logic;
+  signal s_EXMEM_MemToReg   : std_logic;
+  signal s_EXMEM_MemWrite   : std_logic;
+  signal s_EXMEM_MemRead    : std_logic;
+  signal s_EXMEM_Branch     : std_logic;
+  signal s_EXMEM_BranchAddr : std_logic_vector(31 downto 0);
+  signal s_EXMEM_BranchTaken: std_logic;
+  signal s_EXMEM_WriteData  : std_logic_vector(31 downto 0);
+  signal s_EXMEM_PCplus4    : std_logic_vector(31 downto 0);
+  signal s_EXMEM_ALUResult  : std_logic_vector(31 downto 0);
+  signal s_EXMEM_RS2Data    : std_logic_vector(31 downto 0);
+  signal s_EXMEM_RDAddr     : std_logic_vector(4 downto 0);
+  signal s_EXMEM_Inst       : std_logic_vector(31 downto 0);
 
   -- MEM/WB pipeline register outputs
   signal s_MEMWB_RegWrite  : std_logic;
@@ -466,8 +474,12 @@ begin
       i_MemToReg   => s_IDEX_MemToReg,
       i_MemWrite   => s_IDEX_MemWrite,
       i_MemRead    => s_IDEX_MemRead,
+      i_Branch     => s_IDEX_Branch,
+      i_BranchAddr => s_BranchAddr,
+      i_BranchTaken=> s_BranchTaken,
       i_PCplus4    => s_IDEX_PCplus4,
       i_ALUResult  => s_ALUResult,
+      i_WriteData  => s_IDEX_RS2Data,  -- For store instructions
       i_RS2Data    => s_IDEX_RS2Data,
       i_RDAddr     => s_IDEX_RDAddr,
       i_Instr      => s_IDEX_Instr,
@@ -475,6 +487,10 @@ begin
       o_MemToReg   => s_EXMEM_MemToReg,
       o_MemWrite   => s_EXMEM_MemWrite,
       o_MemRead    => s_EXMEM_MemRead,
+      o_Branch     => s_EXMEM_Branch,
+      o_BranchAddr => s_EXMEM_BranchAddr,
+      o_BranchTaken=> s_EXMEM_BranchTaken,
+      o_WriteData  => s_EXMEM_WriteData,
       o_PCplus4    => s_EXMEM_PCplus4,
       o_ALUResult  => s_EXMEM_ALUResult,
       o_RS2Data    => s_EXMEM_RS2Data,
@@ -590,6 +606,8 @@ begin
   s_DMemAddr <= s_EXMEM_ALUResult;
   s_DMemData <= s_EXMEM_RS2Data;
   s_DMemWr   <= s_EXMEM_MemWrite;
+  
+  -- Branch condition evaluation removed - using ID stage evaluation for software-scheduled pipeline
   
   -- Write data selection with proper load handling (WB stage)
   process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_PCplus4, s_MEMWB_ALUResult, s_MEMWB_MemData)
