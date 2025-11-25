@@ -1,12 +1,24 @@
 Oh no...
 
-Cycle: na
-RARS instruction number: 1	Instruction: addi x1,x0,120
-Expected:	Register Write to Reg: 0x01 Val: 0x00000078
-Got     :	Execution stopped
-Student execution ended prematurely
+Cycle: 6
+RARS instruction number: 3	Instruction: sub x1,x1,x2
+Expected:	Register Write to Reg: 0x01 Val: 0x0000003C
+Got     :	Register Write to Reg: 0x01 Val: 0x00000000
+Incorrect write
 
-Almost! your processor completed the program with  1/3 allowed mismatches
+Cycle: 11
+RARS instruction number: 8	Instruction: sub x3,x3,x4
+Expected:	Register Write to Reg: 0x03 Val: 0x1110F000
+Got     :	Register Write to Reg: 0x03 Val: 0x00000000
+Incorrect write
+
+Cycle: 14
+RARS instruction number: 11	Instruction: sub x1,x1,x2
+Expected:	Register Write to Reg: 0x01 Val: 0x000000B4
+Got     :	Register Write to Reg: 0x01 Val: 0xFFFFFFC4
+Incorrect write
+
+You have reached the maximum mismatches (3)
 
 Helpful resources for Debugging:
 ms.trace : output from the VHDL testbench during program execution on your processor
