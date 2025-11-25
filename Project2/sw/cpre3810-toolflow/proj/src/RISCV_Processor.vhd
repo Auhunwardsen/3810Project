@@ -414,7 +414,7 @@ begin
       i_flush   => '0',  -- No flushing in software-scheduled pipeline
       i_PC      => s_PC,
       i_PCplus4 => s_PCplus4,
-      i_Instr   => s_Instr_Fetch,
+      i_Instr   => s_Instr_Fetch,  -- Use fetch unit output
       o_PC      => s_IFID_PC,
       o_PCplus4 => s_IFID_PCplus4,
       o_Instr   => s_IFID_Inst
@@ -606,7 +606,7 @@ begin
   -- Branch condition evaluation removed - using ID stage evaluation for software-scheduled pipeline
   
   -- Write data selection with proper load handling (WB stage)
-  process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_PCplus4, s_MEMWB_ALUResult, s_MEMWB_MemData)
+  process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_ALUResult, s_MEMWB_MemData)
     variable v_LoadData : std_logic_vector(31 downto 0);
     variable v_IsJAL : std_logic;
     variable v_IsJALR : std_logic;
