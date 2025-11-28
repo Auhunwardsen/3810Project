@@ -429,12 +429,15 @@ architecture structure of RISCV_Processor is
 
 begin
 
+  -------------------------------------------------------------------------
+  -- MEMORY MODULES (Instruction & Data Memory)
+  -------------------------------------------------------------------------
   -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
   with iInstLd select
     s_IMemAddr <= s_NextInstAddr when '0',
       iInstAddr when others;
 
-
+  -- Instruction Memory (accessed in IF stage)
   IMem: mem
     generic map(ADDR_WIDTH => ADDR_WIDTH,
                 DATA_WIDTH => N)
@@ -444,6 +447,7 @@ begin
              we   => iInstLd,
              q    => s_Inst);
   
+  -- Data Memory (accessed in MEM stage)
   DMem: mem
     generic map(ADDR_WIDTH => ADDR_WIDTH,
                 DATA_WIDTH => N)
@@ -453,9 +457,11 @@ begin
              we   => s_DMemWr,
              q    => s_DMemOut);
 
-  -- Processor Implementation
-  
-  -- Fetch unit
+  -------------------------------------------------------------------------
+  -- STAGE 1: INSTRUCTION FETCH (IF)
+  -------------------------------------------------------------------------
+  -- Fetches instruction from memory and increments PC
+  -- PC update controlled by hazard detection (s_PCWrite)
   u_fetch: fetch
     port map (
       i_CLK        => iCLK,
@@ -470,7 +476,12 @@ begin
       o_Instr      => open  -- Not needed, we use s_Inst directly
     );
 
-  -- IF/ID Pipeline Register
+  -------------------------------------------------------------------------
+  -- PIPELINE REGISTER: IF/ID
+  -------------------------------------------------------------------------
+  -- Latches PC, PC+4, and instruction between IF and ID stages
+  -- Write enable controlled by hazard detection for load-use stalls
+  -- Flush controlled by hazard detection for control hazards
   u_IFID: IFID_reg
     port map (
       i_CLK     => iCLK,
@@ -485,7 +496,18 @@ begin
       o_Instr   => s_IFID_Instr
     );
 
-  -- ID/EX Pipeline Register
+  -------------------------------------------------------------------------
+  -- STAGE 2: INSTRUCTION DECODE (ID)
+  -------------------------------------------------------------------------
+  -- Decodes instruction, reads registers, generates control signals
+  -- Control unit, register file, and immediate generator instantiated below
+  -- Hazard detection unit also monitors this stage for load-use hazards
+
+  -------------------------------------------------------------------------
+  -- PIPELINE REGISTER: ID/EX
+  -------------------------------------------------------------------------
+  -- Latches control signals, register data, and immediate between ID and EX stages
+  -- Flush controlled by hazard detection for control hazards and load-use stalls
   u_IDEX: IDEX_reg
     port map (
       i_CLK       => iCLK,
@@ -526,7 +548,17 @@ begin
       o_Instr     => s_IDEX_Instr
     );
 
-  -- EX/MEM Pipeline Register
+  -------------------------------------------------------------------------
+  -- STAGE 3: EXECUTE (EX)
+  -------------------------------------------------------------------------
+  -- Performs ALU operations with forwarding support
+  -- Forwarding unit monitors EX/MEM and MEM/WB stages for data hazards
+  -- ALU inputs selected via forwarding muxes (3-to-1 muxes)
+
+  -------------------------------------------------------------------------
+  -- PIPELINE REGISTER: EX/MEM
+  -------------------------------------------------------------------------
+  -- Latches ALU result, memory write data, and control signals between EX and MEM stages
   u_EXMEM: EXMEM_reg
     port map (
       i_CLK         => iCLK,
@@ -559,7 +591,20 @@ begin
       o_RDAddr      => s_EXMEM_RDAddr
     );
 
-  -- MEM/WB Pipeline Register
+  -------------------------------------------------------------------------
+  -- STAGE 4: MEMORY (MEM)
+  -------------------------------------------------------------------------
+  -- Accesses data memory for load/store instructions
+  -- Data memory instantiated above, controlled by signals:
+  --   s_DMemAddr <= s_EXMEM_ALUResult (address from ALU)
+  --   s_DMemData <= s_EXMEM_RS2Data (write data for stores)
+  --   s_DMemWr   <= s_EXMEM_MemWrite (write enable)
+  --   s_DMemOut  -> passes to MEM/WB register
+
+  -------------------------------------------------------------------------
+  -- PIPELINE REGISTER: MEM/WB
+  -------------------------------------------------------------------------
+  -- Latches memory read data and ALU result between MEM and WB stages
   u_MEMWB: MEMWB_reg
     port map (
       i_CLK         => iCLK,
@@ -579,8 +624,27 @@ begin
       o_MemData     => s_MEMWB_MemData,
       o_RDAddr      => s_MEMWB_RDAddr
     );
-  
-  -- Control unit
+
+  -------------------------------------------------------------------------
+  -- STAGE 5: WRITE BACK (WB)
+  -------------------------------------------------------------------------
+  -- Selects data to write back to register file
+  -- Write-back connections defined at end of file:
+  --   s_RegWr     <= s_MEMWB_RegWrite
+  --   s_RegWrAddr <= s_MEMWB_RDAddr
+  --   s_RegWrData <= memory data OR ALU result (based on MemToReg)
+
+  =========================================================================
+  -- DATAPATH COMPONENT INSTANTIATIONS
+  =========================================================================
+  -- Components used by various pipeline stages
+  -- Organized by usage stage for clarity
+  -------------------------------------------------------------------------
+
+  -------------------------------------------------------------------------
+  -- ID STAGE COMPONENTS
+  -------------------------------------------------------------------------
+  -- Control Unit: generates all control signals based on opcode
   u_control: control
     port map (
       i_opcode   => s_IFID_Instr(6 downto 0),
@@ -593,7 +657,31 @@ begin
       o_regWrite => s_RegWrite
     );
   
-  -- ALU control unit
+  -- Register File: reads RS1 and RS2, writes to RD in WB stage
+  u_regfile: regfile
+    port map (
+      i_CLK       => iCLK,
+      i_RST       => iRST,
+      i_WE        => s_MEMWB_RegWrite,         -- From WB stage
+      i_RS1       => s_IFID_Instr(19 downto 15),
+      i_RS2       => s_IFID_Instr(24 downto 20),
+      i_RD        => s_MEMWB_RDAddr,            -- From WB stage
+      i_WriteData => s_WriteData_WB,            -- From WB stage
+      o_RS1Data   => s_RS1Data,
+      o_RS2Data   => s_RS2Data
+    );
+  
+  -- Immediate Generator: extracts immediate from instruction
+  u_immgen: immgen
+    port map (
+      i_instr => s_IFID_Instr,
+      o_imm   => s_Immediate
+    );
+
+  -------------------------------------------------------------------------
+  -- EX STAGE COMPONENTS
+  -------------------------------------------------------------------------
+  -- ALU Control: decodes funct3/funct7 to generate ALU control signal
   u_alu_control: alu_control
     port map (
       i_ALUOp    => s_IDEX_ALUOp,
@@ -602,28 +690,7 @@ begin
       o_ALUCtrl  => s_ALUCtrl
     );
   
-  -- Register file
-  u_regfile: regfile
-    port map (
-      i_CLK       => iCLK,
-      i_RST       => iRST,
-      i_WE        => s_MEMWB_RegWrite,
-      i_RS1       => s_IFID_Instr(19 downto 15),
-      i_RS2       => s_IFID_Instr(24 downto 20),
-      i_RD        => s_MEMWB_RDAddr,
-      i_WriteData => s_WriteData_WB,
-      o_RS1Data   => s_RS1Data,
-      o_RS2Data   => s_RS2Data
-    );
-  
-  -- Immediate generator
-  u_immgen: immgen
-    port map (
-      i_instr => s_IFID_Instr,
-      o_imm   => s_Immediate
-    );
-  
-  -- ALU source mux (uses forwarded data)
+  -- ALU Source Mux: selects second ALU operand (forwarded RS2 or immediate)
   u_alu_src_mux: mux2t1_n
     port map (
       i_S  => s_IDEX_ALUSrc,
@@ -632,11 +699,11 @@ begin
       o_O  => s_ALUIn2
     );
   
-  -- ALU input selection (uses forwarded data)
+  -- ALU Input Selection Logic: handles special instructions with forwarding
   s_ALUIn1 <= s_IDEX_PC when s_IsAUIPC = '1' else s_ForwardA_Out;
   s_ALUIn2_sel <= s_IDEX_Immediate when (s_IsAUIPC = '1' or s_IsJALR = '1') else s_ALUIn2;
   
-  -- ALU
+  -- ALU: performs arithmetic/logic operations on forwarded data
   u_alu: alu
     port map (
       i_ALUCtrl  => s_ALUCtrl,
@@ -647,7 +714,7 @@ begin
       o_Overflow => s_Overflow
     );
   
-  -- Branch address adder
+  -- Branch Address Adder: computes PC + immediate for branch target
   u_branch_adder: adder_n
     port map (
       iA   => s_IDEX_PC,
@@ -655,7 +722,10 @@ begin
       oSum => s_BranchAddr
     );
 
-  -- Writeback data selection mux
+  -------------------------------------------------------------------------
+  -- WB STAGE COMPONENTS
+  -------------------------------------------------------------------------
+  -- Write-Back Data Selection: chooses between ALU result and memory data
   u_writeback_mux: mux2t1_n
     port map (
       i_S  => s_MEMWB_MemToReg,
@@ -764,7 +834,18 @@ begin
     end if;
   end process;
   
-  -- Hazard Detection Unit
+  =========================================================================
+  -- HARDWARE-SCHEDULED PIPELINE COMPONENTS
+  =========================================================================
+  -- These components are specific to hardware-scheduled pipeline
+  -- Software-scheduled pipeline does NOT have these
+  -------------------------------------------------------------------------
+  
+  -------------------------------------------------------------------------
+  -- HAZARD DETECTION UNIT
+  -------------------------------------------------------------------------
+  -- Detects load-use hazards and control hazards
+  -- Generates stall signals (PCWrite, IFID_Write) and flush signals
   u_hazard_detection: hazard_detection
     port map (
       i_IDEX_MemRead  => s_IDEX_MemRead,
@@ -780,7 +861,11 @@ begin
       o_IDEX_Flush    => s_IDEX_Flush
     );
   
-  -- Forwarding Unit
+  -------------------------------------------------------------------------
+  -- FORWARDING UNIT
+  -------------------------------------------------------------------------
+  -- Detects data hazards and generates forwarding control signals
+  -- Forwards data from EX/MEM or MEM/WB stages to ALU inputs
   u_forwarding_unit: forwarding_unit
     port map (
       i_IDEX_RS1      => s_IDEX_RS1Addr,
@@ -793,7 +878,13 @@ begin
       o_Forward_B     => s_Forward_B
     );
   
-  -- Forwarding Mux A (for ALU input A)
+  -------------------------------------------------------------------------
+  -- FORWARDING MULTIPLEXERS (3-to-1)
+  -------------------------------------------------------------------------
+  -- Select ALU operands from register file, EX/MEM, or MEM/WB stages
+  -- Based on forwarding control signals from forwarding unit
+  
+  -- Forwarding Mux A: selects source for ALU input A (RS1)
   u_forward_mux_A: mux3t1_n
     generic map(N => 32)
     port map (
@@ -804,7 +895,7 @@ begin
       o_O   => s_ForwardA_Out
     );
   
-  -- Forwarding Mux B (for ALU input B - before ALUSrc mux)
+  -- Forwarding Mux B: selects source for ALU input B (RS2) before ALUSrc mux
   u_forward_mux_B: mux3t1_n
     generic map(N => 32)
     port map (
@@ -815,10 +906,16 @@ begin
       o_O   => s_ForwardB_Out
     );
   
-  -- Connect stall signal
+  -------------------------------------------------------------------------
+  -- PIPELINE CONTROL SIGNALS
+  -------------------------------------------------------------------------
+  -- Connect stall signal from hazard detection to fetch unit
   s_Stall <= not s_PCWrite;  -- Stall when PCWrite is 0
   
-  -- Output connections
+  -------------------------------------------------------------------------
+  -- OUTPUT CONNECTIONS
+  -------------------------------------------------------------------------
+  -- Outputs for testbench and synthesis
   oALUOut <= s_ALUResult;
   
   -- Register write outputs for testbench (using WB stage)

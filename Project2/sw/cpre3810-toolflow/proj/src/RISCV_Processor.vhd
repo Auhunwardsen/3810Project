@@ -365,12 +365,15 @@ architecture structure of RISCV_Processor is
 
 begin
 
+  -------------------------------------------------------------------------
+  -- MEMORY MODULES (Instruction & Data Memory)
+  -------------------------------------------------------------------------
   -- TODO: This is required to be your final input to your instruction memory. This provides a feasible method to externally load the memory module which means that the synthesis tool must assume it knows nothing about the values stored in the instruction memory. If this is not included, much, if not all of the design is optimized out because the synthesis tool will believe the memory to be all zeros.
   with iInstLd select
     s_IMemAddr <= s_NextInstAddr when '0',
       iInstAddr when others;
 
-
+  -- Instruction Memory (accessed in IF stage)
   IMem: mem
     generic map(ADDR_WIDTH => ADDR_WIDTH,
                 DATA_WIDTH => N)
@@ -380,6 +383,7 @@ begin
              we   => iInstLd,
              q    => s_Inst);
   
+  -- Data Memory (accessed in MEM stage)
   DMem: mem
     generic map(ADDR_WIDTH => ADDR_WIDTH,
                 DATA_WIDTH => N)
@@ -389,9 +393,10 @@ begin
              we   => s_DMemWr,
              q    => s_DMemOut);
 
-  -- Processor Implementation
-  
-  -- Fetch unit
+  -------------------------------------------------------------------------
+  -- STAGE 1: INSTRUCTION FETCH (IF)
+  -------------------------------------------------------------------------
+  -- Fetches instruction from memory and increments PC
   u_fetch: fetch
     port map (
       i_CLK        => iCLK,
@@ -406,7 +411,10 @@ begin
       o_Instr      => s_Instr_Fetch  -- Fetch unit output instruction
     );
 
-  -- IF/ID Pipeline Register
+  -------------------------------------------------------------------------
+  -- PIPELINE REGISTER: IF/ID
+  -------------------------------------------------------------------------
+  -- Latches PC, PC+4, and instruction between IF and ID stages
   u_IFID: IFID_reg
     port map (
       i_CLK     => iCLK,
@@ -421,7 +429,54 @@ begin
       o_Instr   => s_IFID_Inst
     );
 
-  -- ID/EX Pipeline Register
+  -------------------------------------------------------------------------
+  -- STAGE 2: INSTRUCTION DECODE (ID)
+  -------------------------------------------------------------------------
+  -- Decodes instruction, reads registers, generates control signals
+  -- Control Unit: generates all control signals based on opcode
+  u_control: control
+    port map (
+      i_opcode   => s_IFID_Inst(6 downto 0),
+      o_branch   => s_Branch,
+      o_memRead  => s_MemRead,
+      o_memToReg => s_MemToReg,
+      o_ALUOp    => s_ALUOp,
+      o_memWrite => s_MemWrite,
+      o_ALUSrc   => s_ALUSrc,
+      o_regWrite => s_RegWrite
+    );
+
+  -- Register File: reads two source registers
+  u_regfile: regfile
+    port map (
+      i_CLK       => iCLK,
+      i_RST       => iRST,
+      i_WE        => s_RegWr,
+      i_RS1       => s_IFID_Inst(19 downto 15),
+      i_RS2       => s_IFID_Inst(24 downto 20),
+      i_RD        => s_RegWrAddr,
+      i_WriteData => s_RegWrData,
+      o_RS1Data   => s_RS1Data,
+      o_RS2Data   => s_RS2Data
+    );
+
+  -- Immediate Generator: extracts and sign-extends immediate values
+  u_immgen: immgen
+    port map (
+      i_instr     => s_IFID_Inst,
+      o_immediate => s_Immediate
+    );
+
+  -- Branch Condition Evaluation: determines if branch should be taken
+  -- (See process below at line ~669)
+
+  -- Branch Address Calculation: computes PC + immediate for branches/jumps
+  -- (See adder instantiation below at line ~604)
+
+  -------------------------------------------------------------------------
+  -- PIPELINE REGISTER: ID/EX
+  -------------------------------------------------------------------------
+  -- Latches control signals, register data, and immediate between ID and EX stages
   u_IDEX: IDEX_reg
     port map (
       i_CLK       => iCLK,
@@ -462,7 +517,16 @@ begin
       o_Instr     => s_IDEX_Instr
     );
 
-  -- EX/MEM Pipeline Register
+  -------------------------------------------------------------------------
+  -- STAGE 3: EXECUTE (EX)
+  -------------------------------------------------------------------------
+  -- Performs ALU operations and computes branch target address
+  -- (ALU and muxes instantiated below at line ~572)
+
+  -------------------------------------------------------------------------
+  -- PIPELINE REGISTER: EX/MEM
+  -------------------------------------------------------------------------
+  -- Latches ALU result, memory write data, and control signals between EX and MEM stages
   u_EXMEM: EXMEM_reg
     port map (
       i_CLK        => iCLK,
@@ -497,7 +561,20 @@ begin
       o_Instr      => s_EXMEM_Inst
     );
 
-  -- MEM/WB Pipeline Register
+  -------------------------------------------------------------------------
+  -- STAGE 4: MEMORY (MEM)
+  -------------------------------------------------------------------------
+  -- Accesses data memory for load/store instructions
+  -- Data memory instantiated above, controlled by signals:
+  --   s_DMemAddr <= s_EXMEM_ALUResult (address from ALU)
+  --   s_DMemData <= s_EXMEM_RS2Data (write data for stores)
+  --   s_DMemWr   <= s_EXMEM_MemWrite (write enable)
+  --   s_DMemOut  -> passes to MEM/WB register
+
+  -------------------------------------------------------------------------
+  -- PIPELINE REGISTER: MEM/WB
+  -------------------------------------------------------------------------
+  -- Latches memory read data and ALU result between MEM and WB stages
   u_MEMWB: MEMWB_reg
     port map (
       i_CLK        => iCLK,
@@ -517,8 +594,27 @@ begin
       o_RDAddr     => s_MEMWB_RDAddr,
       o_Instr      => s_MEMWB_Inst
     );
-  
-  -- Control unit 
+
+  -------------------------------------------------------------------------
+  -- STAGE 5: WRITE BACK (WB)
+  -------------------------------------------------------------------------
+  -- Selects data to write back to register file
+  -- Write-back connections defined at end of file:
+  --   s_RegWr     <= s_MEMWB_RegWrite
+  --   s_RegWrAddr <= s_MEMWB_RDAddr
+  --   s_RegWrData <= memory data OR ALU result (based on MemToReg)
+
+  =========================================================================
+  -- DATAPATH COMPONENT INSTANTIATIONS
+  =========================================================================
+  -- Components used by various pipeline stages
+  -- Organized by usage stage for clarity
+  -------------------------------------------------------------------------
+
+  -------------------------------------------------------------------------
+  -- ID STAGE COMPONENTS
+  -------------------------------------------------------------------------
+  -- Control Unit: generates all control signals based on opcode
   u_control: control
     port map (
       i_opcode   => s_IFID_Inst(6 downto 0), 
@@ -531,7 +627,31 @@ begin
       o_regWrite => s_RegWrite
     );
   
-  -- ALU control unit -- Update by the group: use pipelined signals from ID/EX register
+  -- Register File: reads RS1 and RS2, writes to RD in WB stage
+  u_regfile: regfile
+    port map (
+      i_CLK       => iCLK,
+      i_RST       => iRST,
+      i_WE        => s_RegWr,               -- From WB stage
+      i_RS1       => s_IFID_Inst(19 downto 15),
+      i_RS2       => s_IFID_Inst(24 downto 20),
+      i_RD        => s_RegWrAddr,           -- From WB stage
+      i_WriteData => s_RegWrData,           -- From WB stage
+      o_RS1Data   => s_RS1Data,
+      o_RS2Data   => s_RS2Data
+    );
+  
+  -- Immediate Generator: extracts immediate from instruction
+  u_immgen: immgen
+    port map (
+      i_instr     => s_IFID_Inst,
+      o_immediate => s_Immediate
+    );
+
+  -------------------------------------------------------------------------
+  -- EX STAGE COMPONENTS
+  -------------------------------------------------------------------------
+  -- ALU Control: decodes funct3/funct7 to generate ALU control signal
   u_alu_control: alu_control
     port map (
       i_ALUOp    => s_IDEX_ALUOp, 
@@ -540,28 +660,7 @@ begin
       o_ALUCtrl  => s_ALUCtrl
     );
   
-  -- Register file -- Update by the group: use pipelined signals
-  u_regfile: regfile
-    port map (
-      i_CLK       => iCLK,
-      i_RST       => iRST,
-      i_WE        => s_MEMWB_RegWrite, 
-      i_RS1       => s_IFID_Inst(19 downto 15),  
-      i_RS2       => s_IFID_Inst(24 downto 20), 
-      i_RD        => s_MEMWB_RDAddr, 
-      i_WriteData => s_WriteData, -- Update by the group: ensure this uses WB stage data
-      o_RS1Data   => s_RS1Data,
-      o_RS2Data   => s_RS2Data
-    );
-  
-  -- Immediate generator -- Update by the group: use IF/ID register output
-  u_immgen: immgen
-    port map (
-      i_instr => s_IFID_Inst, -- Update by the group: change to s_IFID_Instr for ID stage
-      o_imm   => s_Immediate
-    );
-  
-  -- ALU source mux (operates in EX stage with ID/EX register data)
+  -- ALU Source Mux: selects second ALU operand (RS2 data or immediate)
   u_alu_src_mux: mux2t1_n
     generic map(N => 32)
     port map (
@@ -571,18 +670,19 @@ begin
       o_O  => s_ALUIn2
     );
   
-  -- ALU input selection (EX stage logic)
+  -- ALU Input Selection Logic: handles special instructions (AUIPC, LUI, JAL, JALR)
+  -- This combinational logic operates in EX stage using ID/EX register data
   s_IsAUIPC <= '1' when s_IDEX_Instr(6 downto 0) = "0010111" else '0';
   s_IsJAL   <= '1' when s_IDEX_Instr(6 downto 0) = "1101111" else '0';
   s_IsJALR  <= '1' when s_IDEX_Instr(6 downto 0) = "1100111" else '0';
   s_IsLUI   <= '1' when s_IDEX_Instr(6 downto 0) = "0110111" else '0';
   
-  -- For AUIPC, use PC; for LUI, use 0; otherwise use RS1 data
+  -- First ALU operand: PC for AUIPC, 0 for LUI, RS1 data otherwise
   s_ALUIn1 <= s_IDEX_PC when s_IsAUIPC = '1' else
               x"00000000" when s_IsLUI = '1' else
               s_IDEX_RS1Data;
   
-  -- ALU (operates in EX stage)
+  -- ALU: performs arithmetic/logic operations
   u_alu: alu
     port map (
       i_ALUCtrl  => s_ALUCtrl,
@@ -592,8 +692,14 @@ begin
       o_Zero     => s_Zero,
       o_Overflow => s_Overflow
     );
+
+  -------------------------------------------------------------------------
+  -- ID/EX STAGE COMPONENTS (Branch Resolution)
+  -------------------------------------------------------------------------
+  -- Note: For software-scheduled pipeline, branches resolved in ID/EX
+  -- boundary to avoid control hazards via software scheduling
   
-  -- Branch address adder (ID stage - for software scheduled, branches resolved early)
+  -- Branch Address Adder: computes PC + immediate for branch target
   u_branch_adder: adder_n
     generic map(N => 32)
     port map (
@@ -601,15 +707,19 @@ begin
       iB   => s_Immediate,
       oSum => s_BranchAddr
     );
-  
-  -- Data memory connections -- Update by the group: use EX/MEM register outputs for MEM stage
-  s_DMemAddr <= s_EXMEM_ALUResult;
-  s_DMemData <= s_EXMEM_RS2Data;
-  s_DMemWr   <= s_EXMEM_MemWrite;
-  
-  -- Branch condition evaluation removed - using ID stage evaluation for software-scheduled pipeline
-  
-  -- Write data selection with proper load handling (WB stage)
+
+  -------------------------------------------------------------------------
+  -- MEM STAGE CONNECTIONS
+  -------------------------------------------------------------------------
+  -- Data memory signals driven by EX/MEM pipeline register outputs
+  s_DMemAddr <= s_EXMEM_ALUResult;   -- Memory address from ALU
+  s_DMemData <= s_EXMEM_RS2Data;     -- Write data for stores
+  s_DMemWr   <= s_EXMEM_MemWrite;    -- Write enable
+
+  -------------------------------------------------------------------------
+  -- WB STAGE LOGIC
+  -------------------------------------------------------------------------
+  -- Write Data Selection: chooses between ALU result and memory data
   process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_ALUResult, s_MEMWB_MemData)
     variable v_LoadData : std_logic_vector(31 downto 0);
     variable v_IsJAL : std_logic;
@@ -659,36 +769,42 @@ begin
   end process;
   
   -- Branch condition evaluation (ID stage for software-scheduled pipeline)
+  -- Compares RS1 and RS2 to determine if branch should be taken
   process(s_Branch, s_IFID_Inst, s_RS1Data, s_RS2Data)
-    variable v_BranchCond : std_logic;
-    variable v_Zero : std_logic;
-    variable v_LT : std_logic;
-    variable v_LTU : std_logic;
+    variable v_BranchCond : std_logic;  -- Final branch decision (1=take branch, 0=don't take)
+    variable v_Zero : std_logic;        -- 1 if RS1 == RS2 (for BEQ/BNE)
+    variable v_LT : std_logic;          -- 1 if RS1 < RS2 (signed comparison, for BLT/BGE)
+    variable v_LTU : std_logic;         -- 1 if RS1 < RS2 (unsigned comparison, for BLTU/BGEU)
   begin
+    -- Default: don't take branch
     v_BranchCond := '0';
-    v_Zero := '1' when s_RS1Data = s_RS2Data else '0';
-    v_LT := '1' when signed(s_RS1Data) < signed(s_RS2Data) else '0';
-    v_LTU := '1' when unsigned(s_RS1Data) < unsigned(s_RS2Data) else '0';
     
+    -- Compute all three comparison types in parallel
+    v_Zero := '1' when s_RS1Data = s_RS2Data else '0';                      -- Equal?
+    v_LT := '1' when signed(s_RS1Data) < signed(s_RS2Data) else '0';        -- Signed less than?
+    v_LTU := '1' when unsigned(s_RS1Data) < unsigned(s_RS2Data) else '0';   -- Unsigned less than?
+    
+    -- If this is a branch instruction, determine which condition to use
     if s_Branch = '1' then
-      case s_IFID_Inst(14 downto 12) is  -- funct3 field
-        when "000" =>  -- BEQ
-          v_BranchCond := v_Zero;
-        when "001" =>  -- BNE
-          v_BranchCond := not v_Zero;
-        when "100" =>  -- BLT
-          v_BranchCond := v_LT;
-        when "101" =>  -- BGE
-          v_BranchCond := not v_LT;
-        when "110" =>  -- BLTU
-          v_BranchCond := v_LTU;
-        when "111" =>  -- BGEU
-          v_BranchCond := not v_LTU;
+      case s_IFID_Inst(14 downto 12) is  -- funct3 field determines branch type
+        when "000" =>  -- BEQ: Branch if Equal
+          v_BranchCond := v_Zero;           -- Take if RS1 == RS2
+        when "001" =>  -- BNE: Branch if Not Equal
+          v_BranchCond := not v_Zero;       -- Take if RS1 != RS2
+        when "100" =>  -- BLT: Branch if Less Than (signed)
+          v_BranchCond := v_LT;             -- Take if RS1 < RS2 (signed)
+        when "101" =>  -- BGE: Branch if Greater or Equal (signed)
+          v_BranchCond := not v_LT;         -- Take if RS1 >= RS2 (signed)
+        when "110" =>  -- BLTU: Branch if Less Than Unsigned
+          v_BranchCond := v_LTU;            -- Take if RS1 < RS2 (unsigned)
+        when "111" =>  -- BGEU: Branch if Greater or Equal Unsigned
+          v_BranchCond := not v_LTU;        -- Take if RS1 >= RS2 (unsigned)
         when others =>
-          v_BranchCond := '0';
+          v_BranchCond := '0';              -- Invalid funct3, don't branch
       end case;
     end if;
     
+    -- Output: 1 = take branch, 0 = continue sequential execution
     s_BranchTaken <= v_BranchCond;
   end process;
   

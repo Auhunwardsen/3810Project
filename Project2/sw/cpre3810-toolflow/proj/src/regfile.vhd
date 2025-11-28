@@ -49,6 +49,8 @@ architecture rtl of regfile is
 
   signal we_decode  : std_logic_vector(31 downto 0);
   signal regs_flat  : std_logic_vector(32*32-1 downto 0);
+  signal rs1_mux_out : std_logic_vector(31 downto 0);
+  signal rs2_mux_out : std_logic_vector(31 downto 0);
 begin
   -- decode write address; gate with global write enable
   DEC: decoder5t32
@@ -77,7 +79,11 @@ begin
     regs_flat(i*32+31 downto i*32) <= qi;
   end generate;
 
-  -- read ports
-  MUXA: mux32_1 port map(data_in => regs_flat, sel => i_RS1, y => o_RS1Data);
-  MUXB: mux32_1 port map(data_in => regs_flat, sel => i_RS2, y => o_RS2Data);
+  -- read ports with internal forwarding
+  MUXA: mux32_1 port map(data_in => regs_flat, sel => i_RS1, y => rs1_mux_out);
+  MUXB: mux32_1 port map(data_in => regs_flat, sel => i_RS2, y => rs2_mux_out);
+  
+  -- Internal forwarding: if reading same register being written, bypass
+  o_RS1Data <= i_WriteData when (i_WE = '1' and i_RD = i_RS1 and i_RD /= "00000") else rs1_mux_out;
+  o_RS2Data <= i_WriteData when (i_WE = '1' and i_RD = i_RS2 and i_RD /= "00000") else rs2_mux_out;
 end architecture;
