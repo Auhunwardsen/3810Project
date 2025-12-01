@@ -472,11 +472,9 @@ begin
       o_imm => s_Immediate
     );
 
-  -- WB→ID Forwarding: Forward from WB stage to ID stage when writing to register being read
-  -- This is necessary because register file's internal forwarding doesn't work across pipeline stages
+  -- WB→ID Forwarding: Only forward from WB stage (software-scheduled pipeline)
+  -- No EX→ID or MEM→ID forwarding - software must schedule to avoid those hazards
   process(s_RS1Data, s_RS2Data, s_IFID_Inst, 
-          s_IDEX_RegWrite, s_IDEX_RDAddr, s_ALUResult,
-          s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_EXMEM_ALUResult,
           s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_WriteData)
     variable v_RS1_addr : std_logic_vector(4 downto 0);
     variable v_RS2_addr : std_logic_vector(4 downto 0);
@@ -484,24 +482,15 @@ begin
     v_RS1_addr := s_IFID_Inst(19 downto 15);
     v_RS2_addr := s_IFID_Inst(24 downto 20);
     
-    -- Forward RS1: Priority EX > MEM > WB > regfile
-    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_final <= s_ALUResult;  -- Forward from EX stage
-    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_final <= s_EXMEM_ALUResult;  -- Forward from MEM stage
-    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_final <= s_WriteData;  -- Forward from WB stage
+    -- Forward from WB only - maintains software schedule timing
+    if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+      s_RS1Data_final <= s_WriteData;
     else
       s_RS1Data_final <= s_RS1Data;
     end if;
     
-    -- Forward RS2: Priority EX > MEM > WB > regfile
-    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_final <= s_ALUResult;  -- Forward from EX stage
-    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_final <= s_EXMEM_ALUResult;  -- Forward from MEM stage
-    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_final <= s_WriteData;  -- Forward from WB stage
+    if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+      s_RS2Data_final <= s_WriteData;
     else
       s_RS2Data_final <= s_RS2Data;
     end if;

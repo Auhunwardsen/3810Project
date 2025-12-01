@@ -2,7 +2,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-
+library work;
+use work.RISCV_types.all;
 
 entity fetch is
   port (
@@ -95,7 +96,7 @@ begin
   process(i_CLK, i_RST)
   begin
     if (i_RST = '1') then
-      s_PC <= "0x00400000";  -- Reset to 0x00400000
+      s_PC <= PC_BASE_ADDR;  -- Reset to 0x00400000
     elsif (rising_edge(i_CLK)) then
       s_PC <= s_NextPC;
     end if;

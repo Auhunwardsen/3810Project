@@ -25,6 +25,7 @@ entity EXMEM_reg is
     i_RS2Data     : in  std_logic_vector(31 downto 0);
     i_RDAddr      : in  std_logic_vector(4 downto 0);
     i_PCplus4     : in  std_logic_vector(31 downto 0);
+    i_Instr   : in  std_logic_vector(31 downto 0);
     
     -- Outputs to MEM stage
     o_RegWrite    : out std_logic;
@@ -39,7 +40,8 @@ entity EXMEM_reg is
     o_WriteData   : out std_logic_vector(31 downto 0);
     o_RS2Data     : out std_logic_vector(31 downto 0);
     o_RDAddr      : out std_logic_vector(4 downto 0);
-    o_PCplus4     : out std_logic_vector(31 downto 0)
+    o_PCplus4     : out std_logic_vector(31 downto 0);
+    o_Instr       : out std_logic_vector(31 downto 0)
   );
 end EXMEM_reg;
 
@@ -88,6 +90,7 @@ begin
         o_MemWrite    <= i_MemWrite;
         o_MemRead     <= i_MemRead;
         o_Branch      <= i_Branch;
+        o_Instr       <= i_Instr;
         
         o_BranchAddr  <= i_BranchAddr;
         o_BranchTaken <= i_BranchTaken;

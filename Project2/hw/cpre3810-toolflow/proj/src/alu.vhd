@@ -171,7 +171,7 @@ begin
                 
             -- LUI - Load Upper Immediate (1110)
             when "1110" =>
-                -- For LUI, we just pass i_B directly (the immediate value)
+                -- For LUI, we pass the immediate value (i_B) directly - ignore i_A
                 s_Result <= i_B;
                 s_Overflow <= '0';
                 

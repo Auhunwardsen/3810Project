@@ -158,46 +158,6 @@ architecture structure of RISCV_Processor is
     );
   end component;
 
-  component hazard_detection is
-    port(
-      i_IDEX_MemRead  : in std_logic;
-      i_IDEX_RD       : in std_logic_vector(4 downto 0);
-      i_IFID_RS1      : in std_logic_vector(4 downto 0);
-      i_IFID_RS2      : in std_logic_vector(4 downto 0);
-      i_Branch        : in std_logic;
-      i_Jump          : in std_logic;
-      o_PCWrite       : out std_logic;
-      o_IFID_Write    : out std_logic;
-      o_ControlMux    : out std_logic;
-      o_IFID_Flush    : out std_logic;
-      o_IDEX_Flush    : out std_logic
-    );
-  end component;
-
-  component forwarding_unit is
-    port(
-      i_IDEX_RS1      : in std_logic_vector(4 downto 0);
-      i_IDEX_RS2      : in std_logic_vector(4 downto 0);
-      i_EXMEM_RD      : in std_logic_vector(4 downto 0);
-      i_MEMWB_RD      : in std_logic_vector(4 downto 0);
-      i_EXMEM_RegWrite : in std_logic;
-      i_MEMWB_RegWrite : in std_logic;
-      o_Forward_A     : out std_logic_vector(1 downto 0);
-      o_Forward_B     : out std_logic_vector(1 downto 0)
-    );
-  end component;
-
-  component mux3t1_n is
-    generic(N : integer := 32);
-    port(
-      i_S   : in  std_logic_vector(1 downto 0);
-      i_D0  : in  std_logic_vector(N-1 downto 0);
-      i_D1  : in  std_logic_vector(N-1 downto 0);
-      i_D2  : in  std_logic_vector(N-1 downto 0);
-      o_O   : out std_logic_vector(N-1 downto 0)
-    );
-  end component;
-
   -- Pipeline register components
   component IFID_reg is
     port(
@@ -257,132 +217,70 @@ architecture structure of RISCV_Processor is
 
   component EXMEM_reg is
     port(
-      i_CLK         : in  std_logic;
-      i_RST         : in  std_logic;
-      i_WE          : in  std_logic;
-      i_flush       : in  std_logic;
-      i_RegWrite    : in  std_logic;
-      i_MemToReg    : in  std_logic;
-      i_MemWrite    : in  std_logic;
-      i_MemRead     : in  std_logic;
-      i_PCplus4     : in  std_logic_vector(31 downto 0);
-      i_PCBranch    : in  std_logic_vector(31 downto 0);
-      i_PCSrc       : in  std_logic;
-      i_ALUResult   : in  std_logic_vector(31 downto 0);
-      i_RS2Data     : in  std_logic_vector(31 downto 0);
-      i_RDAddr      : in  std_logic_vector(4 downto 0);
-      o_RegWrite    : out std_logic;
-      o_MemToReg    : out std_logic;
-      o_MemWrite    : out std_logic;
-      o_MemRead     : out std_logic;
-      o_PCplus4     : out std_logic_vector(31 downto 0);
-      o_PCBranch    : out std_logic_vector(31 downto 0);
-      o_PCSrc       : out std_logic;
-      o_ALUResult   : out std_logic_vector(31 downto 0);
-      o_RS2Data     : out std_logic_vector(31 downto 0);
-      o_RDAddr      : out std_logic_vector(4 downto 0)
+      i_CLK       : in  std_logic;
+      i_RST       : in  std_logic;
+      i_WE        : in  std_logic;
+      i_flush     : in  std_logic;
+      i_RegWrite  : in  std_logic;
+      i_MemToReg  : in  std_logic;
+      i_MemWrite  : in  std_logic;
+      i_MemRead   : in  std_logic;
+      i_Branch    : in  std_logic;
+      i_BranchAddr: in  std_logic_vector(31 downto 0);
+      i_BranchTaken: in std_logic;
+      i_PCplus4   : in  std_logic_vector(31 downto 0);
+      i_ALUResult : in  std_logic_vector(31 downto 0);
+      i_WriteData : in  std_logic_vector(31 downto 0);
+      i_RS2Data   : in  std_logic_vector(31 downto 0);
+      i_RDAddr    : in  std_logic_vector(4 downto 0);
+      i_Instr     : in  std_logic_vector(31 downto 0);
+      
+      o_RegWrite  : out std_logic;
+      o_MemToReg  : out std_logic;
+      o_MemWrite  : out std_logic;
+      o_MemRead   : out std_logic;
+      o_Branch    : out std_logic;
+      o_BranchAddr: out std_logic_vector(31 downto 0);
+      o_BranchTaken: out std_logic;
+      o_WriteData : out std_logic_vector(31 downto 0);
+      o_PCplus4   : out std_logic_vector(31 downto 0);
+      o_ALUResult : out std_logic_vector(31 downto 0);
+      o_RS2Data   : out std_logic_vector(31 downto 0);
+      o_RDAddr    : out std_logic_vector(4 downto 0);
+      o_Instr     : out std_logic_vector(31 downto 0)
     );
   end component;
 
   component MEMWB_reg is
     port(
-      i_CLK         : in  std_logic;
-      i_RST         : in  std_logic;
-      i_WE          : in  std_logic;
-      i_flush       : in  std_logic;
-      i_RegWrite    : in  std_logic;
-      i_MemToReg    : in  std_logic;
-      i_PCplus4     : in  std_logic_vector(31 downto 0);
-      i_ALUResult   : in  std_logic_vector(31 downto 0);
-      i_MemData     : in  std_logic_vector(31 downto 0);
-      i_RDAddr      : in  std_logic_vector(4 downto 0);
-      o_RegWrite    : out std_logic;
-      o_MemToReg    : out std_logic;
-      o_PCplus4     : out std_logic_vector(31 downto 0);
-      o_ALUResult   : out std_logic_vector(31 downto 0);
-      o_MemData     : out std_logic_vector(31 downto 0);
-      o_RDAddr      : out std_logic_vector(4 downto 0)
+      i_CLK       : in  std_logic;
+      i_RST       : in  std_logic;
+      i_WE        : in  std_logic;
+      i_flush     : in  std_logic;
+      i_RegWrite  : in  std_logic;
+      i_MemToReg  : in  std_logic;
+      i_ALUResult : in  std_logic_vector(31 downto 0);
+      i_MemData   : in  std_logic_vector(31 downto 0);
+      i_PCplus4   : in  std_logic_vector(31 downto 0);
+      i_RDAddr    : in  std_logic_vector(4 downto 0);
+      i_Instr     : in  std_logic_vector(31 downto 0);
+      o_RegWrite  : out std_logic;
+      o_MemToReg  : out std_logic;
+      o_ALUResult : out std_logic_vector(31 downto 0);
+      o_MemData   : out std_logic_vector(31 downto 0);
+      o_PCplus4   : out std_logic_vector(31 downto 0);
+      o_RDAddr    : out std_logic_vector(4 downto 0);
+      o_Instr     : out std_logic_vector(31 downto 0)
     );
   end component;
 
-  -- Pipeline stage signals
-  -- IF stage
+  -- Processor internal signals
   signal s_PC         : std_logic_vector(31 downto 0);
   signal s_PCplus4    : std_logic_vector(31 downto 0);
   signal s_UseNextAdr : std_logic;
   signal s_NextAdr    : std_logic_vector(31 downto 0);
   signal s_Stall      : std_logic;
-  signal s_PCWrite    : std_logic;
-  signal s_Instr_IF   : std_logic_vector(31 downto 0);
-  
-  -- IF/ID pipeline register signals
-  signal s_IFID_Write    : std_logic;
-  signal s_IFID_Flush    : std_logic;
-  signal s_IFID_PC       : std_logic_vector(31 downto 0);
-  signal s_IFID_PCplus4  : std_logic_vector(31 downto 0);
-  signal s_IFID_Instr    : std_logic_vector(31 downto 0);
-  
-  -- ID stage signals
-  signal s_RS1Data_ID    : std_logic_vector(31 downto 0);
-  signal s_RS2Data_ID    : std_logic_vector(31 downto 0);
-  signal s_Immediate_ID  : std_logic_vector(31 downto 0);
-  
-  -- ID/EX pipeline register signals
-  signal s_IDEX_Flush    : std_logic;
-  signal s_IDEX_RegWrite : std_logic;
-  signal s_IDEX_MemToReg : std_logic;
-  signal s_IDEX_MemWrite : std_logic;
-  signal s_IDEX_MemRead  : std_logic;
-  signal s_IDEX_Branch   : std_logic;
-  signal s_IDEX_ALUSrc   : std_logic;
-  signal s_IDEX_ALUOp    : std_logic_vector(2 downto 0);
-  signal s_IDEX_PC       : std_logic_vector(31 downto 0);
-  signal s_IDEX_PCplus4  : std_logic_vector(31 downto 0);
-  signal s_IDEX_RS1Data  : std_logic_vector(31 downto 0);
-  signal s_IDEX_RS2Data  : std_logic_vector(31 downto 0);
-  signal s_IDEX_Immediate: std_logic_vector(31 downto 0);
-  signal s_IDEX_RS1Addr  : std_logic_vector(4 downto 0);
-  signal s_IDEX_RS2Addr  : std_logic_vector(4 downto 0);
-  signal s_IDEX_RDAddr   : std_logic_vector(4 downto 0);
-  signal s_IDEX_Instr    : std_logic_vector(31 downto 0);
-  
-  -- EX stage signals
-  signal s_ALU_Input_A   : std_logic_vector(31 downto 0);
-  signal s_ALU_Input_B   : std_logic_vector(31 downto 0);
-  signal s_Forward_A     : std_logic_vector(1 downto 0);
-  signal s_Forward_B     : std_logic_vector(1 downto 0);
-  signal s_ALUResult_EX  : std_logic_vector(31 downto 0);
-  signal s_Zero_EX       : std_logic;
-  signal s_BranchAddr_EX : std_logic_vector(31 downto 0);
-  signal s_PCSrc_EX      : std_logic;
-  
-  -- EX/MEM pipeline register signals
-  signal s_EXMEM_RegWrite   : std_logic;
-  signal s_EXMEM_MemToReg   : std_logic;
-  signal s_EXMEM_MemWrite   : std_logic;
-  signal s_EXMEM_MemRead    : std_logic;
-  signal s_EXMEM_Branch     : std_logic;
-  signal s_EXMEM_BranchAddr : std_logic_vector(31 downto 0);
-  signal s_EXMEM_BranchTaken: std_logic;
-  signal s_EXMEM_WriteData  : std_logic_vector(31 downto 0);
-  signal s_EXMEM_PCplus4    : std_logic_vector(31 downto 0);
-  signal s_EXMEM_ALUResult  : std_logic_vector(31 downto 0);
-  signal s_EXMEM_RS2Data    : std_logic_vector(31 downto 0);
-  signal s_EXMEM_RDAddr     : std_logic_vector(4 downto 0);
-  
-  -- MEM stage signals
-  signal s_MemData_MEM   : std_logic_vector(31 downto 0);
-  
-  -- MEM/WB pipeline register signals
-  signal s_MEMWB_RegWrite : std_logic;
-  signal s_MEMWB_MemToReg : std_logic;
-  signal s_MEMWB_PCplus4  : std_logic_vector(31 downto 0);
-  signal s_MEMWB_ALUResult: std_logic_vector(31 downto 0);
-  signal s_MEMWB_MemData  : std_logic_vector(31 downto 0);
-  signal s_MEMWB_RDAddr   : std_logic_vector(4 downto 0);
-  
-  -- WB stage signals
-  signal s_WriteData_WB  : std_logic_vector(31 downto 0);
+  signal s_Instr_Fetch: std_logic_vector(31 downto 0);
   
   -- Control signals
   signal s_Branch     : std_logic;
@@ -399,6 +297,8 @@ architecture structure of RISCV_Processor is
   -- Register file signals
   signal s_RS1Data    : std_logic_vector(31 downto 0);
   signal s_RS2Data    : std_logic_vector(31 downto 0);
+  signal s_RS1Data_final : std_logic_vector(31 downto 0);  -- After WB→ID forwarding check
+  signal s_RS2Data_final : std_logic_vector(31 downto 0);  -- After WB→ID forwarding check
   signal s_WriteData  : std_logic_vector(31 downto 0);
   
   -- Immediate generator signals
@@ -418,14 +318,55 @@ architecture structure of RISCV_Processor is
   signal s_IsAUIPC    : std_logic;
   signal s_IsJAL      : std_logic;
   signal s_IsJALR     : std_logic;
+  signal s_IsLUI      : std_logic;
+
+  -- Pipeline register signals
+  -- IF/ID pipeline register outputs
+  signal s_IFID_PC      : std_logic_vector(31 downto 0);
+  signal s_IFID_PCplus4 : std_logic_vector(31 downto 0);
+  signal s_IFID_Inst    : std_logic_vector(31 downto 0);
   
-  -- Hazard detection signals
-  signal s_ControlMux  : std_logic;
-  signal s_IDEX_Flush  : std_logic;
+  -- ID/EX pipeline register outputs  
+  signal s_IDEX_RegWrite  : std_logic;
+  signal s_IDEX_MemToReg  : std_logic;
+  signal s_IDEX_MemWrite  : std_logic;
+  signal s_IDEX_MemRead   : std_logic;
+  signal s_IDEX_Branch    : std_logic;
+  signal s_IDEX_ALUSrc    : std_logic;
+  signal s_IDEX_ALUOp     : std_logic_vector(2 downto 0);
+  signal s_IDEX_PC        : std_logic_vector(31 downto 0);
+  signal s_IDEX_PCplus4   : std_logic_vector(31 downto 0);
+  signal s_IDEX_RS1Data   : std_logic_vector(31 downto 0);
+  signal s_IDEX_RS2Data   : std_logic_vector(31 downto 0);
+  signal s_IDEX_Immediate : std_logic_vector(31 downto 0);
+  signal s_IDEX_RS1Addr   : std_logic_vector(4 downto 0);
+  signal s_IDEX_RS2Addr   : std_logic_vector(4 downto 0);
+  signal s_IDEX_RDAddr    : std_logic_vector(4 downto 0);
+  signal s_IDEX_Instr     : std_logic_vector(31 downto 0);
   
-  -- Forwarding mux outputs
-  signal s_ForwardA_Out: std_logic_vector(31 downto 0);
-  signal s_ForwardB_Out: std_logic_vector(31 downto 0);
+  -- EX/MEM pipeline register outputs
+  signal s_EXMEM_RegWrite   : std_logic;
+  signal s_EXMEM_MemToReg   : std_logic;
+  signal s_EXMEM_MemWrite   : std_logic;
+  signal s_EXMEM_MemRead    : std_logic;
+  signal s_EXMEM_Branch     : std_logic;
+  signal s_EXMEM_BranchAddr : std_logic_vector(31 downto 0);
+  signal s_EXMEM_BranchTaken: std_logic;
+  signal s_EXMEM_WriteData  : std_logic_vector(31 downto 0);
+  signal s_EXMEM_PCplus4    : std_logic_vector(31 downto 0);
+  signal s_EXMEM_ALUResult  : std_logic_vector(31 downto 0);
+  signal s_EXMEM_RS2Data    : std_logic_vector(31 downto 0);
+  signal s_EXMEM_RDAddr     : std_logic_vector(4 downto 0);
+  signal s_EXMEM_Inst       : std_logic_vector(31 downto 0);
+
+  -- MEM/WB pipeline register outputs
+  signal s_MEMWB_RegWrite  : std_logic;
+  signal s_MEMWB_MemToReg  : std_logic;
+  signal s_MEMWB_ALUResult : std_logic_vector(31 downto 0);
+  signal s_MEMWB_MemData   : std_logic_vector(31 downto 0);
+  signal s_MEMWB_PCplus4   : std_logic_vector(31 downto 0);
+  signal s_MEMWB_RDAddr    : std_logic_vector(4 downto 0);
+  signal s_MEMWB_Inst    : std_logic_vector(31 downto 0);
 
 begin
 
@@ -461,7 +402,6 @@ begin
   -- STAGE 1: INSTRUCTION FETCH (IF)
   -------------------------------------------------------------------------
   -- Fetches instruction from memory and increments PC
-  -- PC update controlled by hazard detection (s_PCWrite)
   u_fetch: fetch
     port map (
       i_CLK        => iCLK,
@@ -470,50 +410,113 @@ begin
       i_Stall      => s_Stall,
       i_NextAdr    => s_NextAdr,
       o_IMemAdr    => s_NextInstAddr,
-      i_IMemData   => s_Inst,
+      i_IMemData   => s_Inst,  -- Instruction from memory
       o_PC         => s_PC,
       o_PCplus4    => s_PCplus4,
-      o_Instr      => open  -- Not needed, we use s_Inst directly
+      o_Instr      => s_Instr_Fetch  -- Fetch unit output instruction
     );
 
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: IF/ID
   -------------------------------------------------------------------------
   -- Latches PC, PC+4, and instruction between IF and ID stages
-  -- Write enable controlled by hazard detection for load-use stalls
-  -- Flush controlled by hazard detection for control hazards
   u_IFID: IFID_reg
     port map (
       i_CLK     => iCLK,
       i_RST     => iRST,
-      i_WE      => s_IFID_Write,  -- Controlled by hazard detection
-      i_flush   => s_IFID_Flush,  -- Controlled by hazard detection
+      i_WE      => '1',  -- Always enabled for software-scheduled pipeline
+      i_flush   => '0',  -- No flushing in software-scheduled pipeline
       i_PC      => s_PC,
       i_PCplus4 => s_PCplus4,
-      i_Instr   => s_Inst,
+      i_Instr   => s_Instr_Fetch,  -- Use fetch unit output
       o_PC      => s_IFID_PC,
       o_PCplus4 => s_IFID_PCplus4,
-      o_Instr   => s_IFID_Instr
+      o_Instr   => s_IFID_Inst
     );
 
   -------------------------------------------------------------------------
   -- STAGE 2: INSTRUCTION DECODE (ID)
   -------------------------------------------------------------------------
   -- Decodes instruction, reads registers, generates control signals
-  -- Control unit, register file, and immediate generator instantiated below
-  -- Hazard detection unit also monitors this stage for load-use hazards
+  -- Control Unit: generates all control signals based on opcode
+  u_control: control
+    port map (
+      i_opcode   => s_IFID_Inst(6 downto 0),
+      o_branch   => s_Branch,
+      o_memRead  => s_MemRead,
+      o_memToReg => s_MemToReg,
+      o_ALUOp    => s_ALUOp,
+      o_memWrite => s_MemWrite,
+      o_ALUSrc   => s_ALUSrc,
+      o_regWrite => s_RegWrite
+    );
+
+  -- Register File: reads two source registers
+  u_regfile: regfile
+    port map (
+      i_CLK       => iCLK,
+      i_RST       => iRST,
+      i_WE        => s_RegWr,
+      i_RS1       => s_IFID_Inst(19 downto 15),
+      i_RS2       => s_IFID_Inst(24 downto 20),
+      i_RD        => s_RegWrAddr,
+      i_WriteData => s_RegWrData,
+      o_RS1Data   => s_RS1Data,
+      o_RS2Data   => s_RS2Data
+    );
+
+  -- Immediate Generator: extracts and sign-extends immediate values
+  u_immgen: immgen
+    port map (
+      i_instr     => s_IFID_Inst,
+      o_imm => s_Immediate
+    );
+
+  -- WB→ID Forwarding: Forward from WB stage to ID stage when writing to register being read
+  -- This is necessary because register file's internal forwarding doesn't work across pipeline stages
+  process(s_RS1Data, s_RS2Data, s_IFID_Inst, 
+          s_IDEX_RegWrite, s_IDEX_RDAddr, s_ALUResult,
+          s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_EXMEM_ALUResult,
+          s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_WriteData)
+    variable v_RS1_addr : std_logic_vector(4 downto 0);
+    variable v_RS2_addr : std_logic_vector(4 downto 0);
+  begin
+    v_RS1_addr := s_IFID_Inst(19 downto 15);
+    v_RS2_addr := s_IFID_Inst(24 downto 20);
+    
+    -- Forward RS1: Priority EX > MEM > WB > regfile
+    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+      s_RS1Data_final <= s_ALUResult;  -- Forward from EX stage
+    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+      s_RS1Data_final <= s_EXMEM_ALUResult;  -- Forward from MEM stage
+    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+      s_RS1Data_final <= s_WriteData;  -- Forward from WB stage
+    else
+      s_RS1Data_final <= s_RS1Data;
+    end if;
+    
+    -- Forward RS2: Priority EX > MEM > WB > regfile
+    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+      s_RS2Data_final <= s_ALUResult;  -- Forward from EX stage
+    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+      s_RS2Data_final <= s_EXMEM_ALUResult;  -- Forward from MEM stage
+    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+      s_RS2Data_final <= s_WriteData;  -- Forward from WB stage
+    else
+      s_RS2Data_final <= s_RS2Data;
+    end if;
+  end process;
 
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: ID/EX
   -------------------------------------------------------------------------
   -- Latches control signals, register data, and immediate between ID and EX stages
-  -- Flush controlled by hazard detection for control hazards and load-use stalls
   u_IDEX: IDEX_reg
     port map (
       i_CLK       => iCLK,
       i_RST       => iRST,
-      i_WE        => '1',  -- Always write unless stalled (simplified)
-      i_flush     => s_IDEX_Flush,  -- Controlled by hazard detection
+      i_WE        => '1',  -- Always enabled for software-scheduled pipeline
+      i_flush     => '0',  -- No flushing in software-scheduled pipeline
       i_RegWrite  => s_RegWrite,
       i_MemToReg  => s_MemToReg,
       i_MemWrite  => s_MemWrite,
@@ -523,13 +526,13 @@ begin
       i_ALUOp     => s_ALUOp,
       i_PC        => s_IFID_PC,
       i_PCplus4   => s_IFID_PCplus4,
-      i_RS1Data   => s_RS1Data,
-      i_RS2Data   => s_RS2Data,
+      i_RS1Data   => s_RS1Data_final,
+      i_RS2Data   => s_RS2Data_final,
       i_Immediate => s_Immediate,
-      i_RS1Addr   => s_IFID_Instr(19 downto 15),
-      i_RS2Addr   => s_IFID_Instr(24 downto 20),
-      i_RDAddr    => s_IFID_Instr(11 downto 7),
-      i_Instr     => s_IFID_Instr,
+      i_RS1Addr   => s_IFID_Inst(19 downto 15),
+      i_RS2Addr   => s_IFID_Inst(24 downto 20),
+      i_RDAddr    => s_IFID_Inst(11 downto 7),
+      i_Instr     => s_IFID_Inst,
       o_RegWrite  => s_IDEX_RegWrite,
       o_MemToReg  => s_IDEX_MemToReg,
       o_MemWrite  => s_IDEX_MemWrite,
@@ -551,9 +554,54 @@ begin
   -------------------------------------------------------------------------
   -- STAGE 3: EXECUTE (EX)
   -------------------------------------------------------------------------
-  -- Performs ALU operations with forwarding support
-  -- Forwarding unit monitors EX/MEM and MEM/WB stages for data hazards
-  -- ALU inputs selected via forwarding muxes (3-to-1 muxes)
+  -- Performs ALU operations and computes branch target address
+  
+  -- ALU Control: generates ALU operation code from instruction fields
+  u_alu_control: alu_control
+    port map (
+      i_ALUOp    => s_IDEX_ALUOp,
+      i_Funct3   => s_IDEX_Instr(14 downto 12),
+      i_Funct7_5 => s_IDEX_Instr(30),
+      o_ALUCtrl  => s_ALUCtrl
+    );
+
+  -- ALU Source Mux: selects between RS2 data or immediate
+  u_alu_src_mux: mux2t1_n
+    generic map(N => 32)
+    port map (
+      i_S  => s_IDEX_ALUSrc,
+      i_D0 => s_IDEX_RS2Data,
+      i_D1 => s_IDEX_Immediate,
+      o_O  => s_ALUIn2
+    );
+
+  -- ALU Input A Selection: AUIPC uses PC, LUI uses zero, others use RS1
+  process(s_IDEX_Instr, s_IDEX_RS1Data, s_IDEX_PC)
+    variable v_IsAUIPC : std_logic;
+    variable v_IsLUI : std_logic;
+  begin
+    v_IsAUIPC := '1' when s_IDEX_Instr(6 downto 0) = "0010111" else '0';
+    v_IsLUI := '1' when s_IDEX_Instr(6 downto 0) = "0110111" else '0';
+    
+    if v_IsAUIPC = '1' then
+      s_ALUIn1 <= s_IDEX_PC;  -- AUIPC: use PC
+    elsif v_IsLUI = '1' then
+      s_ALUIn1 <= (others => '0');  -- LUI: use 0
+    else
+      s_ALUIn1 <= s_IDEX_RS1Data;  -- Normal: use RS1
+    end if;
+  end process;
+
+  -- ALU: performs arithmetic and logic operations
+  u_alu_inst: alu
+    port map (
+      i_ALUCtrl  => s_ALUCtrl,
+      i_A        => s_ALUIn1,
+      i_B        => s_ALUIn2,
+      o_Result   => s_ALUResult,
+      o_Zero     => s_Zero,
+      o_Overflow => s_Overflow
+    );
 
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: EX/MEM
@@ -561,34 +609,36 @@ begin
   -- Latches ALU result, memory write data, and control signals between EX and MEM stages
   u_EXMEM: EXMEM_reg
     port map (
-      i_CLK         => iCLK,
-      i_RST         => iRST,
-      i_WE          => '1',  -- Always write (no stalling at this stage)
-      i_flush       => '0',  -- No flushing at this stage
-      i_RegWrite    => s_IDEX_RegWrite,
-      i_MemToReg    => s_IDEX_MemToReg,
-      i_MemWrite    => s_IDEX_MemWrite,
-      i_MemRead     => s_IDEX_MemRead,
-      i_Branch      => s_IDEX_Branch,
-      i_BranchAddr  => s_BranchAddr,
-      i_BranchTaken => s_BranchTaken,
-      i_ALUResult   => s_ALUResult,
-      i_WriteData   => s_ForwardB_Out,  -- For store instructions
-      i_RS2Data     => s_ForwardB_Out,  -- Use forwarded data
-      i_RDAddr      => s_IDEX_RDAddr,
-      i_PCplus4     => s_IDEX_PCplus4,
-      o_RegWrite    => s_EXMEM_RegWrite,
-      o_MemToReg    => s_EXMEM_MemToReg,
-      o_MemWrite    => s_EXMEM_MemWrite,
-      o_MemRead     => s_EXMEM_MemRead,
-      o_Branch      => s_EXMEM_Branch,
-      o_BranchAddr  => s_EXMEM_BranchAddr,
-      o_BranchTaken => s_EXMEM_BranchTaken,
-      o_WriteData   => s_EXMEM_WriteData,
-      o_PCplus4     => s_EXMEM_PCplus4,
-      o_ALUResult   => s_EXMEM_ALUResult,
-      o_RS2Data     => s_EXMEM_RS2Data,
-      o_RDAddr      => s_EXMEM_RDAddr
+      i_CLK        => iCLK,
+      i_RST        => iRST,
+      i_WE         => '1',  -- Always enabled for software-scheduled pipeline
+      i_flush      => '0',  -- No flushing in software-scheduled pipeline
+      i_RegWrite   => s_IDEX_RegWrite,
+      i_MemToReg   => s_IDEX_MemToReg,
+      i_MemWrite   => s_IDEX_MemWrite,
+      i_MemRead    => s_IDEX_MemRead,
+      i_Branch     => s_IDEX_Branch,
+      i_BranchAddr => s_BranchAddr,
+      i_BranchTaken=> s_BranchTaken,
+      i_PCplus4    => s_IDEX_PCplus4,
+      i_ALUResult  => s_ALUResult,
+      i_WriteData  => s_IDEX_RS2Data,  -- For store instructions
+      i_RS2Data    => s_IDEX_RS2Data,
+      i_RDAddr     => s_IDEX_RDAddr,
+      i_Instr      => s_IDEX_Instr,
+      o_RegWrite   => s_EXMEM_RegWrite,
+      o_MemToReg   => s_EXMEM_MemToReg,
+      o_MemWrite   => s_EXMEM_MemWrite,
+      o_MemRead    => s_EXMEM_MemRead,
+      o_Branch     => s_EXMEM_Branch,
+      o_BranchAddr => s_EXMEM_BranchAddr,
+      o_BranchTaken=> s_EXMEM_BranchTaken,
+      o_WriteData  => s_EXMEM_WriteData,
+      o_PCplus4    => s_EXMEM_PCplus4,
+      o_ALUResult  => s_EXMEM_ALUResult,
+      o_RS2Data    => s_EXMEM_RS2Data,
+      o_RDAddr     => s_EXMEM_RDAddr,
+      o_Instr      => s_EXMEM_Inst
     );
 
   -------------------------------------------------------------------------
@@ -607,22 +657,24 @@ begin
   -- Latches memory read data and ALU result between MEM and WB stages
   u_MEMWB: MEMWB_reg
     port map (
-      i_CLK         => iCLK,
-      i_RST         => iRST,
-      i_WE          => '1',  -- Always write (no stalling at this stage)
-      i_flush       => '0',  -- No flushing at this stage  
-      i_RegWrite    => s_EXMEM_RegWrite,
-      i_MemToReg    => s_EXMEM_MemToReg,
-      i_PCplus4     => s_EXMEM_PCplus4,
-      i_ALUResult   => s_EXMEM_ALUResult,
-      i_MemData     => s_DMemOut,
-      i_RDAddr      => s_EXMEM_RDAddr,
-      o_RegWrite    => s_MEMWB_RegWrite,
-      o_MemToReg    => s_MEMWB_MemToReg,
-      o_PCplus4     => s_MEMWB_PCplus4,
-      o_ALUResult   => s_MEMWB_ALUResult,
-      o_MemData     => s_MEMWB_MemData,
-      o_RDAddr      => s_MEMWB_RDAddr
+      i_CLK        => iCLK,
+      i_RST        => iRST,
+      i_WE         => '1',  -- Always enabled for software-scheduled pipeline
+      i_flush      => '0',  -- No flushing in software-scheduled pipeline
+      i_RegWrite   => s_EXMEM_RegWrite,
+      i_MemToReg   => s_EXMEM_MemToReg,
+      i_ALUResult  => s_EXMEM_ALUResult,
+      i_MemData    => s_DMemOut,
+      i_RDAddr     => s_EXMEM_RDAddr,
+      i_Instr      => s_EXMEM_Inst,
+      i_PCplus4    => s_EXMEM_PCplus4,
+      o_RegWrite   => s_MEMWB_RegWrite,
+      o_MemToReg   => s_MEMWB_MemToReg,
+      o_ALUResult  => s_MEMWB_ALUResult,
+      o_MemData    => s_MEMWB_MemData,
+      o_RDAddr     => s_MEMWB_RDAddr,
+      o_Instr      => s_MEMWB_Inst,
+      o_PCplus4    => s_MEMWB_PCplus4
     );
 
   -------------------------------------------------------------------------
@@ -634,197 +686,137 @@ begin
   --   s_RegWrAddr <= s_MEMWB_RDAddr
   --   s_RegWrData <= memory data OR ALU result (based on MemToReg)
 
-  =========================================================================
-  -- DATAPATH COMPONENT INSTANTIATIONS
-  =========================================================================
-  -- Components used by various pipeline stages
-  -- Organized by usage stage for clarity
   -------------------------------------------------------------------------
-
+  -- ID/EX STAGE COMPONENTS (Branch Resolution)
   -------------------------------------------------------------------------
-  -- ID STAGE COMPONENTS
-  -------------------------------------------------------------------------
-  -- Control Unit: generates all control signals based on opcode
-  u_control: control
-    port map (
-      i_opcode   => s_IFID_Instr(6 downto 0),
-      o_branch   => s_Branch,
-      o_memRead  => s_MemRead,
-      o_memToReg => s_MemToReg,
-      o_ALUOp    => s_ALUOp,
-      o_memWrite => s_MemWrite,
-      o_ALUSrc   => s_ALUSrc,
-      o_regWrite => s_RegWrite
-    );
-  
-  -- Register File: reads RS1 and RS2, writes to RD in WB stage
-  u_regfile: regfile
-    port map (
-      i_CLK       => iCLK,
-      i_RST       => iRST,
-      i_WE        => s_MEMWB_RegWrite,         -- From WB stage
-      i_RS1       => s_IFID_Instr(19 downto 15),
-      i_RS2       => s_IFID_Instr(24 downto 20),
-      i_RD        => s_MEMWB_RDAddr,            -- From WB stage
-      i_WriteData => s_WriteData_WB,            -- From WB stage
-      o_RS1Data   => s_RS1Data,
-      o_RS2Data   => s_RS2Data
-    );
-  
-  -- Immediate Generator: extracts immediate from instruction
-  u_immgen: immgen
-    port map (
-      i_instr => s_IFID_Instr,
-      o_imm   => s_Immediate
-    );
-
-  -------------------------------------------------------------------------
-  -- EX STAGE COMPONENTS
-  -------------------------------------------------------------------------
-  -- ALU Control: decodes funct3/funct7 to generate ALU control signal
-  u_alu_control: alu_control
-    port map (
-      i_ALUOp    => s_IDEX_ALUOp,
-      i_Funct3   => s_IDEX_Instr(14 downto 12),
-      i_Funct7_5 => s_IDEX_Instr(30),
-      o_ALUCtrl  => s_ALUCtrl
-    );
-  
-  -- ALU Source Mux: selects second ALU operand (forwarded RS2 or immediate)
-  u_alu_src_mux: mux2t1_n
-    port map (
-      i_S  => s_IDEX_ALUSrc,
-      i_D0 => s_ForwardB_Out,
-      i_D1 => s_IDEX_Immediate,
-      o_O  => s_ALUIn2
-    );
-  
-  -- ALU Input Selection Logic: handles special instructions with forwarding
-  s_ALUIn1 <= s_IDEX_PC when s_IsAUIPC = '1' else s_ForwardA_Out;
-  s_ALUIn2_sel <= s_IDEX_Immediate when (s_IsAUIPC = '1' or s_IsJALR = '1') else s_ALUIn2;
-  
-  -- ALU: performs arithmetic/logic operations on forwarded data
-  u_alu: alu
-    port map (
-      i_ALUCtrl  => s_ALUCtrl,
-      i_A        => s_ALUIn1,
-      i_B        => s_ALUIn2_sel,
-      o_Result   => s_ALUResult,
-      o_Zero     => s_Zero,
-      o_Overflow => s_Overflow
-    );
+  -- Note: For software-scheduled pipeline, branches resolved in ID/EX
+  -- boundary to avoid control hazards via software scheduling
   
   -- Branch Address Adder: computes PC + immediate for branch target
   u_branch_adder: adder_n
+    generic map(N => 32)
     port map (
-      iA   => s_IDEX_PC,
-      iB   => s_IDEX_Immediate,
+      iA   => s_IFID_PC,
+      iB   => s_Immediate,
       oSum => s_BranchAddr
     );
 
   -------------------------------------------------------------------------
-  -- WB STAGE COMPONENTS
+  -- MEM STAGE CONNECTIONS
   -------------------------------------------------------------------------
-  -- Write-Back Data Selection: chooses between ALU result and memory data
-  u_writeback_mux: mux2t1_n
-    port map (
-      i_S  => s_MEMWB_MemToReg,
-      i_D0 => s_MEMWB_ALUResult,
-      i_D1 => s_MEMWB_MemData,
-      o_O  => s_WriteData_WB
-    );
-  
-  -- Memory connections
-  s_DMemAddr <= s_EXMEM_ALUResult;
-  s_DMemData <= s_EXMEM_RS2Data;
-  s_DMemWr <= s_EXMEM_MemWrite;
-  
-  -- Instruction type detection (using IDEX stage)
-  s_IsAUIPC <= '1' when s_IDEX_Instr(6 downto 0) = "0010111" else '0';  -- AUIPC
-  s_IsJAL   <= '1' when s_IDEX_Instr(6 downto 0) = "1101111" else '0';  -- JAL
-  s_IsJALR  <= '1' when s_IDEX_Instr(6 downto 0) = "1100111" else '0';  -- JALR
-  
-  -- Write data selection with proper load handling
-  process(s_IsJAL, s_IsJALR, s_MemToReg, s_PCplus4, s_ALUResult, s_DMemOut, s_Inst, s_PC)
+  -- Data memory signals driven by EX/MEM pipeline register outputs
+  s_DMemAddr <= s_EXMEM_ALUResult;   -- Memory address from ALU
+  s_DMemData <= s_EXMEM_RS2Data;     -- Write data for stores
+  s_DMemWr   <= s_EXMEM_MemWrite;    -- Write enable
+
+  -------------------------------------------------------------------------
+  -- WB STAGE LOGIC
+  -------------------------------------------------------------------------
+  -- Write Data Selection: chooses between ALU result and memory data
+  process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_ALUResult, s_MEMWB_MemData, s_MEMWB_PCplus4)
     variable v_LoadData : std_logic_vector(31 downto 0);
+    variable v_IsJAL : std_logic;
+    variable v_IsJALR : std_logic;
   begin
-    if s_IsJAL = '1' or s_IsJALR = '1' then
-      -- JAL/JALR write PC+4 to register (return address)
-      s_WriteData <= s_PCplus4;
-    elsif s_MemToReg = '1' then
+    v_IsJAL := '1' when s_MEMWB_Inst(6 downto 0) = "1101111" else '0';
+    v_IsJALR := '1' when s_MEMWB_Inst(6 downto 0) = "1100111" else '0';
+    
+    if v_IsJAL = '1' or v_IsJALR = '1' then
+      -- JAL/JALR write PC+4 to register (return address) - use PCplus4 from pipeline
+      s_WriteData <= s_MEMWB_PCplus4;
+    elsif s_MEMWB_MemToReg = '1' then
       -- Load instructions - handle different load types with proper sign extension
-      case s_Inst(14 downto 12) is  -- funct3 field for load instructions
+      case s_MEMWB_Inst(14 downto 12) is  -- funct3 field for load instructions
         when "000" =>  -- LB (Load Byte) - sign extend byte
-          if s_DMemOut(7) = '1' then
-            v_LoadData := x"FFFFFF" & s_DMemOut(7 downto 0);
+          if s_MEMWB_MemData(7) = '1' then
+            v_LoadData := x"FFFFFF" & s_MEMWB_MemData(7 downto 0);
           else
-            v_LoadData := x"000000" & s_DMemOut(7 downto 0);
+            v_LoadData := x"000000" & s_MEMWB_MemData(7 downto 0);
           end if;
           s_WriteData <= v_LoadData;
           
         when "001" =>  -- LH (Load Halfword) - sign extend halfword
-          if s_DMemOut(15) = '1' then
-            v_LoadData := x"FFFF" & s_DMemOut(15 downto 0);
+          if s_MEMWB_MemData(15) = '1' then
+            v_LoadData := x"FFFF" & s_MEMWB_MemData(15 downto 0);
           else
-            v_LoadData := x"0000" & s_DMemOut(15 downto 0);
+            v_LoadData := x"0000" & s_MEMWB_MemData(15 downto 0);
           end if;
           s_WriteData <= v_LoadData;
           
         when "010" =>  -- LW (Load Word) - full 32-bit word
-          s_WriteData <= s_DMemOut;
+          s_WriteData <= s_MEMWB_MemData;
           
         when "100" =>  -- LBU (Load Byte Unsigned) - zero extend byte
-          s_WriteData <= x"000000" & s_DMemOut(7 downto 0);
+          s_WriteData <= x"000000" & s_MEMWB_MemData(7 downto 0);
           
         when "101" =>  -- LHU (Load Halfword Unsigned) - zero extend halfword
-          s_WriteData <= x"0000" & s_DMemOut(15 downto 0);
+          s_WriteData <= x"0000" & s_MEMWB_MemData(15 downto 0);
           
         when others =>  -- Default to LW
-          s_WriteData <= s_DMemOut;
+          s_WriteData <= s_MEMWB_MemData;
       end case;
     else
       -- ALU result for normal operations
-      s_WriteData <= s_ALUResult;
+      s_WriteData <= s_MEMWB_ALUResult;
     end if;
   end process;
   
-  -- Branch condition evaluation (using EX stage signals)
-  process(s_IDEX_Branch, s_IDEX_Instr, s_Zero, s_ALUResult)
-    variable v_BranchCond : std_logic;
+  -- Branch condition evaluation (ID stage for software-scheduled pipeline)
+  -- Compares RS1 and RS2 to determine if branch should be taken
+  process(s_Branch, s_IFID_Inst, s_RS1Data_final, s_RS2Data_final)
+    variable v_BranchCond : std_logic;  -- Final branch decision (1=take branch, 0=don't take)
+    variable v_Zero : std_logic;        -- 1 if RS1 == RS2 (for BEQ/BNE)
+    variable v_LT : std_logic;          -- 1 if RS1 < RS2 (signed comparison, for BLT/BGE)
+    variable v_LTU : std_logic;         -- 1 if RS1 < RS2 (unsigned comparison, for BLTU/BGEU)
   begin
+    -- Default: don't take branch
     v_BranchCond := '0';
     
-    if s_IDEX_Branch = '1' then
-      case s_IDEX_Instr(14 downto 12) is  -- funct3 field
-        when "000" =>  -- BEQ
-          v_BranchCond := s_Zero;
-        when "001" =>  -- BNE
-          v_BranchCond := not s_Zero;
-        when "100" =>  -- BLT
-          v_BranchCond := s_ALUResult(0);
-        when "101" =>  -- BGE
-          v_BranchCond := not s_ALUResult(0);
-        when "110" =>  -- BLTU
-          v_BranchCond := s_ALUResult(0);
-        when "111" =>  -- BGEU
-          v_BranchCond := not s_ALUResult(0);
+    -- Compute all three comparison types in parallel
+    v_Zero := '1' when s_RS1Data_final = s_RS2Data_final else '0';                      -- Equal?
+    v_LT := '1' when signed(s_RS1Data_final) < signed(s_RS2Data_final) else '0';        -- Signed less than?
+    v_LTU := '1' when unsigned(s_RS1Data_final) < unsigned(s_RS2Data_final) else '0';   -- Unsigned less than?
+    
+    -- If this is a branch instruction, determine which condition to use
+    if s_Branch = '1' then
+      case s_IFID_Inst(14 downto 12) is  -- funct3 field determines branch type
+        when "000" =>  -- BEQ: Branch if Equal
+          v_BranchCond := v_Zero;           -- Take if RS1 == RS2
+        when "001" =>  -- BNE: Branch if Not Equal
+          v_BranchCond := not v_Zero;       -- Take if RS1 != RS2
+        when "100" =>  -- BLT: Branch if Less Than (signed)
+          v_BranchCond := v_LT;             -- Take if RS1 < RS2 (signed)
+        when "101" =>  -- BGE: Branch if Greater or Equal (signed)
+          v_BranchCond := not v_LT;         -- Take if RS1 >= RS2 (signed)
+        when "110" =>  -- BLTU: Branch if Less Than Unsigned
+          v_BranchCond := v_LTU;            -- Take if RS1 < RS2 (unsigned)
+        when "111" =>  -- BGEU: Branch if Greater or Equal Unsigned
+          v_BranchCond := not v_LTU;        -- Take if RS1 >= RS2 (unsigned)
         when others =>
-          v_BranchCond := '0';
+          v_BranchCond := '0';              -- Invalid funct3, don't branch
       end case;
     end if;
     
+    -- Output: 1 = take branch, 0 = continue sequential execution
     s_BranchTaken <= v_BranchCond;
   end process;
   
-  -- Next address selection
-  process(s_BranchTaken, s_BranchAddr, s_IsJAL, s_IsJALR, s_ALUResult)
+  -- Next address selection (ID stage for software-scheduled pipeline)
+  process(s_BranchTaken, s_BranchAddr, s_IFID_Inst, s_RS1Data_final, s_Immediate, s_PCplus4)
+    variable v_IsJAL : std_logic;
+    variable v_IsJALR : std_logic;
+    variable v_JALRTarget : std_logic_vector(31 downto 0);
   begin
-    if s_IsJAL = '1' then
+    v_IsJAL := '1' when s_IFID_Inst(6 downto 0) = "1101111" else '0';
+    v_IsJALR := '1' when s_IFID_Inst(6 downto 0) = "1100111" else '0';
+    v_JALRTarget := std_logic_vector(unsigned(s_RS1Data_final) + unsigned(s_Immediate));
+    
+    if v_IsJAL = '1' then
       s_UseNextAdr <= '1';
       s_NextAdr <= s_BranchAddr;  -- JAL: PC + immediate
-    elsif s_IsJALR = '1' then
+    elsif v_IsJALR = '1' then
       s_UseNextAdr <= '1';
-      s_NextAdr <= s_ALUResult;   -- JALR: RS1 + immediate (computed by ALU)
+      s_NextAdr <= v_JALRTarget;  -- JALR: RS1 + immediate
     elsif s_BranchTaken = '1' then
       s_UseNextAdr <= '1';
       s_NextAdr <= s_BranchAddr;  -- Branch to PC + immediate
@@ -834,97 +826,20 @@ begin
     end if;
   end process;
   
-  =========================================================================
-  -- HARDWARE-SCHEDULED PIPELINE COMPONENTS
-  =========================================================================
-  -- These components are specific to hardware-scheduled pipeline
-  -- Software-scheduled pipeline does NOT have these
-  -------------------------------------------------------------------------
+  -- Stall logic (not implemented yet)
+  s_Stall <= '0';
   
-  -------------------------------------------------------------------------
-  -- HAZARD DETECTION UNIT
-  -------------------------------------------------------------------------
-  -- Detects load-use hazards and control hazards
-  -- Generates stall signals (PCWrite, IFID_Write) and flush signals
-  u_hazard_detection: hazard_detection
-    port map (
-      i_IDEX_MemRead  => s_IDEX_MemRead,
-      i_IDEX_RD       => s_IDEX_RDAddr,
-      i_IFID_RS1      => s_IFID_Instr(19 downto 15),  -- rs1 field
-      i_IFID_RS2      => s_IFID_Instr(24 downto 20),  -- rs2 field
-      i_Branch        => s_BranchTaken,
-      i_Jump          => s_IsJAL or s_IsJALR,
-      o_PCWrite       => s_PCWrite,
-      o_IFID_Write    => s_IFID_Write,
-      o_ControlMux    => s_ControlMux,
-      o_IFID_Flush    => s_IFID_Flush,
-      o_IDEX_Flush    => s_IDEX_Flush
-    );
+  -- Output connections -- Update by the group: use pipelined ALU result
+  oALUOut <= s_EXMEM_ALUResult; 
   
-  -------------------------------------------------------------------------
-  -- FORWARDING UNIT
-  -------------------------------------------------------------------------
-  -- Detects data hazards and generates forwarding control signals
-  -- Forwards data from EX/MEM or MEM/WB stages to ALU inputs
-  u_forwarding_unit: forwarding_unit
-    port map (
-      i_IDEX_RS1      => s_IDEX_RS1Addr,
-      i_IDEX_RS2      => s_IDEX_RS2Addr,
-      i_EXMEM_RD      => s_EXMEM_RDAddr,
-      i_MEMWB_RD      => s_MEMWB_RDAddr,
-      i_EXMEM_RegWrite => s_EXMEM_RegWrite,
-      i_MEMWB_RegWrite => s_MEMWB_RegWrite,
-      o_Forward_A     => s_Forward_A,
-      o_Forward_B     => s_Forward_B
-    );
+  -- Register write outputs for testbench -- Update by the group: use WB stage signals
+  -- RISC-V x0 is hardwired to zero - block writes to register 0
+  s_RegWr <= s_MEMWB_RegWrite when s_MEMWB_RDAddr /= "00000" else '0';
+  s_RegWrAddr <= s_MEMWB_RDAddr;  -- Update by the group: change to s_MEMWB_RDAddr
+  s_RegWrData <= s_WriteData; -- Update by the group: ensure this uses final WB stage data
   
-  -------------------------------------------------------------------------
-  -- FORWARDING MULTIPLEXERS (3-to-1)
-  -------------------------------------------------------------------------
-  -- Select ALU operands from register file, EX/MEM, or MEM/WB stages
-  -- Based on forwarding control signals from forwarding unit
-  
-  -- Forwarding Mux A: selects source for ALU input A (RS1)
-  u_forward_mux_A: mux3t1_n
-    generic map(N => 32)
-    port map (
-      i_S   => s_Forward_A,
-      i_D0  => s_IDEX_RS1Data,        -- 00: register file data
-      i_D1  => s_WriteData_WB,        -- 01: MEM/WB forwarded data
-      i_D2  => s_EXMEM_ALUResult,     -- 10: EX/MEM forwarded data
-      o_O   => s_ForwardA_Out
-    );
-  
-  -- Forwarding Mux B: selects source for ALU input B (RS2) before ALUSrc mux
-  u_forward_mux_B: mux3t1_n
-    generic map(N => 32)
-    port map (
-      i_S   => s_Forward_B,
-      i_D0  => s_IDEX_RS2Data,        -- 00: register file data
-      i_D1  => s_WriteData_WB,        -- 01: MEM/WB forwarded data
-      i_D2  => s_EXMEM_ALUResult,     -- 10: EX/MEM forwarded data
-      o_O   => s_ForwardB_Out
-    );
-  
-  -------------------------------------------------------------------------
-  -- PIPELINE CONTROL SIGNALS
-  -------------------------------------------------------------------------
-  -- Connect stall signal from hazard detection to fetch unit
-  s_Stall <= not s_PCWrite;  -- Stall when PCWrite is 0
-  
-  -------------------------------------------------------------------------
-  -- OUTPUT CONNECTIONS
-  -------------------------------------------------------------------------
-  -- Outputs for testbench and synthesis
-  oALUOut <= s_ALUResult;
-  
-  -- Register write outputs for testbench (using WB stage)
-  s_RegWr <= s_MEMWB_RegWrite;
-  s_RegWrAddr <= s_MEMWB_RDAddr;
-  s_RegWrData <= s_WriteData_WB;
-  
-  -- Control outputs (halt should be detected in WB stage)
-  s_Halt <= '1' when s_MEMWB_RDAddr = "00000" and s_MEMWB_RegWrite = '0' else '0';  -- Simplified halt detection
+  -- Control outputs (halt should be detected when WFI reaches WB stage)
+  s_Halt <= '1' when s_MEMWB_Inst(6 downto 0) = "1110011" else '0';
   
   -- In RISC-V, arithmetic overflow does NOT generate exceptions for standard instructions
   -- Only report overflow for specific instructions that need it (none in basic RISC-V)
