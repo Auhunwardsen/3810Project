@@ -470,8 +470,9 @@ begin
     );
 
   -- WB-to-ID Forwarding Logic (for back-to-back dependencies like AUIPC+ADDI)
-  -- Forward write data from WB/MEM/EX stages if writing to register being read in ID stage
-  process(s_RS1Data, s_RS2Data, s_RegWr, s_RegWrAddr, s_RegWrData, s_IFID_Inst,
+  -- Forward write data from EX/MEM/WB stages if writing to register being read in ID stage
+  process(s_RS1Data, s_RS2Data, s_IFID_Inst,
+          s_IDEX_RegWrite, s_IDEX_RDAddr, s_ALUResult,
           s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_EXMEM_ALUResult,
           s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_MEMWB_ALUResult, s_MEMWB_MemData, s_MEMWB_MemToReg)
     variable v_RS1_addr : std_logic_vector(4 downto 0);
@@ -488,8 +489,10 @@ begin
       v_WB_data := s_MEMWB_ALUResult;
     end if;
     
-    -- Forward RS1: priority EX/MEM > MEM/WB > regfile
-    if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+    -- Forward RS1: priority EX > EX/MEM > MEM/WB > regfile
+    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+      s_RS1Data_fwd <= s_ALUResult;  -- Forward from EX stage (ALU output)
+    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
       s_RS1Data_fwd <= s_EXMEM_ALUResult;  -- Forward from EX/MEM stage
     elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
       s_RS1Data_fwd <= v_WB_data;  -- Forward from MEM/WB stage
@@ -497,8 +500,10 @@ begin
       s_RS1Data_fwd <= s_RS1Data;  -- Use regfile output
     end if;
     
-    -- Forward RS2: priority EX/MEM > MEM/WB > regfile
-    if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+    -- Forward RS2: priority EX > EX/MEM > MEM/WB > regfile  
+    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+      s_RS2Data_fwd <= s_ALUResult;  -- Forward from EX stage (ALU output)
+    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
       s_RS2Data_fwd <= s_EXMEM_ALUResult;  -- Forward from EX/MEM stage
     elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
       s_RS2Data_fwd <= v_WB_data;  -- Forward from MEM/WB stage
