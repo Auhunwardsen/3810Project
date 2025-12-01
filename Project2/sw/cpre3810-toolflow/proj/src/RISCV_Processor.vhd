@@ -780,7 +780,8 @@ begin
   oALUOut <= s_EXMEM_ALUResult; 
   
   -- Register write outputs for testbench -- Update by the group: use WB stage signals
-  s_RegWr <= s_MEMWB_RegWrite; 
+  -- RISC-V x0 is hardwired to zero - block writes to register 0
+  s_RegWr <= s_MEMWB_RegWrite when s_MEMWB_RDAddr /= "00000" else '0';
   s_RegWrAddr <= s_MEMWB_RDAddr;  -- Update by the group: change to s_MEMWB_RDAddr
   s_RegWrData <= s_WriteData; -- Update by the group: ensure this uses final WB stage data
   
