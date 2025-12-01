@@ -541,11 +541,28 @@ begin
       o_O  => s_ALUIn2
     );
 
+  -- ALU Input A Selection: AUIPC uses PC, LUI uses zero, others use RS1
+  process(s_IDEX_Instr, s_IDEX_RS1Data, s_IDEX_PC)
+    variable v_IsAUIPC : std_logic;
+    variable v_IsLUI : std_logic;
+  begin
+    v_IsAUIPC := '1' when s_IDEX_Instr(6 downto 0) = "0010111" else '0';
+    v_IsLUI := '1' when s_IDEX_Instr(6 downto 0) = "0110111" else '0';
+    
+    if v_IsAUIPC = '1' then
+      s_ALUIn1 <= s_IDEX_PC;  -- AUIPC: use PC
+    elsif v_IsLUI = '1' then
+      s_ALUIn1 <= (others => '0');  -- LUI: use 0
+    else
+      s_ALUIn1 <= s_IDEX_RS1Data;  -- Normal: use RS1
+    end if;
+  end process;
+
   -- ALU: performs arithmetic and logic operations
   u_alu_inst: alu
     port map (
       i_ALUCtrl  => s_ALUCtrl,
-      i_A        => s_IDEX_RS1Data,
+      i_A        => s_ALUIn1,
       i_B        => s_ALUIn2,
       o_Result   => s_ALUResult,
       o_Zero     => s_Zero,
