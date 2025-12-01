@@ -297,8 +297,6 @@ architecture structure of RISCV_Processor is
   -- Register file signals
   signal s_RS1Data    : std_logic_vector(31 downto 0);
   signal s_RS2Data    : std_logic_vector(31 downto 0);
-  signal s_RS1Data_fwd : std_logic_vector(31 downto 0);  -- Forwarded RS1
-  signal s_RS2Data_fwd : std_logic_vector(31 downto 0);  -- Forwarded RS2
   signal s_WriteData  : std_logic_vector(31 downto 0);
   
   -- Immediate generator signals
@@ -472,48 +470,8 @@ begin
       o_imm => s_Immediate
     );
 
-  -- WB-to-ID Forwarding Logic (for back-to-back dependencies like AUIPC+ADDI)
-  -- Forward write data from EX/MEM/WB stages if writing to register being read in ID stage
-  process(s_RS1Data, s_RS2Data, s_IFID_Inst,
-          s_IDEX_RegWrite, s_IDEX_RDAddr, s_ALUResult,
-          s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_EXMEM_ALUResult,
-          s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_MEMWB_ALUResult, s_MEMWB_MemData, s_MEMWB_MemToReg)
-    variable v_RS1_addr : std_logic_vector(4 downto 0);
-    variable v_RS2_addr : std_logic_vector(4 downto 0);
-    variable v_WB_data : std_logic_vector(31 downto 0);
-  begin
-    v_RS1_addr := s_IFID_Inst(19 downto 15);
-    v_RS2_addr := s_IFID_Inst(24 downto 20);
-    
-    -- Determine WB stage write data
-    if s_MEMWB_MemToReg = '1' then
-      v_WB_data := s_MEMWB_MemData;
-    else
-      v_WB_data := s_MEMWB_ALUResult;
-    end if;
-    
-    -- Forward RS1: priority EX > EX/MEM > MEM/WB > regfile
-    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_fwd <= s_ALUResult;  -- Forward from EX stage (ALU output)
-    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_fwd <= s_EXMEM_ALUResult;  -- Forward from EX/MEM stage
-    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_fwd <= v_WB_data;  -- Forward from MEM/WB stage
-    else
-      s_RS1Data_fwd <= s_RS1Data;  -- Use regfile output
-    end if;
-    
-    -- Forward RS2: priority EX > EX/MEM > MEM/WB > regfile  
-    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_fwd <= s_ALUResult;  -- Forward from EX stage (ALU output)
-    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_fwd <= s_EXMEM_ALUResult;  -- Forward from EX/MEM stage
-    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_fwd <= v_WB_data;  -- Forward from MEM/WB stage
-    else
-      s_RS2Data_fwd <= s_RS2Data;  -- Use regfile output
-    end if;
-  end process;
+  -- No external forwarding for software-scheduled pipeline
+  -- Register file handles internal forwarding for same-cycle write/read
 
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: ID/EX
@@ -534,8 +492,8 @@ begin
       i_ALUOp     => s_ALUOp,
       i_PC        => s_IFID_PC,
       i_PCplus4   => s_IFID_PCplus4,
-      i_RS1Data   => s_RS1Data_fwd,  -- Use forwarded data
-      i_RS2Data   => s_RS2Data_fwd,  -- Use forwarded data
+      i_RS1Data   => s_RS1Data,  -- Direct from register file (has internal forwarding)
+      i_RS2Data   => s_RS2Data,  -- Direct from register file (has internal forwarding)
       i_Immediate => s_Immediate,
       i_RS1Addr   => s_IFID_Inst(19 downto 15),
       i_RS2Addr   => s_IFID_Inst(24 downto 20),
