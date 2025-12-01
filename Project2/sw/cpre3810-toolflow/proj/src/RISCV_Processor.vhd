@@ -521,7 +521,36 @@ begin
   -- STAGE 3: EXECUTE (EX)
   -------------------------------------------------------------------------
   -- Performs ALU operations and computes branch target address
-  -- (ALU and muxes instantiated below at line ~572)
+  
+  -- ALU Control: generates ALU operation code from instruction fields
+  u_alu_control: alu_control
+    port map (
+      i_ALUOp    => s_IDEX_ALUOp,
+      i_Funct3   => s_IDEX_Instr(14 downto 12),
+      i_Funct7_5 => s_IDEX_Instr(30),
+      o_ALUCtrl  => s_ALUCtrl
+    );
+
+  -- ALU Source Mux: selects between RS2 data or immediate
+  u_alu_src_mux: mux2t1_n
+    generic map(N => 32)
+    port map (
+      i_S  => s_IDEX_ALUSrc,
+      i_D0 => s_IDEX_RS2Data,
+      i_D1 => s_IDEX_Immediate,
+      o_O  => s_ALUIn2
+    );
+
+  -- ALU: performs arithmetic and logic operations
+  u_alu_inst: alu
+    port map (
+      i_ALUCtrl  => s_ALUCtrl,
+      i_A        => s_IDEX_RS1Data,
+      i_B        => s_ALUIn2,
+      o_Result   => s_ALUResult,
+      o_Zero     => s_Zero,
+      o_Overflow => s_Overflow
+    );
 
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: EX/MEM
@@ -603,74 +632,6 @@ begin
   --   s_RegWr     <= s_MEMWB_RegWrite
   --   s_RegWrAddr <= s_MEMWB_RDAddr
   --   s_RegWrData <= memory data OR ALU result (based on MemToReg)
-
-  -------------------------------------------------------------------------
-  -- DATAPATH COMPONENT INSTANTIATIONS
-  -------------------------------------------------------------------------
-  -- Components used by various pipeline stages
-  -- Organized by usage stage for clarity
-  -------------------------------------------------------------------------
-
-  -------------------------------------------------------------------------
-  -- ID STAGE COMPONENTS
-  -------------------------------------------------------------------------
-  -- Control Unit: generates all control signals based on opcode
-  u_control: control
-    port map (
-      i_opcode   => s_IFID_Inst(6 downto 0), 
-      o_branch   => s_Branch,
-      o_memRead  => s_MemRead,
-      o_memToReg => s_MemToReg,
-      o_ALUOp    => s_ALUOp,
-      o_memWrite => s_MemWrite,
-      o_ALUSrc   => s_ALUSrc,
-      o_regWrite => s_RegWrite
-    );
-  
-  -------------------------------------------------------------------------
-  -- EX STAGE COMPONENTS
-  -------------------------------------------------------------------------
-  -- ALU Control: decodes funct3/funct7 to generate ALU control signal
-  u_alu_control: alu_control
-    port map (
-      i_ALUOp    => s_IDEX_ALUOp, 
-      i_Funct3   => s_IDEX_Instr(14 downto 12), 
-      i_Funct7_5 => s_IDEX_Instr(30), 
-      o_ALUCtrl  => s_ALUCtrl
-    );
-  
-  -- ALU Source Mux: selects second ALU operand (RS2 data or immediate)
-  u_alu_src_mux: mux2t1_n
-    generic map(N => 32)
-    port map (
-      i_S  => s_IDEX_ALUSrc,
-      i_D0 => s_IDEX_RS2Data,
-      i_D1 => s_IDEX_Immediate,
-      o_O  => s_ALUIn2
-    );
-  
-  -- ALU Input Selection Logic: handles special instructions (AUIPC, LUI, JAL, JALR)
-  -- This combinational logic operates in EX stage using ID/EX register data
-  s_IsAUIPC <= '1' when s_IDEX_Instr(6 downto 0) = "0010111" else '0';
-  s_IsJAL   <= '1' when s_IDEX_Instr(6 downto 0) = "1101111" else '0';
-  s_IsJALR  <= '1' when s_IDEX_Instr(6 downto 0) = "1100111" else '0';
-  s_IsLUI   <= '1' when s_IDEX_Instr(6 downto 0) = "0110111" else '0';
-  
-  -- First ALU operand: PC for AUIPC, 0 for LUI, RS1 data otherwise
-  s_ALUIn1 <= s_IDEX_PC when s_IsAUIPC = '1' else
-              x"00000000" when s_IsLUI = '1' else
-              s_IDEX_RS1Data;
-  
-  -- ALU: performs arithmetic/logic operations
-  u_alu: alu
-    port map (
-      i_ALUCtrl  => s_ALUCtrl,
-      i_A        => s_ALUIn1,
-      i_B        => s_ALUIn2,
-      o_Result   => s_ALUResult,
-      o_Zero     => s_Zero,
-      o_Overflow => s_Overflow
-    );
 
   -------------------------------------------------------------------------
   -- ID/EX STAGE COMPONENTS (Branch Resolution)
