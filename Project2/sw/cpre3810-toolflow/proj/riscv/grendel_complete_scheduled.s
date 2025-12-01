@@ -22,12 +22,12 @@ res_idx:
         .word   3
 
 .text
-        # Initialize stack and frame pointers with hazard avoidance
-	li   sp, 0x10011000        # Load stack pointer
-	nop                        # Avoid load-use hazard
-	nop
-	nop
-	li   fp, 0                 # Initialize frame pointer
+	# Initialize stack and frame pointers with hazard avoidance
+	lui  sp, 0x10011           # Load upper bits for stack pointer
+	nop                        # RAW hazard prevention
+	nop                        # RAW hazard prevention
+	addi sp, sp, 0             # Add lower bits (0x000)
+	li   fp, 0                 # Initialize frame pointer (simple, no hazard)
 	nop                        # Hazard avoidance
 	nop
 	nop

@@ -19,11 +19,16 @@ n:      .word 8
 ##############################################################
 main:
 	# Initialize stack pointer
-	li   sp, 0x80000000     # Set stack pointer to high memory
+	lui  sp, 0x80000        # Load upper 20 bits
+	nop                     # RAW hazard prevention
+	nop                     # RAW hazard prevention  
+	addi sp, sp, 0          # Add lower 12 bits (0)
 	
 	# load base address and indices
-    la   a0, array       # a0 = base address
-    li   a1, 0           # left = 0
+    la   a0, array          # a0 = base address 
+    nop                     # Potential hazard prevention
+    nop                     # Potential hazard prevention
+    li   a1, 0              # left = 0 (simple addi, no hazard)
    	lw   t0, n
     nop
     nop

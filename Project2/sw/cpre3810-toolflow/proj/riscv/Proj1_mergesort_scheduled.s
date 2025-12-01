@@ -14,21 +14,21 @@ n:      .word 8
 ##############################################################
 main:
 	# Initialize stack pointer
-	li   sp, 0x80000000     # Set stack pointer to high memory
-	nop                     # Avoid load-use hazard
-	nop
-	nop
+	lui  sp, 0x80000        # Load upper 20 bits
+	nop                     # RAW hazard prevention
+	nop                     # RAW hazard prevention  
+	addi sp, sp, 0          # Add lower 12 bits (0)
 	
 	# load base address and indices
-    	la   a0, array          # a0 = base address
-    	li   a1, 0              # left = 0
-    	nop                     # Avoid hazard with la instruction
-    	nop
-   	lw   t0, n              # Load n
-   	nop                     # Load-use hazard avoidance
-   	nop
-   	nop
-    	addi a2, t0, -1         # right = n-1
+    la   a0, array          # a0 = base address 
+    nop                     # Potential hazard prevention
+    nop                     # Potential hazard prevention
+    li   a1, 0              # left = 0 (simple addi, no hazard)
+   	lw   t0, n
+    nop
+    nop
+    nop
+    add  a2, t0, -1      # right = n-1
 
     	# Call mergesort with hazard avoidance
     	nop                     # Prepare for control hazard

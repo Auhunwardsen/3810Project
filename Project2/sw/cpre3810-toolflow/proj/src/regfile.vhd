@@ -79,11 +79,7 @@ begin
     regs_flat(i*32+31 downto i*32) <= qi;
   end generate;
 
-  -- read ports with internal forwarding
-  MUXA: mux32_1 port map(data_in => regs_flat, sel => i_RS1, y => rs1_mux_out);
-  MUXB: mux32_1 port map(data_in => regs_flat, sel => i_RS2, y => rs2_mux_out);
-  
-  -- read ports (no internal forwarding; handled in processor)
-  o_RS1Data <= rs1_mux_out;
-  o_RS2Data <= rs2_mux_out;
+  -- read ports (no internal forwarding; handled by software scheduling)
+  MUXA: mux32_1 port map(data_in => regs_flat, sel => i_RS1, y => o_RS1Data);
+  MUXB: mux32_1 port map(data_in => regs_flat, sel => i_RS2, y => o_RS2Data);
 end architecture;
