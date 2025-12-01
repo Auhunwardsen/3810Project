@@ -464,7 +464,7 @@ begin
   u_immgen: immgen
     port map (
       i_instr     => s_IFID_Inst,
-      o_immediate => s_Immediate
+      o_imm => s_Immediate
     );
 
   -- Branch Condition Evaluation: determines if branch should be taken
@@ -604,9 +604,9 @@ begin
   --   s_RegWrAddr <= s_MEMWB_RDAddr
   --   s_RegWrData <= memory data OR ALU result (based on MemToReg)
 
-  =========================================================================
+  -------------------------------------------------------------------------
   -- DATAPATH COMPONENT INSTANTIATIONS
-  =========================================================================
+  -------------------------------------------------------------------------
   -- Components used by various pipeline stages
   -- Organized by usage stage for clarity
   -------------------------------------------------------------------------
@@ -627,27 +627,6 @@ begin
       o_regWrite => s_RegWrite
     );
   
-  -- Register File: reads RS1 and RS2, writes to RD in WB stage
-  u_regfile: regfile
-    port map (
-      i_CLK       => iCLK,
-      i_RST       => iRST,
-      i_WE        => s_RegWr,               -- From WB stage
-      i_RS1       => s_IFID_Inst(19 downto 15),
-      i_RS2       => s_IFID_Inst(24 downto 20),
-      i_RD        => s_RegWrAddr,           -- From WB stage
-      i_WriteData => s_RegWrData,           -- From WB stage
-      o_RS1Data   => s_RS1Data,
-      o_RS2Data   => s_RS2Data
-    );
-  
-  -- Immediate Generator: extracts immediate from instruction
-  u_immgen: immgen
-    port map (
-      i_instr     => s_IFID_Inst,
-      o_immediate => s_Immediate
-    );
-
   -------------------------------------------------------------------------
   -- EX STAGE COMPONENTS
   -------------------------------------------------------------------------
