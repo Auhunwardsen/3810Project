@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 13:03:54 on Dec 01,2025
+Start time: 13:15:35 on Dec 01,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/IFID_reg.vhd proj/src/EXMEM_reg.vhd proj/src/decoder5t32.vhd proj/src/addsub.vhd proj/src/mux32_1.vhd proj/src/alu.vhd proj/src/RISCV_types.vhd proj/src/mux2t1_n.vhd proj/src/MEMWB_reg.vhd proj/src/immgen.vhd proj/src/barrelshifter.vhd proj/src/fetch.vhd proj/src/alu_control.vhd proj/src/IDEX_reg.vhd proj/src/mem.vhd proj/src/control.vhd proj/src/reg_n.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/dffg.vhd proj/src/RISCV_Processor.vhd proj/src/regfile.vhd proj/src/adder_n.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -58,11 +58,7 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling architecture mixed of dffg
 -- Compiling entity RISCV_Processor
 -- Compiling architecture structure of RISCV_Processor
-** Error: proj/src/RISCV_Processor.vhd(467): (vcom-1484) Unknown formal identifier "o_immediate".
-** Error: proj/src/RISCV_Processor.vhd(607): near "=": syntax error
-** Error: proj/src/RISCV_Processor.vhd(631): Symbol "u_regfile" has already been declared in this region.
-** Error: proj/src/RISCV_Processor.vhd(645): Symbol "u_immgen" has already been declared in this region.
-** Error: proj/src/RISCV_Processor.vhd(648): (vcom-1484) Unknown formal identifier "o_immediate".
-** Note: proj/src/RISCV_Processor.vhd(853): VHDL Compiler exiting
-End time: 13:03:54 on Dec 01,2025, Elapsed time: 0:00:00
-Errors: 5, Warnings: 2
+** Error: proj/src/RISCV_Processor.vhd(618): Symbol "u_control" has already been declared in this region.
+** Note: proj/src/RISCV_Processor.vhd(832): VHDL Compiler exiting
+End time: 13:15:35 on Dec 01,2025, Elapsed time: 0:00:00
+Errors: 1, Warnings: 2
