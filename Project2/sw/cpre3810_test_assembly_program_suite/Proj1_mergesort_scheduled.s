@@ -1,6 +1,10 @@
+
 # Proj1_mergesort_scheduled.s
-# Software-scheduled version with NOPs and instruction reordering
-# to avoid data and control hazards
+#   Recursive Merge Sort implementation.
+# 
+#   This file has been scheduled to run on a 5-stage pipeline without hardware
+#   hazard detection or forwarding. NOPs have been inserted to prevent data and
+#   control hazards.
 
 .data
 array:  .word 8, 3, 5, 4, 7, 2, 6, 1   # unsorted array
@@ -10,145 +14,216 @@ n:      .word 8
 .globl main
 
 ##############################################################
-# main - Software scheduled for pipeline hazard avoidance
+# main
+# - Initializes stack pointer and calls mergesort
 ##############################################################
 main:
 	# Initialize stack pointer
 	li   sp, 0x80000000     # Set stack pointer to high memory
-	nop                     # Avoid load-use hazard
-	nop
-	nop
 	
 	# load base address and indices
-    	la   a0, array          # a0 = base address
-    	li   a1, 0              # left = 0
-    	nop                     # Avoid hazard with la instruction
-    	nop
-   	lw   t0, n              # Load n
-   	nop                     # Load-use hazard avoidance
-   	nop
-   	nop
-    	addi a2, t0, -1         # right = n-1
+    la   a0, array       # a0 = base address
+    li   a1, 0           # left = 0
+   	lw   t0, n
+    nop
+    nop
+    nop
+    add  a2, t0, -1      # right = n-1
 
-    	# Call mergesort with hazard avoidance
-    	nop                     # Prepare for control hazard
-    	nop
-    	jal  ra, mergesort      # Jump with 2-cycle delay
-    	nop                     # Branch delay slots (software scheduled)
-    	nop
-    	
-	beq zero, zero, done    # Jump to done
-	nop                     # Control hazard avoidance
+    jal  ra, mergesort
+	nop
+	beq zero, zero, done
 	nop
 
 ##############################################################
-# mergesort(a0=array, a1=left, a2=right) - Software scheduled
+# mergesort(a0=array, a1=left, a2=right)
+#   if left >= right: return
+#   mid = (left + right) / 2
+#   mergesort(array, left, mid)
+#   mergesort(array, mid+1, right)
+#   merge(array, left, mid, right)
 ##############################################################
 mergesort:
-    # Save return address and arguments (with hazard avoidance)
-    addi sp, sp, -16        # Allocate stack space
-    nop                     # Avoid data hazard with sp
-    sw   ra, 12(sp)         # Save return address
-    sw   a2, 8(sp)          # Save right
-    sw   a1, 4(sp)          # Save left
-    sw   a0, 0(sp)          # Save array base
-    
-    # Check base condition: if left >= right, return
-    nop                     # Avoid hazard with previous stores
-    bge  a1, a2, ms_return  # if left >= right, return
-    nop                     # Control hazard avoidance
+    bge  a1, a2, ms_return      # if left >= right, return
     nop
 
-    # Calculate mid = (left + right) / 2
-    add  t0, a1, a2         # t0 = left + right
-    nop                     # Data hazard avoidance
+    add  t0, a1, a2             # t0 = left + right
     nop
     nop
-    srli t1, t0, 1          # t1 = mid = (left + right) / 2
+    srai t1, t0, 1              # t1 = mid = (left+right)/2
 
-    # First recursive call: mergesort(array, left, mid)
-    # a0 already has array base
-    # a1 already has left
-    add  a2, t1, x0         # a2 = mid (copy t1 to a2)
-    nop                     # Data hazard avoidance
+    # push ra, a1, a2, t1 (mid)
+   	addi sp, sp, -16
     nop
     nop
-    jal  ra, mergesort      # First recursive call
-    nop                     # Control hazard avoidance
-    nop
+    sw   ra, 12(sp)
+    sw   a1, 8(sp)
+    sw   a2, 4(sp)
+    sw   t1, 0(sp)
 
-    # Restore values for second call
-    lw   a0, 0(sp)          # Restore array base
-    lw   a1, 4(sp)          # Restore left
-    lw   a2, 8(sp)          # Restore right
-    nop                     # Load-use hazard avoidance
-    nop
-    nop
-    
-    # Recalculate mid for second call
-    add  t0, a1, a2         # t0 = left + right
-    nop                     # Data hazard avoidance
-    nop
-    nop
-    srli t1, t0, 1          # t1 = mid
-    
-    # Second recursive call: mergesort(array, mid+1, right)
-    addi a1, t1, 1          # a1 = mid + 1
-    # a2 already has right
-    nop                     # Data hazard avoidance
-    nop
-    nop
-    jal  ra, mergesort      # Second recursive call
-    nop                     # Control hazard avoidance
+    # call mergesort(array, left, mid)
+    mv   a2, t1
+    jal  ra, mergesort
     nop
 
-    # Merge phase: merge(array, left, mid, right)
-    lw   a0, 0(sp)          # Restore array base
-    lw   a1, 4(sp)          # Restore left
-    lw   a2, 8(sp)          # Restore right
-    nop                     # Load-use hazard avoidance
+    # call mergesort(array, mid+1, right)
+   	lw   t1, 0(sp)
     nop
     nop
-    
-    # Calculate mid again for merge
-    add  t0, a1, a2         # t0 = left + right
-    nop                     # Data hazard avoidance
+    nop
+    add  a1, t1, 1
+    lw   a2, 4(sp)
     nop
     nop
-    srli a3, t0, 1          # a3 = mid
-    nop                     # Data hazard avoidance
     nop
-    nop
-    jal  ra, merge          # Call merge function
-    nop                     # Control hazard avoidance
+    jal  ra, mergesort
     nop
 
+    # call merge(array, left, mid, right)
+    lw   t1, 0(sp)
+    lw   a1, 8(sp)
+    lw   a2, 4(sp)
+    nop
+    nop
+    nop
+    jal  ra, merge
+    nop
+
+    # pop ra and locals
+    lw   ra, 12(sp)
+    nop
+    nop
+    nop
+    addi sp, sp, 16
+    nop
+    	
 ms_return:
-    # Restore return address and return
-    lw   ra, 12(sp)         # Restore return address
-    nop                     # Load-use hazard avoidance
-    nop
-    nop
-    addi sp, sp, 16         # Deallocate stack space
-    nop                     # Data hazard avoidance
-    nop
-    nop
-    jalr x0, ra, 0          # Return
-    nop                     # Control hazard avoidance
-    nop
+   	jr   ra
+	nop
+
 
 ##############################################################
-# merge(a0=array, a1=left, a2=right, a3=mid) - Software scheduled
+# merge(a0=array, a1=left, a2=right)
+# mid stored in t1
+#   Uses t0t6 as temporaries.
+#   Creates a local buffer on stack to hold merged elements.
 ##############################################################
 merge:
-    # Simplified merge for software scheduling
-    # Just return for now to complete the structure
-    jalr x0, ra, 0          # Return immediately
-    nop                     # Control hazard avoidance
+    # compute mid+1 and setup temp ptr
+	addi sp, sp, -64        # local buffer (enough for 16 ints)
+    nop
+    nop
+    mv   t2, sp             # t2 = temp pointer
+   	add  t3, t1, 1          # j = mid+1
+    mv   t4, a1             # i = left
+    mv   t5, zero           # k = 0
+
+merge_loop:
+    bgt  t4, t1, copy_right
+    nop
+   	bgt  t3, a2, copy_left
     nop
 
+    slli t6, t4, 2
+    nop
+    nop
+    add  t6, a0, t6
+    nop
+    nop
+    lw   s0, 0(t6)          # s0 = arr[i]
+
+    slli a3, t3, 2
+    nop
+    nop
+    add  a3, a0, a3
+    nop
+    nop
+    lw   s1, 0(a3)          # s1 = arr[j]
+    nop
+    nop
+    nop
+    ble  s0, s1, take_left
+   	nop
+    # take right
+    sw   s1, 0(t2)
+    add  t3, t3, 1
+    j    next_take
+    nop
+    	
+take_left:
+    sw   s0, 0(t2)
+    add  t4, t4, 1
+    
+next_take:
+    add  t2, t2, 4
+    add  t5, t5, 1
+    j merge_loop
+    nop
+
+copy_left:
+    bgt  t4, t1, copy_right
+    nop
+    slli t6, t4, 2
+    nop
+    nop
+    add  t6, a0, t6
+    nop
+    nop
+    lw   s0, 0(t6)
+    nop
+    nop
+    nop
+   	sw   s0, 0(t2)
+    add  t4, t4, 1
+    add  t2, t2, 4
+    j copy_left
+    nop
+
+copy_right:
+    bgt  t3, a2, write_back
+    nop
+    slli t6, t3, 2
+    nop
+    nop
+    add  t6, a0, t6
+    nop
+    nop
+    lw   s0, 0(t6)
+    nop
+    nop
+    nop
+    sw   s0, 0(t2)
+    add  t3, t3, 1
+    add  t2, t2, 4
+    j copy_right
+    nop
+
+write_back:
+    mv   t2, sp
+    mv   t4, a1
+    	
+wb_loop:
+    bgt  t4, a2, wb_done
+    nop
+    lw   s0, 0(t2)
+    slli t6, t4, 2
+    nop
+    nop
+    nop
+    add  t6, a0, t6
+    nop
+    nop
+    sw   s0, 0(t6)
+    add  t2, t2, 4
+    add  t4, t4, 1
+    j wb_loop
+    nop
+
+wb_done:
+    addi sp, sp, 64
+    nop
+   	jr ra
+	nop
+
 done:
-    # End program
-    wfi                     # Wait for interrupt (halt)
-    nop
-    nop
+	wfi
