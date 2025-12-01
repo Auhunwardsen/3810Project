@@ -83,7 +83,7 @@ begin
   MUXA: mux32_1 port map(data_in => regs_flat, sel => i_RS1, y => rs1_mux_out);
   MUXB: mux32_1 port map(data_in => regs_flat, sel => i_RS2, y => rs2_mux_out);
   
-  -- forwarding: if reading same register being written, then bypass 
-  o_RS1Data <= i_WriteData when (i_WE = '1' and i_RD = i_RS1 and i_RD /= "00000") else rs1_mux_out;
-  o_RS2Data <= i_WriteData when (i_WE = '1' and i_RD = i_RS2 and i_RD /= "00000") else rs2_mux_out;
+  -- read ports (no internal forwarding; handled in processor)
+  o_RS1Data <= rs1_mux_out;
+  o_RS2Data <= rs2_mux_out;
 end architecture;
