@@ -297,6 +297,8 @@ architecture structure of RISCV_Processor is
   -- Register file signals
   signal s_RS1Data    : std_logic_vector(31 downto 0);
   signal s_RS2Data    : std_logic_vector(31 downto 0);
+  signal s_RS1Data_final : std_logic_vector(31 downto 0);  -- After WB→ID forwarding check
+  signal s_RS2Data_final : std_logic_vector(31 downto 0);  -- After WB→ID forwarding check
   signal s_WriteData  : std_logic_vector(31 downto 0);
   
   -- Immediate generator signals
@@ -470,6 +472,29 @@ begin
       o_imm => s_Immediate
     );
 
+  -- WB→ID Forwarding: Forward from WB stage to ID stage when writing to register being read
+  -- This is necessary because register file's internal forwarding doesn't work across pipeline stages
+  process(s_RS1Data, s_RS2Data, s_IFID_Inst, s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_WriteData)
+    variable v_RS1_addr : std_logic_vector(4 downto 0);
+    variable v_RS2_addr : std_logic_vector(4 downto 0);
+  begin
+    v_RS1_addr := s_IFID_Inst(19 downto 15);
+    v_RS2_addr := s_IFID_Inst(24 downto 20);
+    
+    -- Forward from WB if WB is writing to the register ID wants to read
+    if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+      s_RS1Data_final <= s_WriteData;
+    else
+      s_RS1Data_final <= s_RS1Data;
+    end if;
+    
+    if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+      s_RS2Data_final <= s_WriteData;
+    else
+      s_RS2Data_final <= s_RS2Data;
+    end if;
+  end process;
+
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: ID/EX
   -------------------------------------------------------------------------
@@ -489,8 +514,8 @@ begin
       i_ALUOp     => s_ALUOp,
       i_PC        => s_IFID_PC,
       i_PCplus4   => s_IFID_PCplus4,
-      i_RS1Data   => s_RS1Data,
-      i_RS2Data   => s_RS2Data,
+      i_RS1Data   => s_RS1Data_final,
+      i_RS2Data   => s_RS2Data_final,
       i_Immediate => s_Immediate,
       i_RS1Addr   => s_IFID_Inst(19 downto 15),
       i_RS2Addr   => s_IFID_Inst(24 downto 20),
