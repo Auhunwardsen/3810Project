@@ -30,11 +30,11 @@ main:
     slli x5, x4, 1          # x5 = 30 (uses x4)
     
     # Test Load/Store with proper scheduling
-    la   x6, test_data      # Load address (pseudo-instruction)
+    la   x6, test_data      # Load address (expands to auipc+addi)
     nop                     # RAW hazard prevention
     nop                     # RAW hazard prevention  
     nop                     # RAW hazard prevention
-    nop                     # RAW hazard prevention
+    nop                     # Extra safety for la expansion
     lw   x7, 0(x6)          # Load first word (x7 = 10)
     nop                     # Load-use hazard avoidance
     nop

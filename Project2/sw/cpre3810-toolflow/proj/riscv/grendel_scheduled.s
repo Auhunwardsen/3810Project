@@ -26,10 +26,17 @@ visited:
 res_idx:
         .word   3
 .text
-        # NEW RISCV                # ORIGINAL MIPS
-	li   sp, 0x10011000        # li $sp, 0x10011000
-	li   fp, 0                 # li $fp, 0
-	la   ra, pump              # la $ra pump
+	# NEW RISCV - Software scheduled for 5-stage pipeline
+	lui  sp, 0x10011           # Load upper bits for stack pointer
+	nop                        # RAW hazard prevention
+	nop                        # RAW hazard prevention
+	nop                        # RAW hazard prevention
+	addi sp, sp, 0             # Add lower bits (0x000)
+	li   fp, 0                 # fp = 0 (simple addi, no hazard)
+	la   ra, pump              # la expands to auipc+addi
+	nop                        # RAW hazard prevention
+	nop                        # RAW hazard prevention
+	nop                        # RAW hazard prevention
 	j    main
 pump:
         j end
@@ -120,11 +127,20 @@ turkey:
 telling:
         # NOTE: $v0 === $2
 	la   t2,    res_idx        # la      $v0, res_idx
+	nop                        # RAW hazard prevention
+	nop                        # RAW hazard prevention
+	nop                        # RAW hazard prevention
 	lw   t2,  0(t2)            # lw      $v0, 0($v0)
         addi t4,    t2, -1         # addiu   $4,$2,-1
         la   t3,    res_idx        # la      $3, res_idx
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
         sw   t4,  0(t3)            # sw      $4, 0($3)
         la   t4,    res            # la      $4, res
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
                                    # ; lui     $3,%hi(res_idx)
                                    # ; sw      $4,%lo(res_idx)($3)
                                    # ; lui     $4,%hi(res)
@@ -138,6 +154,9 @@ telling:
         neg  t6,    t6
         
         la   t2,    res            # la      $2, res
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
         li   a1,    0x0000ffff
         and  t6,    t2, a1         # andi    $at, $2, 0xffff # -1 will sign extend (according to assembler), but 0xffff won't
         add  t2,    t4, t6         # addu    $2, $4, $at
@@ -259,6 +278,9 @@ has_edge:
         lw   t2,  0(t2)            # lw      $2,0($2)
         sw   t2, 16(fp)            # sw      $2,16($fp)
         li   t2,  1                # li      $2,1
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
         j    measley
@@ -293,6 +315,9 @@ mark_visited:
         mv   fp,    sp             # move    $fp,$sp
         sw   t4, 32(fp)            # sw      $4,32($fp)
         li   t2,  1                # li      $2,1
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
+        nop                        # RAW hazard prevention
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
         j    recast

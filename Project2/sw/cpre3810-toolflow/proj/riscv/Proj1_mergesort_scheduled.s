@@ -24,13 +24,23 @@ n:      .word 8
 # - Initializes stack pointer and calls mergesort
 ##############################################################
 main:
-	# Initialize stack pointer
-	li   sp, 0x80000000     # Set stack pointer to high memory
+	# Initialize stack pointer - expand li pseudo-instruction
+	lui  sp, 0x80000        # Load upper 20 bits
+	nop                     # RAW hazard prevention
+	nop                     # RAW hazard prevention
+	nop                     # RAW hazard prevention
+	addi sp, sp, 0          # Add lower 12 bits (0)
 	
-	# load base address and indices
-    	la   a0, array       # a0 = base address
-    	li   a1, 0           # left = 0
+	# load base address and indices - expand la pseudo-instruction
+    	la   a0, array       # a0 = base address (expands to auipc+addi)
+    	nop                  # RAW hazard prevention
+    	nop                  # RAW hazard prevention
+    	nop                  # RAW hazard prevention
+    	li   a1, 0           # left = 0 (simple addi, no hazard)
    	lw   t0, n
+   	nop                  # Load-use hazard prevention
+   	nop                  # Load-use hazard prevention
+   	nop                  # Load-use hazard prevention
     	addi a2, t0, -1      # right = n-1
 
     	jal  ra, mergesort
