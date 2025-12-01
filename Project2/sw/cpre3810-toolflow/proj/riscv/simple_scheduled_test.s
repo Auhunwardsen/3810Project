@@ -31,10 +31,10 @@ main:
     
     # Test Load/Store with proper scheduling
     la   x6, test_data      # Load address (pseudo-instruction)
-    nop                     # RAW hazard prevention (la expands to 2 instructions)
+    nop                     # RAW hazard prevention
     nop                     # RAW hazard prevention  
-    nop                     # Extra safety
-    nop                     # Extra safety
+    nop                     # RAW hazard prevention
+    nop                     # RAW hazard prevention
     lw   x7, 0(x6)          # Load first word (x7 = 10)
     nop                     # Load-use hazard avoidance
     nop
