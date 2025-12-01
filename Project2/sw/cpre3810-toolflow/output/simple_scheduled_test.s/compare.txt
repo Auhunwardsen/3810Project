@@ -1,11 +1,5 @@
 Oh no...
 
-Cycle: 21
-RARS instruction number: 18	Instruction: auipc x6,64528
-Expected:	Register Write to Reg: 0x06 Val: 0x10010044
-Got     :	Register Write to Reg: 0x06 Val: 0x0FC1000A
-Incorrect write
-
 Cycle: 22
 RARS instruction number: 19	Instruction: addi x6,x6,-68
 Expected:	Register Write to Reg: 0x06 Val: 0x10010000
@@ -16,6 +10,12 @@ Cycle: 26
 RARS instruction number: 23	Instruction: lw x7,0(x6)
 Expected:	Register Write to Reg: 0x07 Val: 0x0000000A
 Got     :	Register Write to Reg: 0x07 Val: 0x00000000
+Incorrect write
+
+Cycle: 30
+RARS instruction number: 27	Instruction: add x8,x7,x5
+Expected:	Register Write to Reg: 0x08 Val: 0x00000028
+Got     :	Register Write to Reg: 0x08 Val: 0x0000001E
 Incorrect write
 
 You have reached the maximum mismatches (3)
