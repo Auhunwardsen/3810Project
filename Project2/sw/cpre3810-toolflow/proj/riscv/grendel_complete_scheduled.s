@@ -86,7 +86,7 @@ trucks:
         nop                        # Allow previous computation to complete
         nop
         nop
-        bne  v0, x0, skip_node     # If visited, skip this node
+        bne  s1, x0, skip_node     # If visited, skip this node
         nop                        # Control hazard avoidance  
         nop
         
@@ -173,7 +173,7 @@ is_visited:
         nop                        # Data hazard avoidance
         nop
         nop
-        lb   v0, 0(t1)             # Load visited[node]
+        lb   s1, 0(t1)             # Load visited[node]
         nop                        # Load-use hazard avoidance
         nop
         nop
