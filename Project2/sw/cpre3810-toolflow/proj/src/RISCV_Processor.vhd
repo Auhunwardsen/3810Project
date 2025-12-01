@@ -297,8 +297,6 @@ architecture structure of RISCV_Processor is
   -- Register file signals
   signal s_RS1Data    : std_logic_vector(31 downto 0);
   signal s_RS2Data    : std_logic_vector(31 downto 0);
-  signal s_RS1Data_fwd : std_logic_vector(31 downto 0);  -- After WB→ID forwarding
-  signal s_RS2Data_fwd : std_logic_vector(31 downto 0);  -- After WB→ID forwarding
   signal s_WriteData  : std_logic_vector(31 downto 0);
   
   -- Immediate generator signals
@@ -472,30 +470,6 @@ begin
       o_imm => s_Immediate
     );
 
-  -- WB→ID Forwarding (necessary even for software-scheduled pipeline)
-  -- Handles case where WB writes to register being read in ID
-  process(s_RS1Data, s_RS2Data, s_IFID_Inst, s_RegWr, s_RegWrAddr, s_RegWrData)
-    variable v_RS1_addr : std_logic_vector(4 downto 0);
-    variable v_RS2_addr : std_logic_vector(4 downto 0);
-  begin
-    v_RS1_addr := s_IFID_Inst(19 downto 15);
-    v_RS2_addr := s_IFID_Inst(24 downto 20);
-    
-    -- Forward RS1 from WB if writing to same register
-    if (s_RegWr = '1' and s_RegWrAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_fwd <= s_RegWrData;
-    else
-      s_RS1Data_fwd <= s_RS1Data;
-    end if;
-    
-    -- Forward RS2 from WB if writing to same register
-    if (s_RegWr = '1' and s_RegWrAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_fwd <= s_RegWrData;
-    else
-      s_RS2Data_fwd <= s_RS2Data;
-    end if;
-  end process;
-
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: ID/EX
   -------------------------------------------------------------------------
@@ -515,8 +489,8 @@ begin
       i_ALUOp     => s_ALUOp,
       i_PC        => s_IFID_PC,
       i_PCplus4   => s_IFID_PCplus4,
-      i_RS1Data   => s_RS1Data_fwd,
-      i_RS2Data   => s_RS2Data_fwd,
+      i_RS1Data   => s_RS1Data,
+      i_RS2Data   => s_RS2Data,
       i_Immediate => s_Immediate,
       i_RS1Addr   => s_IFID_Inst(19 downto 15),
       i_RS2Addr   => s_IFID_Inst(24 downto 20),
