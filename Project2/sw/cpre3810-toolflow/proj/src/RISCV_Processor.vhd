@@ -158,7 +158,7 @@ architecture structure of RISCV_Processor is
     );
   end component;
 
-  -- Pipeline register components
+  -- Pipeline Register Components
   component IFID_reg is
     port(
       i_CLK     : in  std_logic;
@@ -166,7 +166,7 @@ architecture structure of RISCV_Processor is
       i_WE      : in  std_logic;
       i_flush   : in  std_logic;
       i_PC      : in  std_logic_vector(31 downto 0);
-      i_PCplus4 : in  std_logic_vector(31 downto 0);
+      i_PCplus4 : in  std_logic_vector(31 downto 0); 
       i_Instr   : in  std_logic_vector(31 downto 0);
       o_PC      : out std_logic_vector(31 downto 0);
       o_PCplus4 : out std_logic_vector(31 downto 0);
@@ -176,10 +176,10 @@ architecture structure of RISCV_Processor is
 
   component IDEX_reg is
     port(
-      i_CLK       : in  std_logic;
-      i_RST       : in  std_logic;
-      i_WE        : in  std_logic;
-      i_flush     : in  std_logic;
+      i_CLK     : in  std_logic;
+      i_RST     : in  std_logic;
+      i_WE      : in  std_logic;
+      i_flush   : in  std_logic;
       i_RegWrite  : in  std_logic;
       i_MemToReg  : in  std_logic;
       i_MemWrite  : in  std_logic;
@@ -217,57 +217,56 @@ architecture structure of RISCV_Processor is
 
   component EXMEM_reg is
     port(
-      i_CLK       : in  std_logic;
-      i_RST       : in  std_logic;
-      i_WE        : in  std_logic;
-      i_flush     : in  std_logic;
-      i_RegWrite  : in  std_logic;
-      i_MemToReg  : in  std_logic;
-      i_MemWrite  : in  std_logic;
-      i_MemRead   : in  std_logic;
-      i_Branch    : in  std_logic;
-      i_BranchAddr: in  std_logic_vector(31 downto 0);
-      i_BranchTaken: in std_logic;
-      i_PCplus4   : in  std_logic_vector(31 downto 0);
-      i_ALUResult : in  std_logic_vector(31 downto 0);
-      i_WriteData : in  std_logic_vector(31 downto 0);
-      i_RS2Data   : in  std_logic_vector(31 downto 0);
-      i_RDAddr    : in  std_logic_vector(4 downto 0);
-      i_Instr     : in  std_logic_vector(31 downto 0);
-      
-      o_RegWrite  : out std_logic;
-      o_MemToReg  : out std_logic;
-      o_MemWrite  : out std_logic;
-      o_MemRead   : out std_logic;
-      o_Branch    : out std_logic;
-      o_BranchAddr: out std_logic_vector(31 downto 0);
-      o_BranchTaken: out std_logic;
-      o_WriteData : out std_logic_vector(31 downto 0);
-      o_PCplus4   : out std_logic_vector(31 downto 0);
-      o_ALUResult : out std_logic_vector(31 downto 0);
-      o_RS2Data   : out std_logic_vector(31 downto 0);
-      o_RDAddr    : out std_logic_vector(4 downto 0);
-      o_Instr     : out std_logic_vector(31 downto 0)
+      i_CLK     : in  std_logic;
+      i_RST     : in  std_logic;
+      i_WE      : in  std_logic;
+      i_flush   : in  std_logic;
+      i_RegWrite    : in  std_logic;
+      i_MemToReg    : in  std_logic;
+      i_MemWrite    : in  std_logic;
+      i_MemRead     : in  std_logic;
+      i_Branch      : in  std_logic;
+      i_BranchAddr  : in  std_logic_vector(31 downto 0);
+      i_BranchTaken : in  std_logic;
+      i_ALUResult   : in  std_logic_vector(31 downto 0);
+      i_WriteData   : in  std_logic_vector(31 downto 0);
+      i_RS2Data     : in  std_logic_vector(31 downto 0);
+      i_RDAddr      : in  std_logic_vector(4 downto 0);
+      i_PCplus4     : in  std_logic_vector(31 downto 0);
+      i_Instr       : in  std_logic_vector(31 downto 0);
+      o_RegWrite    : out std_logic;
+      o_MemToReg    : out std_logic;
+      o_MemWrite    : out std_logic;
+      o_MemRead     : out std_logic;
+      o_Branch      : out std_logic;
+      o_BranchAddr  : out std_logic_vector(31 downto 0);
+      o_BranchTaken : out std_logic;
+      o_ALUResult   : out std_logic_vector(31 downto 0);
+      o_WriteData   : out std_logic_vector(31 downto 0);
+      o_RS2Data     : out std_logic_vector(31 downto 0);
+      o_RDAddr      : out std_logic_vector(4 downto 0);
+      o_PCplus4     : out std_logic_vector(31 downto 0);
+      o_Instr       : out std_logic_vector(31 downto 0)
     );
   end component;
 
   component MEMWB_reg is
     port(
-      i_CLK       : in  std_logic;
-      i_RST       : in  std_logic;
-      i_WE        : in  std_logic;
-      i_flush     : in  std_logic;
+      i_CLK     : in  std_logic;
+      i_RST     : in  std_logic;
+      i_WE      : in  std_logic;
+      i_flush   : in  std_logic;
       i_RegWrite  : in  std_logic;
       i_MemToReg  : in  std_logic;
-      i_ALUResult : in  std_logic_vector(31 downto 0);
       i_MemData   : in  std_logic_vector(31 downto 0);
+      i_ALUResult : in  std_logic_vector(31 downto 0);
       i_PCplus4   : in  std_logic_vector(31 downto 0);
       i_RDAddr    : in  std_logic_vector(4 downto 0);
       i_Instr     : in  std_logic_vector(31 downto 0);
       o_RegWrite  : out std_logic;
       o_MemToReg  : out std_logic;
-      o_ALUResult : out std_logic_vector(31 downto 0);
       o_MemData   : out std_logic_vector(31 downto 0);
+      o_ALUResult : out std_logic_vector(31 downto 0);
       o_PCplus4   : out std_logic_vector(31 downto 0);
       o_RDAddr    : out std_logic_vector(4 downto 0);
       o_Instr     : out std_logic_vector(31 downto 0)
@@ -798,7 +797,8 @@ begin
   begin
     v_IsJAL := '1' when s_IFID_Inst(6 downto 0) = "1101111" else '0';
     v_IsJALR := '1' when s_IFID_Inst(6 downto 0) = "1100111" else '0';
-    v_JALRTarget := std_logic_vector(unsigned(s_RS1Data_final) + unsigned(s_Immediate));
+    -- JALR target = (rs1 + imm) with LSB set to 0
+    v_JALRTarget := std_logic_vector(unsigned(s_RS1Data_final) + unsigned(s_Immediate)) and (x"FFFFFFFE");
     
     if v_IsJAL = '1' then
       s_UseNextAdr <= '1';
@@ -834,4 +834,3 @@ begin
   -- Only report overflow for specific instructions that need it (none in basic RISC-V)
   s_Ovfl <= '0';  -- Always '0' for standard RISC-V instructions
 end structure;
-
