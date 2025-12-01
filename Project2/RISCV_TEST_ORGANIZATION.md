@@ -32,17 +32,17 @@
 ```bash
 cd sw/cpre3810-toolflow
 # Simple test
-./cpre3810-toolflow/3810_tf.sh -s cpre3810-toolflow/proj/src -t riscv/simple_scheduled_test.s
+sh ./3810_tf.sh test proj/riscv/simple_scheduled_test.s
 
 - 
 
 # Mergesort test
-./cpre3810-toolflow/3810_tf.sh -s cpre3810-toolflow/proj/src -t riscv/Proj1_mergesort_scheduled.s
+sh ./3810_tf.sh test proj/riscv/Proj1_mergesort_scheduled.s
 
 - 
 
 # Grendel test
-./cpre3810-toolflow/3810_tf.sh -s cpre3810-toolflow/proj/src -t riscv/grendel_scheduled.s
+sh ./3810_tf.sh test proj/riscv/grendel_scheduled.s
 ```
 
 ### Hardware Pipeline Testing:
