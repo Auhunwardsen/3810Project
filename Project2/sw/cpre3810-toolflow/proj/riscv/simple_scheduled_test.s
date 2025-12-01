@@ -29,12 +29,14 @@ main:
     nop
     slli x5, x4, 1          # x5 = 30 (uses x4)
     
-    # Test Load/Store with proper scheduling
-    la   x6, test_data      # Load address (expands to auipc+addi)
-    nop                     # RAW hazard prevention
-    nop                     # RAW hazard prevention  
-    nop                     # RAW hazard prevention
-    nop                     # Extra safety for la expansion
+    # Test Load/Store with proper scheduling - use correct RARS values
+    auipc x6, 64528         # Load PC + offset (same as RARS)
+    nop                     # RAW hazard prevention cycle 1
+    nop                     # RAW hazard prevention cycle 2  
+    nop                     # RAW hazard prevention cycle 3
+    nop                     # Extra safety cycle 4
+    nop                     # Extra safety cycle 5
+    addi x6, x6, -68        # Add offset (same as RARS) - now safe to read x6
     lw   x7, 0(x6)          # Load first word (x7 = 10)
     nop                     # Load-use hazard avoidance
     nop

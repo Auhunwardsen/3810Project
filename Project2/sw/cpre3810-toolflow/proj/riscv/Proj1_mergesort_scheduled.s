@@ -24,18 +24,21 @@ n:      .word 8
 # - Initializes stack pointer and calls mergesort
 ##############################################################
 main:
-	# Initialize stack pointer - expand li pseudo-instruction
-	lui  sp, 0x80000        # Load upper 20 bits
-	nop                     # RAW hazard prevention
-	nop                     # RAW hazard prevention
-	nop                     # RAW hazard prevention
-	addi sp, sp, 0          # Add lower 12 bits (0)
+	# Initialize stack pointer - manual expansion with NOPs
+	lui  sp, 0x80000        # Load upper 20 bits (0x80000000 >> 12 = 0x80000)
+	nop                     # RAW hazard prevention cycle 1
+	nop                     # RAW hazard prevention cycle 2
+	nop                     # RAW hazard prevention cycle 3
+	addi sp, sp, 0          # Add lower 12 bits (0) - now safe to read sp
 	
-	# load base address and indices - expand la pseudo-instruction
-    	la   a0, array       # a0 = base address (expands to auipc+addi)
-    	nop                  # RAW hazard prevention
-    	nop                  # RAW hazard prevention
-    	nop                  # RAW hazard prevention
+	# load base address and indices - use known address calculation  
+    	auipc a0, 64528       # Load PC + offset to get near data section
+    	nop                  # RAW hazard prevention cycle 1
+    	nop                  # RAW hazard prevention cycle 2
+    	nop                  # RAW hazard prevention cycle 3
+    	nop                  # Extra safety cycle 4
+    	nop                  # Extra safety cycle 5
+    	addi a0, a0, -20     # Adjust to array address - now safe to read a0
     	li   a1, 0           # left = 0 (simple addi, no hazard)
    	lw   t0, n
    	nop                  # Load-use hazard prevention

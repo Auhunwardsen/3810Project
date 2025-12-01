@@ -26,17 +26,20 @@ visited:
 res_idx:
         .word   3
 .text
-	# NEW RISCV - Software scheduled for 5-stage pipeline
-	lui  sp, 0x10011           # Load upper bits for stack pointer
-	nop                        # RAW hazard prevention
-	nop                        # RAW hazard prevention
-	nop                        # RAW hazard prevention
-	addi sp, sp, 0             # Add lower bits (0x000)
+	# NEW RISCV - Software scheduled with manual instruction expansion
+	lui  sp, 0x10011           # Load upper bits (0x10011000 >> 12 = 0x10011)
+	nop                        # RAW hazard prevention cycle 1
+	nop                        # RAW hazard prevention cycle 2
+	nop                        # RAW hazard prevention cycle 3
+	addi sp, sp, 0             # Add lower bits (0x000) - now safe to read sp
 	li   fp, 0                 # fp = 0 (simple addi, no hazard)
-	la   ra, pump              # la expands to auipc+addi
-	nop                        # RAW hazard prevention
-	nop                        # RAW hazard prevention
-	nop                        # RAW hazard prevention
+	auipc ra, 0               # Load current PC into ra
+	nop                        # RAW hazard prevention cycle 1
+	nop                        # RAW hazard prevention cycle 2
+	nop                        # RAW hazard prevention cycle 3
+	nop                        # Extra safety cycle 4
+	nop                        # Extra safety cycle 5
+	addi ra, ra, 24           # Add offset to pump - now safe to read ra
 	j    main
 pump:
         j end
