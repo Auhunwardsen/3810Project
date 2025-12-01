@@ -37,13 +37,13 @@ main:
     	nop
     	nop
     	nop
-   	lw   t0, n           # Load array size
-   	nop                  # Load-use hazard prevention
-   	nop                  # Load-use hazard prevention
-   	nop                  # Load-use hazard prevention
-   	nop
-   	nop
-    	addi a2, t0, -1      # right = n-1
+   	lw   t0, n           # Load array size (pseudo-instruction expands)
+   	nop                  # Load-use hazard prevention cycle 1
+   	nop                  # Load-use hazard prevention cycle 2
+   	nop                  # Load-use hazard prevention cycle 3
+   	nop                  # Load-use hazard prevention cycle 4
+   	nop                  # Load-use hazard prevention cycle 5
+    	addi a2, t0, -1      # right = n-1 (now safe to use t0)
 
     jal  ra, mergesort
 	nop

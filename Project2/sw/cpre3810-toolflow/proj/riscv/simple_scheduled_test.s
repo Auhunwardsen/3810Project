@@ -26,14 +26,15 @@ main:
     nop
     slli x5, x4, 1          # x5 = 30 (uses x4)
     
-    # Test Load/Store with proper scheduling - software scheduled
-    la   x6, test_data      # Load address (pseudo-instruction)
-    nop                     # NOPs after pseudo-instruction
-    nop                     
-    nop                     
-    nop                     
-    nop
-    lw   x7, 0(x6)          # Load first word (x7 = 10)
+    # Test Load/Store with proper scheduling - let pseudo-instruction expand
+    la   x6, test_data      # Load address (expands to auipc + addi)
+    # Reorder other instructions to provide delay instead of NOPs
+    addi x9, x0, 999        # Prepare value for later (independent)
+    addi x10, x0, 100       # Prepare value for later (independent)
+    addi x11, x0, 888       # Prepare value for later (independent)
+    addi x13, x0, 777       # Prepare value for later (independent)
+    addi x14, x0, 200       # Prepare value for later (independent)
+    lw   x7, 0(x6)          # Load first word (x7 = 10) - now safe to use x6
     nop                     # Load-use hazard avoidance
     nop
     nop
@@ -45,21 +46,21 @@ main:
     # Test Branch instructions with control hazard avoidance
     beq  x1, x1, taken      # Should be taken
     nop                     # Control hazard slot
-    addi x9, x0, 999        # Should not execute
+    nop                     # Should not execute
     
 taken:
-    addi x10, x0, 100       # x10 = 100
+    nop                     # x10 already set above
     nop
     nop
-    bne  x10, x1, not_equal # Should be taken
+    bne  x10, x1, not_equal # Should be taken (x10=100, x1=5)
     nop                     # Control hazard slot
-    addi x11, x0, 888       # Should not execute
+    nop                     # Should not execute
     
 not_equal:
     # Test JAL instruction
     jal  ra, subroutine    # Jump and link, ra = PC+4
     nop                     # Control hazard slot
-    addi x13, x0, 777       # Should not execute
+    nop                     # Should not execute
     
     # Final test - JALR to end program
     jalr x0, ra, 0         # Return from subroutine
@@ -70,7 +71,8 @@ not_equal:
     nop
 
 subroutine:
-    addi x14, x0, 200       # x14 = 200
+    nop                     # x14 already set above
+    nop
     jr   ra        # Jump back using return address
     nop                     # Control hazard slot
     

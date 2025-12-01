@@ -24,26 +24,17 @@ main:
 	nop                     # RAW hazard prevention  
 	addi sp, sp, 0          # Add lower 12 bits (0)
 	
-	# load base address and indices - software scheduled with NOPs only
-    	la   a0, array       # a0 = base address (pseudo-instruction)
-    	nop                  # NOPs after pseudo-instruction
-    	nop                  
-    	nop                  
-    	nop                  
-    	nop                  
-    	li   a1, 0           # left = 0 (pseudo-instruction)  
-    	nop                  # NOPs after pseudo-instruction
-    	nop
-    	nop
-    	nop
-    	nop
-   	lw   t0, n           # Load array size
-   	nop                  # Load-use hazard prevention
-   	nop                  # Load-use hazard prevention
-   	nop                  # Load-use hazard prevention
-   	nop
-   	nop
-    	addi a2, t0, -1      # right = n-1
+	# load base address and indices - software scheduled with instruction reordering
+    	la   a0, array       # a0 = base address (expands to auipc + addi)
+    	li   a1, 0           # left = 0 (expands to addi a1, x0, 0)
+   	lw   t0, n           # Load array size (expands to auipc + lw)
+   	# Use independent instructions to provide scheduling delay
+   	addi sp, sp, 0       # Stack pointer already set (no-op for delay)
+   	addi sp, sp, 0       # Additional delay
+   	addi sp, sp, 0       # Additional delay  
+   	addi sp, sp, 0       # Additional delay
+   	addi sp, sp, 0       # Additional delay
+    	addi a2, t0, -1      # right = n-1 (now safe to use t0)
 
     jal  ra, mergesort
 	nop
