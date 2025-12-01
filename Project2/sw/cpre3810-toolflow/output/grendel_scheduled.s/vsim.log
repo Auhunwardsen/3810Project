@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 15:54:49 on Nov 25,2025
+# Start time: 13:32:41 on Dec 01,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Note: (vsim-8611) Generating debug db.
 # ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
@@ -37,19 +37,19 @@ Reading pref.tcl
 # Loading work.adder_n(rtl)#1
 # Loading work.mux2t1_n(rtl)#1
 # Loading work.ifid_reg(behavioral)#1
-# Loading work.idex_reg(behavioral)#1
-# Loading work.exmem_reg(behavioral)#1
-# Loading work.memwb_reg(behavioral)#1
 # Loading work.control(dataflow)#1
-# Loading work.alu_control(dataflow)#1
 # Loading work.regfile(rtl)#1
 # Loading work.decoder5t32(dataflow)#1
 # Loading work.reg_n(structural)#1
 # Loading work.dffg(mixed)#1
 # Loading work.mux32_1(rtl)#1
 # Loading work.immgen(dataflow)#1
+# Loading work.idex_reg(behavioral)#1
+# Loading work.alu_control(dataflow)#1
 # Loading work.alu(structural)#1
 # Loading work.barrelshifter(dataflow)#1
+# Loading work.exmem_reg(behavioral)#1
+# Loading work.memwb_reg(behavioral)#1
 # ** Warning: (vsim-8683) Uninitialized out port /tb/MyRiscv/u_MEMWB/o_Instr(31 downto 7) has no driver.
 # This port will contribute value (25'hXXXXXXX) to the signal network.
 # ** Warning: (vsim-8683) Uninitialized out port /tb/MyRiscv/u_MEMWB/o_Instr(6 downto 0) has no driver.
@@ -69,7 +69,7 @@ Reading pref.tcl
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv/IMem
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv/u_alu/u_shifter
+#    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv/u_alu_inst/u_shifter
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv/u_regfile/MUXA
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
@@ -79,8 +79,10 @@ Reading pref.tcl
 # ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
 #    Time: 0 ns  Iteration: 1  Instance: /tb/MyRiscv
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 5 ns  Iteration: 2  Instance: /tb/MyRiscv/u_alu_inst/u_shifter
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 1380 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 1380 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
-# End time: 15:54:56 on Nov 25,2025, Elapsed time: 0:00:07
-# Errors: 0, Warnings: 16
+# End time: 13:32:49 on Dec 01,2025, Elapsed time: 0:00:08
+# Errors: 0, Warnings: 17
