@@ -261,12 +261,14 @@ architecture structure of RISCV_Processor is
       i_MemToReg  : in  std_logic;
       i_ALUResult : in  std_logic_vector(31 downto 0);
       i_MemData   : in  std_logic_vector(31 downto 0);
+      i_PCplus4   : in  std_logic_vector(31 downto 0);
       i_RDAddr    : in  std_logic_vector(4 downto 0);
       i_Instr     : in  std_logic_vector(31 downto 0);
       o_RegWrite  : out std_logic;
       o_MemToReg  : out std_logic;
       o_ALUResult : out std_logic_vector(31 downto 0);
       o_MemData   : out std_logic_vector(31 downto 0);
+      o_PCplus4   : out std_logic_vector(31 downto 0);
       o_RDAddr    : out std_logic_vector(4 downto 0);
       o_Instr     : out std_logic_vector(31 downto 0)
     );
@@ -362,6 +364,7 @@ architecture structure of RISCV_Processor is
   signal s_MEMWB_MemToReg  : std_logic;
   signal s_MEMWB_ALUResult : std_logic_vector(31 downto 0);
   signal s_MEMWB_MemData   : std_logic_vector(31 downto 0);
+  signal s_MEMWB_PCplus4   : std_logic_vector(31 downto 0);
   signal s_MEMWB_RDAddr    : std_logic_vector(4 downto 0);
   signal s_MEMWB_Inst    : std_logic_vector(31 downto 0);
 
@@ -672,12 +675,14 @@ begin
       i_MemData    => s_DMemOut,
       i_RDAddr     => s_EXMEM_RDAddr,
       i_Instr      => s_EXMEM_Inst,
+      i_PCplus4    => s_EXMEM_PCplus4,
       o_RegWrite   => s_MEMWB_RegWrite,
       o_MemToReg   => s_MEMWB_MemToReg,
       o_ALUResult  => s_MEMWB_ALUResult,
       o_MemData    => s_MEMWB_MemData,
       o_RDAddr     => s_MEMWB_RDAddr,
-      o_Instr      => s_MEMWB_Inst
+      o_Instr      => s_MEMWB_Inst,
+      o_PCplus4    => s_MEMWB_PCplus4
     );
 
   -------------------------------------------------------------------------
@@ -716,7 +721,7 @@ begin
   -- WB STAGE LOGIC
   -------------------------------------------------------------------------
   -- Write Data Selection: chooses between ALU result and memory data
-  process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_ALUResult, s_MEMWB_MemData)
+  process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_ALUResult, s_MEMWB_MemData, s_MEMWB_PCplus4)
     variable v_LoadData : std_logic_vector(31 downto 0);
     variable v_IsJAL : std_logic;
     variable v_IsJALR : std_logic;
@@ -725,8 +730,8 @@ begin
     v_IsJALR := '1' when s_MEMWB_Inst(6 downto 0) = "1100111" else '0';
     
     if v_IsJAL = '1' or v_IsJALR = '1' then
-      -- JAL/JALR write PC+4 to register (return address) - stored in ALU result
-      s_WriteData <= s_MEMWB_ALUResult;
+      -- JAL/JALR write PC+4 to register (return address) - use PCplus4 from pipeline
+      s_WriteData <= s_MEMWB_PCplus4;
     elsif s_MEMWB_MemToReg = '1' then
       -- Load instructions - handle different load types with proper sign extension
       case s_MEMWB_Inst(14 downto 12) is  -- funct3 field for load instructions

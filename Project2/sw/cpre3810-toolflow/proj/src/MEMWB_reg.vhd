@@ -17,6 +17,7 @@ entity MEMWB_reg is
     -- Data signals
     i_MemData   : in  std_logic_vector(31 downto 0);
     i_ALUResult : in  std_logic_vector(31 downto 0);
+    i_PCplus4   : in  std_logic_vector(31 downto 0);
     i_RDAddr    : in  std_logic_vector(4 downto 0);
     i_Instr     : in  std_logic_vector(31 downto 0);
     
@@ -26,6 +27,7 @@ entity MEMWB_reg is
     
     o_MemData   : out std_logic_vector(31 downto 0);
     o_ALUResult : out std_logic_vector(31 downto 0);
+    o_PCplus4   : out std_logic_vector(31 downto 0);
     o_RDAddr    : out std_logic_vector(4 downto 0);
     o_Instr     : out std_logic_vector(31 downto 0)
   );
@@ -41,6 +43,7 @@ begin
       o_MemToReg  <= '0';
       o_MemData   <= (others => '0');
       o_ALUResult <= (others => '0');
+      o_PCplus4   <= (others => '0');
       o_RDAddr    <= (others => '0');
       o_Instr     <= (others => '0');
       
@@ -51,6 +54,7 @@ begin
         o_MemToReg  <= '0';
         o_MemData   <= (others => '0');
         o_ALUResult <= (others => '0');
+        o_PCplus4   <= (others => '0');
         o_RDAddr    <= (others => '0');
         o_Instr     <= (others => '0');
         
@@ -60,6 +64,7 @@ begin
         o_MemToReg  <= i_MemToReg;
         o_MemData   <= i_MemData;
         o_ALUResult <= i_ALUResult;
+        o_PCplus4   <= i_PCplus4;
         o_RDAddr    <= i_RDAddr;
         o_Instr     <= i_Instr;
       end if;
