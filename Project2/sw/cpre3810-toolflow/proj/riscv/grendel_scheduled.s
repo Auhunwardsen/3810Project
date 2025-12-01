@@ -10,7 +10,7 @@
 
 .data
 res:
-	.word -1-1-1-1
+	.word -1, -1, -1, -1
 nodes:
         .byte   97 # a
         .byte   98 # b
@@ -22,7 +22,7 @@ adjacencymatrix:
         .word   0
         .word   3
 visited:
-	.byte 0 0 0 0
+	.byte 0, 0, 0, 0
 res_idx:
         .word   3
 .text
@@ -32,7 +32,12 @@ res_idx:
 	nop                        # RAW hazard prevention cycle 2
 	nop                        # RAW hazard prevention cycle 3
 	addi sp, sp, 0             # Add lower bits (0x000) - now safe to read sp
-	li   fp, 0                 # fp = 0 (simple addi, no hazard)
+	li   fp, 0                 # fp = 0 (pseudo-instruction)
+	nop                        # NOPs after pseudo-instruction
+	nop
+	nop
+	nop
+	nop
 	auipc ra, 0               # Load current PC into ra
 	nop                        # RAW hazard prevention cycle 1
 	nop                        # RAW hazard prevention cycle 2
@@ -57,6 +62,11 @@ main:
 main_loop_body:
         lw   t4, 24(fp)            # lw      $4,24($fp)
         la   ra,    trucks         # la      $ra, trucks
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         j    is_visited
 trucks:
 
@@ -67,6 +77,11 @@ trucks:
         lw   t4, 24(fp)            # lw      $4,24($fp)
                                    # ; addi    $k0, $k0,1# breakpoint
         la   ra,    billowy        # la      $ra, billowy
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         j    topsort
 billowy:
 
@@ -103,6 +118,11 @@ welcome:
 interest:
         lw   t4, 24(fp)            # lw      $4,24($fp)
         la   ra,    new            # la      $ra, new
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         j    is_visited
 new:
         xori t2,    t2, 1          # xori    $2,$2,0x1
@@ -111,6 +131,11 @@ new:
 
         lw   t4, 24(fp)            # lw      $4,24($fp)
         la   ra,    partner        # la      $ra, partner
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         j    topsort
 partner:
 
@@ -118,6 +143,11 @@ tasteful:
         addi t2,    fp, 28         # addiu   $2,$fp,28
         mv   t4,    t2             # move    $4,$2
         la   ra,    badge          # la      $ra, badge
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         j    next_edge
 badge:
         sw   t2, 24(fp)            # sw      $2,24($fp)
@@ -125,6 +155,11 @@ badge:
 turkey:
         lw   t3, 24(fp)            # lw      $3,24($fp)
         li   t2, -1                # li      $2,-1
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         beq  t3,    t2, telling    # beq     $3,$2,telling # beq, j to simulate bne
         j    interest
 telling:
@@ -161,6 +196,11 @@ telling:
         nop                        # RAW hazard prevention
         nop                        # RAW hazard prevention
         li   a1,    0x0000ffff
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         and  t6,    t2, a1         # andi    $at, $2, 0xffff # -1 will sign extend (according to assembler), but 0xffff won't
         add  t2,    t4, t6         # addu    $2, $4, $at
         add  t2,    t3, t2         # addu    $2,$3,$2
@@ -261,6 +301,11 @@ waggish:
         j    snail
 mark:
         li   t2, -1                # li      $2,-1
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
 
 cynical:
         mv   sp,    fp             # move    $sp,$fp

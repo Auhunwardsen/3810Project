@@ -24,16 +24,26 @@ main:
 	nop                     # RAW hazard prevention  
 	addi sp, sp, 0          # Add lower 12 bits (0)
 	
-	# load base address and indices
-    la   a0, array          # a0 = base address 
-    nop                     # Potential hazard prevention
-    nop                     # Potential hazard prevention
-    li   a1, 0              # left = 0 (simple addi, no hazard)
-   	lw   t0, n
-    nop
-    nop
-    nop
-    add  a2, t0, -1      # right = n-1
+	# load base address and indices - software scheduled with NOPs only
+    	la   a0, array       # a0 = base address (pseudo-instruction)
+    	nop                  # NOPs after pseudo-instruction
+    	nop                  
+    	nop                  
+    	nop                  
+    	nop                  
+    	li   a1, 0           # left = 0 (pseudo-instruction)  
+    	nop                  # NOPs after pseudo-instruction
+    	nop
+    	nop
+    	nop
+    	nop
+   	lw   t0, n           # Load array size
+   	nop                  # Load-use hazard prevention
+   	nop                  # Load-use hazard prevention
+   	nop                  # Load-use hazard prevention
+   	nop
+   	nop
+    	addi a2, t0, -1      # right = n-1
 
     jal  ra, mergesort
 	nop
