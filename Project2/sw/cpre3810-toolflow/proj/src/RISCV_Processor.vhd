@@ -474,22 +474,62 @@ begin
   -- WB→ID Forwarding: Only forward from WB stage (software-scheduled pipeline)
   -- No EX→ID or MEM→ID forwarding - software must schedule to avoid those hazards
   process(s_RS1Data, s_RS2Data, s_IFID_Inst, 
-          s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_WriteData)
+          s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_MEMWB_ALUResult, s_MEMWB_MemData, s_MEMWB_MemToReg, s_MEMWB_Inst, s_MEMWB_PCplus4)
     variable v_RS1_addr : std_logic_vector(4 downto 0);
     variable v_RS2_addr : std_logic_vector(4 downto 0);
+    variable v_ForwardData : std_logic_vector(31 downto 0);
+    variable v_IsJAL : std_logic;
+    variable v_IsJALR : std_logic;
+    variable v_LoadData : std_logic_vector(31 downto 0);
   begin
     v_RS1_addr := s_IFID_Inst(19 downto 15);
     v_RS2_addr := s_IFID_Inst(24 downto 20);
     
+    -- Compute forwarded data directly in this process to avoid timing issues
+    v_IsJAL := '1' when s_MEMWB_Inst(6 downto 0) = "1101111" else '0';
+    v_IsJALR := '1' when s_MEMWB_Inst(6 downto 0) = "1100111" else '0';
+    
+    if v_IsJAL = '1' or v_IsJALR = '1' then
+      v_ForwardData := s_MEMWB_PCplus4;
+    elsif s_MEMWB_MemToReg = '1' then
+      -- Handle load instructions
+      case s_MEMWB_Inst(14 downto 12) is
+        when "000" =>  -- LB
+          if s_MEMWB_MemData(7) = '1' then
+            v_LoadData := x"FFFFFF" & s_MEMWB_MemData(7 downto 0);
+          else
+            v_LoadData := x"000000" & s_MEMWB_MemData(7 downto 0);
+          end if;
+          v_ForwardData := v_LoadData;
+        when "001" =>  -- LH
+          if s_MEMWB_MemData(15) = '1' then
+            v_LoadData := x"FFFF" & s_MEMWB_MemData(15 downto 0);
+          else
+            v_LoadData := x"0000" & s_MEMWB_MemData(15 downto 0);
+          end if;
+          v_ForwardData := v_LoadData;
+        when "010" =>  -- LW
+          v_ForwardData := s_MEMWB_MemData;
+        when "100" =>  -- LBU
+          v_ForwardData := x"000000" & s_MEMWB_MemData(7 downto 0);
+        when "101" =>  -- LHU
+          v_ForwardData := x"0000" & s_MEMWB_MemData(15 downto 0);
+        when others =>
+          v_ForwardData := s_MEMWB_MemData;
+      end case;
+    else
+      v_ForwardData := s_MEMWB_ALUResult;
+    end if;
+    
     -- Forward from WB only - maintains software schedule timing
     if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_final <= s_WriteData;
+      s_RS1Data_final <= v_ForwardData;
     else
       s_RS1Data_final <= s_RS1Data;
     end if;
     
     if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_final <= s_WriteData;
+      s_RS2Data_final <= v_ForwardData;
     else
       s_RS2Data_final <= s_RS2Data;
     end if;
