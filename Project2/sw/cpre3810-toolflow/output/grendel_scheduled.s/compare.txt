@@ -1,19 +1,19 @@
 Oh no...
 
-Cycle: 5
-RARS instruction number: 2	Instruction: addi x2,x2,0
+Cycle: 7
+RARS instruction number: 4	Instruction: addi x2,x2,0
 Expected:	Register Write to Reg: 0x02 Val: 0x10011000
 Got     :	Register Write to Reg: 0x02 Val: 0x00000000
 Incorrect write
 
-Cycle: 14
-RARS instruction number: 11	Instruction: addi x1,x1,32
-Expected:	Register Write to Reg: 0x01 Val: 0x00400044
+Cycle: 13
+RARS instruction number: 10	Instruction: addi x1,x1,32
+Expected:	Register Write to Reg: 0x01 Val: 0x00400040
 Got     :	Register Write to Reg: 0x01 Val: 0x00000020
 Incorrect write
 
-Cycle: 20
-RARS instruction number: 16	Instruction: addi x2,x2,-40
+Cycle: 19
+RARS instruction number: 15	Instruction: addi x2,x2,-40
 Expected:	Register Write to Reg: 0x02 Val: 0x10010FD8
 Got     :	Register Write to Reg: 0x02 Val: 0xFFFFFFD8
 Incorrect write
