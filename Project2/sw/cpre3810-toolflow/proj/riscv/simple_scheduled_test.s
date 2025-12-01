@@ -30,10 +30,11 @@ main:
     slli x5, x4, 1          # x5 = 30 (uses x4)
     
     # Test Load/Store with proper scheduling
-    la   x6, test_data      # Load address
-    nop                     # Avoid hazard with la
-    nop
-    nop
+    la   x6, test_data      # Load address (pseudo-instruction)
+    nop                     # RAW hazard prevention (la expands to 2 instructions)
+    nop                     # RAW hazard prevention  
+    nop                     # Extra safety
+    nop                     # Extra safety
     lw   x7, 0(x6)          # Load first word (x7 = 10)
     nop                     # Load-use hazard avoidance
     nop
