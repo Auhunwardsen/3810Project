@@ -751,7 +751,7 @@ begin
   
   -- Branch condition evaluation (ID stage for software-scheduled pipeline)
   -- Compares RS1 and RS2 to determine if branch should be taken
-  process(s_Branch, s_IFID_Inst, s_RS1Data, s_RS2Data)
+  process(s_Branch, s_IFID_Inst, s_RS1Data_final, s_RS2Data_final)
     variable v_BranchCond : std_logic;  -- Final branch decision (1=take branch, 0=don't take)
     variable v_Zero : std_logic;        -- 1 if RS1 == RS2 (for BEQ/BNE)
     variable v_LT : std_logic;          -- 1 if RS1 < RS2 (signed comparison, for BLT/BGE)
@@ -761,9 +761,9 @@ begin
     v_BranchCond := '0';
     
     -- Compute all three comparison types in parallel
-    v_Zero := '1' when s_RS1Data = s_RS2Data else '0';                      -- Equal?
-    v_LT := '1' when signed(s_RS1Data) < signed(s_RS2Data) else '0';        -- Signed less than?
-    v_LTU := '1' when unsigned(s_RS1Data) < unsigned(s_RS2Data) else '0';   -- Unsigned less than?
+    v_Zero := '1' when s_RS1Data_final = s_RS2Data_final else '0';                      -- Equal?
+    v_LT := '1' when signed(s_RS1Data_final) < signed(s_RS2Data_final) else '0';        -- Signed less than?
+    v_LTU := '1' when unsigned(s_RS1Data_final) < unsigned(s_RS2Data_final) else '0';   -- Unsigned less than?
     
     -- If this is a branch instruction, determine which condition to use
     if s_Branch = '1' then
@@ -790,14 +790,14 @@ begin
   end process;
   
   -- Next address selection (ID stage for software-scheduled pipeline)
-  process(s_BranchTaken, s_BranchAddr, s_IFID_Inst, s_RS1Data, s_Immediate, s_PCplus4)
+  process(s_BranchTaken, s_BranchAddr, s_IFID_Inst, s_RS1Data_final, s_Immediate, s_PCplus4)
     variable v_IsJAL : std_logic;
     variable v_IsJALR : std_logic;
     variable v_JALRTarget : std_logic_vector(31 downto 0);
   begin
     v_IsJAL := '1' when s_IFID_Inst(6 downto 0) = "1101111" else '0';
     v_IsJALR := '1' when s_IFID_Inst(6 downto 0) = "1100111" else '0';
-    v_JALRTarget := std_logic_vector(unsigned(s_RS1Data) + unsigned(s_Immediate));
+    v_JALRTarget := std_logic_vector(unsigned(s_RS1Data_final) + unsigned(s_Immediate));
     
     if v_IsJAL = '1' then
       s_UseNextAdr <= '1';
