@@ -31,25 +31,25 @@
 ### Software Pipeline Testing:
 ```bash
 cd sw/cpre3810-toolflow
-./3810_tf.sh test proj/riscv/simple_scheduled_test.s proj/src/
-./3810_tf.sh test proj/riscv/Proj1_mergesort_scheduled.s proj/src/
-./3810_tf.sh test proj/riscv/grendel_scheduled.s proj/src/
+./3810_tf.sh test proj/riscv/simple_scheduled_test.s 
+./3810_tf.sh test proj/riscv/Proj1_mergesort_scheduled.s 
+./3810_tf.sh test proj/riscv/grendel_scheduled.s 
 ```
 
 ### Hardware Pipeline Testing:
 ```bash
 cd hw/cpre3810-toolflow
 # Test hazard detection
-./3810_tf.sh test proj/riscv/data_hazard_test1.s proj/src/
-./3810_tf.sh test proj/riscv/control_hazard_test1.s proj/src/
-./3810_tf.sh test proj/riscv/combined_hazard_test.s proj/src/
+./3810_tf.sh test proj/riscv/data_hazard_test1.s 
+./3810_tf.sh test proj/riscv/control_hazard_test1.s 
+./3810_tf.sh test proj/riscv/combined_hazard_test.s 
 
 # Test unscheduled programs (should work with hardware hazard handling)
-./3810_tf.sh test proj/riscv/Proj1_mergesort.s proj/src/
-./3810_tf.sh test proj/riscv/Proj1_cf_test.s proj/src/
+./3810_tf.sh test proj/riscv/Proj1_mergesort.s 
+./3810_tf.sh test proj/riscv/Proj1_cf_test.s 
 
 # Test scheduled programs (should also work)
-./3810_tf.sh test proj/riscv/Proj1_mergesort_scheduled.s proj/src/
+./3810_tf.sh test proj/riscv/Proj1_mergesort_scheduled.s 
 ```
 
 ## Key Differences
