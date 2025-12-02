@@ -28,8 +28,23 @@ res_idx:
 .text
         # NEW RISCV                # ORIGINAL MIPS
 	li   sp, 0x10011000        # li $sp, 0x10011000
+	nop                        # NOPs after pseudo-instruction
+	nop
+	nop
+	nop
+	nop
 	li   fp, 0                 # li $fp, 0
+	nop                        # NOPs after pseudo-instruction
+	nop
+	nop
+	nop
+	nop
 	la   ra, pump              # la $ra pump
+	nop                        # NOPs after pseudo-instruction
+	nop
+	nop
+	nop
+	nop
 	j    main
 pump:
         j end
@@ -46,7 +61,17 @@ main:
 
 main_loop_body:
         lw   t4, 24(fp)            # lw      $4,24($fp)
+        nop                        # NOPs after load
+        nop
+        nop
+        nop
+        nop
         la   ra,    trucks         # la      $ra, trucks
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         j    is_visited
 trucks:
 
@@ -55,13 +80,28 @@ trucks:
         beq  t2,    x0, kick       # beq     $2,$0,kick
 
         lw   t4, 24(fp)            # lw      $4,24($fp)
+        nop                        # NOPs after load
+        nop
+        nop
+        nop
+        nop
                                    # ; addi    $k0, $k0,1# breakpoint
         la   ra,    billowy        # la      $ra, billowy
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         j    topsort
 billowy:
 
 kick:
         lw   t2, 24(fp)            # lw      $2,24($fp)
+        nop                        # NOPs after load
+        nop
+        nop
+        nop
+        nop
         addi t2,    t2, 1          # addiu   $2,$2,1
         sw   t2, 24(fp)            # sw      $2,24($fp)
 main_loop_control:

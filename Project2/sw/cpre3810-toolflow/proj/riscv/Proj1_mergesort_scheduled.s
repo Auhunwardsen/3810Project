@@ -26,14 +26,37 @@ n:      .word 8
 main:
 	# Initialize stack pointer
 	li   sp, 0x80000000     # Set stack pointer to high memory
+	nop                     # NOPs after pseudo-instruction
+	nop
+	nop
+	nop
+	nop
 	
 	# load base address and indices
     	la   a0, array       # a0 = base address
+    	nop                  # NOPs after pseudo-instruction
+    	nop
+    	nop
+    	nop
+    	nop
     	li   a1, 0           # left = 0
+    	nop                  # NOPs after pseudo-instruction
+    	nop
+    	nop
+    	nop
+    	nop
    	lw   t0, n
+   	nop                  # NOPs after load before use
+   	nop
+   	nop
+   	nop
+   	nop
     	addi a2, t0, -1      # right = n-1
 
     	jal  ra, mergesort
+    	nop                  # NOPs after jal
+    	nop
+    	nop
 	beq zero, zero, done
 
 ##############################################################
