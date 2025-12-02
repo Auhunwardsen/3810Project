@@ -1,1 +1,1 @@
-proj/riscv/Proj1_mergesort_scheduled.s
+proj/riscv/grendel_scheduled.s
