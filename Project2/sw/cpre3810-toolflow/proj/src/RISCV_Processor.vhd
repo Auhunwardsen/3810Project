@@ -547,11 +547,8 @@ begin
 
   -- ALU Input A Selection: AUIPC uses PC, others use RS1 (LUI ignores input A)
   process(s_IDEX_Instr, s_IDEX_RS1Data, s_IDEX_PC)
-    variable v_IsAUIPC : std_logic;
   begin
-    v_IsAUIPC := '1' when s_IDEX_Instr(6 downto 0) = "0010111" else '0';
-    
-    if v_IsAUIPC = '1' then
+    if s_IDEX_Instr(6 downto 0) = "0010111" then
       s_ALUIn1 <= s_IDEX_PC;  -- AUIPC: use PC
     else
       s_ALUIn1 <= s_IDEX_RS1Data;  -- Normal: use RS1 (LUI will ignore this anyway)
@@ -681,13 +678,8 @@ begin
   -- Write Data Selection: chooses between ALU result and memory data
   process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_ALUResult, s_MEMWB_MemData, s_MEMWB_PCplus4)
     variable v_LoadData : std_logic_vector(31 downto 0);
-    variable v_IsJAL : std_logic;
-    variable v_IsJALR : std_logic;
   begin
-    v_IsJAL := '1' when s_MEMWB_Inst(6 downto 0) = "1101111" else '0';
-    v_IsJALR := '1' when s_MEMWB_Inst(6 downto 0) = "1100111" else '0';
-    
-    if v_IsJAL = '1' or v_IsJALR = '1' then
+    if s_MEMWB_Inst(6 downto 0) = "1101111" or s_MEMWB_Inst(6 downto 0) = "1100111" then
       -- JAL/JALR write PC+4 to register (return address) - use PCplus4 from pipeline
       s_WriteData <= s_MEMWB_PCplus4;
     elsif s_MEMWB_MemToReg = '1' then
@@ -739,9 +731,23 @@ begin
     v_BranchCond := '0';
     
     -- Compute all three comparison types in parallel
-    v_Zero := '1' when s_RS1Data_final = s_RS2Data_final else '0';                      -- Equal?
-    v_LT := '1' when signed(s_RS1Data_final) < signed(s_RS2Data_final) else '0';        -- Signed less than?
-    v_LTU := '1' when unsigned(s_RS1Data_final) < unsigned(s_RS2Data_final) else '0';   -- Unsigned less than?
+    if s_RS1Data_final = s_RS2Data_final then
+      v_Zero := '1';
+    else
+      v_Zero := '0';
+    end if;
+    
+    if signed(s_RS1Data_final) < signed(s_RS2Data_final) then
+      v_LT := '1';
+    else
+      v_LT := '0';
+    end if;
+    
+    if unsigned(s_RS1Data_final) < unsigned(s_RS2Data_final) then
+      v_LTU := '1';
+    else
+      v_LTU := '0';
+    end if;
     
     -- If this is a branch instruction, determine which condition to use
     if s_Branch = '1' then
@@ -769,19 +775,15 @@ begin
   
   -- Next address selection (ID stage for software-scheduled pipeline)
   process(s_BranchTaken, s_BranchAddr, s_IFID_Inst, s_RS1Data_final, s_Immediate, s_PCplus4)
-    variable v_IsJAL : std_logic;
-    variable v_IsJALR : std_logic;
     variable v_JALRTarget : std_logic_vector(31 downto 0);
   begin
-    v_IsJAL := '1' when s_IFID_Inst(6 downto 0) = "1101111" else '0';
-    v_IsJALR := '1' when s_IFID_Inst(6 downto 0) = "1100111" else '0';
     -- JALR target = (rs1 + imm) with LSB set to 0
     v_JALRTarget := std_logic_vector(unsigned(s_RS1Data_final) + unsigned(s_Immediate)) and (x"FFFFFFFE");
     
-    if v_IsJAL = '1' then
+    if s_IFID_Inst(6 downto 0) = "1101111" then  -- JAL
       s_UseNextAdr <= '1';
       s_NextAdr <= s_BranchAddr;  -- JAL: PC + immediate
-    elsif v_IsJALR = '1' then
+    elsif s_IFID_Inst(6 downto 0) = "1100111" then  -- JALR
       s_UseNextAdr <= '1';
       s_NextAdr <= v_JALRTarget;  -- JALR: RS1 + immediate
     elsif s_BranchTaken = '1' then
@@ -801,12 +803,26 @@ begin
   
   -- Register write outputs for testbench -- Update by the group: use WB stage signals
   -- RISC-V x0 is hardwired to zero - block writes to register 0
-  s_RegWr <= s_MEMWB_RegWrite when s_MEMWB_RDAddr /= "00000" else '0';
+  process(s_MEMWB_RegWrite, s_MEMWB_RDAddr)
+  begin
+    if s_MEMWB_RDAddr /= "00000" then
+      s_RegWr <= s_MEMWB_RegWrite;
+    else
+      s_RegWr <= '0';
+    end if;
+  end process;
   s_RegWrAddr <= s_MEMWB_RDAddr;  -- Update by the group: change to s_MEMWB_RDAddr
   s_RegWrData <= s_WriteData; -- Update by the group: ensure this uses final WB stage data
   
   -- Control outputs (halt should be detected when WFI reaches WB stage)
-  s_Halt <= '1' when s_MEMWB_Inst(6 downto 0) = "1110011" else '0';
+  process(s_MEMWB_Inst)
+  begin
+    if s_MEMWB_Inst(6 downto 0) = "1110011" then
+      s_Halt <= '1';
+    else
+      s_Halt <= '0';
+    end if;
+  end process;
   
   -- In RISC-V, arithmetic overflow does NOT generate exceptions for standard instructions
   -- Only report overflow for specific instructions that need it (none in basic RISC-V)
