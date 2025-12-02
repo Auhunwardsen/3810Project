@@ -2,19 +2,23 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
+library work;
+use work.RISCV_types. all;
+
 entity tb_processor_sw is
 end tb_processor_sw;
 
 architecture behavior of tb_processor_sw is
     -- Component Declaration for Software-Scheduled Pipeline
     component RISCV_Processor
+        generic(N : integer := DATA_WIDTH);
         port (
             iCLK        : in  std_logic;
             iRST        : in  std_logic;
             iInstLd     : in  std_logic;
-            iInstAddr   : in  std_logic_vector(31 downto 0);
-            iInstExt    : in  std_logic_vector(31 downto 0);
-            oALUOut     : out std_logic_vector(31 downto 0)
+            iInstAddr   : in  std_logic_vector(N-1 downto 0);
+            iInstExt    : in  std_logic_vector(N-1 downto 0);
+            oALUOut     : out std_logic_vector(N-1 downto 0)
         );
     end component;
     
@@ -48,6 +52,7 @@ architecture behavior of tb_processor_sw is
 begin
     -- Instantiate the software-scheduled processor
     UUT: RISCV_Processor
+        generic map(N => 32)
         port map (
             iCLK        => s_CLK,
             iRST        => s_RST,
