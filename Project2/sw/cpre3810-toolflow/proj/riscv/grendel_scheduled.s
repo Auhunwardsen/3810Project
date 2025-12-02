@@ -351,6 +351,8 @@ iterate_edges:
         sw   t4, 24(fp)            # sw      $4,24($fp)
         sw   t5, 28(fp)            # sw      $5,28($fp)
         lw   t2, 28(fp)            # lw      $2,28($fp)
+        nop
+        nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
         lw   t2, 24(fp)            # lw      $2,24($fp)
@@ -376,8 +378,12 @@ next_edge:
 
 snail:
         lw   t2, 32(fp)            # lw      $2,32($fp)
+        nop
+        nop
         lw   t3,  0(t2)            # lw      $3,0($2)
         lw   t2, 32(fp)            # lw      $2,32($fp)
+        nop
+        nop
         lw   t2,  4(t2)            # lw      $2,4($2)
         mv   t5,    t2             # move    $5,$2
         mv   t4,    t3             # move    $4,$3
@@ -444,6 +450,8 @@ has_edge:
         slli t3,    t3, 2          # sll     $3,$3,2
         add  t2,    t3, t2         # addu    $2,$3,$2
         lw   t2,  0(t2)            # lw      $2,0($2)
+        nop
+        nop
         sw   t2, 16(fp)            # sw      $2,16($fp)
         li   t2,  1                # li      $2,1
         nop                        # NOPs after pseudo-instruction
@@ -457,20 +465,28 @@ has_edge:
 
 look:
         lw   t2,  8(fp)            # lw      $2,8($fp)
+        nop
+        nop
         slli t2,    t2, 1          # sll     $2,$2,1
         sw   t2,  8(fp)            # sw      $2,8($fp)
         lw   t2, 12(fp)            # lw      $2,12($fp)
+        nop
+        nop
         addi t2,    t2, 1          # addiu   $2,$2,1
         sw   t2, 12(fp)            # sw      $2,12($fp)
 measley:
         lw   t3, 12(fp)            # lw      $3,12($fp)
         lw   t2, 36(fp)            # lw      $2,36($fp)
+        nop
+        nop
         slt  t2,    t3, t2         # slt     $2,$3,$2
         beq  t2,    x0, experience # beq     $2,$0,experience # beq, j to simulate bne 
         j    look
 experience:
         lw   t3,  8(fp)            # lw      $3,8($fp)
         lw   t2, 16(fp)            # lw      $2,16($fp)
+        nop
+        nop
         and  t2,    t3, t2         # and     $2,$3,$2
         slt  t2,    x0, t2         # slt     $2,$0,$2
         andi t2,    t2, 0xff       # andi    $2,$2,0x00ff
@@ -498,14 +514,20 @@ mark_visited:
 
 example:
         lw   t2,  8(fp)            # lw      $2,8($fp)
+        nop
+        nop
         slli t2,    t2, 8          # sll     $2,$2,8
         sw   t2,  8(fp)            # sw      $2,8($fp)
         lw   t2, 12(fp)            # lw      $2,12($fp)
+        nop
+        nop
         addi t2,    t2, 1          # addiu   $2,$2,1
         sw   t2, 12(fp)            # sw      $2,12($fp)
 recast:
         lw   t3, 12(fp)            # lw      $3,12($fp)
         lw   t2, 32(fp)            # lw      $2,32($fp)
+        nop
+        nop
         slt  t2,    t3, t2         # slt     $2,$3,$2
         beq  t2,    x0, pat        # beq     $2,$zero,pat # beq, j to simulate bne
         j    example
@@ -520,10 +542,16 @@ pat:
         nop
         sw   t2, 16(fp)              # sw      $2,16($fp)
         lw   t2, 16(fp)              # lw      $2,16($fp)
+        nop
+        nop
         lw   t3,  0(t2)              # lw      $3,0($2)
         lw   t2,  8(fp)              # lw      $2,8($fp)
+        nop
+        nop
         or   t3,    t3, t2           # or      $3,$3,$2
         lw   t2, 16(fp)              # lw      $2,16($fp)
+        nop
+        nop
         sw   t3,  0(t2)              # sw      $3,0($2)
         mv   sp,    fp               # move    $sp,$fp
         lw   fp, 28(sp)              # lw      $fp,28($sp)
@@ -544,14 +572,20 @@ is_visited:
 
 justify:
         lw   t2,  8(fp)              # lw      $2,8($fp)
+        nop
+        nop
         slli t2,    t2, 8            # sll     $2,$2,8
         sw   t2,  8(fp)              # sw      $2,8($fp)
         lw   t2, 12(fp)              # lw      $2,12($fp)
+        nop
+        nop
         addi t2,    t2, 1            # addiu   $2,$2,1
         sw   t2, 12(fp)              # sw      $2,12($fp)
 evasive:
         lw   t3, 12(fp)              # lw      $3,12($fp)
         lw   t2, 32(fp)              # lw      $2,32($fp)
+        nop
+        nop
         slt  t2,    t3, t2           # slt     $2,$3,$2
         beq  t2,    x0,representative# beq $2,$0,representitive # beq, j to simulate bne
         j    justify
@@ -565,9 +599,13 @@ representative:
         nop
         nop
         lw   t2,  0(t2)              # lw      $2,0($2)
+        nop
+        nop
         sw   t2, 16(fp)              # sw      $2,16($fp)
         lw   t3, 16(fp)              # lw      $3,16($fp)
         lw   t2,  8(fp)              # lw      $2,8($fp)
+        nop
+        nop
         and  t2,    t3, t2           # and     $2,$3,$2
         slt  t2,    x0, t2           # slt     $2,$0,$2
         andi t2,    t2, 0xff         # andi    $2,$2,0x00ff
