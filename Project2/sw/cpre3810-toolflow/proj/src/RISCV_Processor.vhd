@@ -796,8 +796,8 @@ begin
   -- Stall logic (not implemented yet)
   s_Stall <= '0';
   
-  -- Output connections -- Update by the group: use pipelined ALU result
-  oALUOut <= s_EXMEM_ALUResult; 
+  -- Output connections -- Update by the group: observe WB ALU result for validation
+  oALUOut <= s_MEMWB_ALUResult; 
   
   -- Register write outputs for testbench -- Update by the group: use WB stage signals
   -- RISC-V x0 is hardwired to zero - block writes to register 0

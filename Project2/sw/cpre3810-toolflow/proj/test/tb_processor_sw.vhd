@@ -24,6 +24,13 @@ architecture behavior of tb_processor_sw is
     signal s_CLK       : std_logic := '0';
     signal s_RST       : std_logic := '0';
     signal s_ALUResult : std_logic_vector(31 downto 0);
+    signal s_InstLd    : std_logic := '0';
+    signal s_InstAddr  : std_logic_vector(31 downto 0) := (others => '0');
+    signal s_InstExt   : std_logic_vector(31 downto 0) := (others => '0');
+
+    file f_imem : text open read_mode is "../../riscv/imem.hex";  -- adjust path if needed
+    variable v_line : line;
+    variable v_word : std_logic_vector(31 downto 0);
     
     -- Clock period definition
     constant c_CLK_PERIOD : time := 10 ns;
@@ -34,9 +41,9 @@ begin
         port map (
             iCLK        => s_CLK,
             iRST        => s_RST,
-            iInstLd     => '0',  -- Normal operation
-            iInstAddr   => (others => '0'),  -- Not used when iInstLd = '0'
-            iInstExt    => (others => '0'),  -- Not used when iInstLd = '0'
+            iInstLd     => s_InstLd,
+            iInstAddr   => s_InstAddr,
+            iInstExt    => s_InstExt,
             oALUOut     => s_ALUResult
         );
     
@@ -49,19 +56,31 @@ begin
         wait for c_CLK_PERIOD/2;
     end process;
     
-    -- Test process for software-scheduled pipeline
+    -- Instruction memory loader then run
     test_proc: process
     begin
-        -- Hold reset for 100 ns
+        -- Apply reset
         s_RST <= '1';
         wait for 100 ns;
         s_RST <= '0';
-        
+
+        -- Load instruction memory from hex file (one 32-bit word per line, hex)
+        s_InstLd <= '1';
+        s_InstAddr <= (others => '0');
+        while not endfile(f_imem) loop
+            readline(f_imem, v_line);
+            hread(v_line, v_word);
+            s_InstExt <= v_word;
+            -- IMem expects word addresses; increment by 4
+            wait for c_CLK_PERIOD; -- present data for a cycle
+            s_InstAddr <= std_logic_vector(unsigned(s_InstAddr) + 4);
+        end loop;
+        s_InstLd <= '0';
+
         -- Run simulation for enough cycles to execute scheduled program
-        -- Software-scheduled pipeline needs more cycles due to NOPs
-        wait for c_CLK_PERIOD * 500;
-        
-        report "Software-scheduled pipeline test completed - ALU output: " & to_hstring(s_ALUResult);
+        wait for c_CLK_PERIOD * 1000;
+
+        report "Software-scheduled pipeline test completed - WB ALUOut (dec): " & integer'image(to_integer(unsigned(s_ALUResult)));
         wait;
     end process;
     
