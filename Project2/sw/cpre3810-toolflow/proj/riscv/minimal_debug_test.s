@@ -273,9 +273,12 @@ main:
     nop
     
     # ========== PHASE 7: Branch Instructions ==========
-    # Test BEQ (should branch)
+    # Test BEQ (should branch) - need 3 NOPs after branch for EX stage resolution
     beq x1, x1, branch_test1    # x1 == x1, should branch
-    addi x22, x0, 999           # should NOT execute
+    nop                         # Branch delay slot 1
+    nop                         # Branch delay slot 2  
+    nop                         # Branch delay slot 3
+    addi x22, x0, 999           # should NOT execute (after 3 NOPs)
     
 branch_test1:
     addi x22, x0, 1001          # x22 = 1001 (good value)
@@ -290,9 +293,12 @@ branch_test1:
     nop
     nop
     
-    # Test BNE (should branch)
-    bne x1, x2, branch_test2    # x1 != x2, should branch  
-    addi x23, x0, 999           # should NOT execute
+    # Test BNE (should branch) - need 3 NOPs after branch for EX stage resolution
+    bne x1, x2, branch_test2    # x1 != x2, should branch
+    nop                         # Branch delay slot 1
+    nop                         # Branch delay slot 2
+    nop                         # Branch delay slot 3  
+    addi x23, x0, 999           # should NOT execute (after 3 NOPs)
     
 branch_test2:
     addi x23, x0, 1002          # x23 = 1002 (good value)
@@ -308,9 +314,12 @@ branch_test2:
     nop
     
     # ========== PHASE 8: Simple Jump Test (No Return) ==========
-    # Test simple jump forward (no return to avoid infinite loop)
+    # Test simple jump forward (no return to avoid infinite loop) - need 3 NOPs for EX stage resolution
     jal x24, simple_jump        # x24 = return address, jump forward
-    addi x25, x0, 999           # should NOT execute (bad value)
+    nop                         # Jump delay slot 1
+    nop                         # Jump delay slot 2
+    nop                         # Jump delay slot 3
+    addi x25, x0, 999           # should NOT execute (bad value, after 3 NOPs)
     
 simple_jump:
     # Simple jump target - just set a marker value
