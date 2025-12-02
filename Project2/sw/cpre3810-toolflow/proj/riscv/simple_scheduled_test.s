@@ -13,17 +13,21 @@ main:
     addi x1, x0, 5          # x1 = 5
     nop
     nop
+    nop                     # Need 3 NOPs for 5-stage pipeline
     add  x2, x1, x1         # x2 = 10 (uses x1)
     nop
     nop
+    nop                     # Need 3 NOPs for 5-stage pipeline
     sub  x3, x2, x1         # x3 = 5 (uses x2 and x1)
     
     # Test I-type instructions
     nop
     nop
+    nop                     # Need 3 NOPs for 5-stage pipeline
     addi x4, x3, 10         # x4 = 15 (uses x3)
     nop
     nop
+    nop                     # Need 3 NOPs for 5-stage pipeline
     slli x5, x4, 1          # x5 = 30 (uses x4)
     
     # Test Load/Store with proper scheduling - let pseudo-instruction expand
@@ -48,10 +52,11 @@ main:
     lw   x7, 0(x6)          # Load first word (x7 = 10) - now safe to use x6
     nop                     # Load-use hazard avoidance
     nop
-    nop
+    nop                     # Need 3 NOPs for 5-stage pipeline
     add  x8, x7, x5         # x8 = 40 (uses loaded x7)
     nop
     nop
+    nop                     # Need 3 NOPs for 5-stage pipeline
     sw   x8, 4(x6)          # Store result
     
     # Test Branch instructions with control hazard avoidance
