@@ -26,15 +26,14 @@ main:
     nop
     slli x5, x4, 1          # x5 = 30 (uses x4)
     
-    # Test Load/Store with proper scheduling - manually expand la to handle U-type hazard
-    auipc x6, %hi(test_data)  # Load upper address (U-type instruction)
-    nop                        # U-type hazard avoidance
-    nop                        # U-type hazard avoidance  
-    nop                        # U-type hazard avoidance
-    nop                        # U-type hazard avoidance
-    nop                        # U-type hazard avoidance
-    addi x6, x6, %lo(test_data)  # Add lower address (now safe to use x6)
-    # Add more delay cycles to ensure address calculation completes
+    # Test Load/Store with proper scheduling - let pseudo-instruction expand
+    la   x6, test_data      # Load address (expands to auipc + addi)
+    nop                     # U-type hazard avoidance for la expansion
+    nop                     # U-type hazard avoidance  
+    nop                     # U-type hazard avoidance
+    nop                     # U-type hazard avoidance
+    nop                     # U-type hazard avoidance
+    # Add more delay cycles to ensure la completes fully
     addi x9, x0, 999        # Prepare value for later (independent)
     addi x10, x0, 100       # Prepare value for later (independent)
     addi x11, x0, 888       # Prepare value for later (independent)
