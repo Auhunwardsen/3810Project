@@ -79,7 +79,33 @@ begin
     regs_flat(i*32+31 downto i*32) <= qi;
   end generate;
 
-  -- read ports (no internal forwarding; handled by software scheduling)
-  MUXA: mux32_1 port map(data_in => regs_flat, sel => i_RS1, y => o_RS1Data);
-  MUXB: mux32_1 port map(data_in => regs_flat, sel => i_RS2, y => o_RS2Data);
+  -- read ports with write-through for pipeline timing
+  -- If reading same register being written, return write data (bypass)
+  process(regs_flat, i_RS1, i_WE, i_RD, i_WriteData)
+  begin
+    if (i_WE = '1' and i_RS1 = i_RD and unsigned(i_RD) /= 0) then
+      o_RS1Data <= i_WriteData;  -- Write-through: return new data being written
+    else
+      -- Normal mux operation
+      if unsigned(i_RS1) = 0 then
+        o_RS1Data <= (others => '0');
+      else
+        o_RS1Data <= regs_flat(to_integer(unsigned(i_RS1))*32+31 downto to_integer(unsigned(i_RS1))*32);
+      end if;
+    end if;
+  end process;
+
+  process(regs_flat, i_RS2, i_WE, i_RD, i_WriteData)
+  begin
+    if (i_WE = '1' and i_RS2 = i_RD and unsigned(i_RD) /= 0) then
+      o_RS2Data <= i_WriteData;  -- Write-through: return new data being written
+    else
+      -- Normal mux operation
+      if unsigned(i_RS2) = 0 then
+        o_RS2Data <= (others => '0');
+      else
+        o_RS2Data <= regs_flat(to_integer(unsigned(i_RS2))*32+31 downto to_integer(unsigned(i_RS2))*32);
+      end if;
+    end if;
+  end process;
 end architecture;

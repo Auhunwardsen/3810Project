@@ -382,7 +382,7 @@ begin
     generic map(ADDR_WIDTH => ADDR_WIDTH,
                 DATA_WIDTH => N)
     port map(clk  => iCLK,
-             addr => s_IMemAddr(11 downto 2),
+             addr => s_IMemAddr(11 downto 2),  -- Use bits [11:2] for 10-bit addressing (4KB memory)
              data => iInstExt,
              we   => iInstLd,
              q    => s_Inst);
@@ -392,7 +392,7 @@ begin
     generic map(ADDR_WIDTH => ADDR_WIDTH,
                 DATA_WIDTH => N)
     port map(clk  => iCLK,
-             addr => s_DMemAddr(11 downto 2),
+             addr => s_DMemAddr(11 downto 2),  -- Use bits [11:2] for 10-bit addressing (4KB memory)
              data => s_DMemData,
              we   => s_DMemWr,
              q    => s_DMemOut);
