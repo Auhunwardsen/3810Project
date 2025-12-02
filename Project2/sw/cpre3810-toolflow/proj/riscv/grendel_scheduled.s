@@ -27,9 +27,11 @@ res_idx:
         .word   3
 .text
 	# NEW RISCV                # ORIGINAL MIPS  
-	li   sp, 0x10011000        # li $sp, 0x10011000
+	#li   sp, 0x10011000        # li $sp, 0x10011000
+        lui   sp, 0x10011
 	nop                        # NOPs after pseudo-instruction (expands to lui+addi)
 	nop
+        addi  sp, sp, 0
 	nop
 	nop
 	nop
@@ -43,9 +45,11 @@ res_idx:
 	nop
 	nop
 	nop
-	la   ra, pump              # la $ra pump
+	#la   ra, pump              # la $ra pump
+        lui   ra, %hi(pump)
 	nop                        # NOPs after pseudo-instruction
 	nop
+        addi  ra, ra, %lo(pump)
 	nop
 	nop
 	nop
@@ -82,9 +86,11 @@ main_loop_body:
         nop
         nop
         nop
-        la   ra,    trucks         # la      $ra, trucks
+        #la   ra,    trucks         # la      $ra, trucks
+        lui  ra, %hi(trucks)
         nop                        # NOPs after pseudo-instruction
         nop
+        addi  ra, ra, %lo(trucks)
         nop
         nop
         nop
@@ -105,12 +111,11 @@ trucks:
         nop
         nop
                                    # ; addi    $k0, $k0,1# breakpoint
-        la   ra,    billowy        # la      $ra, billowy
+        #la   ra,    billowy        # la      $ra, billowy
+        lui  ra, %hi(billowy)
         nop                        # NOPs after pseudo-instruction
         nop
-        nop
-        nop
-        nop
+        addi  ra, ra, %lo(billowy)
         nop
         nop
         nop
@@ -154,7 +159,14 @@ welcome:
         
 interest:
         lw   t4, 24(fp)            # lw      $4,24($fp)
-        la   ra,    new            # la      $ra, new
+        #la   ra,    new            # la      $ra, new
+        lui  ra, %hi(new)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  ra, ra, %lo(new)
+        nop
+        nop
+        nop
         j    is_visited
 new:
         xori t2,    t2, 1          # xori    $2,$2,0x1
@@ -162,14 +174,26 @@ new:
         beq  t2,    x0, tasteful   # beq     $2,$0,tasteful
 
         lw   t4, 24(fp)            # lw      $4,24($fp)
-        la   ra,    partner        # la      $ra, partner
+        #la   ra,    partner        # la      $ra, partner
+        lui  ra, %hi(partner)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  ra, ra, %lo(partner)
+        nop
+        nop
         j    topsort
 partner:
 
 tasteful:
         addi t2,    fp, 28         # addiu   $2,$fp,28
         mv   t4,    t2             # move    $4,$2
-        la   ra,    badge          # la      $ra, badge
+        #la   ra,    badge          # la      $ra, badge
+        lui  ra, %hi(badge)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  ra, ra, %lo(badge)
+        nop
+        nop
         j    next_edge
 badge:
         sw   t2, 24(fp)            # sw      $2,24($fp)
@@ -191,12 +215,30 @@ turkey:
         j    interest
 telling:
         # NOTE: $v0 === $2
-	la   t2,    res_idx        # la      $v0, res_idx
+	#la   t2,    res_idx        # la      $v0, res_idx
+        lui  t2, %hi(res_idx)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  t2, t2, %lo(res_idx)
+        nop
+        nop
 	lw   t2,  0(t2)            # lw      $v0, 0($v0)
         addi t4,    t2, -1         # addiu   $4,$2,-1
-        la   t3,    res_idx        # la      $3, res_idx
+        #la   t3,    res_idx        # la      $3, res_idx
+        lui  t3, %hi(res_idx)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  t3, t3, %lo(res_idx)
+        nop
+        nop
         sw   t4,  0(t3)            # sw      $4, 0($3)
-        la   t4,    res            # la      $4, res
+        #la   t4,    res            # la      $4, res
+        lui  t4, %hi(res)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  t4, t4, %lo(res)
+        nop
+        nop
                                    # ; lui     $3,%hi(res_idx)
                                    # ; sw      $4,%lo(res_idx)($3)
                                    # ; lui     $4,%hi(res)
@@ -209,17 +251,23 @@ telling:
         or   t6,    ra, t2         # nor     $at, $ra, $2 # does nothing 
         neg  t6,    t6
         
-        la   t2,    res            # la      $2, res
+        #la   t2,    res            # la      $2, res
+        lui  t2, %hi(res)
         nop                        # NOPs after pseudo-instruction
         nop
+        addi  t2, t2, %lo(res)
         nop
         nop
-        nop
-        li   a1,    0x0000ffff     # li with 16-bit constant
         nop                        # NOPs after pseudo-instruction
         nop
+        #li   a1,    0x0000ffff     # li with 16-bit constant
+        lui   a1, 0x1
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  a1, a1, -1
         nop
         nop
+        nop                        # NOPs after pseudo-instruction
         nop
         and  t6,    t2, a1         # andi    $at, $2, 0xffff # -1 will sign extend (according to assembler), but 0xffff won't
         add  t2,    t4, t6         # addu    $2, $4, $at
@@ -239,20 +287,38 @@ topsort:
         mv   fp,    sp             # move    $fp,$sp
         sw   t4, 48(fp)            # sw      $4,48($fp)
         lw   t4, 48(fp)            # lw      $4,48($fp)
-        la   ra,    verse          # la      $ra, verse
+        #la   ra,    verse          # la      $ra, verse
+        lui   ra, %hi(verse)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  ra, ra, %lo(verse)
+        nop
+        nop
         j    mark_visited
 verse:
 
         addi t2,    fp, 28         # addiu   $2,$fp,28
         lw   t5, 48(fp)            # lw      $5,48($fp)
         mv   t4,    t2             # move    $4,$2
-        la   ra,    joyous         # la      $ra, joyous
+        #la   ra,    joyous         # la      $ra, joyous
+        lui   ra, %hi(joyous)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  ra, ra, %lo(joyous)
+        nop
+        nop
         j    iterate_edges
 joyous:
 
         addi t2,    fp, 28         # addiu   $2,$fp,28
         mv   t4,    t2             # move    $4,$2
-        la   ra,    whispering     # la      $ra, whispering
+        #la   ra,    whispering     # la      $ra, whispering
+        lui   ra, %hi(whispering)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  ra, ra, %lo(whispering)
+        nop
+        nop
         j    next_edge
 whispering:
 
@@ -295,7 +361,13 @@ snail:
         lw   t2,  4(t2)            # lw      $2,4($2)
         mv   t5,    t2             # move    $5,$2
         mv   t4,    t3             # move    $4,$3
-        la   ra,    induce         # la      $ra,induce
+        #la   ra,    induce         # la      $ra,induce
+        lui   ra, %hi(induce)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  ra, ra, %lo(induce)
+        nop
+        nop
         j    has_edge
 induce:
         beq  t2,    x0, quarter    # beq     $2,$0,quarter
@@ -339,7 +411,13 @@ has_edge:
         mv   fp,    sp             # move    $fp,$sp
         sw   t4, 32(fp)            # sw      $4,32($fp)
         sw   t5, 36(fp)            # sw      $5,36($fp)
-        la   t2,    adjacencymatrix# la      $2,adjacencymatrix
+        #la   t2,    adjacencymatrix# la      $2,adjacencymatrix
+        lui   t2, %hi(adjacencymatrix)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  t2, t2, %lo(adjacencymatrix)
+        nop
+        nop
         lw   t3, 32(fp)            # lw      $3,32($fp)
         slli t3,    t3, 2          # sll     $3,$3,2
         add  t2,    t3, t2         # addu    $2,$3,$2
@@ -409,7 +487,13 @@ recast:
         j    example
 pat:
 
-       	la   t2, visited             # la      $2, visited
+       	#la   t2, visited             # la      $2, visited
+        lui   t2, %hi(visited)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  t2, t2, %lo(visited)
+        nop
+        nop
         sw   t2, 16(fp)              # sw      $2,16($fp)
         lw   t2, 16(fp)              # lw      $2,16($fp)
         lw   t3,  0(t2)              # lw      $3,0($2)
@@ -447,7 +531,13 @@ evasive:
         j    justify
 representative:
 
-        la   t2,    visited          # la      $2,visited
+        #la   t2,    visited          # la      $2,visited
+        lui   t2, %hi(visited)
+        nop                        # NOPs after pseudo-instruction
+        nop
+        addi  t2, t2, %lo(visited)
+        nop
+        nop
         lw   t2,  0(t2)              # lw      $2,0($2)
         sw   t2, 16(fp)              # sw      $2,16($fp)
         lw   t3, 16(fp)              # lw      $3,16($fp)
