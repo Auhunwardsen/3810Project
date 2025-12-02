@@ -1,0 +1,1 @@
+sh ./3810_tf.sh proj/riscv/minimal_debug_test.s
