@@ -1,1 +1,1 @@
-proj/riscv/grendel_scheduled.s
+proj/riscv/simple_scheduled_test.s
