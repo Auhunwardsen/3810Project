@@ -34,6 +34,14 @@ main:
 	
 	# load base address and indices
     	la   a0, array       # a0 = base address
+    	nop                   # U-type hazard avoidance
+    	nop                   # U-type hazard avoidance
+    	nop                   # U-type hazard avoidance
+    	nop                   # U-type hazard avoidance
+    	nop                   # U-type hazard avoidance
+    	nop                   # U-type hazard avoidance
+    	nop                   # U-type hazard avoidance
+    	nop                   # U-type hazard avoidance
     	nop                  # NOPs after pseudo-instruction
     	nop
     	nop

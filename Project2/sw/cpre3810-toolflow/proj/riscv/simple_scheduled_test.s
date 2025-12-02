@@ -33,6 +33,9 @@ main:
     nop                     # U-type hazard avoidance
     nop                     # U-type hazard avoidance
     nop                     # U-type hazard avoidance
+    nop                     # Additional U-type hazard avoidance
+    nop                     # Additional U-type hazard avoidance
+    nop                     # Additional U-type hazard avoidance
     # Add more delay cycles to ensure la completes fully
     addi x9, x0, 999        # Prepare value for later (independent)
     addi x10, x0, 100       # Prepare value for later (independent)
