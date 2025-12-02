@@ -67,33 +67,46 @@ main:
     
     # Test Branch instructions with control hazard avoidance
     beq  x1, x1, taken      # Should be taken
-    nop                     # Control hazard slot
-    nop                     # Should not execute
+    nop                     # Branch delay slot 1
+    nop                     # Branch delay slot 2
+    nop                     # Branch delay slot 3
+    addi x12, x0, 999       # Should not execute (bad value)
     
 taken:
-    nop                     # x10 already set above
+    addi x12, x0, 555       # Good value (proves BEQ worked)
+    nop
     nop
     nop
     bne  x10, x1, not_equal # Should be taken (x10=100, x1=5)
-    nop                     # Control hazard slot
-    nop                     # Should not execute
+    nop                     # Branch delay slot 1
+    nop                     # Branch delay slot 2
+    nop                     # Branch delay slot 3
+    addi x13, x0, 999       # Should not execute (bad value)
     
 not_equal:
+    addi x13, x0, 777       # Good value (proves BNE worked)
     # Test JAL instruction
     jal  x1, subroutine    # Jump and link, x1 = PC+4
-    nop                     # Control hazard slot
-    nop                     # Should not execute
+    nop                     # Jump delay slot 1
+    nop                     # Jump delay slot 2
+    nop                     # Jump delay slot 3
+    addi x14, x0, 999       # Should not execute (bad value)
     
     # Final test - jump to done
     j done
-    nop                     # Control hazard slot
-    nop                     # Should not execute
+    nop                     # Jump delay slot 1
+    nop                     # Jump delay slot 2
+    nop                     # Jump delay slot 3
+    addi x15, x0, 999       # Should not execute (bad value)
 
 subroutine:
-    nop                     # Simple subroutine
+    addi x16, x0, 444       # Mark that subroutine was reached
     nop
     jalr x0, x1, 0        # Jump back using return address
-    nop                     # Control hazard slot
+    nop                     # Jump delay slot 1
+    nop                     # Jump delay slot 2
+    nop                     # Jump delay slot 3
+    addi x17, x0, 999       # Should not execute (bad value)
     
 done:
     wfi                     # End program
