@@ -65,16 +65,13 @@ not_equal:
     nop                     # Control hazard slot
     nop                     # Should not execute
     
-    # Final test - JALR to end program
-    jalr x0, x1, 0         # Return from subroutine
-    nop                     # Control hazard slot
-    
-    # This part of the code is now reached after subroutine returns
+    # Final test - jump to done
     j done
-    nop
+    nop                     # Control hazard slot
+    nop                     # Should not execute
 
 subroutine:
-    nop                     # x14 already set above
+    nop                     # Simple subroutine
     nop
     jalr x0, x1, 0        # Jump back using return address
     nop                     # Control hazard slot

@@ -26,9 +26,15 @@ main:
     nop
     slli x5, x4, 1          # x5 = 30 (uses x4)
     
-    # Test Load/Store with proper scheduling - let pseudo-instruction expand
-    la   x6, test_data      # Load address (expands to auipc + addi)
-    # Add more delay cycles to ensure la completes fully
+    # Test Load/Store with proper scheduling - manually expand la to handle U-type hazard
+    auipc x6, %hi(test_data)  # Load upper address (U-type instruction)
+    nop                        # U-type hazard avoidance
+    nop                        # U-type hazard avoidance  
+    nop                        # U-type hazard avoidance
+    nop                        # U-type hazard avoidance
+    nop                        # U-type hazard avoidance
+    addi x6, x6, %lo(test_data)  # Add lower address (now safe to use x6)
+    # Add more delay cycles to ensure address calculation completes
     addi x9, x0, 999        # Prepare value for later (independent)
     addi x10, x0, 100       # Prepare value for later (independent)
     addi x11, x0, 888       # Prepare value for later (independent)
@@ -65,16 +71,13 @@ not_equal:
     nop                     # Control hazard slot
     nop                     # Should not execute
     
-    # Final test - JALR to end program
-    jalr x0, x1, 0         # Return from subroutine
-    nop                     # Control hazard slot
-    
-    # This part of the code is now reached after subroutine returns
+    # Final test - jump to done
     j done
-    nop
+    nop                     # Control hazard slot
+    nop                     # Should not execute
 
 subroutine:
-    nop                     # x14 already set above
+    nop                     # Simple subroutine
     nop
     jalr x0, x1, 0        # Jump back using return address
     nop                     # Control hazard slot
