@@ -545,20 +545,16 @@ begin
       o_O  => s_ALUIn2
     );
 
-  -- ALU Input A Selection: AUIPC uses PC, LUI uses zero, others use RS1
+  -- ALU Input A Selection: AUIPC uses PC, others use RS1 (LUI ignores input A)
   process(s_IDEX_Instr, s_IDEX_RS1Data, s_IDEX_PC)
     variable v_IsAUIPC : std_logic;
-    variable v_IsLUI : std_logic;
   begin
     v_IsAUIPC := '1' when s_IDEX_Instr(6 downto 0) = "0010111" else '0';
-    v_IsLUI := '1' when s_IDEX_Instr(6 downto 0) = "0110111" else '0';
     
     if v_IsAUIPC = '1' then
       s_ALUIn1 <= s_IDEX_PC;  -- AUIPC: use PC
-    elsif v_IsLUI = '1' then
-      s_ALUIn1 <= (others => '0');  -- LUI: use 0
     else
-      s_ALUIn1 <= s_IDEX_RS1Data;  -- Normal: use RS1
+      s_ALUIn1 <= s_IDEX_RS1Data;  -- Normal: use RS1 (LUI will ignore this anyway)
     end if;
   end process;
 
