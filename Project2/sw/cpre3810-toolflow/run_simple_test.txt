@@ -1,0 +1,1 @@
+sh ./3810_tf.sh proj/riscv/simple_scheduled_test.s

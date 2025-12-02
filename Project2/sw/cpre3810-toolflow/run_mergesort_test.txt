@@ -1,0 +1,1 @@
+sh ./3810_tf.sh proj/riscv/Proj1_mergesort_scheduled.s
