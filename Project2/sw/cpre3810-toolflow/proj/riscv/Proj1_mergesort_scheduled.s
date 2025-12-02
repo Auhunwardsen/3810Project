@@ -42,9 +42,13 @@ main:
     	nop
     	nop
     	nop
-   	lw   t0, n           # Load n value (using symbol)
-   	nop                  # NOPs after load before use
+   	lw   t0, n           # Load n value (pseudo-instruction)
+   	nop                  # NOPs after load before use (may expand)
    	nop
+   	nop
+   	nop
+   	nop
+   	nop                  # Extra NOPs for potential expansion
    	nop
    	nop
    	nop

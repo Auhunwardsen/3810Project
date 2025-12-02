@@ -28,13 +28,17 @@ res_idx:
 .text
 	# NEW RISCV                # ORIGINAL MIPS  
 	li   sp, 0x10011000        # li $sp, 0x10011000
+	nop                        # NOPs after pseudo-instruction (expands to lui+addi)
+	nop
+	nop
+	nop
+	nop
+	nop                        # Extra NOPs for expansion
+	nop
+	nop
+	nop
+	li   fp, 0                 # li $fp, 0
 	nop                        # NOPs after pseudo-instruction
-	nop
-	nop
-	nop
-	nop
-	addi fp, x0, 0             # Set fp to 0 (explicit addi)
-	nop                        # NOPs after instruction
 	nop
 	nop
 	nop
@@ -172,7 +176,17 @@ badge:
         
 turkey:
         lw   t3, 24(fp)            # lw      $3,24($fp)
+        nop                        # NOPs after load
+        nop
+        nop
+        nop
+        nop
         li   t2, -1                # li      $2,-1
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         beq  t3,    t2, telling    # beq     $3,$2,telling # beq, j to simulate bne
         j    interest
 telling:
@@ -196,7 +210,17 @@ telling:
         neg  t6,    t6
         
         la   t2,    res            # la      $2, res
-        li   a1,    0x0000ffff
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
+        li   a1,    0x0000ffff     # li with 16-bit constant
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         and  t6,    t2, a1         # andi    $at, $2, 0xffff # -1 will sign extend (according to assembler), but 0xffff won't
         add  t2,    t4, t6         # addu    $2, $4, $at
         add  t2,    t3, t2         # addu    $2,$3,$2
@@ -297,6 +321,11 @@ waggish:
         j    snail
 mark:
         li   t2, -1                # li      $2,-1
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
 
 cynical:
         mv   sp,    fp             # move    $sp,$fp
@@ -317,6 +346,11 @@ has_edge:
         lw   t2,  0(t2)            # lw      $2,0($2)
         sw   t2, 16(fp)            # sw      $2,16($fp)
         li   t2,  1                # li      $2,1
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
         j    measley
@@ -351,6 +385,11 @@ mark_visited:
         mv   fp,    sp             # move    $fp,$sp
         sw   t4, 32(fp)            # sw      $4,32($fp)
         li   t2,  1                # li      $2,1
+        nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
+        nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
         j    recast
