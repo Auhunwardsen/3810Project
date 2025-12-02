@@ -7,13 +7,13 @@ Got     :	Register Write to Reg: 0x02 Val: 0x00000000
 Incorrect write
 
 Cycle: 18
-RARS instruction number: 15	Instruction: addi x1,x1,32
-Expected:	Register Write to Reg: 0x01 Val: 0x00400054
-Got     :	Register Write to Reg: 0x01 Val: 0x00000020
+RARS instruction number: 15	Instruction: addi x1,x1,44
+Expected:	Register Write to Reg: 0x01 Val: 0x00400060
+Got     :	Register Write to Reg: 0x01 Val: 0x0000002C
 Incorrect write
 
-Cycle: 26
-RARS instruction number: 22	Instruction: addi x2,x2,-40
+Cycle: 29
+RARS instruction number: 25	Instruction: addi x2,x2,-40
 Expected:	Register Write to Reg: 0x02 Val: 0x10010FD8
 Got     :	Register Write to Reg: 0x02 Val: 0xFFFFFFD8
 Incorrect write
