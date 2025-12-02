@@ -29,8 +29,6 @@ architecture behavior of tb_processor_sw is
     signal s_InstExt   : std_logic_vector(31 downto 0) := (others => '0');
 
     file f_imem : text open read_mode is "../../riscv/imem.hex";  -- adjust path if needed
-    variable v_line : line;
-    variable v_word : std_logic_vector(31 downto 0);
     
     -- Clock period definition
     constant c_CLK_PERIOD : time := 10 ns;
@@ -58,6 +56,8 @@ begin
     
     -- Instruction memory loader then run
     test_proc: process
+        variable v_line : line;
+        variable v_word : std_logic_vector(31 downto 0);
     begin
         -- Apply reset
         s_RST <= '1';
