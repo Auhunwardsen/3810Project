@@ -388,11 +388,12 @@ begin
              q    => s_Inst);
   
   -- Data Memory (accessed in MEM stage)
+  -- Data segment base is 0x10000000. Subtract base address and use bits [11:2] for word addressing
   DMem: mem
     generic map(ADDR_WIDTH => ADDR_WIDTH,
                 DATA_WIDTH => N)
     port map(clk  => iCLK,
-             addr => s_DMemAddr(11 downto 2),  -- Use bits [11:2] for 10-bit addressing (4KB memory)
+             addr => std_logic_vector(unsigned(s_DMemAddr) - x"10000000")(11 downto 2),  -- Subtract data base, then word-align
              data => s_DMemData,
              we   => s_DMemWr,
              q    => s_DMemOut);
