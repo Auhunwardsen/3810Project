@@ -28,6 +28,11 @@ main:
     
     # Test Load/Store with proper scheduling - let pseudo-instruction expand
     la   x6, test_data      # Load address (expands to auipc + addi)
+    nop                     # U-type hazard avoidance for la expansion
+    nop                     # U-type hazard avoidance  
+    nop                     # U-type hazard avoidance
+    nop                     # U-type hazard avoidance
+    nop                     # U-type hazard avoidance
     # Add more delay cycles to ensure la completes fully
     addi x9, x0, 999        # Prepare value for later (independent)
     addi x10, x0, 100       # Prepare value for later (independent)
