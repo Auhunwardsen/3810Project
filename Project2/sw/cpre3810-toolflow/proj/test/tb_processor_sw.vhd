@@ -7,7 +7,7 @@ end tb_processor_sw;
 
 architecture behavior of tb_processor_sw is
     -- Component Declaration for Software-Scheduled Pipeline
-    component RISCV_Processor
+    component riscv_processor
         port (
             iCLK        : in  std_logic;
             iRST        : in  std_logic;
@@ -47,7 +47,7 @@ architecture behavior of tb_processor_sw is
     
 begin
     -- Instantiate the software-scheduled processor
-    UUT: RISCV_Processor
+    UUT: riscv_processor
         port map (
             iCLK        => s_CLK,
             iRST        => s_RST,
