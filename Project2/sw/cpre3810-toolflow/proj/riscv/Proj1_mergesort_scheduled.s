@@ -24,32 +24,31 @@ n:      .word 8
 # - Initializes stack pointer and calls mergesort
 ##############################################################
 main:
-	# Initialize stack pointer
-	li   sp, 0x80000000     # Set stack pointer to high memory
-	nop                     # NOPs after pseudo-instruction
-	nop
+	# Initialize stack pointer - use explicit LUI
+	lui  sp, 0x80000        # sp = 0x80000000
+	nop                     # NOPs after LUI
 	nop
 	nop
 	nop
 	
-	# load base address - use explicit LUI instead of la
-    	lui  a0, %hi(array)   # High part of array address
+	# load base address - use simple base address
+    	lui  a0, 0x10000      # a0 = 0x10000000 (simple base)
     	nop
     	nop
     	nop
     	nop                   # NOPs after LUI
-    	addi a0, a0, %lo(array) # Add low part of array address
+    	addi a1, x0, 0       # left = 0 (explicit ADDI)
+    	nop                  # NOPs after instruction
     	nop
     	nop
     	nop
-    	nop                   # NOPs after ADDI
-    	li   a1, 0           # left = 0
-    	nop                  # NOPs after pseudo-instruction
-    	nop
-    	nop
-    	nop
-    	nop
-   	lw   t0, n
+   	# Load n using explicit addressing (n is at base + 32 bytes offset from array)
+   	addi t1, a0, 32      # t1 = base + offset to n
+   	nop                  # NOPs after instruction
+   	nop
+   	nop
+   	nop
+   	lw   t0, 0(t1)       # load n value
    	nop                  # NOPs after load before use
    	nop
    	nop
@@ -99,8 +98,18 @@ mergesort:
 
     	# call mergesort(array, mid+1, right)
    	lw   t1, 0(sp)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
     	addi a1, t1, 1
     	lw   a2, 4(sp)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
     	jal  ra, mergesort
     	nop
     	nop
@@ -108,8 +117,23 @@ mergesort:
 
     	# call merge(array, left, mid, right)
     	lw   t1, 0(sp)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
     	lw   a1, 8(sp)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
     	lw   a2, 4(sp)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
     	jal  ra, merge
     	nop
     	nop
@@ -117,6 +141,11 @@ mergesort:
 
     	# pop ra and locals
     	lw   ra, 12(sp)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
     	addi sp, sp, 16
     	
 ms_return:
@@ -150,10 +179,20 @@ merge_loop:
     	slli t6, t4, 2
     	add  t6, a0, t6
     	lw   s0, 0(t6)          # s0 = arr[i]
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
 
     	slli a3, t3, 2
     	add  a3, a0, a3
     	lw   s1, 0(a3)          # s1 = arr[j]
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
 
     	ble  s0, s1, take_left
     	nop
@@ -187,6 +226,11 @@ copy_left:
     	slli t6, t4, 2
     	add  t6, a0, t6
     	lw   s0, 0(t6)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
    	sw   s0, 0(t2)
     	addi t4, t4, 1
     	addi t2, t2, 4
@@ -203,6 +247,11 @@ copy_right:
     	slli t6, t3, 2
     	add  t6, a0, t6
     	lw   s0, 0(t6)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
     	sw   s0, 0(t2)
     	addi t3, t3, 1
     	addi t2, t2, 4
@@ -221,6 +270,11 @@ wb_loop:
     	nop
     	nop
     	lw   s0, 0(t2)
+    	nop                     # NOPs after load before use
+    	nop
+    	nop
+    	nop
+    	nop
     	slli t6, t4, 2
     	add  t6, a0, t6
     	sw   s0, 0(t6)
