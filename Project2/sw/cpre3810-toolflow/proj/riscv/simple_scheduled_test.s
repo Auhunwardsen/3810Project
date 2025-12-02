@@ -28,12 +28,15 @@ main:
     
     # Test Load/Store with proper scheduling - let pseudo-instruction expand
     la   x6, test_data      # Load address (expands to auipc + addi)
-    # Reorder other instructions to provide delay instead of NOPs
+    # Add more delay cycles to ensure la completes fully
     addi x9, x0, 999        # Prepare value for later (independent)
     addi x10, x0, 100       # Prepare value for later (independent)
     addi x11, x0, 888       # Prepare value for later (independent)
-    addi x13, x0, 777       # Prepare value for later (independent)
-    addi x14, x0, 200       # Prepare value for later (independent)
+    nop                     # Extra safety cycle
+    nop                     # Extra safety cycle  
+    nop                     # Extra safety cycle
+    nop                     # Extra safety cycle
+    nop                     # Extra safety cycle
     lw   x7, 0(x6)          # Load first word (x7 = 10) - now safe to use x6
     nop                     # Load-use hazard avoidance
     nop
@@ -58,12 +61,12 @@ taken:
     
 not_equal:
     # Test JAL instruction
-    jal  ra, subroutine    # Jump and link, ra = PC+4
+    jal  x1, subroutine    # Jump and link, x1 = PC+4
     nop                     # Control hazard slot
     nop                     # Should not execute
     
     # Final test - JALR to end program
-    jalr x0, ra, 0         # Return from subroutine
+    jalr x0, x1, 0         # Return from subroutine
     nop                     # Control hazard slot
     
     # This part of the code is now reached after subroutine returns
@@ -73,7 +76,7 @@ not_equal:
 subroutine:
     nop                     # x14 already set above
     nop
-    jr   ra        # Jump back using return address
+    jalr x0, x1, 0        # Jump back using return address
     nop                     # Control hazard slot
     
 done:

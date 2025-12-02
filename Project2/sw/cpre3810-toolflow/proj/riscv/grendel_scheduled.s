@@ -27,19 +27,19 @@ res_idx:
         .word   3
 .text
 	# NEW RISCV - Software scheduled with manual instruction expansion
-	lui  sp, 0x10011           # Load upper bits (0x10011000 >> 12 = 0x10011)
+	lui  x2, 0x10011           # Load upper bits (0x10011000 >> 12 = 0x10011)
 	nop                        # RAW hazard prevention cycle 1
 	nop                        # RAW hazard prevention cycle 2
 	nop                        # RAW hazard prevention cycle 3
-	addi sp, sp, 0             # Add lower bits (0x000) - now safe to read sp
-	li   fp, 0                 # fp = 0 (expands to addi fp, x0, 0)
-	auipc ra, 0               # Load current PC into ra
+	addi x2, x2, 0             # Add lower bits (0x000) - now safe to read x2
+	li   x8, 0                 # x8 = 0 (expands to addi x8, x0, 0)
+	auipc x1, 0               # Load current PC into x1
 	nop                        # RAW hazard prevention cycle 1
 	nop                        # RAW hazard prevention cycle 2
 	nop                        # RAW hazard prevention cycle 3
 	nop                        # Extra safety cycle 4
 	nop                        # Extra safety cycle 5
-	addi ra, ra, 24           # Add offset to pump - now safe to read ra
+	addi x1, x1, 24           # Add offset to pump - now safe to read x1
 	j    main
 pump:
         j end
@@ -47,43 +47,43 @@ pump:
 
 
 main:
-        addi sp,    sp, -40        # addiu   $sp,$sp,-40
-        sw   ra, 36(sp)            # sw      $31,36($sp)
-        sw   fp, 32(sp)            # sw      $fp,32($sp)
-        add  fp,    sp, x0         # add     $fp,$sp,$zero
-        sw   x0, 24(sp)            # sw      $0,24($fp)
+        addi x2,    x2, -40        # addiu   $sp,$sp,-40
+        sw   x1, 36(x2)            # sw      $31,36($sp)
+        sw   x8, 32(x2)            # sw      $fp,32($sp)
+        add  x8,    x2, x0         # add     $fp,$sp,$zero
+        sw   x0, 24(x8)            # sw      $0,24($fp)
         j    main_loop_control
 
 main_loop_body:
-        lw   t4, 24(fp)            # lw      $4,24($fp)
-        la   ra,    trucks         # la      $ra, trucks (expands to auipc + addi)
+        lw   x29, 24(x8)           # lw      $4,24($fp)
+        la   x1,    trucks         # la      $ra, trucks (expands to auipc + addi)
         # Reorder independent instructions for delay
-        mv   t6, t4                # Prepare for later use
-        mv   t7, t3                # Prepare for later use  
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
+        add  x31, x29, x0          # Prepare for later use (mv t6, t4)
+        add  x28, x28, x0          # Prepare for later use (mv t7, t3)
+        addi x5, x0, 0             # Independent instruction
+        addi x6, x0, 0             # Independent instruction
         j    is_visited
 trucks:
 
-        xori t2,    t2, 1          # xori    $2,$2,0x1
-        andi t2,    t2, 0xff       # andi    $2,$2,0x00ff
-        beq  t2,    x0, kick       # beq     $2,$0,kick
+        xori x7,    x7, 1          # xori    $2,$2,0x1
+        andi x7,    x7, 0xff       # andi    $2,$2,0x00ff
+        beq  x7,    x0, kick       # beq     $2,$0,kick
 
-        lw   t4, 24(fp)            # lw      $4,24($fp)
+        lw   x29, 24(x8)           # lw      $4,24($fp)
                                    # ; addi    $k0, $k0,1# breakpoint
-        la   ra,    billowy        # la      $ra, billowy (expands to auipc + addi)
+        la   x1,    billowy        # la      $ra, billowy (expands to auipc + addi)
         # Reorder independent instructions for delay
-        mv   t6, t4                # Prepare for later use
-        mv   t7, t3                # Prepare for later use
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
+        add  x31, x29, x0          # Prepare for later use (mv t6, t4)
+        add  x28, x28, x0          # Prepare for later use (mv t7, t3)
+        addi x5, x0, 0             # Independent instruction
+        addi x6, x0, 0             # Independent instruction
         j    topsort
 billowy:
 
 kick:
-        lw   t2, 24(fp)            # lw      $2,24($fp)
-        addi t2,    t2, 1          # addiu   $2,$2,1
-        sw   t2, 24(fp)            # sw      $2,24($fp)
+        lw   x7, 24(x8)            # lw      $2,24($fp)
+        addi x7,    x7, 1          # addiu   $2,$2,1
+        sw   x7, 24(x8)            # sw      $2,24($fp)
 main_loop_control:
         lw   t2, 24(fp)            # lw      $2,24($fp)
         slti t2,    t2, 4          # slti    $2,$2, 4

@@ -19,30 +19,30 @@ n:      .word 8
 ##############################################################
 main:
 	# Initialize stack pointer
-	lui  sp, 0x80000        # Load upper 20 bits
+	lui  x2, 0x80000        # Load upper 20 bits
 	nop                     # RAW hazard prevention
 	nop                     # RAW hazard prevention  
-	addi sp, sp, 0          # Add lower 12 bits (0)
+	addi x2, x2, 0          # Add lower 12 bits (0)
 	
 	# load base address and indices - software scheduled with instruction reordering
-    	la   a0, array       # a0 = base address (expands to auipc + addi)
-    	li   a1, 0           # left = 0 (expands to addi a1, x0, 0)
-   	lw   t0, n           # Load array size (expands to auipc + lw)
+    	la   x10, array       # x10 = base address (expands to auipc + addi)
+    	li   x11, 0           # left = 0 (expands to addi x11, x0, 0)
+   	lw   x5, n           # Load array size (expands to auipc + lw)
    	# Use independent instructions to provide scheduling delay
-   	addi sp, sp, 0       # Stack pointer already set (no-op for delay)
-   	addi sp, sp, 0       # Additional delay
-   	addi sp, sp, 0       # Additional delay  
-   	addi sp, sp, 0       # Additional delay
-   	addi sp, sp, 0       # Additional delay
-    	addi a2, t0, -1      # right = n-1 (now safe to use t0)
+   	addi x2, x2, 0       # Stack pointer already set (no-op for delay)
+   	addi x2, x2, 0       # Additional delay
+   	addi x2, x2, 0       # Additional delay  
+   	addi x2, x2, 0       # Additional delay
+   	addi x2, x2, 0       # Additional delay
+    	addi x12, x5, -1      # right = n-1 (now safe to use x5)
 
-    jal  ra, mergesort
+    jal  x1, mergesort
 	nop
 	beq zero, zero, done
 	nop
 
 ##############################################################
-# mergesort(a0=array, a1=left, a2=right)
+# mergesort(x10=array, x11=left, x12=right)
 #   if left >= right: return
 #   mid = (left + right) / 2
 #   mergesort(array, left, mid)
