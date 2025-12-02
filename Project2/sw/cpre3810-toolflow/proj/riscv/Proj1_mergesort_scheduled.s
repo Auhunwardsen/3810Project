@@ -32,21 +32,17 @@ main:
 	nop
 	nop
 	
-	# load base address and indices
-    	la   a0, array       # a0 = base address
-    	nop                   # U-type hazard avoidance
-    	nop                   # U-type hazard avoidance
-    	nop                   # U-type hazard avoidance
-    	nop                   # U-type hazard avoidance
-    	nop                   # U-type hazard avoidance
-    	nop                   # U-type hazard avoidance
-    	nop                   # U-type hazard avoidance
-    	nop                   # U-type hazard avoidance
-    	nop                  # NOPs after pseudo-instruction
+	# load base address - use explicit LUI instead of la
+    	lui  a0, %hi(array)   # High part of array address
     	nop
     	nop
     	nop
+    	nop                   # NOPs after LUI
+    	addi a0, a0, %lo(array) # Add low part of array address
     	nop
+    	nop
+    	nop
+    	nop                   # NOPs after ADDI
     	li   a1, 0           # left = 0
     	nop                  # NOPs after pseudo-instruction
     	nop
@@ -66,6 +62,9 @@ main:
     	nop
     	nop
 	beq zero, zero, done
+	nop
+	nop
+	nop
 
 ##############################################################
 # mergesort(a0=array, a1=left, a2=right)
@@ -77,6 +76,9 @@ main:
 ##############################################################
 mergesort:
     	bge  a1, a2, ms_return      # if left >= right, return
+    	nop
+    	nop
+    	nop
 
     	add  t0, a1, a2             # t0 = left + right
     	srai t1, t0, 1              # t1 = mid = (left+right)/2
@@ -91,18 +93,27 @@ mergesort:
     	# call mergesort(array, left, mid)
     	mv   a2, t1
     	jal  ra, mergesort
+    	nop
+    	nop
+    	nop
 
     	# call mergesort(array, mid+1, right)
    	lw   t1, 0(sp)
     	addi a1, t1, 1
     	lw   a2, 4(sp)
     	jal  ra, mergesort
+    	nop
+    	nop
+    	nop
 
     	# call merge(array, left, mid, right)
     	lw   t1, 0(sp)
     	lw   a1, 8(sp)
     	lw   a2, 4(sp)
     	jal  ra, merge
+    	nop
+    	nop
+    	nop
 
     	# pop ra and locals
     	lw   ra, 12(sp)
@@ -128,7 +139,13 @@ merge:
 
 merge_loop:
     	bgt  t4, t1, copy_right
+    	nop
+    	nop
+    	nop
    	 bgt  t3, a2, copy_left
+    	nop
+    	nop
+    	nop
 
     	slli t6, t4, 2
     	add  t6, a0, t6
@@ -139,10 +156,16 @@ merge_loop:
     	lw   s1, 0(a3)          # s1 = arr[j]
 
     	ble  s0, s1, take_left
+    	nop
+    	nop
+    	nop
    	# take right
     	sw   s1, 0(t2)
     	addi t3, t3, 1
     	j    next_take
+    	nop
+    	nop
+    	nop
     	
 take_left:
     	sw   s0, 0(t2)
@@ -152,9 +175,15 @@ next_take:
     	addi t2, t2, 4
     	addi t5, t5, 1
     	j merge_loop
+    	nop
+    	nop
+    	nop
 
 copy_left:
     	bgt  t4, t1, copy_right
+    	nop
+    	nop
+    	nop
     	slli t6, t4, 2
     	add  t6, a0, t6
     	lw   s0, 0(t6)
@@ -162,9 +191,15 @@ copy_left:
     	addi t4, t4, 1
     	addi t2, t2, 4
     	j copy_left
+    	nop
+    	nop
+    	nop
 
 copy_right:
     	bgt  t3, a2, write_back
+    	nop
+    	nop
+    	nop
     	slli t6, t3, 2
     	add  t6, a0, t6
     	lw   s0, 0(t6)
@@ -172,6 +207,9 @@ copy_right:
     	addi t3, t3, 1
     	addi t2, t2, 4
     	j copy_right
+    	nop
+    	nop
+    	nop
 
 write_back:
     	mv   t2, sp
@@ -179,6 +217,9 @@ write_back:
     	
 wb_loop:
     	bgt  t4, a2, wb_done
+    	nop
+    	nop
+    	nop
     	lw   s0, 0(t2)
     	slli t6, t4, 2
     	add  t6, a0, t6
@@ -186,6 +227,9 @@ wb_loop:
     	addi t2, t2, 4
     	addi t4, t4, 1
     	j wb_loop
+    	nop
+    	nop
+    	nop
 
 wb_done:
     	addi sp, sp, 64

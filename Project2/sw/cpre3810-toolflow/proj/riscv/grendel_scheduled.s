@@ -49,8 +49,14 @@ res_idx:
 	nop
 	nop
 	j    main
+	nop
+	nop
+	nop
 pump:
         j end
+        nop
+        nop
+        nop
 	ebreak                     # halt
 
 
@@ -61,6 +67,9 @@ main:
         add  fp,    sp, x0         # add     $fp,$sp,$zero
         sw   x0, 24(sp)            # sw      $0,24($fp)
         j    main_loop_control
+        nop
+        nop
+        nop
 
 main_loop_body:
         lw   t4, 24(fp)            # lw      $4,24($fp)
