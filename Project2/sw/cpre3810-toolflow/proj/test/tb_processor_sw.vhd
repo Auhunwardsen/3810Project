@@ -1,8 +1,6 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
-use IEEE.std_logic_textio.all;
-use STD.textio.all;
 
 entity tb_processor_sw is
 end tb_processor_sw;
@@ -27,13 +25,25 @@ architecture behavior of tb_processor_sw is
     signal s_InstLd    : std_logic := '0';
     signal s_InstAddr  : std_logic_vector(31 downto 0) := (others => '0');
     signal s_InstExt   : std_logic_vector(31 downto 0) := (others => '0');
-
-    -- Program file path; update if your hex lives elsewhere
-    constant c_IMEM_PATH : string := "../../riscv/imem.hex";  -- adjust path if needed
-    file f_imem : text open read_mode is c_IMEM_PATH;
     
     -- Clock period definition
     constant c_CLK_PERIOD : time := 10 ns;
+    
+    -- Simple test program: LUI x2, 0x10011; ADDI x3, x2, 0x034; ADD x4, x2, x3
+    type mem_array is array (0 to 15) of std_logic_vector(31 downto 0);
+    constant test_program : mem_array := (
+        0  => x"10011137",  -- LUI x2, 0x10011 (loads 0x10011000 into x2)
+        1  => x"00000013",  -- NOP (ADDI x0, x0, 0)
+        2  => x"00000013",  -- NOP  
+        3  => x"03410193",  -- ADDI x3, x2, 0x034 (x3 = x2 + 0x034 = 0x10011034)
+        4  => x"00000013",  -- NOP
+        5  => x"00000013",  -- NOP
+        6  => x"00310233",  -- ADD x4, x2, x3 (x4 = x2 + x3)
+        7  => x"00000013",  -- NOP
+        8  => x"00000013",  -- NOP
+        9  => x"00100073",  -- EBREAK (end simulation marker)
+        others => x"00000013"  -- Fill rest with NOPs
+    );
     
 begin
     -- Instantiate the software-scheduled processor
@@ -56,33 +66,28 @@ begin
         wait for c_CLK_PERIOD/2;
     end process;
     
-    -- Instruction memory loader then run
+    -- Load test program and run
     test_proc: process
-        variable v_line : line;
-        variable v_word : std_logic_vector(31 downto 0);
     begin
         -- Apply reset
         s_RST <= '1';
         wait for 100 ns;
         s_RST <= '0';
 
-        -- Load instruction memory from hex file (one 32-bit word per line, hex)
+        -- Load hardcoded test program into instruction memory
         s_InstLd <= '1';
-        s_InstAddr <= (others => '0');
-        while not endfile(f_imem) loop
-            readline(f_imem, v_line);
-            hread(v_line, v_word);
-            s_InstExt <= v_word;
-            -- IMem expects word addresses; increment by 4
-            wait for c_CLK_PERIOD; -- present data for a cycle
-            s_InstAddr <= std_logic_vector(unsigned(s_InstAddr) + 4);
+        for i in 0 to 15 loop
+            s_InstAddr <= std_logic_vector(to_unsigned(i * 4, 32));
+            s_InstExt <= test_program(i);
+            wait for c_CLK_PERIOD;
         end loop;
         s_InstLd <= '0';
 
-        -- Run simulation for enough cycles to execute scheduled program
-        wait for c_CLK_PERIOD * 1000;
+        -- Run simulation for enough cycles to execute test program
+        -- LUI takes 5 cycles to WB, ADDI takes 5 more, ADD takes 5 more = ~20 cycles
+        wait for c_CLK_PERIOD * 50;
 
-        report "Software-scheduled pipeline test completed - WB ALUOut (dec): " & integer'image(to_integer(unsigned(s_ALUResult)));
+        report "Test completed - Final WB ALUOut: " & integer'image(to_integer(unsigned(s_ALUResult)));
         wait;
     end process;
     
