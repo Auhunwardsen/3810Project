@@ -34,25 +34,27 @@ main:
     nop                     # Need 4 NOPs for actual VHDL timing
     slli x5, x4, 1          # x5 = 30 (uses x4)
     
-    # Test Load/Store with proper scheduling - let pseudo-instruction expand
-    la   x6, test_data      # Load address (expands to auipc + addi)
-    nop                     # U-type hazard avoidance for la expansion
-    nop                     # U-type hazard avoidance  
-    nop                     # U-type hazard avoidance
-    nop                     # U-type hazard avoidance
-    nop                     # U-type hazard avoidance
-    nop                     # Additional U-type hazard avoidance
-    nop                     # Additional U-type hazard avoidance
-    nop                     # Additional U-type hazard avoidance
-    # Add more delay cycles to ensure la completes fully
-    addi x9, x0, 999        # Prepare value for later (independent)
-    addi x10, x0, 100       # Prepare value for later (independent)
+    # Test Load/Store with explicit address loading (avoid la pseudo-instruction)
+    # Use simple base address that we know works
+    lui  x6, 0x10000        # x6 = 0x10000000 (base address)
+    nop
+    nop
+    nop
+    nop                     # Need 4 NOPs after LUI
+    
+    # Store test data at known addresses first
+    addi x9, x0, 10         # Test value 1
+    addi x10, x0, 100       # Prepare value for later (independent) 
     addi x11, x0, 888       # Prepare value for later (independent)
-    nop                     # Extra safety cycle
-    nop                     # Extra safety cycle  
-    nop                     # Extra safety cycle
-    nop                     # Extra safety cycle
-    nop                     # Extra safety cycle
+    nop
+    nop
+    nop
+    nop                     # Need 4 NOPs before using x9
+    sw   x9, 0(x6)          # Store 10 at base address
+    nop
+    nop
+    nop
+    nop                     # Need 4 NOPs after store
     lw   x7, 0(x6)          # Load first word (x7 = 10) - now safe to use x6
     nop                     # Load-use hazard avoidance
     nop
