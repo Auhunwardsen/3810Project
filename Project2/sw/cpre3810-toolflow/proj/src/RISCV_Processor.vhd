@@ -41,6 +41,7 @@ architecture structure of RISCV_Processor is
   signal s_DMemAddr     : std_logic_vector(N-1 downto 0); -- TODO: use this signal as the final data memory address input
   signal s_DMemData     : std_logic_vector(N-1 downto 0); -- TODO: use this signal as the final data memory data input
   signal s_DMemOut      : std_logic_vector(N-1 downto 0); -- TODO: use this signal as the data memory output
+  signal s_DMemAddr_offset : std_logic_vector(N-1 downto 0); -- Data address with base offset applied
  
   -- Required register file signals 
   signal s_RegWr        : std_logic; -- TODO: use this signal as the final active high write enable input to the register file
@@ -388,12 +389,12 @@ begin
              q    => s_Inst);
   
   -- Data Memory (accessed in MEM stage)
-  -- Data segment base is 0x10000000. Subtract base address and use bits [11:2] for word addressing
+  -- Uses offset address after subtracting data base (0x10000000)
   DMem: mem
     generic map(ADDR_WIDTH => ADDR_WIDTH,
                 DATA_WIDTH => N)
     port map(clk  => iCLK,
-             addr => std_logic_vector(unsigned(s_DMemAddr) - x"10000000")(11 downto 2),  -- Subtract data base, then word-align
+             addr => s_DMemAddr_offset(11 downto 2),  -- Use offset bits [11:2] for word addressing
              data => s_DMemData,
              we   => s_DMemWr,
              q    => s_DMemOut);
@@ -674,6 +675,9 @@ begin
   s_DMemAddr <= s_EXMEM_ALUResult;   -- Memory address from ALU
   s_DMemData <= s_EXMEM_RS2Data;     -- Write data for stores
   s_DMemWr   <= s_EXMEM_MemWrite;    -- Write enable
+  
+  -- Data memory base address translation: 0x10000000 -> 0x00000000
+  s_DMemAddr_offset <= std_logic_vector(unsigned(s_DMemAddr) - unsigned'(x"10000000"));
 
   -------------------------------------------------------------------------
   -- WB STAGE LOGIC
