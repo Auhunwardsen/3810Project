@@ -26,15 +26,15 @@ visited:
 res_idx:
         .word   3
 .text
-        # NEW RISCV                # ORIGINAL MIPS
+	# NEW RISCV                # ORIGINAL MIPS  
 	li   sp, 0x10011000        # li $sp, 0x10011000
 	nop                        # NOPs after pseudo-instruction
 	nop
 	nop
 	nop
 	nop
-	li   fp, 0                 # li $fp, 0
-	nop                        # NOPs after pseudo-instruction
+	addi fp, x0, 0             # Set fp to 0 (explicit addi)
+	nop                        # NOPs after instruction
 	nop
 	nop
 	nop

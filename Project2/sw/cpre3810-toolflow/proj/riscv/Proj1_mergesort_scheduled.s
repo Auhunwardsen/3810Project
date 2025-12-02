@@ -42,13 +42,7 @@ main:
     	nop
     	nop
     	nop
-   	# Load n using explicit addressing (n is at base + 32 bytes offset from array)
-   	addi t1, a0, 32      # t1 = base + offset to n
-   	nop                  # NOPs after instruction
-   	nop
-   	nop
-   	nop
-   	lw   t0, 0(t1)       # load n value
+   	lw   t0, n           # Load n value (using symbol)
    	nop                  # NOPs after load before use
    	nop
    	nop
