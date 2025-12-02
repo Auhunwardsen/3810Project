@@ -275,10 +275,10 @@ main:
     # ========== PHASE 7: Branch Instructions ==========
     # Test BEQ (should branch)
     beq x1, x1, branch_test1    # x1 == x1, should branch
-    addi x22, x0, 0xBAD         # should NOT execute
+    addi x22, x0, 999           # should NOT execute
     
 branch_test1:
-    addi x22, x0, 0xC001        # x22 = 0xC001 (good value)
+    addi x22, x0, 1001          # x22 = 1001 (good value)
     nop
     nop
     nop
@@ -292,10 +292,10 @@ branch_test1:
     
     # Test BNE (should branch)
     bne x1, x2, branch_test2    # x1 != x2, should branch  
-    addi x23, x0, 0xBAD         # should NOT execute
+    addi x23, x0, 999           # should NOT execute
     
 branch_test2:
-    addi x23, x0, 0xC002        # x23 = 0xC002 (good value)
+    addi x23, x0, 1002          # x23 = 1002 (good value)
     nop
     nop
     nop
@@ -310,10 +310,10 @@ branch_test2:
     # ========== PHASE 8: Jump Instructions ==========
     # Test JAL
     jal x24, jump_test          # x24 = return address
-    addi x25, x0, 0xBAD         # should NOT execute
+    addi x25, x0, 999           # should NOT execute
     
 jump_return:
-    addi x25, x0, 0xC003        # x25 = 0xC003 (good value)
+    addi x25, x0, 1003          # x25 = 1003 (good value)
     nop
     nop
     nop
@@ -329,12 +329,12 @@ jump_return:
     # Final signature values for validation:
     # x1=1, x2=-1, x3=255, x6=0, x7=511, x8=1, x9=-1, x10=0
     # x11=4, x12=127, x13=-1, x14=1, x15=1, x19=0x123, x21=0x456
-    # x22=0xC001, x23=0xC002, x25=0xC003
+    # x22=1001, x23=1002, x25=1003, x26=1004
     wfi
     
 jump_test:
     # Simple jump target - return via JALR
-    addi x26, x0, 0xC004        # x26 = 0xC004 (mark we were here)
+    addi x26, x0, 1004          # x26 = 1004 (mark we were here)
     nop
     nop
     nop
