@@ -30,7 +30,7 @@ architecture behavior of tb_processor_sw is
 
     -- Program file path; update if your hex lives elsewhere
     constant c_IMEM_PATH : string := "../../riscv/imem.hex";  -- adjust path if needed
-    file f_imem : text;  -- opened in process with file_open
+    file f_imem : text open read_mode is c_IMEM_PATH;
     
     -- Clock period definition
     constant c_CLK_PERIOD : time := 10 ns;
@@ -60,31 +60,24 @@ begin
     test_proc: process
         variable v_line : line;
         variable v_word : std_logic_vector(31 downto 0);
-        variable v_opened : boolean;
     begin
         -- Apply reset
         s_RST <= '1';
         wait for 100 ns;
         s_RST <= '0';
 
-        -- Try to load instruction memory from hex file (one 32-bit word per line, hex)
-        v_opened := file_open(f_imem, c_IMEM_PATH, read_mode);
-        if v_opened then
-            s_InstLd <= '1';
-            s_InstAddr <= (others => '0');
-            while not endfile(f_imem) loop
-                readline(f_imem, v_line);
-                hread(v_line, v_word);
-                s_InstExt <= v_word;
-                -- IMem expects word addresses; increment by 4
-                wait for c_CLK_PERIOD; -- present data for a cycle
-                s_InstAddr <= std_logic_vector(unsigned(s_InstAddr) + 4);
-            end loop;
-            s_InstLd <= '0';
-            file_close(f_imem);
-        else
-            report "IMEM hex file not found: " & c_IMEM_PATH severity warning;
-        end if;
+        -- Load instruction memory from hex file (one 32-bit word per line, hex)
+        s_InstLd <= '1';
+        s_InstAddr <= (others => '0');
+        while not endfile(f_imem) loop
+            readline(f_imem, v_line);
+            hread(v_line, v_word);
+            s_InstExt <= v_word;
+            -- IMem expects word addresses; increment by 4
+            wait for c_CLK_PERIOD; -- present data for a cycle
+            s_InstAddr <= std_logic_vector(unsigned(s_InstAddr) + 4);
+        end loop;
+        s_InstLd <= '0';
 
         -- Run simulation for enough cycles to execute scheduled program
         wait for c_CLK_PERIOD * 1000;
