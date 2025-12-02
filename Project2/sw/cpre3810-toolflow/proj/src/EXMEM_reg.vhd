@@ -84,14 +84,14 @@ begin
         o_PCplus4     <= (others => '0');
         
       elsif i_WE = '1' then
-        -- Normal operation
+        -- Normal operation - Control signals
         o_RegWrite    <= i_RegWrite;
         o_MemToReg    <= i_MemToReg;
         o_MemWrite    <= i_MemWrite;
         o_MemRead     <= i_MemRead;
         o_Branch      <= i_Branch;
-        o_Instr       <= i_Instr;
         
+        -- Data signals
         o_BranchAddr  <= i_BranchAddr;
         o_BranchTaken <= i_BranchTaken;
         o_ALUResult   <= i_ALUResult;
@@ -99,6 +99,7 @@ begin
         o_RS2Data     <= i_RS2Data;
         o_RDAddr      <= i_RDAddr;
         o_PCplus4     <= i_PCplus4;
+        o_Instr       <= i_Instr;
       end if;
     end if;
   end process;

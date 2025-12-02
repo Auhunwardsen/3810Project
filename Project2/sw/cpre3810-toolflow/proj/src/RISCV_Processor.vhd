@@ -545,13 +545,15 @@ begin
       o_O  => s_ALUIn2
     );
 
-  -- ALU Input A Selection: AUIPC uses PC, others use RS1 (LUI ignores input A)
+  -- ALU Input A Selection: AUIPC uses PC, LUI uses zero, others use RS1
   process(s_IDEX_Instr, s_IDEX_RS1Data, s_IDEX_PC)
   begin
     if s_IDEX_Instr(6 downto 0) = "0010111" then
       s_ALUIn1 <= s_IDEX_PC;  -- AUIPC: use PC
+    elsif s_IDEX_Instr(6 downto 0) = "0110111" then  
+      s_ALUIn1 <= (others => '0');  -- LUI: don't care, but use clean signal
     else
-      s_ALUIn1 <= s_IDEX_RS1Data;  -- Normal: use RS1 (LUI will ignore this anyway)
+      s_ALUIn1 <= s_IDEX_RS1Data;  -- Normal: use RS1
     end if;
   end process;
 
