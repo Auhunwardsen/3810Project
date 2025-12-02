@@ -135,6 +135,8 @@ kick:
         sw   t2, 24(fp)            # sw      $2,24($fp)
 main_loop_control:
         lw   t2, 24(fp)            # lw      $2,24($fp)
+        nop
+        nop
         slti t2,    t2, 4          # slti    $2,$2, 4
         beq  t2,    x0, hew        # beq     $2, $zero, hew # beq, j to simulate bne 
         j    main_loop_body
@@ -144,10 +146,14 @@ hew:
 
 wave:
         lw   t2, 28(fp)            # lw      $2,28($fp)
+        nop
+        nop
         addi t2,    t2, 1          # addiu   $2,$2,1
         sw   t2, 28(fp)            # sw      $2,28($fp)
 welcome:
         lw   t2, 28(fp)            # lw      $2,28($fp)
+        nop
+        nop
         slti t2,    t2, 4          # slti    $2,$2,4
         xori t2,    t2, 1          # xori    $2,$2,1 # xori 1, beq to simulate bne where val in [0,1]
         beq  t2,    x0, wave       # beq     $2,$0,wave
@@ -161,6 +167,8 @@ welcome:
         
 interest:
         lw   t4, 24(fp)            # lw      $4,24($fp)
+        nop
+        nop
         #la   ra,    new            # la      $ra, new
         lui  ra, %hi(new)
         nop                        # NOPs after pseudo-instruction
@@ -176,6 +184,8 @@ new:
         beq  t2,    x0, tasteful   # beq     $2,$0,tasteful
 
         lw   t4, 24(fp)            # lw      $4,24($fp)
+        nop
+        nop
         #la   ra,    partner        # la      $ra, partner
         lui  ra, %hi(partner)
         nop                        # NOPs after pseudo-instruction
@@ -225,6 +235,8 @@ telling:
         nop
         nop
 	lw   t2,  0(t2)            # lw      $v0, 0($v0)
+        nop
+        nop
         addi t4,    t2, -1         # addiu   $4,$2,-1
         #la   t3,    res_idx        # la      $3, res_idx
         lui  t3, %hi(res_idx)
