@@ -45,6 +45,9 @@ res_idx:
 	nop
 	nop
 	nop
+	nop
+	nop
+	nop
 	j    main
 pump:
         j end
@@ -72,6 +75,9 @@ main_loop_body:
         nop
         nop
         nop
+        nop
+        nop
+        nop
         j    is_visited
 trucks:
 
@@ -88,6 +94,9 @@ trucks:
                                    # ; addi    $k0, $k0,1# breakpoint
         la   ra,    billowy        # la      $ra, billowy
         nop                        # NOPs after pseudo-instruction
+        nop
+        nop
+        nop
         nop
         nop
         nop
