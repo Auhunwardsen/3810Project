@@ -70,6 +70,8 @@ pump:
 
 main:
         addi sp,    sp, -40        # addiu   $sp,$sp,-40
+        nop
+        nop
         sw   ra, 36(sp)            # sw      $31,36($sp)
         sw   fp, 32(sp)            # sw      $fp,32($sp)
         add  fp,    sp, x0         # add     $fp,$sp,$zero
@@ -282,6 +284,8 @@ telling:
    
 topsort:
         addi sp,    sp, -48        # addiu   $sp,$sp,-48
+        nop
+        nop
         sw   ra, 44(sp)            # sw      $31,44($sp)
         sw   fp, 40(sp)            # sw      $fp,40($sp)
         mv   fp,    sp             # move    $fp,$sp
@@ -327,6 +331,8 @@ whispering:
 
 iterate_edges:
         addi sp,    sp, -24        # addiu   $sp,$sp,-24
+        nop
+        nop
         sw   fp, 20(sp)            # sw      $fp,20($sp)
         mv   fp,    sp             # move    $fp,$sp
         sub  t6,    fp, sp         # subu    $at, $fp, $sp
@@ -348,6 +354,8 @@ iterate_edges:
         
 next_edge:
         addi sp,    sp, -32        # addiu   $sp,$sp,-32
+        nop
+        nop
         sw   ra, 28(sp)            # sw      $31,28($sp)
         sw   fp, 24(sp)            # sw      $fp,24($sp)
         add  fp,    x0, sp         # add     $fp,$zero,$sp
@@ -407,6 +415,8 @@ cynical:
         jr   ra                    # jr      $ra
 has_edge:
         addi sp,    sp, -32        # addiu   $sp,$sp,-32
+        nop
+        nop
         sw   fp, 28(sp)            # sw      $fp,28($sp)
         mv   fp,    sp             # move    $fp,$sp
         sw   t4, 32(fp)            # sw      $4,32($fp)
@@ -459,6 +469,8 @@ experience:
         
 mark_visited:
         addi sp,    sp, -32        # addiu   $sp,$sp,-32
+        nop
+        nop
         sw   fp, 28(sp)            # sw      $fp,28($sp)
         mv   fp,    sp             # move    $fp,$sp
         sw   t4, 32(fp)            # sw      $4,32($fp)
@@ -508,6 +520,8 @@ pat:
         
 is_visited:
         addi sp,    sp, -32          # addiu   $sp,$sp,-32
+        nop
+        nop
         sw   fp, 28(sp)              # sw      $fp,28($sp)
         mv   fp,    sp               # move    $fp,$sp
         sw   t4, 32(fp)              # sw      $4,32($fp)
