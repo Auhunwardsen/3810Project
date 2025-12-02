@@ -10,7 +10,7 @@
 
 .data
 res:
-	.word -1, -1, -1, -1
+	.word -1-1-1-1
 nodes:
         .byte   97 # a
         .byte   98 # b
@@ -22,24 +22,14 @@ adjacencymatrix:
         .word   0
         .word   3
 visited:
-	.byte 0, 0, 0, 0
+	.byte 0 0 0 0
 res_idx:
         .word   3
 .text
-	# NEW RISCV - Software scheduled with manual instruction expansion
-	lui  x2, 0x10011           # Load upper bits (0x10011000 >> 12 = 0x10011)
-	nop                        # RAW hazard prevention cycle 1
-	nop                        # RAW hazard prevention cycle 2
-	nop                        # RAW hazard prevention cycle 3
-	addi x2, x2, 0             # Add lower bits (0x000) - now safe to read x2
-	li   x8, 0                 # x8 = 0 (expands to addi x8, x0, 0)
-	auipc x1, 0               # Load current PC into x1
-	nop                        # RAW hazard prevention cycle 1
-	nop                        # RAW hazard prevention cycle 2
-	nop                        # RAW hazard prevention cycle 3
-	nop                        # Extra safety cycle 4
-	nop                        # Extra safety cycle 5
-	addi x1, x1, 24           # Add offset to pump - now safe to read x1
+        # NEW RISCV                # ORIGINAL MIPS
+	li   sp, 0x10011000        # li $sp, 0x10011000
+	li   fp, 0                 # li $fp, 0
+	la   ra, pump              # la $ra pump
 	j    main
 pump:
         j end
@@ -47,43 +37,33 @@ pump:
 
 
 main:
-        addi x2,    x2, -40        # addiu   $sp,$sp,-40
-        sw   x1, 36(x2)            # sw      $31,36($sp)
-        sw   x8, 32(x2)            # sw      $fp,32($sp)
-        add  x8,    x2, x0         # add     $fp,$sp,$zero
-        sw   x0, 24(x8)            # sw      $0,24($fp)
+        addi sp,    sp, -40        # addiu   $sp,$sp,-40
+        sw   ra, 36(sp)            # sw      $31,36($sp)
+        sw   fp, 32(sp)            # sw      $fp,32($sp)
+        add  fp,    sp, x0         # add     $fp,$sp,$zero
+        sw   x0, 24(sp)            # sw      $0,24($fp)
         j    main_loop_control
 
 main_loop_body:
-        lw   x29, 24(x8)           # lw      $4,24($fp)
-        la   x1,    trucks         # la      $ra, trucks (expands to auipc + addi)
-        # Reorder independent instructions for delay
-        add  x31, x29, x0          # Prepare for later use (mv t6, t4)
-        add  x28, x28, x0          # Prepare for later use (mv t7, t3)
-        addi x5, x0, 0             # Independent instruction
-        addi x6, x0, 0             # Independent instruction
+        lw   t4, 24(fp)            # lw      $4,24($fp)
+        la   ra,    trucks         # la      $ra, trucks
         j    is_visited
 trucks:
 
-        xori x7,    x7, 1          # xori    $2,$2,0x1
-        andi x7,    x7, 0xff       # andi    $2,$2,0x00ff
-        beq  x7,    x0, kick       # beq     $2,$0,kick
+        xori t2,    t2, 1          # xori    $2,$2,0x1
+        andi t2,    t2, 0xff       # andi    $2,$2,0x00ff
+        beq  t2,    x0, kick       # beq     $2,$0,kick
 
-        lw   x29, 24(x8)           # lw      $4,24($fp)
+        lw   t4, 24(fp)            # lw      $4,24($fp)
                                    # ; addi    $k0, $k0,1# breakpoint
-        la   x1,    billowy        # la      $ra, billowy (expands to auipc + addi)
-        # Reorder independent instructions for delay
-        add  x31, x29, x0          # Prepare for later use (mv t6, t4)
-        add  x28, x28, x0          # Prepare for later use (mv t7, t3)
-        addi x5, x0, 0             # Independent instruction
-        addi x6, x0, 0             # Independent instruction
+        la   ra,    billowy        # la      $ra, billowy
         j    topsort
 billowy:
 
 kick:
-        lw   x7, 24(x8)            # lw      $2,24($fp)
-        addi x7,    x7, 1          # addiu   $2,$2,1
-        sw   x7, 24(x8)            # sw      $2,24($fp)
+        lw   t2, 24(fp)            # lw      $2,24($fp)
+        addi t2,    t2, 1          # addiu   $2,$2,1
+        sw   t2, 24(fp)            # sw      $2,24($fp)
 main_loop_control:
         lw   t2, 24(fp)            # lw      $2,24($fp)
         slti t2,    t2, 4          # slti    $2,$2, 4
@@ -112,12 +92,7 @@ welcome:
         
 interest:
         lw   t4, 24(fp)            # lw      $4,24($fp)
-        la   ra,    new            # la      $ra, new (expands to auipc + addi)
-        # Use independent instructions for delay
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
-        mv   t6, t4                # Independent move
-        mv   t7, t3                # Independent move
+        la   ra,    new            # la      $ra, new
         j    is_visited
 new:
         xori t2,    t2, 1          # xori    $2,$2,0x1
@@ -125,55 +100,31 @@ new:
         beq  t2,    x0, tasteful   # beq     $2,$0,tasteful
 
         lw   t4, 24(fp)            # lw      $4,24($fp)
-        la   ra,    partner        # la      $ra, partner (expands to auipc + addi)
-        # Use independent instructions for delay
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
-        mv   t6, t4                # Independent move
-        mv   t7, t3                # Independent move
+        la   ra,    partner        # la      $ra, partner
         j    topsort
 partner:
 
 tasteful:
         addi t2,    fp, 28         # addiu   $2,$fp,28
         mv   t4,    t2             # move    $4,$2
-        la   ra,    badge          # la      $ra, badge (expands to auipc + addi)
-        # Use independent instructions for delay
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
-        mv   t6, t4                # Independent move
-        mv   t7, t3                # Independent move
+        la   ra,    badge          # la      $ra, badge
         j    next_edge
 badge:
         sw   t2, 24(fp)            # sw      $2,24($fp)
         
 turkey:
         lw   t3, 24(fp)            # lw      $3,24($fp)
-        li   t2, -1                # li      $2,-1 (expands to addi t2, x0, -1)
-        # Use independent instructions for delay
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
-        mv   t6, t4                # Independent move
-        mv   t7, t3                # Independent move
+        li   t2, -1                # li      $2,-1
         beq  t3,    t2, telling    # beq     $3,$2,telling # beq, j to simulate bne
         j    interest
 telling:
         # NOTE: $v0 === $2
 	la   t2,    res_idx        # la      $v0, res_idx
-	nop                        # RAW hazard prevention
-	nop                        # RAW hazard prevention
-	nop                        # RAW hazard prevention
 	lw   t2,  0(t2)            # lw      $v0, 0($v0)
         addi t4,    t2, -1         # addiu   $4,$2,-1
         la   t3,    res_idx        # la      $3, res_idx
-        nop                        # RAW hazard prevention
-        nop                        # RAW hazard prevention
-        nop                        # RAW hazard prevention
         sw   t4,  0(t3)            # sw      $4, 0($3)
-        la   t4,    res            # la      $4, res (expands to auipc + addi)
-        # Use independent instructions for delay
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
+        la   t4,    res            # la      $4, res
                                    # ; lui     $3,%hi(res_idx)
                                    # ; sw      $4,%lo(res_idx)($3)
                                    # ; lui     $4,%hi(res)
@@ -186,11 +137,8 @@ telling:
         or   t6,    ra, t2         # nor     $at, $ra, $2 # does nothing 
         neg  t6,    t6
         
-        la   t2,    res            # la      $2, res (expands to auipc + addi)
-        li   a1,    0x0000ffff     # li expands to lui + addi
-        # Use independent instructions for delay
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
+        la   t2,    res            # la      $2, res
+        li   a1,    0x0000ffff
         and  t6,    t2, a1         # andi    $at, $2, 0xffff # -1 will sign extend (according to assembler), but 0xffff won't
         add  t2,    t4, t6         # addu    $2, $4, $at
         add  t2,    t3, t2         # addu    $2,$3,$2
@@ -290,10 +238,7 @@ waggish:
         beq  t2,    x0, mark       # beq     $2,$zero,mark # beq, j to simulate bne 
         j    snail
 mark:
-        li   t2, -1                # li      $2,-1 (expands to addi t2, x0, -1)
-        # Use independent instructions for delay
-        addi t0, x0, 0             # Independent instruction
-        addi t1, x0, 0             # Independent instruction
+        li   t2, -1                # li      $2,-1
 
 cynical:
         mv   sp,    fp             # move    $sp,$fp
@@ -314,9 +259,6 @@ has_edge:
         lw   t2,  0(t2)            # lw      $2,0($2)
         sw   t2, 16(fp)            # sw      $2,16($fp)
         li   t2,  1                # li      $2,1
-        nop                        # RAW hazard prevention
-        nop                        # RAW hazard prevention
-        nop                        # RAW hazard prevention
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
         j    measley
@@ -351,9 +293,6 @@ mark_visited:
         mv   fp,    sp             # move    $fp,$sp
         sw   t4, 32(fp)            # sw      $4,32($fp)
         li   t2,  1                # li      $2,1
-        nop                        # RAW hazard prevention
-        nop                        # RAW hazard prevention
-        nop                        # RAW hazard prevention
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
         j    recast
