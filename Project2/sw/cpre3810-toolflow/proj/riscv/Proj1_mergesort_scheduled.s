@@ -48,6 +48,7 @@ main:
 	nop                  # NOPs after jal
 	nop
 	nop
+	nop
 	beq zero, zero, done
 	nop
 	nop
@@ -84,6 +85,7 @@ mergesort:
     	# call mergesort(array, left, mid)
     	mv   a2, t1
     	jal  ra, mergesort
+		nop
     	nop
     	nop
 		nop
@@ -98,9 +100,9 @@ mergesort:
     	nop
     	nop
 		nop
+		nop
 
     	# call merge(array, left, mid, right)
-		nop
     	lw   t1, 0(sp)
     	lw   a1, 8(sp)
     	lw   a2, 4(sp)
@@ -108,6 +110,7 @@ mergesort:
     	nop
 		nop
     	nop
+		nop
 
     	# pop ra and locals
     	lw   ra, 12(sp)

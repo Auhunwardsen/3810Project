@@ -65,6 +65,7 @@ begin
       o_RS2Data     <= (others => '0');
       o_RDAddr      <= (others => '0');
       o_PCplus4     <= (others => '0');
+      o_Instr       <= (others => '0');
       
     elsif rising_edge(i_CLK) then
       if i_flush = '1' then
@@ -82,6 +83,7 @@ begin
         o_RS2Data     <= (others => '0');
         o_RDAddr      <= (others => '0');
         o_PCplus4     <= (others => '0');
+        o_Instr       <= (others => '0');
         
       elsif i_WE = '1' then
         -- Normal operation - Control signals

@@ -59,6 +59,7 @@ architecture structure of RISCV_Processor is
   -- Required overflow signal -- for overflow exception detection
   signal s_Ovfl         : std_logic;  -- TODO: this signal indicates an overflow exception would have been initiated
 
+
   component mem is
     generic(ADDR_WIDTH : integer;
             DATA_WIDTH : integer);
@@ -325,6 +326,7 @@ architecture structure of RISCV_Processor is
   signal s_IFID_PC      : std_logic_vector(31 downto 0);
   signal s_IFID_PCplus4 : std_logic_vector(31 downto 0);
   signal s_IFID_Inst    : std_logic_vector(31 downto 0);
+  signal s_IFID_flush   : std_logic;
   
   -- ID/EX pipeline register outputs  
   signal s_IDEX_RegWrite  : std_logic;
@@ -426,7 +428,7 @@ begin
       i_CLK     => iCLK,
       i_RST     => iRST,
       i_WE      => '1',  -- Always enabled for software-scheduled pipeline
-      i_flush   => '0',  -- No flushing in software-scheduled pipeline
+      i_flush   => s_IFID_flush,
       i_PC      => s_PC,
       i_PCplus4 => s_PCplus4,
       i_Instr   => s_Instr_Fetch,  -- Use fetch unit output
@@ -778,6 +780,18 @@ begin
     
     -- Output: 1 = take branch, 0 = continue sequential execution
     s_BranchTaken <= v_BranchCond;
+  end process;
+
+  -- Flush condition evaluation (ID stage for software-scheduled pipeline)
+  process(s_BranchTaken, s_IFID_Inst)
+  begin
+    if (s_BranchTaken = '1') or
+       (s_IFID_Inst(6 downto 0) = "1101111") or
+       (s_IFID_Inst(6 downto 0) = "1100111") then
+      s_IFID_flush <= '1';
+    else
+      s_IFID_flush <= '0';
+    end if;
   end process;
   
   -- Next address selection (ID stage for software-scheduled pipeline)
