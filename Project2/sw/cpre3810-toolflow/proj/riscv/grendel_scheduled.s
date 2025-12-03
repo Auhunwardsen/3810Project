@@ -489,6 +489,8 @@ next_edge:
         nop
         nop
         add  fp,    x0, sp         # add     $fp,$zero,$sp
+        nop
+        nop
         sw   t4, 32(fp)            # sw      $4,32($fp)
         j    waggish
         nop
