@@ -32,8 +32,6 @@ res_idx:
 	nop                        # NOPs after pseudo-instruction (expands to lui+addi)
 	nop
         addi  sp, sp, 0
-	nop
-	nop
 	li   fp, 0                 # li $fp, 0
 	nop                        # NOPs after pseudo-instruction
 	nop
@@ -42,8 +40,6 @@ res_idx:
 	nop                        # NOPs after pseudo-instruction
 	nop
         addi  ra, ra, %lo(pump)
-	nop
-	nop
 	j    main
 	nop
 	nop
@@ -51,10 +47,7 @@ pump:
         j end
         nop
         nop
-        nop
 	ebreak                     # halt
-        nop
-        nop
 
 
 main:
@@ -62,35 +55,21 @@ main:
         nop
         nop
         sw   ra, 36(sp)            # sw      $31,36($sp)
-        nop
-        nop
         sw   fp, 32(sp)            # sw      $fp,32($sp)
-        nop
-        nop
         add  fp,    sp, x0         # add     $fp,$sp,$zero
-        nop
-        nop
         sw   x0, 24(sp)            # sw      $0,24($fp)
-        nop
-        nop
         j    main_loop_control
-        nop
         nop
         nop
 
 main_loop_body:
         lw   t4, 24(fp)            # lw      $4,24($fp)
-        nop                        # NOPs after load
-        nop
         #la   ra,    trucks         # la      $ra, trucks
         lui  ra, %hi(trucks)
         nop                        # NOPs after pseudo-instruction
         nop
         addi  ra, ra, %lo(trucks)
-        nop
-        nop
         j    is_visited
-        nop
         nop
         nop
 trucks:
@@ -104,10 +83,7 @@ trucks:
         beq  t2,    x0, kick       # beq     $2,$0,kick
         nop
         nop
-        nop
         lw   t4, 24(fp)            # lw      $4,24($fp)
-        nop                        # NOPs after load
-        nop
                                    # ; addi    $k0, $k0,1# breakpoint
         #la   ra,    billowy        # la      $ra, billowy
         lui  ra, %hi(billowy)
@@ -117,7 +93,6 @@ trucks:
         nop
         nop
         j    topsort
-        nop
         nop
         nop
 billowy:
@@ -130,8 +105,6 @@ kick:
         nop
         nop
         sw   t2, 24(fp)            # sw      $2,24($fp)
-        nop
-        nop
 main_loop_control:
         lw   t2, 24(fp)            # lw      $2,24($fp)
         nop
@@ -146,13 +119,9 @@ main_loop_control:
         j    main_loop_body
         nop
         nop
-        nop
 hew:
         sw   x0, 28(fp)            # sw      $0,28($fp)
-        nop
-        nop
         j    welcome
-        nop
         nop
         nop
 
@@ -164,8 +133,6 @@ wave:
         nop
         nop
         sw   t2, 28(fp)            # sw      $2,28($fp)
-        nop
-        nop
 welcome:
         lw   t2, 28(fp)            # lw      $2,28($fp)
         nop
@@ -181,29 +148,18 @@ welcome:
         nop
         nop
         mv   t2,    x0             # move    $2,$0
-        nop
-        nop
         mv   sp,    fp             # move    $sp,$fp
         nop
         nop
         lw   ra, 36(sp)            # lw      $31,36($sp)
-        nop
-        nop
         lw   fp, 32(sp)            # lw      $fp,32($sp)
-        nop
-        nop
         addi sp, sp, 40            # addiu   $sp,$sp,40
-        nop
-        nop
         jr   ra                    # jr      $ra
-        nop
         nop
         nop
         
 interest:
         lw   t4, 24(fp)            # lw      $4,24($fp)
-        nop
-        nop
         #la   ra,    new            # la      $ra, new
         lui  ra, %hi(new)
         nop                        # NOPs after pseudo-instruction
@@ -212,7 +168,6 @@ interest:
         nop
         nop
         j    is_visited
-        nop
         nop
         nop
 new:
@@ -227,8 +182,6 @@ new:
         nop
         nop
         lw   t4, 24(fp)            # lw      $4,24($fp)
-        nop
-        nop
         #la   ra,    partner        # la      $ra, partner
         lui  ra, %hi(partner)
         nop                        # NOPs after pseudo-instruction
@@ -239,7 +192,6 @@ new:
         j    topsort
         nop
         nop
-        nop
 partner:
 
 tasteful:
@@ -247,28 +199,19 @@ tasteful:
         nop
         nop
         mv   t4,    t2             # move    $4,$2
-        nop
-        nop
         #la   ra,    badge          # la      $ra, badge
         lui  ra, %hi(badge)
         nop                        # NOPs after pseudo-instruction
         nop
         addi  ra, ra, %lo(badge)
-        nop
-        nop
         j    next_edge
-        nop
         nop
         nop
 badge:
         sw   t2, 24(fp)            # sw      $2,24($fp)
-        nop
-        nop
         
 turkey:
         lw   t3, 24(fp)            # lw      $3,24($fp)
-        nop                        # NOPs after load
-        nop
         li   t2, -1                # li      $2,-1
         nop                        # NOPs after pseudo-instruction
         nop
@@ -277,7 +220,6 @@ turkey:
         nop
         nop
         j    interest
-        nop
         nop
         nop
 telling:
@@ -293,8 +235,6 @@ telling:
         nop
         nop
         addi t4,    t2, -1         # addiu   $4,$2,-1
-        nop
-        nop
         #la   t3,    res_idx        # la      $3, res_idx
         lui  t3, %hi(res_idx)
         nop                        # NOPs after pseudo-instruction
@@ -303,15 +243,11 @@ telling:
         nop
         nop
         sw   t4,  0(t3)            # sw      $4, 0($3)
-        nop
-        nop
         #la   t4,    res            # la      $4, res
         lui  t4, %hi(res)
         nop                        # NOPs after pseudo-instruction
         nop
         addi  t4, t4, %lo(res)
-        nop
-        nop
                                    # ; lui     $3,%hi(res_idx)
                                    # ; sw      $4,%lo(res_idx)($3)
                                    # ; lui     $4,%hi(res)
@@ -338,8 +274,6 @@ telling:
         nop                        # NOPs after pseudo-instruction
         nop
         addi  t2, t2, %lo(res)
-        nop                        # NOPs after pseudo-instruction
-        nop
         #li   a1,    0x0000ffff     # li with 16-bit constant
         lui   a1, 0x1
         nop                        # NOPs after pseudo-instruction
@@ -354,14 +288,10 @@ telling:
         nop
         nop
         add  t2,    t3, t2         # addu    $2,$3,$2
-        nop
-        nop
         lw   t3, 48(fp)            # lw      $3,48($fp)
         nop
         nop
         sw   t3,  0(t2)            # sw      $3,0($2)
-        nop
-        nop
         mv   sp,    fp             # move    $sp,$fp
         nop
         nop
@@ -371,7 +301,6 @@ telling:
         jr   ra                    # jr      $ra
         nop
         nop
-        nop
    
 topsort:
         addi sp,    sp, -48        # addiu   $sp,$sp,-48
@@ -379,8 +308,6 @@ topsort:
         nop
         sw   ra, 44(sp)            # sw      $31,44($sp)
         sw   fp, 40(sp)            # sw      $fp,40($sp)
-        nop
-        nop
         mv   fp,    sp             # move    $fp,$sp
         nop
         nop
@@ -393,16 +320,12 @@ topsort:
         nop                        # NOPs after pseudo-instruction
         nop
         addi  ra, ra, %lo(verse)
-        nop
-        nop
         j    mark_visited
-        nop
         nop
         nop
 verse:
 
         addi t2,    fp, 28         # addiu   $2,$fp,28
-        nop
         nop
         lw   t5, 48(fp)            # lw      $5,48($fp)
         mv   t4,    t2             # move    $4,$2
@@ -414,7 +337,6 @@ verse:
         nop
         nop
         j    iterate_edges
-        nop
         nop
         nop
 joyous:
@@ -433,12 +355,10 @@ joyous:
         j    next_edge
         nop
         nop
-        nop
 whispering:
 
         sw   t2, 24(fp)            # sw      $2,24($fp)
         j    turkey
-        nop
         nop
         nop
 
@@ -447,8 +367,6 @@ iterate_edges:
         nop
         nop
         sw   fp, 20(sp)            # sw      $fp,20($sp)
-        nop
-        nop
         mv   fp,    sp             # move    $fp,$sp
         nop
         nop
@@ -480,7 +398,6 @@ iterate_edges:
         jr   ra                    # jr      $ra
         nop
         nop
-        nop
         
 next_edge:
         addi sp,    sp, -32        # addiu   $sp,$sp,-32
@@ -488,14 +405,11 @@ next_edge:
         nop
         sw   ra, 28(sp)            # sw      $31,28($sp)
         sw   fp, 24(sp)            # sw      $fp,24($sp)
-        nop
-        nop
         add  fp,    x0, sp         # add     $fp,$zero,$sp
         nop
         nop
         sw   t4, 32(fp)            # sw      $4,32($fp)
         j    waggish
-        nop
         nop
         nop
 
@@ -517,10 +431,7 @@ snail:
         nop                        # NOPs after pseudo-instruction
         nop
         addi  ra, ra, %lo(induce)
-        nop
-        nop
         j    has_edge
-        nop
         nop
         nop
 induce:
@@ -535,14 +446,11 @@ induce:
         nop
         nop
         addi t4,    t2, 1          # addiu   $4,$2,1
-        nop
-        nop
         lw   t3, 32(fp)            # lw      $3,32($fp)
         nop
         nop
         sw   t4,  4(t3)            # sw      $4,4($3)
         j    cynical
-        nop
         nop
         nop
 
@@ -554,8 +462,6 @@ quarter:
         nop
         nop
         addi t3,    t2, 1          # addiu   $3,$2,1
-        nop
-        nop
         lw   t2, 32(fp)            # lw      $2,32($fp)
         nop
         nop
@@ -578,11 +484,8 @@ waggish:
         j    snail
         nop
         nop
-        nop
 mark:
         li   t2, -1                # li      $2,-1
-        nop                        # NOPs after pseudo-instruction
-        nop
 
 cynical:
         mv   sp,    fp             # move    $sp,$fp
@@ -590,11 +493,8 @@ cynical:
         nop
         lw   ra, 28(sp)            # lw      $31,28($sp)
         lw   fp, 24(sp)            # lw      $fp,24($sp)
-        nop
-        nop
         addi sp,    sp, 32         # addiu   $sp,$sp,32
         jr   ra     
-        nop
         nop
         nop               # jr      $ra
 has_edge:
@@ -612,8 +512,6 @@ has_edge:
         nop                        # NOPs after pseudo-instruction
         nop
         addi  t2, t2, %lo(adjacencymatrix)
-        nop
-        nop
         lw   t3, 32(fp)            # lw      $3,32($fp)
         nop
         nop
@@ -632,10 +530,7 @@ has_edge:
         nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
-        nop
-        nop
         j    measley
-        nop
         nop
         nop
 
@@ -647,8 +542,6 @@ look:
         nop
         nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
-        nop
-        nop
         lw   t2, 12(fp)            # lw      $2,12($fp)
         nop
         nop
@@ -656,8 +549,7 @@ look:
         nop
         nop
         sw   t2, 12(fp)            # sw      $2,12($fp)
-        nop
-        nop
+
 measley:
         lw   t3, 12(fp)            # lw      $3,12($fp)
         lw   t2, 36(fp)            # lw      $2,36($fp)
@@ -671,7 +563,6 @@ measley:
         nop
         nop
         j    look
-        nop
         nop
         nop
 experience:
@@ -693,10 +584,7 @@ experience:
         nop
         lw   fp, 28(sp)            # lw      $fp,28($sp)
         addi sp,    sp, 32         # addiu   $sp,$sp,32
-        nop
-        nop
         jr   ra                    # jr      $ra
-        nop
         nop
         nop
         
@@ -714,10 +602,7 @@ mark_visited:
         nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
-        nop
-        nop
         j    recast
-        nop
         nop
         nop
 
@@ -729,8 +614,6 @@ example:
         nop
         nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
-        nop
-        nop
         lw   t2, 12(fp)            # lw      $2,12($fp)
         nop
         nop
@@ -738,8 +621,6 @@ example:
         nop
         nop
         sw   t2, 12(fp)            # sw      $2,12($fp)
-        nop
-        nop
 recast:
         lw   t3, 12(fp)            # lw      $3,12($fp)
         lw   t2, 32(fp)            # lw      $2,32($fp)
@@ -755,7 +636,6 @@ recast:
         j    example
         nop
         nop
-        nop
 pat:
 
        	#la   t2, visited             # la      $2, visited
@@ -766,8 +646,6 @@ pat:
         nop
         nop
         sw   t2, 16(fp)              # sw      $2,16($fp)
-        nop
-        nop
         lw   t2, 16(fp)              # lw      $2,16($fp)
         nop
         nop
@@ -788,7 +666,6 @@ pat:
         jr   ra                      # jr      $ra
         nop
         nop
-        nop
 is_visited:
         addi sp,    sp, -32          # addiu   $sp,$sp,-32
         nop
@@ -805,10 +682,7 @@ is_visited:
         nop
         sw   t2,  8(fp)              # sw      $2,8($fp)
         sw   x0, 12(fp)              # sw      $0,12($fp)
-        nop
-        nop
         j    evasive
-        nop
         nop
         nop
 
@@ -820,8 +694,6 @@ justify:
         nop
         nop
         sw   t2,  8(fp)              # sw      $2,8($fp)
-        nop
-        nop
         lw   t2, 12(fp)              # lw      $2,12($fp)
         nop
         nop
@@ -829,8 +701,6 @@ justify:
         nop
         nop
         sw   t2, 12(fp)              # sw      $2,12($fp)
-        nop
-        nop
 evasive:
         lw   t3, 12(fp)              # lw      $3,12($fp)
         lw   t2, 32(fp)              # lw      $2,32($fp)
@@ -846,7 +716,6 @@ evasive:
         j    justify
         nop
         nop
-        nop
 representative:
 
         #la   t2,    visited          # la      $2,visited
@@ -860,8 +729,6 @@ representative:
         nop
         nop
         sw   t2, 16(fp)              # sw      $2,16($fp)
-        nop
-        nop
         lw   t3, 16(fp)              # lw      $3,16($fp)
         lw   t2,  8(fp)              # lw      $2,8($fp)
         nop
@@ -873,15 +740,12 @@ representative:
         nop
         nop
         andi t2,    t2, 0xff         # andi    $2,$2,0x00ff
-        nop
-        nop
         mv   sp,    fp               # move    $sp,$fp
         nop
         nop
         lw   fp, 28(sp)              # lw      $fp,28($sp)
         addi sp,    sp, 32           # addiu   $sp,$sp,32
         jr   ra                      # jr      $ra
-        nop
         nop
         nop
 
