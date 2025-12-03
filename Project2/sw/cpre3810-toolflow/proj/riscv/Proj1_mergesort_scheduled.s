@@ -86,6 +86,7 @@ mergesort:
     	jal  ra, mergesort
     	nop
     	nop
+		nop
 
     	# call mergesort(array, mid+1, right)
    		lw   t1, 0(sp)
@@ -96,13 +97,16 @@ mergesort:
     	jal  ra, mergesort
     	nop
     	nop
+		nop
 
     	# call merge(array, left, mid, right)
+		nop
     	lw   t1, 0(sp)
     	lw   a1, 8(sp)
     	lw   a2, 4(sp)
     	jal  ra, merge
     	nop
+		nop
     	nop
 
     	# pop ra and locals
