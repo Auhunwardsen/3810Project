@@ -31,7 +31,11 @@ main:
 	lui  a0, 0x10000      # a0 = 0x10000000 (simple base)
 
 	addi a1, x0, 0       # left = 0 (explicit ADDI)
-   	lw   t0, n           # Load n value (pseudo-instruction)
+
+	lui  t0, %hi(n)
+	nop
+	nop
+   	lw   t0, %lo(n)(t0)           # Load n value (pseudo-instruction)
    	nop                  # NOPs after load before use (may expand)
    	nop
    
