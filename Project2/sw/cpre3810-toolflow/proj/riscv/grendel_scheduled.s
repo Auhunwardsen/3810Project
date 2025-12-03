@@ -506,6 +506,8 @@ snail:
         nop
         nop
         lw   t2,  4(t2)            # lw      $2,4($2)
+        nop
+        nop
         mv   t5,    t2             # move    $5,$2
         mv   t4,    t3             # move    $4,$3
         #la   ra,    induce         # la      $ra,induce
@@ -534,6 +536,8 @@ induce:
         nop
         nop
         lw   t3, 32(fp)            # lw      $3,32($fp)
+        nop
+        nop
         sw   t4,  4(t3)            # sw      $4,4($3)
         j    cynical
         nop
@@ -551,6 +555,8 @@ quarter:
         nop
         nop
         lw   t2, 32(fp)            # lw      $2,32($fp)
+        nop
+        nop
         sw   t3,  4(t2)            # sw      $3,4($2)
 
 waggish:
