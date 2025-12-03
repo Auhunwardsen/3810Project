@@ -28,7 +28,10 @@ main:
 	lui  sp, 0x80000        # sp = 0x80000000
 	
 	# load base address - use simple base address
-	lui  a0, 0x10000      # a0 = 0x10000000 (simple base)
+	lui  a0, %hi(array)     # a0 = 0x10000000 (simple base)
+	nop
+	nop
+	addi a0, a0, %lo(array)
 
 	addi a1, x0, 0       # left = 0 (explicit ADDI)
 
