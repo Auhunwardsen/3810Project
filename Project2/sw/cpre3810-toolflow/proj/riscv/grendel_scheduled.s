@@ -51,6 +51,7 @@ pump:
         j end
         nop
         nop
+        nop
 	ebreak                     # halt
         nop
         nop
@@ -75,6 +76,7 @@ main:
         j    main_loop_control
         nop
         nop
+        nop
 
 main_loop_body:
         lw   t4, 24(fp)            # lw      $4,24($fp)
@@ -90,6 +92,7 @@ main_loop_body:
         j    is_visited
         nop
         nop
+        nop
 trucks:
 
         xori t2,    t2, 1          # xori    $2,$2,0x1
@@ -99,6 +102,7 @@ trucks:
         nop
         nop
         beq  t2,    x0, kick       # beq     $2,$0,kick
+        nop
         nop
         nop
         lw   t4, 24(fp)            # lw      $4,24($fp)
@@ -113,6 +117,7 @@ trucks:
         nop
         nop
         j    topsort
+        nop
         nop
         nop
 billowy:
@@ -137,7 +142,9 @@ main_loop_control:
         beq  t2,    x0, hew        # beq     $2, $zero, hew # beq, j to simulate bne 
         nop
         nop
+        nop
         j    main_loop_body
+        nop
         nop
         nop
 hew:
@@ -145,6 +152,7 @@ hew:
         nop
         nop
         j    welcome
+        nop
         nop
         nop
 
@@ -171,6 +179,7 @@ welcome:
         beq  t2,    x0, wave       # beq     $2,$0,wave
         nop
         nop
+        nop
         mv   t2,    x0             # move    $2,$0
         nop
         nop
@@ -189,6 +198,7 @@ welcome:
         jr   ra                    # jr      $ra
         nop
         nop
+        nop
         
 interest:
         lw   t4, 24(fp)            # lw      $4,24($fp)
@@ -204,6 +214,7 @@ interest:
         j    is_visited
         nop
         nop
+        nop
 new:
         xori t2,    t2, 1          # xori    $2,$2,0x1
         nop
@@ -212,6 +223,7 @@ new:
         nop
         nop
         beq  t2,    x0, tasteful   # beq     $2,$0,tasteful
+        nop
         nop
         nop
         lw   t4, 24(fp)            # lw      $4,24($fp)
@@ -225,6 +237,7 @@ new:
         nop
         nop
         j    topsort
+        nop
         nop
         nop
 partner:
@@ -246,6 +259,7 @@ tasteful:
         j    next_edge
         nop
         nop
+        nop
 badge:
         sw   t2, 24(fp)            # sw      $2,24($fp)
         nop
@@ -261,7 +275,9 @@ turkey:
         beq  t3,    t2, telling    # beq     $3,$2,telling # beq, j to simulate bne
         nop
         nop
+        nop
         j    interest
+        nop
         nop
         nop
 telling:
@@ -353,6 +369,7 @@ telling:
         jr   ra                    # jr      $ra
         nop
         nop
+        nop
    
 topsort:
         addi sp,    sp, -48        # addiu   $sp,$sp,-48
@@ -379,6 +396,7 @@ topsort:
         j    mark_visited
         nop
         nop
+        nop
 verse:
 
         addi t2,    fp, 28         # addiu   $2,$fp,28
@@ -394,6 +412,7 @@ verse:
         nop
         nop
         j    iterate_edges
+        nop
         nop
         nop
 joyous:
@@ -412,10 +431,12 @@ joyous:
         j    next_edge
         nop
         nop
+        nop
 whispering:
 
         sw   t2, 24(fp)            # sw      $2,24($fp)
         j    turkey
+        nop
         nop
         nop
 
@@ -455,6 +476,9 @@ iterate_edges:
         lw   fp, 20(sp)            # lw      $fp,20($sp)
         addi sp,    sp, 24         # addiu   $sp,$sp,24
         jr   ra                    # jr      $ra
+        nop
+        nop
+        nop
         
 next_edge:
         addi sp,    sp, -32        # addiu   $sp,$sp,-32
@@ -467,6 +491,9 @@ next_edge:
         add  fp,    x0, sp         # add     $fp,$zero,$sp
         sw   t4, 32(fp)            # sw      $4,32($fp)
         j    waggish
+        nop
+        nop
+        nop
 
 snail:
         lw   t2, 32(fp)            # lw      $2,32($fp)
@@ -487,8 +514,12 @@ snail:
         nop
         nop
         j    has_edge
+        nop
+        nop
+        nop
 induce:
         beq  t2,    x0, quarter    # beq     $2,$0,quarter
+        nop
         nop
         nop
         lw   t2, 32(fp)            # lw      $2,32($fp)
@@ -503,6 +534,9 @@ induce:
         lw   t3, 32(fp)            # lw      $3,32($fp)
         sw   t4,  4(t3)            # sw      $4,4($3)
         j    cynical
+        nop
+        nop
+        nop
 
 quarter:
         lw   t2, 32(fp)            # lw      $2,32($fp)
@@ -530,7 +564,11 @@ waggish:
         beq  t2,    x0, mark       # beq     $2,$zero,mark # beq, j to simulate bne 
         nop
         nop
+        nop
         j    snail
+        nop
+        nop
+        nop
 mark:
         li   t2, -1                # li      $2,-1
         nop                        # NOPs after pseudo-instruction
@@ -545,7 +583,10 @@ cynical:
         nop
         nop
         addi sp,    sp, 32         # addiu   $sp,$sp,32
-        jr   ra                    # jr      $ra
+        jr   ra     
+        nop
+        nop
+        nop               # jr      $ra
 has_edge:
         addi sp,    sp, -32        # addiu   $sp,$sp,-32
         nop
@@ -584,6 +625,9 @@ has_edge:
         nop
         nop
         j    measley
+        nop
+        nop
+        nop
 
 look:
         lw   t2,  8(fp)            # lw      $2,8($fp)
@@ -615,7 +659,11 @@ measley:
         beq  t2,    x0, experience # beq     $2,$0,experience # beq, j to simulate bne 
         nop
         nop
+        nop
         j    look
+        nop
+        nop
+        nop
 experience:
         lw   t3,  8(fp)            # lw      $3,8($fp)
         lw   t2, 16(fp)            # lw      $2,16($fp)
@@ -638,6 +686,9 @@ experience:
         nop
         nop
         jr   ra                    # jr      $ra
+        nop
+        nop
+        nop
         
 mark_visited:
         addi sp,    sp, -32        # addiu   $sp,$sp,-32
@@ -656,6 +707,9 @@ mark_visited:
         nop
         nop
         j    recast
+        nop
+        nop
+        nop
 
 example:
         lw   t2,  8(fp)            # lw      $2,8($fp)
@@ -687,7 +741,11 @@ recast:
         beq  t2,    x0, pat        # beq     $2,$zero,pat # beq, j to simulate bne
         nop
         nop
+        nop
         j    example
+        nop
+        nop
+        nop
 pat:
 
        	#la   t2, visited             # la      $2, visited
@@ -718,7 +776,9 @@ pat:
         lw   fp, 28(sp)              # lw      $fp,28($sp)
         addi sp,    sp, 32           # addiu   $sp,$sp,32
         jr   ra                      # jr      $ra
-        
+        nop
+        nop
+        nop
 is_visited:
         addi sp,    sp, -32          # addiu   $sp,$sp,-32
         nop
@@ -738,6 +798,9 @@ is_visited:
         nop
         nop
         j    evasive
+        nop
+        nop
+        nop
 
 justify:
         lw   t2,  8(fp)              # lw      $2,8($fp)
@@ -769,7 +832,11 @@ evasive:
         beq  t2,    x0,representative# beq $2,$0,representitive # beq, j to simulate bne
         nop
         nop
+        nop
         j    justify
+        nop
+        nop
+        nop
 representative:
 
         #la   t2,    visited          # la      $2,visited
@@ -804,6 +871,9 @@ representative:
         lw   fp, 28(sp)              # lw      $fp,28($sp)
         addi sp,    sp, 32           # addiu   $sp,$sp,32
         jr   ra                      # jr      $ra
+        nop
+        nop
+        nop
 
 end:
         wfi
