@@ -329,6 +329,8 @@ telling:
         nop       
        	xor  t6,    ra, t2         # xor     $at, $ra, $2 # does nothing 
         or   t6,    ra, t2         # nor     $at, $ra, $2 # does nothing 
+        nop
+        nop   
         neg  t6,    t6
         
         #la   t2,    res            # la      $2, res
