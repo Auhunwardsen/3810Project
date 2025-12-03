@@ -187,6 +187,8 @@ welcome:
         nop
         nop
         jr   ra                    # jr      $ra
+        nop
+        nop
         
 interest:
         lw   t4, 24(fp)            # lw      $4,24($fp)
@@ -337,7 +339,11 @@ telling:
         nop
         nop
         lw   t3, 48(fp)            # lw      $3,48($fp)
+        nop
+        nop
         sw   t3,  0(t2)            # sw      $3,0($2)
+        nop
+        nop
         mv   sp,    fp             # move    $sp,$fp
         nop
         nop
@@ -345,6 +351,8 @@ telling:
         lw   fp, 40(sp)            # lw      $fp,40($sp)
         addi sp,    sp, 48         # addiu   $sp,$sp,48
         jr   ra                    # jr      $ra
+        nop
+        nop
    
 topsort:
         addi sp,    sp, -48        # addiu   $sp,$sp,-48
@@ -369,6 +377,8 @@ topsort:
         nop
         nop
         j    mark_visited
+        nop
+        nop
 verse:
 
         addi t2,    fp, 28         # addiu   $2,$fp,28
@@ -384,6 +394,8 @@ verse:
         nop
         nop
         j    iterate_edges
+        nop
+        nop
 joyous:
 
         addi t2,    fp, 28         # addiu   $2,$fp,28
@@ -398,10 +410,14 @@ joyous:
         nop
         nop
         j    next_edge
+        nop
+        nop
 whispering:
 
         sw   t2, 24(fp)            # sw      $2,24($fp)
         j    turkey
+        nop
+        nop
 
 iterate_edges:
         addi sp,    sp, -24        # addiu   $sp,$sp,-24
@@ -565,6 +581,8 @@ has_edge:
         nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
+        nop
+        nop
         j    measley
 
 look:
@@ -635,6 +653,8 @@ mark_visited:
         nop
         sw   t2,  8(fp)            # sw      $2,8($fp)
         sw   x0, 12(fp)            # sw      $0,12($fp)
+        nop
+        nop
         j    recast
 
 example:
@@ -654,6 +674,8 @@ example:
         nop
         nop
         sw   t2, 12(fp)            # sw      $2,12($fp)
+        nop
+        nop
 recast:
         lw   t3, 12(fp)            # lw      $3,12($fp)
         lw   t2, 32(fp)            # lw      $2,32($fp)
@@ -713,6 +735,8 @@ is_visited:
         nop
         sw   t2,  8(fp)              # sw      $2,8($fp)
         sw   x0, 12(fp)              # sw      $0,12($fp)
+        nop
+        nop
         j    evasive
 
 justify:
@@ -732,6 +756,8 @@ justify:
         nop
         nop
         sw   t2, 12(fp)              # sw      $2,12($fp)
+        nop
+        nop
 evasive:
         lw   t3, 12(fp)              # lw      $3,12($fp)
         lw   t2, 32(fp)              # lw      $2,32($fp)
