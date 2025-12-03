@@ -26,38 +26,21 @@ n:      .word 8
 main:
 	# Initialize stack pointer - use explicit LUI
 	lui  sp, 0x80000        # sp = 0x80000000
-	nop                     # NOPs after LUI
-	nop
-	nop
-	nop
 	
 	# load base address - use simple base address
-    	lui  a0, 0x10000      # a0 = 0x10000000 (simple base)
-    	nop
-    	nop
-    	nop
-    	nop                   # NOPs after LUI
-    	addi a1, x0, 0       # left = 0 (explicit ADDI)
-    	nop                  # NOPs after instruction
-    	nop
-    	nop
-    	nop
+	lui  a0, 0x10000      # a0 = 0x10000000 (simple base)
+
+	addi a1, x0, 0       # left = 0 (explicit ADDI)
    	lw   t0, n           # Load n value (pseudo-instruction)
    	nop                  # NOPs after load before use (may expand)
    	nop
-   	nop
-   	nop
-   	nop
-   	nop                  # Extra NOPs for potential expansion
-   	nop
-   	nop
-   	nop
-    	addi a2, t0, -1      # right = n-1
+   
+	addi a2, t0, -1      # right = n-1
 
-    	jal  ra, mergesort
-    	nop                  # NOPs after jal
-    	nop
-    	nop
+	jal  ra, mergesort
+	nop                  # NOPs after jal
+	nop
+	nop
 	beq zero, zero, done
 	nop
 	nop
@@ -78,10 +61,14 @@ mergesort:
     	nop
 
     	add  t0, a1, a2             # t0 = left + right
+		nop
+		nop
     	srai t1, t0, 1              # t1 = mid = (left+right)/2
 
     	# push ra, a1, a2, t1 (mid)
-   	addi sp, sp, -16
+   		addi sp, sp, -16
+		nop
+		nop
     	sw   ra, 12(sp)
     	sw   a1, 8(sp)
     	sw   a2, 4(sp)
@@ -92,62 +79,33 @@ mergesort:
     	jal  ra, mergesort
     	nop
     	nop
-    	nop
 
     	# call mergesort(array, mid+1, right)
-   	lw   t1, 0(sp)
+   		lw   t1, 0(sp)
     	nop                     # NOPs after load before use
-    	nop
-    	nop
-    	nop
     	nop
     	addi a1, t1, 1
     	lw   a2, 4(sp)
-    	nop                     # NOPs after load before use
-    	nop
-    	nop
-    	nop
-    	nop
     	jal  ra, mergesort
-    	nop
     	nop
     	nop
 
     	# call merge(array, left, mid, right)
     	lw   t1, 0(sp)
-    	nop                     # NOPs after load before use
-    	nop
-    	nop
-    	nop
-    	nop
     	lw   a1, 8(sp)
-    	nop                     # NOPs after load before use
-    	nop
-    	nop
-    	nop
-    	nop
     	lw   a2, 4(sp)
-    	nop                     # NOPs after load before use
-    	nop
-    	nop
-    	nop
-    	nop
     	jal  ra, merge
-    	nop
     	nop
     	nop
 
     	# pop ra and locals
     	lw   ra, 12(sp)
-    	nop                     # NOPs after load before use
-    	nop
-    	nop
-    	nop
-    	nop
     	addi sp, sp, 16
     	
 ms_return:
-   	jr   ra
+   		jr   ra
+		nop
+		nop
 
 
 ##############################################################
@@ -158,9 +116,11 @@ ms_return:
 ##############################################################
 merge:
     	# compute mid+1 and setup temp ptr
-	addi sp, sp, -64        # local buffer (enough for 16 ints)
+		addi sp, sp, -64        # local buffer (enough for 16 ints)
+		nop
+		nop
     	mv   t2, sp             # t2 = temp pointer
-   	addi t3, t1, 1          # j = mid+1
+   		addi t3, t1, 1          # j = mid+1
     	mv   t4, a1             # i = left
     	mv   t5, zero           # k = 0
 
@@ -169,38 +129,35 @@ merge_loop:
     	nop
     	nop
     	nop
-   	 bgt  t3, a2, copy_left
+   	 	bgt  t3, a2, copy_left
     	nop
     	nop
     	nop
 
     	slli t6, t4, 2
+		nop
+		nop
     	add  t6, a0, t6
+		nop
+		nop
     	lw   s0, 0(t6)          # s0 = arr[i]
-    	nop                     # NOPs after load before use
-    	nop
-    	nop
-    	nop
-    	nop
-
     	slli a3, t3, 2
+		nop
+		nop
     	add  a3, a0, a3
+		nop
+		nop
     	lw   s1, 0(a3)          # s1 = arr[j]
     	nop                     # NOPs after load before use
     	nop
-    	nop
-    	nop
-    	nop
-
     	ble  s0, s1, take_left
     	nop
     	nop
     	nop
-   	# take right
+# take right
     	sw   s1, 0(t2)
     	addi t3, t3, 1
     	j    next_take
-    	nop
     	nop
     	nop
     	
@@ -214,7 +171,6 @@ next_take:
     	j merge_loop
     	nop
     	nop
-    	nop
 
 copy_left:
     	bgt  t4, t1, copy_right
@@ -222,18 +178,19 @@ copy_left:
     	nop
     	nop
     	slli t6, t4, 2
+		nop
+		nop
     	add  t6, a0, t6
+		nop
+		nop
     	lw   s0, 0(t6)
     	nop                     # NOPs after load before use
     	nop
-    	nop
-    	nop
-    	nop
-   	sw   s0, 0(t2)
+   		sw   s0, 0(t2)
     	addi t4, t4, 1
+		nop
     	addi t2, t2, 4
     	j copy_left
-    	nop
     	nop
     	nop
 
@@ -243,18 +200,19 @@ copy_right:
     	nop
     	nop
     	slli t6, t3, 2
+		nop
+		nop
     	add  t6, a0, t6
+		nop
+		nop
     	lw   s0, 0(t6)
     	nop                     # NOPs after load before use
     	nop
-    	nop
-    	nop
-    	nop
     	sw   s0, 0(t2)
     	addi t3, t3, 1
+		nop
     	addi t2, t2, 4
     	j copy_right
-    	nop
     	nop
     	nop
 
@@ -268,24 +226,24 @@ wb_loop:
     	nop
     	nop
     	lw   s0, 0(t2)
-    	nop                     # NOPs after load before use
-    	nop
-    	nop
-    	nop
-    	nop
     	slli t6, t4, 2
+		nop
+		nop
     	add  t6, a0, t6
+		nop
+		nop
     	sw   s0, 0(t6)
     	addi t2, t2, 4
     	addi t4, t4, 1
     	j wb_loop
     	nop
     	nop
-    	nop
 
 wb_done:
     	addi sp, sp, 64
-   	jr ra
+   		jr ra
+		nop
+		nop
 
 done:
 	wfi
