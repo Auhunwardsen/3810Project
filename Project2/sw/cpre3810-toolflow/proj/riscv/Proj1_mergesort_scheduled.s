@@ -32,9 +32,7 @@ main:
 	nop
 	nop
 	addi a0, a0, %lo(array)
-
 	addi a1, x0, 0       # left = 0 (explicit ADDI)
-
 	lui  t0, %hi(n)
 	nop
 	nop
@@ -43,7 +41,6 @@ main:
    	nop
    
 	addi a2, t0, -1      # right = n-1
-
 	jal  ra, mergesort
 	nop                  # NOPs after jal
 	nop
@@ -114,6 +111,7 @@ mergesort:
 
     	# pop ra and locals
     	lw   ra, 12(sp)
+		nop
     	addi sp, sp, 16
     	
 ms_return:
@@ -136,8 +134,8 @@ merge:
     	mv   t2, sp             # t2 = temp pointer
    		addi t3, t1, 1          # j = mid+1
     	mv   t4, a1             # i = left
+		nop
     	mv   t5, zero           # k = 0
-
 merge_loop:
     	bgt  t4, t1, copy_right
     	nop
