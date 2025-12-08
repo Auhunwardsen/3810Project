@@ -1,22 +1,24 @@
-# Test: EX to EX Forwarding
-# Expected: Forward_A/Forward_B = 10 (EX/MEM forward)
-
+# EX-EX Data Forwarding Test
+# Tests forwarding from EX/MEM stage to EX stage
 .text
-.globl main
+.globl _start
 
-main:
-    # Test 1: Forward to RS1
-    addi x1, x0, 10         # x1 = 10
-    add  x2, x1, x0         # Forward x1 to RS1
+_start:
+    # EX-EX forwarding scenario
+    addi x1, x0, 100   # x1 = 100
+    addi x2, x0, 50    # x2 = 50
+    add  x3, x1, x2    # x3 = 150 (EX stage)
+    sub  x4, x3, x1    # x4 = 50 (needs x3 from previous EX, forward from EX/MEM)
     
-    # Test 2: Forward to both operands
-    addi x3, x0, 5          # x3 = 5
-    add  x4, x3, x3         # Forward x3 to both inputs
+    # Another EX-EX forwarding
+    slli x5, x4, 1     # x5 = 100 (EX stage)
+    add  x6, x5, x2    # x6 = 150 (needs x5 from previous EX, forward from EX/MEM)
     
-    # Test 3: Chain forwarding
-    add  x5, x4, x3         # Forward x4 (EX/MEM) and x3 (MEM/WB)
+    # Multiple forwarding
+    addi x7, x0, 1     # x7 = 1
+    add  x8, x6, x7    # x8 = 151 (needs x6 from EX/MEM)
+    add  x9, x8, x7    # x9 = 152 (needs x8 from EX/MEM)
     
-    # Expected: x1=10, x2=10, x3=5, x4=10, x5=15
-    
-    # Halt with wait for interrupt
-    wfi
+    # End program
+    halt:
+        beq x0, x0, halt

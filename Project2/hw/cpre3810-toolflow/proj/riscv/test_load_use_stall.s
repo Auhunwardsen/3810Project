@@ -1,33 +1,29 @@
-# Test: Load-Use Hazard Stall
-# Expected: PCWrite=0, IFID_Write=0, ControlMux=1
-
+# Load-Use Hazard Stall Test
+# Tests detection and stalling for load-use data hazards
 .text
-.globl main
+.globl _start
 
-main:
-    # Set up test data in memory using stores first
-    addi x28, x0, 0x400     # Base address (simple offset)
-    addi x29, x0, 10        # Test value 1
-    sw   x29, 0(x28)        # Store 10 at address 0x400
-    addi x29, x0, 20        # Test value 2  
-    sw   x29, 4(x28)        # Store 20 at address 0x404
-    addi x29, x0, 30        # Test value 3
-    sw   x29, 8(x28)        # Store 30 at address 0x408
+_start:
+    # Set up some data in memory first
+    addi x1, x0, 0x100 # x1 = address 0x100
+    addi x2, x0, 42    # x2 = data value 42
+    sw   x2, 0(x1)     # Store 42 at address 0x100
     
-    # Test 1: Immediate use (STALL)
-    lw   x1, 0(x28)         # Load x1 = 10
-    add  x2, x1, x1         # Stall 1 cycle, then forward
+    # Load-use hazard scenario - should cause 1 cycle stall
+    lw   x3, 0(x1)     # Load from memory into x3 (MEM stage result)
+    add  x4, x3, x2    # Use x3 immediately - HAZARD! Should stall
     
-    # Test 2: Load with gap (NO STALL)
-    lw   x3, 4(x28)         # Load x3 = 20
-    nop                     # Gap
-    add  x4, x3, x0         # Forward from MEM/WB
+    # Another load-use hazard
+    addi x5, x0, 0x104 # x5 = address 0x104  
+    addi x6, x0, 100   # x6 = data value 100
+    sw   x6, 0(x5)     # Store 100 at address 0x104
+    lw   x7, 0(x5)     # Load from memory into x7
+    sub  x8, x7, x6    # Use x7 immediately - HAZARD! Should stall
     
-    # Test 3: Simple operation (no branch complications)
-    addi x5, x0, 30         # x5 = 30
-    add  x6, x5, x0         # x6 = 30
+    # Test multiple register dependencies
+    lw   x9, 0(x1)     # Load 42 into x9
+    add  x10, x9, x9   # Both operands depend on load - should stall
     
-    # Expected: x1=10, x2=20, x3=20, x4=20, x5=30, x6=30
-    
-    # Halt with wait for interrupt
-    wfi
+    # End program
+    halt:
+        beq x0, x0, halt
