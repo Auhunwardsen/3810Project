@@ -1,0 +1,600 @@
+Info: *******************************************************************
+Info: Running Quartus Prime Timing Analyzer
+    Info: Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition
+    Info: Copyright (C) 2020  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Mon Dec  8 09:15:25 2025
+Info: Command: quartus_sta --sdc=toolflow.sdc toolflow --do_report_timing
+Info: qsta_default_script.tcl version: #1
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (21076): High junction temperature operating condition is not set. Assuming a default value of '85'.
+Info (21076): Low junction temperature operating condition is not set. Assuming a default value of '0'.
+Info (332104): Reading SDC File: 'toolflow.sdc'
+Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
+Info: Analyzing Slow 1200mV 85C Model
+Info (332146): Worst-case setup slack is 1.220
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     1.220               0.000 iCLK 
+Info (332146): Worst-case hold slack is 0.342
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.342               0.000 iCLK 
+Info (332146): Worst-case recovery slack is 17.964
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    17.964               0.000 iCLK 
+Info (332146): Worst-case removal slack is 1.458
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     1.458               0.000 iCLK 
+Info (332146): Worst-case minimum pulse width slack is 9.631
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     9.631               0.000 iCLK 
+Info (332115): Report Timing: Found 1 setup paths (0 violated).  Worst case slack is 1.220
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -setup
+    Info (332115): -stdout
+Info (332115): Path #1: Setup slack is 1.220 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : mem:IMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_we_reg
+    Info (332115): To Node      : fetch:u_fetch|s_PC[1]
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      3.441      3.441  R        clock network delay
+    Info (332115):      3.704      0.263     uTco  mem:IMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_we_reg
+    Info (332115):      6.553      2.849 RF  CELL  IMem|ram_rtl_0|auto_generated|ram_block1a8|portadataout[6]
+    Info (332115):      7.023      0.470 FF    IC  IMem|ram~62|datac
+    Info (332115):      7.304      0.281 FF  CELL  IMem|ram~62|combout
+    Info (332115):      8.456      1.152 FF    IC  u_regfile|o_RS1Data[15]~190|datab
+    Info (332115):      8.897      0.441 FR  CELL  u_regfile|o_RS1Data[15]~190|combout
+    Info (332115):     10.988      2.091 RR    IC  u_regfile|o_RS1Data[15]~191|datab
+    Info (332115):     11.406      0.418 RR  CELL  u_regfile|o_RS1Data[15]~191|combout
+    Info (332115):     13.434      2.028 RR    IC  u_regfile|o_RS1Data[15]~192|datad
+    Info (332115):     13.589      0.155 RR  CELL  u_regfile|o_RS1Data[15]~192|combout
+    Info (332115):     13.825      0.236 RR    IC  u_regfile|o_RS1Data[15]~195|dataa
+    Info (332115):     14.242      0.417 RR  CELL  u_regfile|o_RS1Data[15]~195|combout
+    Info (332115):     14.444      0.202 RR    IC  u_regfile|o_RS1Data[15]~196|datac
+    Info (332115):     14.731      0.287 RR  CELL  u_regfile|o_RS1Data[15]~196|combout
+    Info (332115):     15.999      1.268 RR    IC  u_regfile|o_RS1Data[15]~197|datad
+    Info (332115):     16.154      0.155 RR  CELL  u_regfile|o_RS1Data[15]~197|combout
+    Info (332115):     16.968      0.814 RR    IC  LessThan1~31|dataa
+    Info (332115):     17.434      0.466 RR  CELL  LessThan1~31|cout
+    Info (332115):     17.434      0.000 RR    IC  LessThan1~33|cin
+    Info (332115):     17.500      0.066 RF  CELL  LessThan1~33|cout
+    Info (332115):     17.500      0.000 FF    IC  LessThan1~35|cin
+    Info (332115):     17.566      0.066 FR  CELL  LessThan1~35|cout
+    Info (332115):     17.566      0.000 RR    IC  LessThan1~37|cin
+    Info (332115):     17.632      0.066 RF  CELL  LessThan1~37|cout
+    Info (332115):     17.632      0.000 FF    IC  LessThan1~39|cin
+    Info (332115):     17.698      0.066 FR  CELL  LessThan1~39|cout
+    Info (332115):     17.698      0.000 RR    IC  LessThan1~41|cin
+    Info (332115):     17.764      0.066 RF  CELL  LessThan1~41|cout
+    Info (332115):     17.764      0.000 FF    IC  LessThan1~43|cin
+    Info (332115):     17.830      0.066 FR  CELL  LessThan1~43|cout
+    Info (332115):     17.830      0.000 RR    IC  LessThan1~45|cin
+    Info (332115):     17.896      0.066 RF  CELL  LessThan1~45|cout
+    Info (332115):     17.896      0.000 FF    IC  LessThan1~47|cin
+    Info (332115):     17.962      0.066 FR  CELL  LessThan1~47|cout
+    Info (332115):     17.962      0.000 RR    IC  LessThan1~49|cin
+    Info (332115):     18.028      0.066 RF  CELL  LessThan1~49|cout
+    Info (332115):     18.028      0.000 FF    IC  LessThan1~51|cin
+    Info (332115):     18.094      0.066 FR  CELL  LessThan1~51|cout
+    Info (332115):     18.094      0.000 RR    IC  LessThan1~53|cin
+    Info (332115):     18.160      0.066 RF  CELL  LessThan1~53|cout
+    Info (332115):     18.160      0.000 FF    IC  LessThan1~55|cin
+    Info (332115):     18.226      0.066 FR  CELL  LessThan1~55|cout
+    Info (332115):     18.226      0.000 RR    IC  LessThan1~57|cin
+    Info (332115):     18.292      0.066 RF  CELL  LessThan1~57|cout
+    Info (332115):     18.292      0.000 FF    IC  LessThan1~59|cin
+    Info (332115):     18.358      0.066 FR  CELL  LessThan1~59|cout
+    Info (332115):     18.358      0.000 RR    IC  LessThan1~61|cin
+    Info (332115):     18.424      0.066 RF  CELL  LessThan1~61|cout
+    Info (332115):     18.424      0.000 FF    IC  LessThan1~62|cin
+    Info (332115):     18.858      0.434 FF  CELL  LessThan1~62|combout
+    Info (332115):     19.222      0.364 FF    IC  Mux24~1|datad
+    Info (332115):     19.347      0.125 FF  CELL  Mux24~1|combout
+    Info (332115):     19.630      0.283 FF    IC  u_fetch|s_PC[7]~30|datab
+    Info (332115):     19.980      0.350 FR  CELL  u_fetch|s_PC[7]~30|combout
+    Info (332115):     21.058      1.078 RR    IC  u_fetch|s_PC[1]|ena
+    Info (332115):     21.732      0.674 RF  CELL  fetch:u_fetch|s_PC[1]
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):     20.000     20.000           latch edge time
+    Info (332115):     22.946      2.946  R        clock network delay
+    Info (332115):     22.954      0.008           clock pessimism removed
+    Info (332115):     22.934     -0.020           clock uncertainty
+    Info (332115):     22.952      0.018     uTsu  fetch:u_fetch|s_PC[1]
+    Info (332115): Data Arrival Time  :    21.732
+    Info (332115): Data Required Time :    22.952
+    Info (332115): Slack              :     1.220 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 hold paths (0 violated).  Worst case slack is 0.342
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -hold
+    Info (332115): -stdout
+Info (332115): Path #1: Hold slack is 0.342 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : EXMEM_reg:u_EXMEM|o_RS2Data[8]
+    Info (332115): To Node      : mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      2.949      2.949  R        clock network delay
+    Info (332115):      3.181      0.232     uTco  EXMEM_reg:u_EXMEM|o_RS2Data[8]
+    Info (332115):      3.181      0.000 RR  CELL  u_EXMEM|o_RS2Data[8]|q
+    Info (332115):      3.888      0.707 RR    IC  DMem|ram_rtl_0|auto_generated|ram_block1a8|portadatain[0]
+    Info (332115):      3.960      0.072 RR  CELL  mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           latch edge time
+    Info (332115):      3.428      3.428  R        clock network delay
+    Info (332115):      3.396     -0.032           clock pessimism removed
+    Info (332115):      3.396      0.000           clock uncertainty
+    Info (332115):      3.618      0.222      uTh  mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Data Arrival Time  :     3.960
+    Info (332115): Data Required Time :     3.618
+    Info (332115): Slack              :     0.342 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 recovery paths (0 violated).  Worst case slack is 17.964
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -recovery
+    Info (332115): -stdout
+Info (332115): Path #1: Recovery slack is 17.964 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115): To Node      : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      3.058      3.058  R        clock network delay
+    Info (332115):      3.290      0.232     uTco  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115):      3.290      0.000 RR  CELL  u_IDEX|o_MemToReg_rtl_0|auto_generated|dffe6|q
+    Info (332115):      3.984      0.694 RR    IC  u_IDEX|o_MemToReg_rtl_0|auto_generated|altsyncram4|ram_block7a0|clr0
+    Info (332115):      5.264      1.280 RF  CELL  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):     20.000     20.000           latch edge time
+    Info (332115):     23.274      3.274  R        clock network delay
+    Info (332115):     23.306      0.032           clock pessimism removed
+    Info (332115):     23.286     -0.020           clock uncertainty
+    Info (332115):     23.228     -0.058     uTsu  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Arrival Time  :     5.264
+    Info (332115): Data Required Time :    23.228
+    Info (332115): Slack              :    17.964 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 removal paths (0 violated).  Worst case slack is 1.458
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -removal
+    Info (332115): -stdout
+Info (332115): Path #1: Removal slack is 1.458 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115): To Node      : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      2.946      2.946  R        clock network delay
+    Info (332115):      3.178      0.232     uTco  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115):      3.178      0.000 FF  CELL  u_IDEX|o_MemToReg_rtl_0|auto_generated|dffe6|q
+    Info (332115):      3.826      0.648 FF    IC  u_IDEX|o_MemToReg_rtl_0|auto_generated|altsyncram4|ram_block7a0|clr0
+    Info (332115):      4.992      1.166 FR  CELL  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           latch edge time
+    Info (332115):      3.380      3.380  R        clock network delay
+    Info (332115):      3.348     -0.032           clock pessimism removed
+    Info (332115):      3.348      0.000           clock uncertainty
+    Info (332115):      3.534      0.186      uTh  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Arrival Time  :     4.992
+    Info (332115): Data Required Time :     3.534
+    Info (332115): Slack              :     1.458 
+    Info (332115): ===================================================================
+Info: Analyzing Slow 1200mV 0C Model
+Info (334003): Started post-fitting delay annotation
+Info (334004): Delay annotation completed successfully
+Info (332146): Worst-case setup slack is 2.731
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     2.731               0.000 iCLK 
+Info (332146): Worst-case hold slack is 0.350
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.350               0.000 iCLK 
+Info (332146): Worst-case recovery slack is 18.144
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    18.144               0.000 iCLK 
+Info (332146): Worst-case removal slack is 1.321
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     1.321               0.000 iCLK 
+Info (332146): Worst-case minimum pulse width slack is 9.646
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     9.646               0.000 iCLK 
+Info (332115): Report Timing: Found 1 setup paths (0 violated).  Worst case slack is 2.731
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -setup
+    Info (332115): -stdout
+Info (332115): Path #1: Setup slack is 2.731 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : mem:IMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_we_reg
+    Info (332115): To Node      : fetch:u_fetch|s_PC[1]
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      3.120      3.120  R        clock network delay
+    Info (332115):      3.356      0.236     uTco  mem:IMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_we_reg
+    Info (332115):      5.941      2.585 RF  CELL  IMem|ram_rtl_0|auto_generated|ram_block1a8|portadataout[6]
+    Info (332115):      6.356      0.415 FF    IC  IMem|ram~62|datac
+    Info (332115):      6.608      0.252 FF  CELL  IMem|ram~62|combout
+    Info (332115):      7.642      1.034 FF    IC  u_regfile|o_RS1Data[15]~190|datab
+    Info (332115):      8.033      0.391 FR  CELL  u_regfile|o_RS1Data[15]~190|combout
+    Info (332115):      9.989      1.956 RR    IC  u_regfile|o_RS1Data[15]~191|datab
+    Info (332115):     10.370      0.381 RR  CELL  u_regfile|o_RS1Data[15]~191|combout
+    Info (332115):     12.262      1.892 RR    IC  u_regfile|o_RS1Data[15]~192|datad
+    Info (332115):     12.406      0.144 RR  CELL  u_regfile|o_RS1Data[15]~192|combout
+    Info (332115):     12.625      0.219 RR    IC  u_regfile|o_RS1Data[15]~195|dataa
+    Info (332115):     13.005      0.380 RR  CELL  u_regfile|o_RS1Data[15]~195|combout
+    Info (332115):     13.190      0.185 RR    IC  u_regfile|o_RS1Data[15]~196|datac
+    Info (332115):     13.455      0.265 RR  CELL  u_regfile|o_RS1Data[15]~196|combout
+    Info (332115):     14.651      1.196 RR    IC  u_regfile|o_RS1Data[15]~197|datad
+    Info (332115):     14.795      0.144 RR  CELL  u_regfile|o_RS1Data[15]~197|combout
+    Info (332115):     15.005      0.210 RR    IC  Equal4~8|datad
+    Info (332115):     15.149      0.144 RR  CELL  Equal4~8|combout
+    Info (332115):     15.754      0.605 RR    IC  Equal4~9|datad
+    Info (332115):     15.898      0.144 RR  CELL  Equal4~9|combout
+    Info (332115):     16.488      0.590 RR    IC  Equal4~20|datac
+    Info (332115):     16.751      0.263 RR  CELL  Equal4~20|combout
+    Info (332115):     16.936      0.185 RR    IC  Mux24~2|datac
+    Info (332115):     17.179      0.243 RF  CELL  Mux24~2|combout
+    Info (332115):     17.408      0.229 FF    IC  u_fetch|s_PC[7]~29|datad
+    Info (332115):     17.542      0.134 FR  CELL  u_fetch|s_PC[7]~29|combout
+    Info (332115):     18.172      0.630 RR    IC  u_fetch|s_PC[7]~30|datad
+    Info (332115):     18.316      0.144 RR  CELL  u_fetch|s_PC[7]~30|combout
+    Info (332115):     19.328      1.012 RR    IC  u_fetch|s_PC[1]|ena
+    Info (332115):     19.950      0.622 RF  CELL  fetch:u_fetch|s_PC[1]
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):     20.000     20.000           latch edge time
+    Info (332115):     22.675      2.675  R        clock network delay
+    Info (332115):     22.682      0.007           clock pessimism removed
+    Info (332115):     22.662     -0.020           clock uncertainty
+    Info (332115):     22.681      0.019     uTsu  fetch:u_fetch|s_PC[1]
+    Info (332115): Data Arrival Time  :    19.950
+    Info (332115): Data Required Time :    22.681
+    Info (332115): Slack              :     2.731 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 hold paths (0 violated).  Worst case slack is 0.350
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -hold
+    Info (332115): -stdout
+Info (332115): Path #1: Hold slack is 0.350 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : EXMEM_reg:u_EXMEM|o_RS2Data[8]
+    Info (332115): To Node      : mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      2.679      2.679  R        clock network delay
+    Info (332115):      2.892      0.213     uTco  EXMEM_reg:u_EXMEM|o_RS2Data[8]
+    Info (332115):      2.892      0.000 RR  CELL  u_EXMEM|o_RS2Data[8]|q
+    Info (332115):      3.556      0.664 RR    IC  DMem|ram_rtl_0|auto_generated|ram_block1a8|portadatain[0]
+    Info (332115):      3.629      0.073 RR  CELL  mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           latch edge time
+    Info (332115):      3.106      3.106  R        clock network delay
+    Info (332115):      3.078     -0.028           clock pessimism removed
+    Info (332115):      3.078      0.000           clock uncertainty
+    Info (332115):      3.279      0.201      uTh  mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Data Arrival Time  :     3.629
+    Info (332115): Data Required Time :     3.279
+    Info (332115): Slack              :     0.350 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 recovery paths (0 violated).  Worst case slack is 18.144
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -recovery
+    Info (332115): -stdout
+Info (332115): Path #1: Recovery slack is 18.144 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115): To Node      : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      2.775      2.775  R        clock network delay
+    Info (332115):      2.988      0.213     uTco  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115):      2.988      0.000 RR  CELL  u_IDEX|o_MemToReg_rtl_0|auto_generated|dffe6|q
+    Info (332115):      3.630      0.642 RR    IC  u_IDEX|o_MemToReg_rtl_0|auto_generated|altsyncram4|ram_block7a0|clr0
+    Info (332115):      4.778      1.148 RF  CELL  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):     20.000     20.000           latch edge time
+    Info (332115):     22.963      2.963  R        clock network delay
+    Info (332115):     22.991      0.028           clock pessimism removed
+    Info (332115):     22.971     -0.020           clock uncertainty
+    Info (332115):     22.922     -0.049     uTsu  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Arrival Time  :     4.778
+    Info (332115): Data Required Time :    22.922
+    Info (332115): Slack              :    18.144 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 removal paths (0 violated).  Worst case slack is 1.321
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -removal
+    Info (332115): -stdout
+Info (332115): Path #1: Removal slack is 1.321 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115): To Node      : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      2.676      2.676  R        clock network delay
+    Info (332115):      2.889      0.213     uTco  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115):      2.889      0.000 FF  CELL  u_IDEX|o_MemToReg_rtl_0|auto_generated|dffe6|q
+    Info (332115):      3.475      0.586 FF    IC  u_IDEX|o_MemToReg_rtl_0|auto_generated|altsyncram4|ram_block7a0|clr0
+    Info (332115):      4.524      1.049 FR  CELL  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           latch edge time
+    Info (332115):      3.063      3.063  R        clock network delay
+    Info (332115):      3.035     -0.028           clock pessimism removed
+    Info (332115):      3.035      0.000           clock uncertainty
+    Info (332115):      3.203      0.168      uTh  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Arrival Time  :     4.524
+    Info (332115): Data Required Time :     3.203
+    Info (332115): Slack              :     1.321 
+    Info (332115): ===================================================================
+Info: Analyzing Fast 1200mV 0C Model
+Info (332146): Worst-case setup slack is 10.635
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    10.635               0.000 iCLK 
+Info (332146): Worst-case hold slack is 0.141
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.141               0.000 iCLK 
+Info (332146): Worst-case recovery slack is 19.004
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    19.004               0.000 iCLK 
+Info (332146): Worst-case removal slack is 0.691
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.691               0.000 iCLK 
+Info (332146): Worst-case minimum pulse width slack is 9.373
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     9.373               0.000 iCLK 
+Info (332115): Report Timing: Found 1 setup paths (0 violated).  Worst case slack is 10.635
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -setup
+    Info (332115): -stdout
+Info (332115): Path #1: Setup slack is 10.635 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : mem:IMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_we_reg
+    Info (332115): To Node      : fetch:u_fetch|s_PC[1]
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      1.837      1.837  R        clock network delay
+    Info (332115):      1.965      0.128     uTco  mem:IMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_we_reg
+    Info (332115):      3.099      1.134 RF  CELL  IMem|ram_rtl_0|auto_generated|ram_block1a8|portadataout[6]
+    Info (332115):      3.355      0.256 FF    IC  IMem|ram~62|datac
+    Info (332115):      3.488      0.133 FF  CELL  IMem|ram~62|combout
+    Info (332115):      4.118      0.630 FF    IC  u_regfile|o_RS1Data[15]~190|datab
+    Info (332115):      4.294      0.176 FF  CELL  u_regfile|o_RS1Data[15]~190|combout
+    Info (332115):      5.452      1.158 FF    IC  u_regfile|o_RS1Data[15]~191|datab
+    Info (332115):      5.659      0.207 FF  CELL  u_regfile|o_RS1Data[15]~191|combout
+    Info (332115):      6.776      1.117 FF    IC  u_regfile|o_RS1Data[15]~192|datad
+    Info (332115):      6.839      0.063 FF  CELL  u_regfile|o_RS1Data[15]~192|combout
+    Info (332115):      6.975      0.136 FF    IC  u_regfile|o_RS1Data[15]~195|dataa
+    Info (332115):      7.179      0.204 FF  CELL  u_regfile|o_RS1Data[15]~195|combout
+    Info (332115):      7.289      0.110 FF    IC  u_regfile|o_RS1Data[15]~196|datac
+    Info (332115):      7.422      0.133 FF  CELL  u_regfile|o_RS1Data[15]~196|combout
+    Info (332115):      8.108      0.686 FF    IC  u_regfile|o_RS1Data[15]~197|datad
+    Info (332115):      8.171      0.063 FF  CELL  u_regfile|o_RS1Data[15]~197|combout
+    Info (332115):      8.611      0.440 FF    IC  LessThan1~31|dataa
+    Info (332115):      8.782      0.171 FF  CELL  LessThan1~31|cout
+    Info (332115):      8.782      0.000 FF    IC  LessThan1~33|cin
+    Info (332115):      8.816      0.034 FR  CELL  LessThan1~33|cout
+    Info (332115):      8.816      0.000 RR    IC  LessThan1~35|cin
+    Info (332115):      8.850      0.034 RF  CELL  LessThan1~35|cout
+    Info (332115):      8.850      0.000 FF    IC  LessThan1~37|cin
+    Info (332115):      8.884      0.034 FR  CELL  LessThan1~37|cout
+    Info (332115):      8.884      0.000 RR    IC  LessThan1~39|cin
+    Info (332115):      8.918      0.034 RF  CELL  LessThan1~39|cout
+    Info (332115):      8.918      0.000 FF    IC  LessThan1~41|cin
+    Info (332115):      8.952      0.034 FR  CELL  LessThan1~41|cout
+    Info (332115):      8.952      0.000 RR    IC  LessThan1~43|cin
+    Info (332115):      8.986      0.034 RF  CELL  LessThan1~43|cout
+    Info (332115):      8.986      0.000 FF    IC  LessThan1~45|cin
+    Info (332115):      9.020      0.034 FR  CELL  LessThan1~45|cout
+    Info (332115):      9.020      0.000 RR    IC  LessThan1~47|cin
+    Info (332115):      9.054      0.034 RF  CELL  LessThan1~47|cout
+    Info (332115):      9.054      0.000 FF    IC  LessThan1~49|cin
+    Info (332115):      9.088      0.034 FR  CELL  LessThan1~49|cout
+    Info (332115):      9.088      0.000 RR    IC  LessThan1~51|cin
+    Info (332115):      9.122      0.034 RF  CELL  LessThan1~51|cout
+    Info (332115):      9.122      0.000 FF    IC  LessThan1~53|cin
+    Info (332115):      9.156      0.034 FR  CELL  LessThan1~53|cout
+    Info (332115):      9.156      0.000 RR    IC  LessThan1~55|cin
+    Info (332115):      9.190      0.034 RF  CELL  LessThan1~55|cout
+    Info (332115):      9.190      0.000 FF    IC  LessThan1~57|cin
+    Info (332115):      9.224      0.034 FR  CELL  LessThan1~57|cout
+    Info (332115):      9.224      0.000 RR    IC  LessThan1~59|cin
+    Info (332115):      9.258      0.034 RF  CELL  LessThan1~59|cout
+    Info (332115):      9.258      0.000 FF    IC  LessThan1~61|cin
+    Info (332115):      9.292      0.034 FR  CELL  LessThan1~61|cout
+    Info (332115):      9.292      0.000 RR    IC  LessThan1~62|cin
+    Info (332115):      9.534      0.242 RR  CELL  LessThan1~62|combout
+    Info (332115):      9.690      0.156 RR    IC  Mux24~1|datad
+    Info (332115):      9.758      0.068 RR  CELL  Mux24~1|combout
+    Info (332115):      9.866      0.108 RR    IC  u_fetch|s_PC[7]~30|datab
+    Info (332115):     10.033      0.167 RF  CELL  u_fetch|s_PC[7]~30|combout
+    Info (332115):     10.613      0.580 FF    IC  u_fetch|s_PC[1]|ena
+    Info (332115):     10.925      0.312 FR  CELL  fetch:u_fetch|s_PC[1]
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):     20.000     20.000           latch edge time
+    Info (332115):     21.568      1.568  R        clock network delay
+    Info (332115):     21.573      0.005           clock pessimism removed
+    Info (332115):     21.553     -0.020           clock uncertainty
+    Info (332115):     21.560      0.007     uTsu  fetch:u_fetch|s_PC[1]
+    Info (332115): Data Arrival Time  :    10.925
+    Info (332115): Data Required Time :    21.560
+    Info (332115): Slack              :    10.635 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 hold paths (0 violated).  Worst case slack is 0.141
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -hold
+    Info (332115): -stdout
+Info (332115): Path #1: Hold slack is 0.141 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : EXMEM_reg:u_EXMEM|o_RS2Data[8]
+    Info (332115): To Node      : mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      1.572      1.572  R        clock network delay
+    Info (332115):      1.677      0.105     uTco  EXMEM_reg:u_EXMEM|o_RS2Data[8]
+    Info (332115):      1.677      0.000 RR  CELL  u_EXMEM|o_RS2Data[8]|q
+    Info (332115):      2.009      0.332 RR    IC  DMem|ram_rtl_0|auto_generated|ram_block1a8|portadatain[0]
+    Info (332115):      2.045      0.036 RR  CELL  mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           latch edge time
+    Info (332115):      1.820      1.820  R        clock network delay
+    Info (332115):      1.800     -0.020           clock pessimism removed
+    Info (332115):      1.800      0.000           clock uncertainty
+    Info (332115):      1.904      0.104      uTh  mem:DMem|altsyncram:ram_rtl_0|altsyncram_eg81:auto_generated|ram_block1a8~porta_datain_reg0
+    Info (332115): Data Arrival Time  :     2.045
+    Info (332115): Data Required Time :     1.904
+    Info (332115): Slack              :     0.141 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 recovery paths (0 violated).  Worst case slack is 19.004
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -recovery
+    Info (332115): -stdout
+Info (332115): Path #1: Recovery slack is 19.004 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115): To Node      : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      1.631      1.631  R        clock network delay
+    Info (332115):      1.736      0.105     uTco  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115):      1.736      0.000 FF  CELL  u_IDEX|o_MemToReg_rtl_0|auto_generated|dffe6|q
+    Info (332115):      2.091      0.355 FF    IC  u_IDEX|o_MemToReg_rtl_0|auto_generated|altsyncram4|ram_block7a0|clr0
+    Info (332115):      2.702      0.611 FR  CELL  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):     20.000     20.000           latch edge time
+    Info (332115):     21.731      1.731  R        clock network delay
+    Info (332115):     21.751      0.020           clock pessimism removed
+    Info (332115):     21.731     -0.020           clock uncertainty
+    Info (332115):     21.706     -0.025     uTsu  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a0
+    Info (332115): Data Arrival Time  :     2.702
+    Info (332115): Data Required Time :    21.706
+    Info (332115): Slack              :    19.004 
+    Info (332115): ===================================================================
+Info (332115): Report Timing: Found 1 removal paths (0 violated).  Worst case slack is 0.691
+    Info (332115): -to_clock [get_clocks {iCLK}]
+    Info (332115): -removal
+    Info (332115): -stdout
+Info (332115): Path #1: Removal slack is 0.691 
+    Info (332115): ===================================================================
+    Info (332115): From Node    : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115): To Node      : IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a21
+    Info (332115): Launch Clock : iCLK
+    Info (332115): Latch Clock  : iCLK
+    Info (332115): Data Arrival Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           launch edge time
+    Info (332115):      1.570      1.570  R        clock network delay
+    Info (332115):      1.675      0.105     uTco  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|dffe6
+    Info (332115):      1.675      0.000 RR  CELL  u_IDEX|o_MemToReg_rtl_0|auto_generated|dffe6|q
+    Info (332115):      1.985      0.310 RR    IC  u_IDEX|o_MemToReg_rtl_0|auto_generated|altsyncram4|ram_block7a21|clr0
+    Info (332115):      2.565      0.580 RF  CELL  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a21
+    Info (332115): Data Required Path:
+    Info (332115): Total (ns)  Incr (ns)     Type  Element
+    Info (332115): ==========  ========= ==  ====  ===================================
+    Info (332115):      0.000      0.000           latch edge time
+    Info (332115):      1.804      1.804  R        clock network delay
+    Info (332115):      1.784     -0.020           clock pessimism removed
+    Info (332115):      1.784      0.000           clock uncertainty
+    Info (332115):      1.874      0.090      uTh  IDEX_reg:u_IDEX|altshift_taps:o_MemToReg_rtl_0|shift_taps_hkm:auto_generated|altsyncram_7961:altsyncram4|ram_block7a21
+    Info (332115): Data Arrival Time  :     2.565
+    Info (332115): Data Required Time :     1.874
+    Info (332115): Slack              :     0.691 
+    Info (332115): ===================================================================
+Info (332102): Design is not fully constrained for setup requirements
+Info (332102): Design is not fully constrained for hold requirements
+Info: Quartus Prime Timing Analyzer was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 814 megabytes
+    Info: Processing ended: Mon Dec  8 09:15:31 2025
+    Info: Elapsed time: 00:00:06
+    Info: Total CPU time (on all processors): 00:00:05
