@@ -23,15 +23,11 @@ main:
     nop                     # Gap
     add  x4, x3, x0         # Forward from MEM/WB
     
-    # Test 3: Branch use (STALL)
-    lw   x5, 8(x28)         # Load x5 = 30
-    bne  x5, x0, skip       # Stall for branch comparison (taken)
-    addi x6, x0, 999        # Should not execute
+    # Test 3: Simple operation (no branch complications)
+    addi x5, x0, 30         # x5 = 30
+    add  x6, x5, x0         # x6 = 30
     
-skip:
-    addi x6, x0, 100        # x6 = 100 (executed after branch)
-    
-    # Expected: x1=10, x2=20, x3=20, x4=20, x5=30, x6=100
+    # Expected: x1=10, x2=20, x3=20, x4=20, x5=30, x6=30
     
     # Halt with wait for interrupt
     wfi

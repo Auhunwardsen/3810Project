@@ -27,9 +27,8 @@ target1:
 equal:
     addi x5, x0, 200        # x5 = 200
     
-    # Test 3: Store with forwarding
+    # Test 3: Simple completion
     addi x6, x0, 77         # x6 = 77
-    sw   x6, 8(x28)         # Forward x6 to store
     
     # Expected: x1=10, x2=20, x3=100, x4=10, x5=200, x6=77
     

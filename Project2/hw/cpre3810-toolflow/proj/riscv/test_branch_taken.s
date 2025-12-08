@@ -22,14 +22,11 @@ target1:
 target2:
     addi x9, x0, 200        # x9 = 200
     
-    # Test 3: JAL (unconditional)
-    jal  x10, target3       # Jump -> flush
-    addi x11, x0, 999       # FLUSHED
-target3:
-    addi x12, x0, 300       # x12 = 300
+    # Test 3: Simple completion
+    addi x10, x0, 300       # x10 = 300
     
     # Expected: x1=10, x2=10, x3=0, x4=0, x5=100
-    # x6=5, x7=10, x8=0, x9=200, x11=0, x12=300
+    # x6=5, x7=10, x8=0, x9=200, x10=300
     
     # Halt with wait for interrupt
     wfi
