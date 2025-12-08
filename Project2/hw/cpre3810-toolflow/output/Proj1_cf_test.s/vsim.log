@@ -3,12 +3,8 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 17:12:16 on Dec 08,2025
-# ** Note: (vsim-3812) Design is being optimized...
-# ** Note: (vsim-8611) Generating debug db.
-# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
-# ** Note: (vopt-4301) Memory core inferred for signal 'ram' width=32, depth=1024, type=RAM at location proj/src/mem.vhd:35
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Start time: 17:48:29 on Dec 08,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2025.1_2 linux_x86_64 Apr  7 2025
 # //
@@ -53,7 +49,7 @@ Reading pref.tcl
 # Loading work.barrelshifter(dataflow)#1
 # Loading work.exmem_reg(behavioral)#1
 # Loading work.memwb_reg(behavioral)#1
-# ** Note: (vsim-8900) Creating design debug database vsim.dbg.
+# ** Note: (vsim-8716) Reusing existing debug database vsim.dbg.
 # do modelsim_framework.do
 # ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
 #    Time: 0 ns  Iteration: 0  Instance: /tb/MyRiscv
@@ -77,5 +73,5 @@ Reading pref.tcl
 #    Time: 0 ns  Iteration: 2  Instance: /tb/MyRiscv
 # ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
 #    Time: 0 ns  Iteration: 2  Instance: /tb/MyRiscv
-# End time: 17:12:30 on Dec 08,2025, Elapsed time: 0:00:14
-# Errors: 0, Warnings: 12
+# End time: 17:48:41 on Dec 08,2025, Elapsed time: 0:00:12
+# Errors: 0, Warnings: 11
