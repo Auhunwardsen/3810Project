@@ -1,6 +1,6 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 18:54:56 on Nov 08,2025
-vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/decoder5t32.vhd proj/src/mem.vhd proj/src/addsub.vhd proj/src/fetch.vhd proj/src/reg_n.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/alu.vhd proj/src/RISCV_Processor.vhd proj/src/dffg.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/control.vhd proj/src/mux2t1_n.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/RISCV_types.vhd proj/src/adder_n.vhd proj/src/regfile.vhd 
+Start time: 17:31:04 on Dec 08,2025
+vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/addsub.vhd proj/src/hazard_detection.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/decoder5t32.vhd proj/src/RISCV_Processor.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/alu.vhd proj/src/IFID_reg.vhd proj/src/EXMEM_reg.vhd proj/src/IDEX_reg.vhd proj/src/regfile.vhd proj/src/adder_n.vhd proj/src/mux3t1_n.vhd proj/src/control.vhd proj/src/MEMWB_reg.vhd proj/src/dffg.vhd proj/src/reg_n.vhd proj/src/mux2t1_n.vhd proj/src/RISCV_types.vhd proj/src/fetch.vhd proj/src/mem.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/forwarding_unit.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
@@ -12,27 +12,23 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling entity tb
 -- Compiling architecture mixed of tb
 -- Loading package NUMERIC_STD
--- Compiling entity decoder5t32
--- Compiling architecture dataflow of decoder5t32
--- Compiling entity mem
--- Compiling architecture rtl of mem
 -- Compiling entity addsub
 -- Compiling architecture rtl of addsub
--- Compiling entity fetch
--- Compiling architecture structural of fetch
--- Compiling entity reg_n
--- Compiling architecture structural of reg_n
+-- Compiling entity hazard_detection
+-- Compiling architecture behavioral of hazard_detection
 -- Compiling entity mux32_1
 -- Compiling architecture rtl of mux32_1
 -- Compiling entity barrelshifter
 -- Compiling architecture dataflow of barrelshifter
--- Compiling entity alu
--- Compiling architecture structural of alu
+-- Compiling entity decoder5t32
+-- Compiling architecture dataflow of decoder5t32
 -- Loading package RISCV_types
 -- Compiling entity RISCV_Processor
 -- Compiling architecture structure of RISCV_Processor
-** Error: proj/src/RISCV_Processor.vhd(301): near "when": (vcom-1576) expecting ',' or ')'.
-** Error: proj/src/RISCV_Processor.vhd(309): Statement cannot be labeled.
-** Note: proj/src/RISCV_Processor.vhd(394): VHDL Compiler exiting
-End time: 18:54:56 on Nov 08,2025, Elapsed time: 0:00:00
-Errors: 2, Warnings: 0
+** Error (suppressible): proj/src/RISCV_Processor.vhd(527): (vcom-1141) Identifier "hazard_detection" does not identify a component declaration.
+** Error (suppressible): proj/src/RISCV_Processor.vhd(649): (vcom-1141) Identifier "forwarding_unit" does not identify a component declaration.
+** Error (suppressible): proj/src/RISCV_Processor.vhd(663): (vcom-1141) Identifier "mux3t1_n" does not identify a component declaration.
+** Error (suppressible): proj/src/RISCV_Processor.vhd(675): (vcom-1141) Identifier "mux3t1_n" does not identify a component declaration.
+** Note: proj/src/RISCV_Processor.vhd(970): VHDL Compiler exiting
+End time: 17:31:04 on Dec 08,2025, Elapsed time: 0:00:00
+Errors: 4, Warnings: 0
