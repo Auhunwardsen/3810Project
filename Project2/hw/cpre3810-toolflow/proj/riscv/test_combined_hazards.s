@@ -1,14 +1,16 @@
 # Test: Combined Hazards
 # Expected: Forwarding + stalls + flushes together
 
-.data
-test_data: .word 10, 20
-
 .text
 .globl main
 
 main:
-    lui  x28, 0x10010       # Base address
+    # Set up test data using stores
+    addi x28, x0, 0x400     # Base address
+    addi x29, x0, 10        # Test value
+    sw   x29, 0(x28)        # Store 10
+    addi x29, x0, 20        # Test value
+    sw   x29, 4(x28)        # Store 20
     
     # Test 1: Forward then branch
     addi x1, x0, 10         # x1 = 10

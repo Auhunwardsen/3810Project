@@ -1,14 +1,18 @@
 # Test: Load-Use Hazard Stall
 # Expected: PCWrite=0, IFID_Write=0, ControlMux=1
 
-.data
-test_data: .word 10, 20, 30, 40
-
 .text
 .globl main
 
 main:
-    lui  x28, 0x10010       # Base address
+    # Set up test data in memory using stores first
+    addi x28, x0, 0x400     # Base address (simple offset)
+    addi x29, x0, 10        # Test value 1
+    sw   x29, 0(x28)        # Store 10 at address 0x400
+    addi x29, x0, 20        # Test value 2  
+    sw   x29, 4(x28)        # Store 20 at address 0x404
+    addi x29, x0, 30        # Test value 3
+    sw   x29, 8(x28)        # Store 30 at address 0x408
     
     # Test 1: Immediate use (STALL)
     lw   x1, 0(x28)         # Load x1 = 10
@@ -21,10 +25,12 @@ main:
     
     # Test 3: Branch use (STALL)
     lw   x5, 8(x28)         # Load x5 = 30
-    beq  x5, x0, skip       # Stall for branch comparison
-    addi x6, x0, 100        # Execute (not taken)
+    bne  x5, x0, skip       # Stall for branch comparison (taken)
+    addi x6, x0, 999        # Should not execute
     
 skip:
+    addi x6, x0, 100        # x6 = 100 (executed after branch)
+    
     # Expected: x1=10, x2=20, x3=20, x4=20, x5=30, x6=100
     
     # Halt with wait for interrupt
