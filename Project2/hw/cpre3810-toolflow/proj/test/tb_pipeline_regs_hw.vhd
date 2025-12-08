@@ -1,13 +1,14 @@
--- Testbench for Pipeline Registers
--- Tests stalling, flushing, and normal operation
+-- Pipeline Register Testbench for Hardware-Scheduled Pipeline
+-- Tests stalling and flushing of all 4 pipeline registers
+-- Required by Section 2.a.iii
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity tb_pipeline_registers is
-end tb_pipeline_registers;
+entity tb_pipeline_regs_hw is
+end tb_pipeline_regs_hw;
 
-architecture behavioral of tb_pipeline_registers is
+architecture behavioral of tb_pipeline_regs_hw is
   
   -- Clock and reset
   signal CLK   : std_logic := '0';
