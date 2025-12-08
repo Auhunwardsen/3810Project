@@ -1,0 +1,3 @@
+../cpre3810-toolflow/proj/riscv/test_branch_taken.s
+../cpre3810-toolflow/proj/riscv/test_combined_hazards.s
+../cpre3810-toolflow/proj/riscv/test_load_use_stall.s
