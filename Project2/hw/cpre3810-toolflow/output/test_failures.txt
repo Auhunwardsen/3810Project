@@ -1,0 +1,3 @@
+../cpre3810-toolflow/proj/riscv/Proj1_cf_test.s
+../cpre3810-toolflow/proj/riscv/Proj1_mergesort.s
+../cpre3810-toolflow/proj/riscv/Proj1_mergesort_scheduled.s
