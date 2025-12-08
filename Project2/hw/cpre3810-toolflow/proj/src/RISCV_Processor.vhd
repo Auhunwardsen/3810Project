@@ -158,46 +158,46 @@ architecture structure of RISCV_Processor is
     );
   end component;
 
-  -- Forwarding and hazard detection components (temporarily commented out for compilation)
-  -- component forwarding_unit is
-  --   port(
-  --     i_IDEX_RS1       : in std_logic_vector(4 downto 0);
-  --     i_IDEX_RS2       : in std_logic_vector(4 downto 0);
-  --     i_EXMEM_RD       : in std_logic_vector(4 downto 0);
-  --     i_MEMWB_RD       : in std_logic_vector(4 downto 0);
-  --     i_EXMEM_RegWrite : in std_logic;
-  --     i_MEMWB_RegWrite : in std_logic;
-  --     o_Forward_A      : out std_logic_vector(1 downto 0);
-  --     o_Forward_B      : out std_logic_vector(1 downto 0)
-  --   );
-  -- end component;
+  -- Forwarding and hazard detection components
+  component forwarding_unit is
+    port(
+      i_IDEX_RS1       : in std_logic_vector(4 downto 0);
+      i_IDEX_RS2       : in std_logic_vector(4 downto 0);
+      i_EXMEM_RD       : in std_logic_vector(4 downto 0);
+      i_MEMWB_RD       : in std_logic_vector(4 downto 0);
+      i_EXMEM_RegWrite : in std_logic;
+      i_MEMWB_RegWrite : in std_logic;
+      o_Forward_A      : out std_logic_vector(1 downto 0);
+      o_Forward_B      : out std_logic_vector(1 downto 0)
+    );
+  end component;
 
-  -- component hazard_detection is
-  --   port(
-  --     i_IDEX_MemRead  : in std_logic;
-  --     i_IDEX_RD       : in std_logic_vector(4 downto 0);
-  --     i_IFID_RS1      : in std_logic_vector(4 downto 0);
-  --     i_IFID_RS2      : in std_logic_vector(4 downto 0);
-  --     i_Branch        : in std_logic;
-  --     i_Jump          : in std_logic;
-  --     o_PCWrite       : out std_logic;
-  --     o_IFID_Write    : out std_logic;
-  --     o_ControlMux    : out std_logic;
-  --     o_IFID_Flush    : out std_logic;
-  --     o_IDEX_Flush    : out std_logic
-  --   );
-  -- end component;
+  component hazard_detection is
+    port(
+      i_IDEX_MemRead  : in std_logic;
+      i_IDEX_RD       : in std_logic_vector(4 downto 0);
+      i_IFID_RS1      : in std_logic_vector(4 downto 0);
+      i_IFID_RS2      : in std_logic_vector(4 downto 0);
+      i_Branch        : in std_logic;
+      i_Jump          : in std_logic;
+      o_PCWrite       : out std_logic;
+      o_IFID_Write    : out std_logic;
+      o_ControlMux    : out std_logic;
+      o_IFID_Flush    : out std_logic;
+      o_IDEX_Flush    : out std_logic
+    );
+  end component;
 
-  -- component mux3t1_n is
-  --   generic(N : integer := 32);
-  --   port(
-  --     i_S   : in  std_logic_vector(1 downto 0);
-  --     i_D0  : in  std_logic_vector(N-1 downto 0);
-  --     i_D1  : in  std_logic_vector(N-1 downto 0);
-  --     i_D2  : in  std_logic_vector(N-1 downto 0);
-  --     o_O   : out std_logic_vector(N-1 downto 0)
-  --   );
-  -- end component;
+  component mux3t1_n is
+    generic(N : integer := 32);
+    port(
+      i_S   : in  std_logic_vector(1 downto 0);
+      i_D0  : in  std_logic_vector(N-1 downto 0);
+      i_D1  : in  std_logic_vector(N-1 downto 0);
+      i_D2  : in  std_logic_vector(N-1 downto 0);
+      o_O   : out std_logic_vector(N-1 downto 0)
+    );
+  end component;
 
   -- Pipeline register components
   component IFID_reg is
