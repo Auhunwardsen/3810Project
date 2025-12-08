@@ -534,7 +534,7 @@ begin
   -- Complete ID-stage forwarding: EX→ID, MEM→ID, WB→ID for branch/jump comparisons
   -- Priority: EX (most recent) > MEM > WB > RegisterFile
   process(s_RS1Data, s_RS2Data, s_IFID_Inst,
-          s_IDEX_RegWrite, s_IDEX_RDAddr, s_IDEX_ALUResult,
+          s_IDEX_RegWrite, s_IDEX_RDAddr, s_ALUResult,
           s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_EXMEM_ALUResult,
           s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_WriteData)
     variable v_RS1_addr : std_logic_vector(4 downto 0);
@@ -545,7 +545,7 @@ begin
     
     -- Forward RS1: Priority EX > MEM > WB > RegisterFile
     if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
-      s_RS1Data_final <= s_IDEX_ALUResult;  -- Forward from EX stage (most recent)
+      s_RS1Data_final <= s_ALUResult;  -- Forward from EX stage (current ALU output)
     elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
       s_RS1Data_final <= s_EXMEM_ALUResult;  -- Forward from MEM stage
     elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
@@ -556,7 +556,7 @@ begin
     
     -- Forward RS2: Priority EX > MEM > WB > RegisterFile
     if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
-      s_RS2Data_final <= s_IDEX_ALUResult;  -- Forward from EX stage (most recent)
+      s_RS2Data_final <= s_ALUResult;  -- Forward from EX stage (current ALU output)
     elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
       s_RS2Data_final <= s_EXMEM_ALUResult;  -- Forward from MEM stage
     elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
