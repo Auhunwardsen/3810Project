@@ -531,9 +531,11 @@ begin
       o_imm       => s_Immediate
     );
 
-  -- WB→ID Forwarding: Forward from WB stage to ID stage for branch/jump comparisons
-  -- This ensures branch decisions use the most recent data
-  process(s_RS1Data, s_RS2Data, s_IFID_Inst, 
+  -- Complete ID-stage forwarding: EX→ID, MEM→ID, WB→ID for branch/jump comparisons
+  -- Priority: EX (most recent) > MEM > WB > RegisterFile
+  process(s_RS1Data, s_RS2Data, s_IFID_Inst,
+          s_IDEX_RegWrite, s_IDEX_RDAddr, s_IDEX_ALUResult,
+          s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_EXMEM_ALUResult,
           s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_WriteData)
     variable v_RS1_addr : std_logic_vector(4 downto 0);
     variable v_RS2_addr : std_logic_vector(4 downto 0);
@@ -541,18 +543,26 @@ begin
     v_RS1_addr := s_IFID_Inst(19 downto 15);
     v_RS2_addr := s_IFID_Inst(24 downto 20);
     
-    -- Forward RS1 from WB stage only (for branches in ID stage)
-    if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+    -- Forward RS1: Priority EX > MEM > WB > RegisterFile
+    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+      s_RS1Data_final <= s_IDEX_ALUResult;  -- Forward from EX stage (most recent)
+    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
+      s_RS1Data_final <= s_EXMEM_ALUResult;  -- Forward from MEM stage
+    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS1_addr and v_RS1_addr /= "00000") then
       s_RS1Data_final <= s_WriteData;  -- Forward from WB stage
     else
-      s_RS1Data_final <= s_RS1Data;
+      s_RS1Data_final <= s_RS1Data;  -- Use register file
     end if;
     
-    -- Forward RS2 from WB stage only (for branches in ID stage)
-    if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+    -- Forward RS2: Priority EX > MEM > WB > RegisterFile
+    if (s_IDEX_RegWrite = '1' and s_IDEX_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+      s_RS2Data_final <= s_IDEX_ALUResult;  -- Forward from EX stage (most recent)
+    elsif (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
+      s_RS2Data_final <= s_EXMEM_ALUResult;  -- Forward from MEM stage
+    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr = v_RS2_addr and v_RS2_addr /= "00000") then
       s_RS2Data_final <= s_WriteData;  -- Forward from WB stage
     else
-      s_RS2Data_final <= s_RS2Data;
+      s_RS2Data_final <= s_RS2Data;  -- Use register file
     end if;
   end process;
 
