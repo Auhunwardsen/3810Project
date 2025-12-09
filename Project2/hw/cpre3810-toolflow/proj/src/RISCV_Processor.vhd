@@ -817,29 +817,24 @@ begin
       case s_MEMWB_Inst(14 downto 12) is  -- funct3 field for load instructions
         when "000" =>  -- LB (Load Byte) - sign extend byte
           if s_MEMWB_MemData(7) = '1' then
-            v_LoadData := x"FFFFFF" & s_MEMWB_MemData(7 downto 0);
+            v_LoadData := (31 downto 8 => '1') & s_MEMWB_MemData(7 downto 0);
           else
-            v_LoadData := x"000000" & s_MEMWB_MemData(7 downto 0);
+            v_LoadData := (31 downto 8 => '0') & s_MEMWB_MemData(7 downto 0);
           end if;
           s_WriteData <= v_LoadData;
-          
         when "001" =>  -- LH (Load Halfword) - sign extend halfword
           if s_MEMWB_MemData(15) = '1' then
-            v_LoadData := x"FFFF" & s_MEMWB_MemData(15 downto 0);
+            v_LoadData := (31 downto 16 => '1') & s_MEMWB_MemData(15 downto 0);
           else
-            v_LoadData := x"0000" & s_MEMWB_MemData(15 downto 0);
+            v_LoadData := (31 downto 16 => '0') & s_MEMWB_MemData(15 downto 0);
           end if;
           s_WriteData <= v_LoadData;
-          
         when "010" =>  -- LW (Load Word) - full 32-bit word
           s_WriteData <= s_MEMWB_MemData;
-          
         when "100" =>  -- LBU (Load Byte Unsigned) - zero extend byte
-          s_WriteData <= x"000000" & s_MEMWB_MemData(7 downto 0);
-          
+          s_WriteData <= (31 downto 8 => '0') & s_MEMWB_MemData(7 downto 0);
         when "101" =>  -- LHU (Load Halfword Unsigned) - zero extend halfword
-          s_WriteData <= x"0000" & s_MEMWB_MemData(15 downto 0);
-          
+          s_WriteData <= (31 downto 16 => '0') & s_MEMWB_MemData(15 downto 0);
         when others =>  -- Default to LW
           s_WriteData <= s_MEMWB_MemData;
       end case;
@@ -985,8 +980,8 @@ begin
     if ((s_Branch = '1' and s_BranchTaken = '1') or s_Jump = '1') then
       s_IFID_Flush   <= '1';   -- Flush IF/ID register
       s_IDEX_Flush   <= '1';   -- Flush ID/EX register
-      s_EXMEM_Flush  <= '1';   -- Flush EX/MEM register
-      s_MEMWB_Flush  <= '0';   -- Do NOT flush MEM/WB register
+      s_EXMEM_Flush  <= '0';   -- Do NOT flush EX/MEM or MEM/WB
+      s_MEMWB_Flush  <= '0';
     else
       s_IFID_Flush   <= '0';
       s_IDEX_Flush   <= '0';
