@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 15:16:34 on Dec 09,2025
+Start time: 15:50:57 on Dec 09,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/addsub.vhd proj/src/hazard_detection.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/decoder5t32.vhd proj/src/RISCV_Processor.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/alu.vhd proj/src/IFID_reg.vhd proj/src/EXMEM_reg.vhd proj/src/IDEX_reg.vhd proj/src/regfile.vhd proj/src/adder_n.vhd proj/src/mux3t1_n.vhd proj/src/control.vhd proj/src/MEMWB_reg.vhd proj/src/dffg.vhd proj/src/reg_n.vhd proj/src/mux2t1_n.vhd proj/src/RISCV_types.vhd proj/src/fetch.vhd proj/src/mem.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/forwarding_unit.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -69,5 +69,5 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling architecture dataflow of alu_control
 -- Compiling entity forwarding_unit
 -- Compiling architecture behavioral of forwarding_unit
-End time: 15:16:35 on Dec 09,2025, Elapsed time: 0:00:01
+End time: 15:50:58 on Dec 09,2025, Elapsed time: 0:00:01
 Errors: 0, Warnings: 2
