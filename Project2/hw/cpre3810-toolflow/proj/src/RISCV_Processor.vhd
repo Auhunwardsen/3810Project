@@ -689,12 +689,12 @@ begin
     );
 
   -- ALU Input A Selection: AUIPC uses PC, LUI uses zero, others use forwarded RS1
-  process(s_IDEX_Instr, s_ALUIn1_fwd, s_IDEX_PC)
+  process(s_IDEX_Instr, s_ALUIn1_fwd, s_IDEX_PC, s_IDEX_Immediate)
   begin
     if s_IDEX_Instr(6 downto 0) = "0010111" then
       s_ALUIn1 <= s_IDEX_PC;  -- AUIPC: use PC
     elsif s_IDEX_Instr(6 downto 0) = "0110111" then  
-      s_ALUIn1 <= (others => '0');  -- LUI: don't care, but use clean signal
+      s_ALUIn1 <= s_IDEX_Immediate;  -- LUI: use immediate
     else
       s_ALUIn1 <= s_ALUIn1_fwd;  -- Normal: use forwarded RS1
     end if;
@@ -841,8 +841,13 @@ begin
     -- JAL/JALR write PC+4, but only if RD != x0 and RegWrite is asserted
     if (s_MEMWB_Inst(6 downto 0) = "1101111" or s_MEMWB_Inst(6 downto 0) = "1100111") and
        s_MEMWB_RDAddr /= "00000" and s_MEMWB_RegWrite = '1' then
-      -- JAL/JALR write PC+4 to register (return address) - use PCplus4 from pipeline
       s_WriteData <= s_MEMWB_PCplus4;
+    elsif s_MEMWB_Inst(6 downto 0) = "0010111" and s_MEMWB_RDAddr /= "00000" and s_MEMWB_RegWrite = '1' then
+      -- AUIPC: write ALU result (PC+imm)
+      s_WriteData <= s_MEMWB_ALUResult;
+    elsif s_MEMWB_Inst(6 downto 0) = "0110111" and s_MEMWB_RDAddr /= "00000" and s_MEMWB_RegWrite = '1' then
+      -- LUI: write immediate
+      s_WriteData <= s_MEMWB_ALUResult;
     elsif s_MEMWB_MemToReg = '1' then
       -- Load instructions - handle different load types with proper sign extension
       case s_MEMWB_Inst(14 downto 12) is  -- funct3 field for load instructions
