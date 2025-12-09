@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 18:17:52 on Dec 08,2025
+Start time: 18:21:06 on Dec 08,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/addsub.vhd proj/src/hazard_detection.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/decoder5t32.vhd proj/src/RISCV_Processor.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/alu.vhd proj/src/IFID_reg.vhd proj/src/EXMEM_reg.vhd proj/src/IDEX_reg.vhd proj/src/regfile.vhd proj/src/adder_n.vhd proj/src/mux3t1_n.vhd proj/src/control.vhd proj/src/MEMWB_reg.vhd proj/src/dffg.vhd proj/src/reg_n.vhd proj/src/mux2t1_n.vhd proj/src/RISCV_types.vhd proj/src/fetch.vhd proj/src/mem.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/forwarding_unit.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -25,38 +25,49 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Loading package RISCV_types
 -- Compiling entity RISCV_Processor
 -- Compiling architecture structure of RISCV_Processor
-** Error: proj/src/RISCV_Processor.vhd(429): (vcom-1136) Unknown identifier "s_IFID_Flush".
-** Error: proj/src/RISCV_Processor.vhd(491): (vcom-1136) Unknown identifier "s_IDEX_Flush".
-** Error: proj/src/RISCV_Processor.vhd(821): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(821): (vcom-1136) Unknown identifier "s_PCWrite".
-** Error: proj/src/RISCV_Processor.vhd(822): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(822): (vcom-1136) Unknown identifier "s_IFID_Write".
-** Error: proj/src/RISCV_Processor.vhd(823): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(823): (vcom-1136) Unknown identifier "s_ControlMux".
-** Error: proj/src/RISCV_Processor.vhd(826): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(826): (vcom-1136) Unknown identifier "s_PCWrite".
-** Error: proj/src/RISCV_Processor.vhd(827): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(827): (vcom-1136) Unknown identifier "s_IFID_Write".
-** Error: proj/src/RISCV_Processor.vhd(828): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(828): (vcom-1136) Unknown identifier "s_ControlMux".
-** Error: proj/src/RISCV_Processor.vhd(834): (vcom-1136) Unknown identifier "s_Jump".
-** Error: proj/src/RISCV_Processor.vhd(834): Expression is not a signal.
-** Error: proj/src/RISCV_Processor.vhd(834): (vcom-1136) Unknown identifier "s_BranchResult".
-** Error: proj/src/RISCV_Processor.vhd(834): Expression is not a signal.
-** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1136) Unknown identifier "s_BranchResult".
-** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1590) Bad expression in right operand of infix expression 'and'.
-** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1136) Unknown identifier "s_Jump".
-** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1590) Bad expression in left operand of infix expression 'or'.
-** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1590) Bad expression in right operand of infix expression 'or'.
-** Error: proj/src/RISCV_Processor.vhd(836): Type error resolving infix expression "or" as type std.STANDARD.BOOLEAN.
-** Error: proj/src/RISCV_Processor.vhd(837): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(837): (vcom-1136) Unknown identifier "s_IFID_Flush".
-** Error: proj/src/RISCV_Processor.vhd(838): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(838): (vcom-1136) Unknown identifier "s_IDEX_Flush".
-** Error: proj/src/RISCV_Processor.vhd(840): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(840): (vcom-1136) Unknown identifier "s_IFID_Flush".
-** Error: proj/src/RISCV_Processor.vhd(841): Illegal target for signal assignment.
-** Error: proj/src/RISCV_Processor.vhd(841): (vcom-1136) Unknown identifier "s_IDEX_Flush".
-** Note: proj/src/RISCV_Processor.vhd(874): VHDL Compiler exiting
-End time: 18:17:52 on Dec 08,2025, Elapsed time: 0:00:00
-Errors: 32, Warnings: 0
+-- Compiling entity zero_extender
+-- Compiling architecture rtl of zero_extender
+-- Compiling entity sign_extender
+-- Compiling architecture rtl of sign_extender
+-- Compiling entity alu
+-- Compiling architecture structural of alu
+-- Compiling entity IFID_reg
+-- Compiling architecture behavioral of IFID_reg
+-- Compiling entity EXMEM_reg
+-- Compiling architecture behavioral of EXMEM_reg
+-- Compiling entity IDEX_reg
+-- Compiling architecture behavioral of IDEX_reg
+-- Compiling entity regfile
+-- Compiling architecture rtl of regfile
+-- Compiling entity adder_n
+-- Compiling architecture rtl of adder_n
+-- Compiling entity mux3t1_n
+-- Compiling architecture dataflow of mux3t1_n
+-- Compiling entity control
+-- Compiling architecture dataflow of control
+-- Compiling entity MEMWB_reg
+-- Compiling architecture behavioral of MEMWB_reg
+-- Compiling entity dffg
+-- Compiling architecture mixed of dffg
+-- Compiling entity reg_n
+-- Compiling architecture structural of reg_n
+-- Compiling entity mux2t1_n
+-- Compiling architecture rtl of mux2t1_n
+** Warning: proj/src/RISCV_types.vhd(15): (vcom-1615) Existing package 'RISCV_types' at line 18 will be overwritten.
+-- Compiling package RISCV_types
+** Warning: proj/src/RISCV_types.vhd(30): (vcom-1615) Existing package body 'RISCV_types(body)' at line 30 will be overwritten.
+-- Compiling package body RISCV_types
+-- Loading package RISCV_types
+-- Loading package RISCV_types
+-- Compiling entity fetch
+-- Compiling architecture structural of fetch
+-- Compiling entity mem
+-- Compiling architecture rtl of mem
+-- Compiling entity immgen
+-- Compiling architecture dataflow of immgen
+-- Compiling entity alu_control
+-- Compiling architecture dataflow of alu_control
+-- Compiling entity forwarding_unit
+-- Compiling architecture behavioral of forwarding_unit
+End time: 18:21:06 on Dec 08,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 2
