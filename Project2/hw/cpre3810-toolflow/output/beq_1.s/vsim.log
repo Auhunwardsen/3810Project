@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 20:58:40 on Dec 08,2025
+# Start time: 21:20:21 on Dec 08,2025
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2025.1_2 linux_x86_64 Apr  7 2025
@@ -80,7 +80,7 @@ Reading pref.tcl
 #     Source: /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd:62
 #   Active process: /tb/MyRiscv/line__932 @ sub-iteration 1
 #     Source: /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd:62
-#   Active process: /tb/MyRiscv/line__975 @ sub-iteration 1
+#   Active process: /tb/MyRiscv/line__980 @ sub-iteration 1
 #     Source: /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd:62
 #       Signal: /tb/MyRiscv/s_ControlMux @ sub-iteration 2 at Value Z (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd:290)
 #       Signal: /tb/MyRiscv/s_IFID_Write @ sub-iteration 2 at Value X (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd:287)
@@ -94,5 +94,5 @@ Reading pref.tcl
 #       Signal: /tb/MyRiscv/u_fetch/s_NextPC @ sub-iteration 4 at Value unknown (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/fetch.vhd:66)
 ################# END OF LOOP #################
 # ** Error (suppressible): (vsim-3601) Iteration limit 10000000 reached at time 80 ns.
-# End time: 20:58:45 on Dec 08,2025, Elapsed time: 0:00:05
+# End time: 21:20:26 on Dec 08,2025, Elapsed time: 0:00:05
 # Errors: 1, Warnings: 12
