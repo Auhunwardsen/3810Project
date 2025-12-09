@@ -282,7 +282,21 @@ architecture structure of RISCV_Processor is
   signal s_Stall      : std_logic;
   signal s_Instr_Fetch: std_logic_vector(31 downto 0);
   
-  -- Control signals
+  -- Hardware scheduling signals
+  signal s_PCWrite     : std_logic;  -- PC write enable from hazard detection
+  signal s_IFID_Write  : std_logic;  -- IF/ID write enable from hazard detection
+  signal s_IFID_Flush  : std_logic;  -- IF/ID flush from control hazard
+  signal s_IDEX_Flush  : std_logic;  -- ID/EX flush from control hazard
+  signal s_ControlMux  : std_logic;  -- Control mux for load-use stall
+  signal s_Jump       : std_logic;  -- Jump signal
+  
+  -- Control signals (before mux)
+  signal s_RegWrite_ID : std_logic;  -- RegWrite before ControlMux
+  signal s_MemWrite_ID : std_logic;  -- MemWrite before ControlMux
+  signal s_MemRead_ID  : std_logic;  -- MemRead before ControlMux
+  signal s_Branch_ID   : std_logic;  -- Branch before ControlMux
+  
+  -- Control signals (after mux)
   signal s_Branch     : std_logic;
   signal s_MemRead    : std_logic;
   signal s_MemToReg   : std_logic;
@@ -425,7 +439,7 @@ begin
     port map (
       i_CLK     => iCLK,
       i_RST     => iRST,
-      i_WE      => '1',  -- Always enabled for software-scheduled pipeline
+      i_WE      => s_IFID_Write,  -- Hardware scheduling control
       i_flush   => s_IFID_Flush,  -- Hardware control hazard flush
       i_PC      => s_PC,
       i_PCplus4 => s_PCplus4,
@@ -443,14 +457,30 @@ begin
   u_control: control
     port map (
       i_opcode   => s_IFID_Inst(6 downto 0),
-      o_branch   => s_Branch,
-      o_memRead  => s_MemRead,
+      o_branch   => s_Branch_ID,
+      o_memRead  => s_MemRead_ID,
       o_memToReg => s_MemToReg,
       o_ALUOp    => s_ALUOp,
-      o_memWrite => s_MemWrite,
+      o_memWrite => s_MemWrite_ID,
       o_ALUSrc   => s_ALUSrc,
-      o_regWrite => s_RegWrite
+      o_regWrite => s_RegWrite_ID
     );
+    
+  -- Control Mux: Insert NOP when stalling for load-use hazard
+  process(s_ControlMux, s_RegWrite_ID, s_MemWrite_ID, s_MemRead_ID, s_Branch_ID)
+  begin
+    if s_ControlMux = '1' then  -- Stall: insert NOP (all control signals = 0)
+      s_RegWrite <= '0';
+      s_MemWrite <= '0';
+      s_MemRead  <= '0';
+      s_Branch   <= '0';
+    else  -- Normal: pass through control signals
+      s_RegWrite <= s_RegWrite_ID;
+      s_MemWrite <= s_MemWrite_ID;
+      s_MemRead  <= s_MemRead_ID;
+      s_Branch   <= s_Branch_ID;
+    end if;
+  end process;
 
   -- Register File: reads two source registers
   u_regfile: regfile
@@ -487,7 +517,7 @@ begin
     port map (
       i_CLK       => iCLK,
       i_RST       => iRST,
-      i_WE        => '1',  -- Always enabled for software-scheduled pipeline
+      i_WE        => '1',  -- Always enabled (stalls handled by control mux)
       i_flush     => s_IDEX_Flush,  -- Hardware control hazard flush
       i_RegWrite  => s_RegWrite,
       i_MemToReg  => s_MemToReg,
@@ -831,9 +861,11 @@ begin
   
   -- Control hazard detection (branch/jump flush)
   -- Flush when branch/jump is taken
-  process(s_Branch, s_Jump, s_BranchResult)
+  process(s_Branch, s_BranchTaken, s_IsJAL, s_IsJALR)
   begin
-    if ((s_Branch = '1' and s_BranchResult = '1') or s_Jump = '1') then
+    s_Jump <= s_IsJAL or s_IsJALR;  -- Combine JAL and JALR as jump
+    
+    if ((s_Branch = '1' and s_BranchTaken = '1') or s_Jump = '1') then
       s_IFID_Flush <= '1';   -- Flush IF/ID register
       s_IDEX_Flush <= '1';   -- Flush ID/EX register
     else
