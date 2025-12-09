@@ -924,42 +924,28 @@ begin
   -- HARDWARE SCHEDULING: Hazard Detection and Pipeline Control
   -------------------------------------------------------------------------
   
-  -- Comprehensive stall detection: Load-use hazards and Branch-ALU hazards
-  -- Stall when: 1) Load-use hazard, OR 2) Branch needs result from EX stage ALU
-  process(s_IDEX_MemRead, s_IDEX_RegWrite, s_IDEX_RDAddr, s_IFID_Inst, s_Branch)
+  -- Robust stall and hazard detection
+  process(s_IDEX_MemRead, s_IDEX_RDAddr, s_IFID_Inst, s_IDEX_Flush, s_IFID_Flush)
     variable v_RS1_addr : std_logic_vector(4 downto 0);
     variable v_RS2_addr : std_logic_vector(4 downto 0);
-    variable v_IsBranch : std_logic;
     variable v_LoadUseHazard : std_logic;
-    variable v_BranchALUHazard : std_logic;
   begin
     v_RS1_addr := s_IFID_Inst(19 downto 15);
     v_RS2_addr := s_IFID_Inst(24 downto 20);
-    v_IsBranch := s_Branch;
-    
-    -- Check for load-use hazard (instruction in EX is load AND current uses its result)
+    -- Load-use hazard: EX stage is load, and ID uses its result
     if (s_IDEX_MemRead = '1' and s_IDEX_RDAddr /= "00000" and 
         (s_IDEX_RDAddr = v_RS1_addr or s_IDEX_RDAddr = v_RS2_addr)) then
       v_LoadUseHazard := '1';
     else
       v_LoadUseHazard := '0';
     end if;
-    
-    -- Check for branch-ALU hazard (branch needs result from ALU in EX stage)
-    if (v_IsBranch = '1' and s_IDEX_RegWrite = '1' and s_IDEX_RDAddr /= "00000" and
-        (s_IDEX_RDAddr = v_RS1_addr or s_IDEX_RDAddr = v_RS2_addr)) then
-      v_BranchALUHazard := '1';
-    else
-      v_BranchALUHazard := '0';
-    end if;
-    
     -- Prioritize flush over stall
     if s_IDEX_Flush = '1' or s_IFID_Flush = '1' then
       s_Stall <= '0';
       s_PCWrite <= '1';
       s_IFID_Write <= '1';
       s_ControlMux <= '0';
-    elsif (v_LoadUseHazard = '1' or v_BranchALUHazard = '1') then
+    elsif v_LoadUseHazard = '1' then
       s_Stall <= '1';
       s_PCWrite <= '0';      -- Don't update PC
       s_IFID_Write <= '0';   -- Don't update IF/ID
@@ -974,13 +960,20 @@ begin
   
   -- Control hazard detection (branch/jump flush)
   -- Flush all pipeline registers except WB when branch/jump is taken
-  process(s_Branch, s_BranchTaken, s_IsJAL, s_IsJALR)
+  -- Robust branch/jump control hazard logic
+  process(s_Branch, s_BranchTaken, s_IFID_Inst)
   begin
-    s_Jump <= s_IsJAL or s_IsJALR;  -- Combine JAL and JALR as jump
-    if ((s_Branch = '1' and s_BranchTaken = '1') or s_Jump = '1') then
-      s_IFID_Flush   <= '1';   -- Flush IF/ID register
-      s_IDEX_Flush   <= '1';   -- Flush ID/EX register
-      s_EXMEM_Flush  <= '0';   -- Do NOT flush EX/MEM or MEM/WB
+    -- Detect JAL/JALR in IFID
+    variable v_Jump : std_logic;
+    v_Jump := '0';
+    if s_IFID_Inst(6 downto 0) = "1101111" or s_IFID_Inst(6 downto 0) = "1100111" then
+      v_Jump := '1';
+    end if;
+    -- Flush IFID/IDEX if branch taken or jump detected in ID
+    if (s_Branch = '1' and s_BranchTaken = '1') or v_Jump = '1' then
+      s_IFID_Flush   <= '1';
+      s_IDEX_Flush   <= '1';
+      s_EXMEM_Flush  <= '0';
       s_MEMWB_Flush  <= '0';
     else
       s_IFID_Flush   <= '0';
