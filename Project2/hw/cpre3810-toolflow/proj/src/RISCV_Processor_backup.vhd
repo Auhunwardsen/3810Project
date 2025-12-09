@@ -326,12 +326,6 @@ architecture structure of RISCV_Processor is
   signal s_Zero       : std_logic;
   signal s_Overflow   : std_logic;
   
-  -- Forwarding signals
-  signal s_ForwardA   : std_logic_vector(1 downto 0);  -- ALU input A forwarding control
-  signal s_ForwardB   : std_logic_vector(1 downto 0);  -- ALU input B forwarding control
-  signal s_ALUIn1_fwd : std_logic_vector(31 downto 0);  -- ALU input A after forwarding
-  signal s_ALUIn2_fwd : std_logic_vector(31 downto 0);  -- ALU input B after forwarding
-  
   -- Branch/Jump signals
   signal s_BranchTaken: std_logic;
   signal s_BranchAddr : std_logic_vector(31 downto 0);
@@ -573,77 +567,25 @@ begin
       o_ALUCtrl  => s_ALUCtrl
     );
 
-  -------------------------------------------------------------------------
-  -- FORWARDING UNIT: Detects and resolves data hazards
-  -------------------------------------------------------------------------
-  -- EX→EX and MEM→EX forwarding logic
-  process(s_EXMEM_RegWrite, s_MEMWB_RegWrite, s_EXMEM_RDAddr, s_MEMWB_RDAddr, 
-          s_IDEX_RS1Addr, s_IDEX_RS2Addr)
-  begin
-    -- Forward A (RS1) logic
-    if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr /= "00000" and 
-        s_EXMEM_RDAddr = s_IDEX_RS1Addr) then
-      s_ForwardA <= "10";  -- Forward from EX/MEM (MEM→EX)
-    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr /= "00000" and
-           s_MEMWB_RDAddr = s_IDEX_RS1Addr and 
-           not (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = s_IDEX_RS1Addr)) then
-      s_ForwardA <= "01";  -- Forward from MEM/WB (WB→EX)
-    else
-      s_ForwardA <= "00";  -- No forwarding
-    end if;
-    
-    -- Forward B (RS2) logic  
-    if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr /= "00000" and 
-        s_EXMEM_RDAddr = s_IDEX_RS2Addr) then
-      s_ForwardB <= "10";  -- Forward from EX/MEM (MEM→EX)
-    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr /= "00000" and
-           s_MEMWB_RDAddr = s_IDEX_RS2Addr and 
-           not (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = s_IDEX_RS2Addr)) then
-      s_ForwardB <= "01";  -- Forward from MEM/WB (WB→EX)
-    else
-      s_ForwardB <= "00";  -- No forwarding
-    end if;
-  end process;
-  
-  -- Forwarding MUX A (ALU Input A)
-  process(s_ForwardA, s_IDEX_RS1Data, s_EXMEM_ALUResult, s_WriteData)
-  begin
-    case s_ForwardA is
-      when "10" => s_ALUIn1_fwd <= s_EXMEM_ALUResult;  -- MEM→EX forwarding
-      when "01" => s_ALUIn1_fwd <= s_WriteData;        -- WB→EX forwarding  
-      when others => s_ALUIn1_fwd <= s_IDEX_RS1Data;   -- No forwarding
-    end case;
-  end process;
-  
-  -- Forwarding MUX B (ALU Input B before ALUSrc mux)
-  process(s_ForwardB, s_IDEX_RS2Data, s_EXMEM_ALUResult, s_WriteData)
-  begin
-    case s_ForwardB is
-      when "10" => s_ALUIn2_fwd <= s_EXMEM_ALUResult;  -- MEM→EX forwarding
-      when "01" => s_ALUIn2_fwd <= s_WriteData;        -- WB→EX forwarding
-      when others => s_ALUIn2_fwd <= s_IDEX_RS2Data;   -- No forwarding  
-    end case;
-  end process;
-
-  -- ALU Source Mux: selects between forwarded RS2 data or immediate
+  -- ALU Source Mux: selects between RS2 data or immediate
   u_alu_src_mux: mux2t1_n
     generic map(N => 32)
     port map (
       i_S  => s_IDEX_ALUSrc,
-      i_D0 => s_ALUIn2_fwd,      -- Use forwarded RS2 data
+      i_D0 => s_IDEX_RS2Data,
       i_D1 => s_IDEX_Immediate,
       o_O  => s_ALUIn2
     );
 
-  -- ALU Input A Selection: AUIPC uses PC, LUI uses zero, others use forwarded RS1
-  process(s_IDEX_Instr, s_ALUIn1_fwd, s_IDEX_PC)
+  -- ALU Input A Selection: AUIPC uses PC, LUI uses zero, others use RS1
+  process(s_IDEX_Instr, s_IDEX_RS1Data, s_IDEX_PC)
   begin
     if s_IDEX_Instr(6 downto 0) = "0010111" then
       s_ALUIn1 <= s_IDEX_PC;  -- AUIPC: use PC
     elsif s_IDEX_Instr(6 downto 0) = "0110111" then  
       s_ALUIn1 <= (others => '0');  -- LUI: don't care, but use clean signal
     else
-      s_ALUIn1 <= s_ALUIn1_fwd;  -- Normal: use forwarded RS1
+      s_ALUIn1 <= s_IDEX_RS1Data;  -- Normal: use RS1
     end if;
   end process;
 
