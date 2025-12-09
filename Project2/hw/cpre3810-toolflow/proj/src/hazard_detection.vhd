@@ -62,10 +62,9 @@ begin
   o_IFID_Write <= not s_DataHazard;  -- Disable write only for data hazards
   o_ControlMux <= s_DataHazard;  -- Insert NOP for data hazards only
 
-  -- Flush IF/ID on control hazard to kill instruction after jump/branch
-  -- This flushes the instruction that was fetched BEFORE PC updated
+  -- Flush IF/ID and ID/EX on control hazard to kill instructions after jump/branch
+  -- This neutralizes both the fetched and decoded instructions on a control hazard
   o_IFID_Flush <= s_ControlHazard;
-  -- Never flush ID/EX - all instructions in ID/EX must complete
-  o_IDEX_Flush <= '0';
+  o_IDEX_Flush <= s_ControlHazard;
 
 end behavioral;

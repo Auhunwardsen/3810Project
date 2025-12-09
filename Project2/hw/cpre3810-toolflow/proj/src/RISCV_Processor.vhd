@@ -999,15 +999,18 @@ begin
   
   -- Register write outputs for testbench -- Update by the group: use WB stage signals
   -- RISC-V x0 is hardwired to zero - block writes to register 0
+  -- Block register writes after halt is asserted to prevent extra writes
   -- Using concurrent conditional assignment for zero-latency propagation
-  s_RegWr     <= s_MEMWB_RegWrite when (s_MEMWB_RDAddr /= "00000") else '0';
+  s_RegWr     <= s_MEMWB_RegWrite when (s_MEMWB_RDAddr /= "00000" and s_Halt = '0') else '0';
   s_RegWrAddr <= s_MEMWB_RDAddr;
   s_RegWrData <= s_WriteData;
   
   -- Control outputs (halt should be detected when WFI reaches WB stage)
   process(s_MEMWB_Inst)
   begin
-    -- Only halt on specific WFI instruction encoding: 0x10500073
+    -- WFI (Wait For Interrupt) instruction encoding: 0x10500073
+    -- This is the RISC-V standard encoding for WFI: funct7=0x20, rs2=0, rs1=0, funct3=0, opcode=SYSTEM (0x73)
+    -- In RARS and most testbenches, WFI is used to signal program completion for simulation.
     -- Do not assert halt if MEMWB is a bubble/NOP (all zeros)
     if s_MEMWB_Inst = x"10500073" and s_MEMWB_Inst /= x"00000000" then
       s_Halt <= '1';
