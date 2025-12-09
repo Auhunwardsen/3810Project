@@ -53,8 +53,8 @@ begin
   -- Combined data hazard signal
   s_DataHazard <= s_LoadUseHazard or s_BranchDataHazard;
 
-  -- Control hazard from external signal (branch taken or jump)
-  s_ControlHazard <= i_Branch or i_Jump;
+  -- Control hazard: any branch or jump that redirects PC
+  s_ControlHazard <= i_Branch;
 
   -- Output logic - prioritize control hazard over data stalls
   -- When control hazard occurs, allow PC update to jump/branch target
@@ -63,7 +63,10 @@ begin
   o_ControlMux <= s_DataHazard and not s_ControlHazard;  -- Insert NOP for data hazards, not control hazards
 
   -- Flush pipeline stages on control hazards
+  -- For jumps (i_Jump): flush only IF/ID (let jump complete to write return address)
+  -- For branches (i_Branch): flush only IF/ID (branch already in ID when taken)
+  -- NOTE: We only flush IF/ID for both cases - the instruction fetched after the jump/branch
   o_IFID_Flush <= s_ControlHazard;
-  o_IDEX_Flush <= s_ControlHazard;
+  o_IDEX_Flush <= '0';  -- Never flush ID/EX - jumps/branches need to complete
 
 end behavioral;
