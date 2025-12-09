@@ -18,8 +18,6 @@ In clock cycle: 16
 Register Write to Reg: 0x04 Val: 0x00400034
 In clock cycle: 17
 Register Write to Reg: 0x01 Val: 0x00400034
-In clock cycle: 18
-Register Write to Reg: 0x05 Val: 0x00000003
 In clock cycle: 20
 Register Write to Reg: 0x05 Val: 0x00000001
 In clock cycle: 20
@@ -28,8 +26,6 @@ In clock cycle: 22
 Register Write to Reg: 0x04 Val: 0x00400048
 In clock cycle: 23
 Register Write to Reg: 0x01 Val: 0x00400034
-In clock cycle: 24
-Register Write to Reg: 0x05 Val: 0x00000003
 In clock cycle: 25
 Register Write to Reg: 0x05 Val: 0x00000003
 In clock cycle: 25

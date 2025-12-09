@@ -1,18 +1,24 @@
 Oh no...
 
 Cycle: 20
-RARS instruction number: 13	Instruction: sw x5,0(x3)
-Expected:	Memory Write to Addr: 0x10010000 Val: 0x00000003
+RARS instruction number: 12	Instruction: addi x5,x0,3
+Expected:	Register Write to Reg: 0x05 Val: 0x00000003
 Got     :	Register Write to Reg: 0x05 Val: 0x00000001
-Wrote to incorrect structure
+Incorrect write
 
 Cycle: 20
+RARS instruction number: 13	Instruction: sw x5,0(x3)
+Expected:	Memory Write to Addr: 0x10010000 Val: 0x00000003
+Got     :	Memory Write to Addr: 0x10010000 Val: 0x00000001
+Incorrect write
+
+Cycle: 22
 RARS instruction number: na	Instruction: na
 Expected:	Execution stopped
-Got     :	Memory Write to Addr: 0x10010000 Val: 0x00000001
+Got     :	Register Write to Reg: 0x04 Val: 0x00400048
 Student execution improperly continued
 
-Almost! your processor completed the program with  2/3 allowed mismatches
+You have reached the maximum mismatches (3)
 
 Helpful resources for Debugging:
 ms.trace : output from the VHDL testbench during program execution on your processor
