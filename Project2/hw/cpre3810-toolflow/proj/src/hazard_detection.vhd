@@ -54,17 +54,18 @@ begin
   s_DataHazard <= s_LoadUseHazard or s_BranchDataHazard;
 
   -- Control hazard: any branch or jump that redirects PC
-  s_ControlHazard <= i_Branch;
+  s_ControlHazard <= i_Branch or i_Jump;
 
   -- Output logic - prioritize control hazard over data stalls
   -- When control hazard occurs, allow PC update to jump/branch target
   o_PCWrite <= not s_DataHazard or s_ControlHazard;
-  -- IMPORTANT: During control hazard, PREVENT IF/ID write to block wrong instruction from entering
-  o_IFID_Write <= not s_DataHazard and not s_ControlHazard;
-  o_ControlMux <= s_DataHazard and not s_ControlHazard;  -- Insert NOP for data hazards, not control hazards
+  o_IFID_Write <= not s_DataHazard;  -- Disable write only for data hazards
+  o_ControlMux <= s_DataHazard;  -- Insert NOP for data hazards only
 
-  -- No flush needed - we prevent wrong instruction from entering IF/ID by disabling writes
-  o_IFID_Flush <= '0';
-  o_IDEX_Flush <= '0';  -- Never flush ID/EX - jumps/branches need to complete
+  -- Flush IF/ID on control hazard to kill instruction after jump/branch
+  -- This flushes the instruction that was fetched BEFORE PC updated
+  o_IFID_Flush <= s_ControlHazard;
+  -- Never flush ID/EX - all instructions in ID/EX must complete
+  o_IDEX_Flush <= '0';
 
 end behavioral;
