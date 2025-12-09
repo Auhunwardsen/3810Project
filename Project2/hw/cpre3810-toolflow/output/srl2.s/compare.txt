@@ -1,6 +1,6 @@
 Oh no...
 
-Cycle: 14
+Cycle: 15
 RARS instruction number: 10	Instruction: lui x5,-524288
 Expected:	Register Write to Reg: 0x05 Val: 0x80000000
 Got     :	Register Write to Reg: 0x1E Val: 0x00000002

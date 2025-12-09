@@ -1,21 +1,21 @@
 Oh no...
 
-Cycle: 19
-RARS instruction number: 14	Instruction: slti x7,x7,4
-Expected:	Register Write to Reg: 0x07 Val: 0x00000001
-Got     :	Register Write to Reg: 0x07 Val: 0x00000000
-Incorrect write
-
-Cycle: 20
+Cycle: 22
 RARS instruction number: 17	Instruction: lw x29,24(x8)
 Expected:	Register Write to Reg: 0x1D Val: 0x00000000
-Got     :	Register Write to Reg: 0x07 Val: 0x00000000
-Incorrect write
+Got     :	Memory Write to Addr: 0x10010FF4 Val: 0x00000000
+Wrote to incorrect structure
 
-Cycle: 21
+Cycle: 26
 RARS instruction number: 18	Instruction: auipc x1,0
 Expected:	Register Write to Reg: 0x01 Val: 0x0040003C
 Got     :	Register Write to Reg: 0x07 Val: 0x00000000
+Incorrect write
+
+Cycle: 28
+RARS instruction number: 19	Instruction: addi x1,x1,12
+Expected:	Register Write to Reg: 0x01 Val: 0x00400048
+Got     :	Register Write to Reg: 0x07 Val: 0x00000001
 Incorrect write
 
 You have reached the maximum mismatches (3)
