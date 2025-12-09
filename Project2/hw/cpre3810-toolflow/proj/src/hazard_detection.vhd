@@ -33,19 +33,20 @@ begin
   
   -- Load-use hazard detection
   -- Occurs when current instruction uses result of previous load instruction
-  s_LoadUseHazard <= '1' when (i_IDEX_MemRead = '1' and 
+  s_LoadUseHazard <= '1' when (i_IDEX_MemRead = '1' and
                               ((i_IDEX_RD = i_IFID_RS1 and i_IFID_RS1 /= "00000") or
                                (i_IDEX_RD = i_IFID_RS2 and i_IFID_RS2 /= "00000")))
                      else '0';
-  
-  -- Control hazard detection  
+
+  -- Control hazard from external signal (branch taken or jump)
   s_ControlHazard <= i_Branch or i_Jump;
-  
-  -- Output logic
-  o_PCWrite <= not s_LoadUseHazard;  -- Stall PC if load-use hazard
-  o_IFID_Write <= not s_LoadUseHazard;  -- Stall IF/ID if load-use hazard
-  o_ControlMux <= s_LoadUseHazard;  -- Insert NOP if load-use hazard
-  
+
+  -- Output logic - prioritize control hazard over load-use stall
+  -- When control hazard occurs, allow PC update to jump/branch target
+  o_PCWrite <= not s_LoadUseHazard or s_ControlHazard;
+  o_IFID_Write <= not s_LoadUseHazard or s_ControlHazard;
+  o_ControlMux <= s_LoadUseHazard and not s_ControlHazard;  -- Insert NOP only for load-use, not control hazard
+
   -- Flush pipeline stages on control hazards
   o_IFID_Flush <= s_ControlHazard;
   o_IDEX_Flush <= s_ControlHazard;

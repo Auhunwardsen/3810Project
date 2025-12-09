@@ -274,6 +274,46 @@ architecture structure of RISCV_Processor is
     );
   end component;
 
+  component hazard_detection is
+    port(
+      i_IDEX_MemRead  : in  std_logic;
+      i_IDEX_RD       : in  std_logic_vector(4 downto 0);
+      i_IFID_RS1      : in  std_logic_vector(4 downto 0);
+      i_IFID_RS2      : in  std_logic_vector(4 downto 0);
+      i_Branch        : in  std_logic;
+      i_Jump          : in  std_logic;
+      o_PCWrite       : out std_logic;
+      o_IFID_Write    : out std_logic;
+      o_ControlMux    : out std_logic;
+      o_IFID_Flush    : out std_logic;
+      o_IDEX_Flush    : out std_logic
+    );
+  end component;
+
+  component forwarding_unit is
+    port(
+      i_IDEX_RS1      : in  std_logic_vector(4 downto 0);
+      i_IDEX_RS2      : in  std_logic_vector(4 downto 0);
+      i_EXMEM_RD      : in  std_logic_vector(4 downto 0);
+      i_MEMWB_RD      : in  std_logic_vector(4 downto 0);
+      i_EXMEM_RegWrite : in  std_logic;
+      i_MEMWB_RegWrite : in  std_logic;
+      o_Forward_A     : out std_logic_vector(1 downto 0);
+      o_Forward_B     : out std_logic_vector(1 downto 0)
+    );
+  end component;
+
+  component mux3t1_n is
+    generic(N : integer := 32);
+    port(
+      i_S   : in  std_logic_vector(1 downto 0);
+      i_D0  : in  std_logic_vector(N-1 downto 0);
+      i_D1  : in  std_logic_vector(N-1 downto 0);
+      i_D2  : in  std_logic_vector(N-1 downto 0);
+      o_O   : out std_logic_vector(N-1 downto 0)
+    );
+  end component;
+
   -- Processor internal signals
   signal s_PC         : std_logic_vector(31 downto 0);
   signal s_PCplus4    : std_logic_vector(31 downto 0);
@@ -291,6 +331,7 @@ architecture structure of RISCV_Processor is
   signal s_MEMWB_Flush  : std_logic;  -- MEM/WB flush from control hazard
   signal s_ControlMux  : std_logic;  -- Control mux for load-use stall
   signal s_Jump       : std_logic;  -- Jump signal
+  signal s_ControlHazard : std_logic;  -- Combined control hazard signal (branch taken or jump)
   
   -- Control signals (before mux)
   signal s_RegWrite_ID : std_logic;  -- RegWrite before ControlMux
@@ -600,54 +641,40 @@ begin
   -------------------------------------------------------------------------
   -- FORWARDING UNIT: Detects and resolves data hazards
   -------------------------------------------------------------------------
-  -- EX→EX and MEM→EX forwarding logic
-  process(s_EXMEM_RegWrite, s_MEMWB_RegWrite, s_EXMEM_RDAddr, s_MEMWB_RDAddr, 
-          s_IDEX_RS1Addr, s_IDEX_RS2Addr)
-  begin
-    -- Forward A (RS1) logic
-    if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr /= "00000" and 
-        s_EXMEM_RDAddr = s_IDEX_RS1Addr) then
-      s_ForwardA <= "10";  -- Forward from EX/MEM (MEM→EX)
-    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr /= "00000" and
-           s_MEMWB_RDAddr = s_IDEX_RS1Addr and 
-           not (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = s_IDEX_RS1Addr)) then
-      s_ForwardA <= "01";  -- Forward from MEM/WB (WB→EX)
-    else
-      s_ForwardA <= "00";  -- No forwarding
-    end if;
-    
-    -- Forward B (RS2) logic  
-    if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr /= "00000" and 
-        s_EXMEM_RDAddr = s_IDEX_RS2Addr) then
-      s_ForwardB <= "10";  -- Forward from EX/MEM (MEM→EX)
-    elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr /= "00000" and
-           s_MEMWB_RDAddr = s_IDEX_RS2Addr and 
-           not (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr = s_IDEX_RS2Addr)) then
-      s_ForwardB <= "01";  -- Forward from MEM/WB (WB→EX)
-    else
-      s_ForwardB <= "00";  -- No forwarding
-    end if;
-  end process;
-  
+  -- Instantiate forwarding unit to generate forwarding control signals
+  u_forwarding_unit: forwarding_unit
+    port map(
+      i_IDEX_RS1      => s_IDEX_RS1Addr,
+      i_IDEX_RS2      => s_IDEX_RS2Addr,
+      i_EXMEM_RD      => s_EXMEM_RDAddr,
+      i_MEMWB_RD      => s_MEMWB_RDAddr,
+      i_EXMEM_RegWrite => s_EXMEM_RegWrite,
+      i_MEMWB_RegWrite => s_MEMWB_RegWrite,
+      o_Forward_A     => s_ForwardA,
+      o_Forward_B     => s_ForwardB
+    );
+
   -- Forwarding MUX A (ALU Input A)
-  process(s_ForwardA, s_IDEX_RS1Data, s_EXMEM_ALUResult, s_WriteData)
-  begin
-    case s_ForwardA is
-      when "10" => s_ALUIn1_fwd <= s_EXMEM_ALUResult;  -- MEM→EX forwarding
-      when "01" => s_ALUIn1_fwd <= s_WriteData;        -- WB→EX forwarding  
-      when others => s_ALUIn1_fwd <= s_IDEX_RS1Data;   -- No forwarding
-    end case;
-  end process;
-  
+  u_forward_mux_a: mux3t1_n
+    generic map(N => 32)
+    port map(
+      i_S  => s_ForwardA,
+      i_D0 => s_IDEX_RS1Data,       -- 00: No forwarding
+      i_D1 => s_WriteData,          -- 01: Forward from MEM/WB (WB→EX)
+      i_D2 => s_EXMEM_ALUResult,    -- 10: Forward from EX/MEM (MEM→EX)
+      o_O  => s_ALUIn1_fwd
+    );
+
   -- Forwarding MUX B (ALU Input B before ALUSrc mux)
-  process(s_ForwardB, s_IDEX_RS2Data, s_EXMEM_ALUResult, s_WriteData)
-  begin
-    case s_ForwardB is
-      when "10" => s_ALUIn2_fwd <= s_EXMEM_ALUResult;  -- MEM→EX forwarding
-      when "01" => s_ALUIn2_fwd <= s_WriteData;        -- WB→EX forwarding
-      when others => s_ALUIn2_fwd <= s_IDEX_RS2Data;   -- No forwarding  
-    end case;
-  end process;
+  u_forward_mux_b: mux3t1_n
+    generic map(N => 32)
+    port map(
+      i_S  => s_ForwardB,
+      i_D0 => s_IDEX_RS2Data,       -- 00: No forwarding
+      i_D1 => s_WriteData,          -- 01: Forward from MEM/WB (WB→EX)
+      i_D2 => s_EXMEM_ALUResult,    -- 10: Forward from EX/MEM (MEM→EX)
+      o_O  => s_ALUIn2_fwd
+    );
 
   -- ALU Source Mux: selects between forwarded RS2 data or immediate
   u_alu_src_mux: mux2t1_n
@@ -923,65 +950,36 @@ begin
   -------------------------------------------------------------------------
   -- HARDWARE SCHEDULING: Hazard Detection and Pipeline Control
   -------------------------------------------------------------------------
-  
-  -- Robust stall and hazard detection
-  process(s_IDEX_MemRead, s_IDEX_RDAddr, s_IFID_Inst, s_IDEX_Flush, s_IFID_Flush)
-    variable v_RS1_addr : std_logic_vector(4 downto 0);
-    variable v_RS2_addr : std_logic_vector(4 downto 0);
-    variable v_LoadUseHazard : std_logic;
-  begin
-    v_RS1_addr := s_IFID_Inst(19 downto 15);
-    v_RS2_addr := s_IFID_Inst(24 downto 20);
-    -- Load-use hazard: EX stage is load, and ID uses its result
-    if (s_IDEX_MemRead = '1' and s_IDEX_RDAddr /= "00000" and 
-        (s_IDEX_RDAddr = v_RS1_addr or s_IDEX_RDAddr = v_RS2_addr)) then
-      v_LoadUseHazard := '1';
-    else
-      v_LoadUseHazard := '0';
-    end if;
-    -- Prioritize flush over stall
-    if s_IDEX_Flush = '1' or s_IFID_Flush = '1' then
-      s_Stall <= '0';
-      s_PCWrite <= '1';
-      s_IFID_Write <= '1';
-      s_ControlMux <= '0';
-    elsif v_LoadUseHazard = '1' then
-      s_Stall <= '1';
-      s_PCWrite <= '0';      -- Don't update PC
-      s_IFID_Write <= '0';   -- Don't update IF/ID
-      s_ControlMux <= '1';   -- Insert bubble (nop) in ID/EX
-    else
-      s_Stall <= '0';
-      s_PCWrite <= '1';      -- Normal PC update
-      s_IFID_Write <= '1';   -- Normal IF/ID update  
-      s_ControlMux <= '0';   -- Pass normal control signals
-    end if;
-  end process;
-  
-  -- Control hazard detection (branch/jump flush)
-  -- Flush all pipeline registers except WB when branch/jump is taken
-  -- Robust branch/jump control hazard logic
-  process(s_Branch, s_BranchTaken, s_IFID_Inst)
-    variable v_Jump : std_logic;
-  begin
-    -- Detect JAL/JALR in IFID
-    v_Jump := '0';
-    if (s_IFID_Inst(6 downto 0) = "1101111") or (s_IFID_Inst(6 downto 0) = "1100111") then
-      v_Jump := '1';
-    end if;
-    -- Flush IFID/IDEX if branch taken or jump detected in ID
-    if ((s_Branch = '1' and s_BranchTaken = '1') or (v_Jump = '1')) then
-      s_IFID_Flush   <= '1';
-      s_IDEX_Flush   <= '1';
-      s_EXMEM_Flush  <= '0';
-      s_MEMWB_Flush  <= '0';
-    else
-      s_IFID_Flush   <= '0';
-      s_IDEX_Flush   <= '0';
-      s_EXMEM_Flush  <= '0';
-      s_MEMWB_Flush  <= '0';
-    end if;
-  end process;
+
+  -- Detect jump instructions (JAL/JALR) in IFID stage
+  s_Jump <= '1' when (s_IFID_Inst(6 downto 0) = "1101111") or
+                     (s_IFID_Inst(6 downto 0) = "1100111") else '0';
+
+  -- Control hazard signal: flush when branch is taken OR jump instruction detected
+  s_ControlHazard <= (s_Branch_ID and s_BranchTaken) or s_Jump;
+
+  -- Hazard Detection Unit instantiation
+  u_hazard_detection: hazard_detection
+    port map(
+      i_IDEX_MemRead  => s_IDEX_MemRead,
+      i_IDEX_RD       => s_IDEX_RDAddr,
+      i_IFID_RS1      => s_IFID_Inst(19 downto 15),
+      i_IFID_RS2      => s_IFID_Inst(24 downto 20),
+      i_Branch        => s_ControlHazard,  -- Flush only when control hazard occurs
+      i_Jump          => '0',  -- Already included in s_ControlHazard
+      o_PCWrite       => s_PCWrite,
+      o_IFID_Write    => s_IFID_Write,
+      o_ControlMux    => s_ControlMux,
+      o_IFID_Flush    => s_IFID_Flush,
+      o_IDEX_Flush    => s_IDEX_Flush
+    );
+
+  -- Stall signal derived from PCWrite for compatibility
+  s_Stall <= not s_PCWrite;
+
+  -- Flush signals for later stages (not needed for basic control hazards)
+  s_EXMEM_Flush  <= '0';
+  s_MEMWB_Flush  <= '0';
   
   -- Output connections -- Update by the group: observe WB ALU result for validation
   oALUOut <= s_MEMWB_ALUResult; 
