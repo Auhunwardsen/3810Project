@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 17:57:14 on Dec 08,2025
+Start time: 18:17:52 on Dec 08,2025
 vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/addsub.vhd proj/src/hazard_detection.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/decoder5t32.vhd proj/src/RISCV_Processor.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/alu.vhd proj/src/IFID_reg.vhd proj/src/EXMEM_reg.vhd proj/src/IDEX_reg.vhd proj/src/regfile.vhd proj/src/adder_n.vhd proj/src/mux3t1_n.vhd proj/src/control.vhd proj/src/MEMWB_reg.vhd proj/src/dffg.vhd proj/src/reg_n.vhd proj/src/mux2t1_n.vhd proj/src/RISCV_types.vhd proj/src/fetch.vhd proj/src/mem.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/forwarding_unit.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -25,13 +25,38 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Loading package RISCV_types
 -- Compiling entity RISCV_Processor
 -- Compiling architecture structure of RISCV_Processor
--- Loading entity hazard_detection
-** Error: proj/src/RISCV_Processor.vhd(537): (vcom-1136) Unknown identifier "s_IDEX_ALUResult".
-** Error: proj/src/RISCV_Processor.vhd(537): Expression is not a signal.
-** Error: proj/src/RISCV_Processor.vhd(548): (vcom-1136) Unknown identifier "s_IDEX_ALUResult".
-** Error: proj/src/RISCV_Processor.vhd(559): (vcom-1136) Unknown identifier "s_IDEX_ALUResult".
--- Loading entity forwarding_unit
--- Loading entity mux3t1_n
-** Note: proj/src/RISCV_Processor.vhd(941): VHDL Compiler exiting
-End time: 17:57:14 on Dec 08,2025, Elapsed time: 0:00:00
-Errors: 4, Warnings: 0
+** Error: proj/src/RISCV_Processor.vhd(429): (vcom-1136) Unknown identifier "s_IFID_Flush".
+** Error: proj/src/RISCV_Processor.vhd(491): (vcom-1136) Unknown identifier "s_IDEX_Flush".
+** Error: proj/src/RISCV_Processor.vhd(821): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(821): (vcom-1136) Unknown identifier "s_PCWrite".
+** Error: proj/src/RISCV_Processor.vhd(822): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(822): (vcom-1136) Unknown identifier "s_IFID_Write".
+** Error: proj/src/RISCV_Processor.vhd(823): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(823): (vcom-1136) Unknown identifier "s_ControlMux".
+** Error: proj/src/RISCV_Processor.vhd(826): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(826): (vcom-1136) Unknown identifier "s_PCWrite".
+** Error: proj/src/RISCV_Processor.vhd(827): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(827): (vcom-1136) Unknown identifier "s_IFID_Write".
+** Error: proj/src/RISCV_Processor.vhd(828): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(828): (vcom-1136) Unknown identifier "s_ControlMux".
+** Error: proj/src/RISCV_Processor.vhd(834): (vcom-1136) Unknown identifier "s_Jump".
+** Error: proj/src/RISCV_Processor.vhd(834): Expression is not a signal.
+** Error: proj/src/RISCV_Processor.vhd(834): (vcom-1136) Unknown identifier "s_BranchResult".
+** Error: proj/src/RISCV_Processor.vhd(834): Expression is not a signal.
+** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1136) Unknown identifier "s_BranchResult".
+** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1590) Bad expression in right operand of infix expression 'and'.
+** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1136) Unknown identifier "s_Jump".
+** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1590) Bad expression in left operand of infix expression 'or'.
+** Error: proj/src/RISCV_Processor.vhd(836): (vcom-1590) Bad expression in right operand of infix expression 'or'.
+** Error: proj/src/RISCV_Processor.vhd(836): Type error resolving infix expression "or" as type std.STANDARD.BOOLEAN.
+** Error: proj/src/RISCV_Processor.vhd(837): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(837): (vcom-1136) Unknown identifier "s_IFID_Flush".
+** Error: proj/src/RISCV_Processor.vhd(838): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(838): (vcom-1136) Unknown identifier "s_IDEX_Flush".
+** Error: proj/src/RISCV_Processor.vhd(840): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(840): (vcom-1136) Unknown identifier "s_IFID_Flush".
+** Error: proj/src/RISCV_Processor.vhd(841): Illegal target for signal assignment.
+** Error: proj/src/RISCV_Processor.vhd(841): (vcom-1136) Unknown identifier "s_IDEX_Flush".
+** Note: proj/src/RISCV_Processor.vhd(874): VHDL Compiler exiting
+End time: 18:17:52 on Dec 08,2025, Elapsed time: 0:00:00
+Errors: 32, Warnings: 0
