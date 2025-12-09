@@ -99,7 +99,7 @@ begin
         wait for 300 ns;
         -- Run simulation for enough cycles to handle hazards and stalls
         wait for c_CLK_PERIOD * 400;
-        report "Hardware-scheduled pipeline test completed - ALU output: " & to_hstring(s_ALUResult);
+        report "Hardware-scheduled pipeline test completed - ALU output: ";
         wait;
     end process;
     
