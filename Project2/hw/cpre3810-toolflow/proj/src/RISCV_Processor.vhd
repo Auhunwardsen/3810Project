@@ -730,8 +730,8 @@ begin
       i_BranchTaken=> s_BranchTaken,
       i_PCplus4    => s_IDEX_PCplus4,
       i_ALUResult  => s_ALUResult,
-      i_WriteData  => s_IDEX_RS2Data,  -- For store instructions
-      i_RS2Data    => s_IDEX_RS2Data,
+      i_WriteData  => s_ALUIn2_fwd,  -- For store instructions - use forwarded RS2
+      i_RS2Data    => s_ALUIn2_fwd,  -- Use forwarded RS2 data
       i_RDAddr     => s_IDEX_RDAddr,
       i_Instr      => s_IDEX_Instr,
       o_RegWrite   => s_EXMEM_RegWrite,
@@ -957,8 +957,9 @@ begin
   s_Jump <= '1' when (s_IFID_Inst(6 downto 0) = "1101111") or
                      (s_IFID_Inst(6 downto 0) = "1100111") else '0';
 
-  -- Control hazard signal: flush when branch is taken OR jump instruction detected
-  s_ControlHazard <= (s_Branch_ID and s_BranchTaken) or s_Jump;
+  -- Control hazard signal: flush when branch is taken
+  -- NOTE: Jumps update PC but do NOT flush - they must complete to write return address
+  s_ControlHazard <= (s_Branch_ID and s_BranchTaken);
 
   -- Hazard Detection Unit instantiation
   u_hazard_detection: hazard_detection
