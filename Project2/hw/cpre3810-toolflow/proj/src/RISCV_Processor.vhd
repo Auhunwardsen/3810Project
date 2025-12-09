@@ -327,13 +327,15 @@ architecture structure of RISCV_Processor is
   -- Hardware scheduling signals
   signal s_PCWrite     : std_logic;  -- PC write enable from hazard detection
   signal s_IFID_Write  : std_logic;  -- IF/ID write enable from hazard detection
-  signal s_IFID_Flush   : std_logic;  -- IF/ID flush from control hazard
+  signal s_IFID_Flush   : std_logic;  -- IF/ID flush from control hazard (final, after delay)
+  signal s_IFID_Flush_Immediate : std_logic;  -- IF/ID flush from hazard detection (before delay)
   signal s_IDEX_Flush   : std_logic;  -- ID/EX flush from control hazard
   signal s_EXMEM_Flush  : std_logic;  -- EX/MEM flush from control hazard
   signal s_MEMWB_Flush  : std_logic;  -- MEM/WB flush from control hazard
   signal s_ControlMux  : std_logic;  -- Control mux for load-use stall
   signal s_Jump       : std_logic;  -- Jump signal
   signal s_ControlHazard : std_logic;  -- Combined control hazard signal (branch taken or jump)
+  signal s_ControlHazard_Delayed : std_logic;  -- Delayed by one cycle to flush instruction after jump
   
   -- Control signals (before mux)
   signal s_RegWrite_ID : std_logic;  -- RegWrite before ControlMux
@@ -964,6 +966,17 @@ begin
   -- Branches flush both IF/ID and ID/EX (handled in hazard detection unit)
   s_ControlHazard <= (s_Branch_ID and s_BranchTaken) or s_Jump;
 
+  -- Delay control hazard by one cycle to flush the instruction AFTER the jump/branch
+  -- When jump is in ID stage, we want to flush the instruction entering IF/ID, not the jump itself
+  process(iCLK, iRST)
+  begin
+    if iRST = '1' then
+      s_ControlHazard_Delayed <= '0';
+    elsif rising_edge(iCLK) then
+      s_ControlHazard_Delayed <= s_ControlHazard;
+    end if;
+  end process;
+
   -- Hazard Detection Unit instantiation
   u_hazard_detection: hazard_detection
     port map(
@@ -978,9 +991,13 @@ begin
       o_PCWrite       => s_PCWrite,
       o_IFID_Write    => s_IFID_Write,
       o_ControlMux    => s_ControlMux,
-      o_IFID_Flush    => s_IFID_Flush,
+      o_IFID_Flush    => s_IFID_Flush_Immediate,  -- Immediate flush output
       o_IDEX_Flush    => s_IDEX_Flush
     );
+
+  -- Use delayed control hazard for IF/ID flush to flush instruction AFTER jump/branch
+  -- This prevents flushing the jump/branch itself when it's in IF/ID
+  s_IFID_Flush <= s_ControlHazard_Delayed;
 
   -- Stall signal derived from PCWrite for compatibility
   s_Stall <= not s_PCWrite;
