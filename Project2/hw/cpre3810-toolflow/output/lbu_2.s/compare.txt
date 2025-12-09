@@ -1,24 +1,18 @@
 Oh no...
 
-Cycle: 7
-RARS instruction number: 4	Instruction: addi x7,x7,-4
-Expected:	Register Write to Reg: 0x07 Val: 0x10010004
-Got     :	Register Write to Reg: 0x07 Val: 0x10010008
-Incorrect write
-
-Cycle: 8
-RARS instruction number: 5	Instruction: lbu x6,0(x5)
-Expected:	Register Write to Reg: 0x06 Val: 0x000000AB
-Got     :	Register Write to Reg: 0x07 Val: 0x10010008
-Incorrect write
-
 Cycle: 9
 RARS instruction number: 6	Instruction: sw x6,0(x7)
 Expected:	Memory Write to Addr: 0x10010004 Val: 0x000000AB
-Got     :	Register Write to Reg: 0x07 Val: 0x10010008
+Got     :	Register Write to Reg: 0x06 Val: 0x000000AB
 Wrote to incorrect structure
 
-You have reached the maximum mismatches (3)
+Cycle: 10
+RARS instruction number: na	Instruction: na
+Expected:	Execution stopped
+Got     :	Register Write to Reg: 0x06 Val: 0x000000AB
+Student execution improperly continued
+
+Almost! your processor completed the program with  2/3 allowed mismatches
 
 Helpful resources for Debugging:
 ms.trace : output from the VHDL testbench during program execution on your processor
