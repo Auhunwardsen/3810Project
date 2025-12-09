@@ -52,6 +52,13 @@ architecture behavior of tb_processor_hw is
         15 => x"00208063"  -- BEQ x1, x2, 8 (branch to PC+8 if x1==x2)
     );
     
+    -- Internal signals for debugging (add these to your waveform viewer)
+    signal s_PC           : std_logic_vector(31 downto 0);
+    signal s_BranchTaken  : std_logic;
+    signal s_IFID_Flush   : std_logic;
+    signal s_IDEX_Flush   : std_logic;
+    signal s_Stall        : std_logic;
+
 begin
     -- Instantiate the hardware-scheduled processor
     UUT: RISCV_Processor
@@ -63,7 +70,14 @@ begin
             iInstExt    => s_InstExt,
             oALUOut     => s_ALUResult
         );
-    
+
+    -- Map internal signals for waveform observation
+    s_PC          <= UUT.s_PC;
+    s_BranchTaken <= UUT.s_BranchTaken;
+    s_IFID_Flush  <= UUT.s_IFID_Flush;
+    s_IDEX_Flush  <= UUT.s_IDEX_Flush;
+    s_Stall       <= UUT.s_Stall;
+
     -- Clock generation
     clk_process: process
     begin
@@ -72,7 +86,7 @@ begin
         s_CLK <= '1';
         wait for c_CLK_PERIOD/2;
     end process;
-    
+
     -- Instruction memory loading
     instr_load_proc: process
     begin
@@ -91,7 +105,7 @@ begin
         s_InstExt  <= (others => '0');
         wait;
     end process;
-    
+
     -- Test process for hardware-scheduled pipeline with hazard detection/forwarding
     test_proc: process
     begin
@@ -102,5 +116,5 @@ begin
         report "Hardware-scheduled pipeline test completed - ALU output: ";
         wait;
     end process;
-    
+
 end behavior;
