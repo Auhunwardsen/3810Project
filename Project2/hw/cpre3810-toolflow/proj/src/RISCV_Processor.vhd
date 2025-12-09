@@ -787,12 +787,10 @@ begin
   
   -- Store data forwarding: Apply WB→MEM forwarding for store data
   process(s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_EXMEM_Inst, s_WriteData, s_EXMEM_RS2Data)
-    variable v_EXMEM_RS2Addr : std_logic_vector(4 downto 0);
   begin
-    v_EXMEM_RS2Addr := s_EXMEM_Inst(24 downto 20);  -- Extract RS2 address from instruction
-    
+    -- Extract RS2 address directly in the comparison for better synthesis
     if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr /= "00000" and 
-        s_MEMWB_RDAddr = v_EXMEM_RS2Addr) then
+        s_MEMWB_RDAddr = s_EXMEM_Inst(24 downto 20)) then
       s_DMemData <= s_WriteData;  -- Forward from WB stage
     else
       s_DMemData <= s_EXMEM_RS2Data;  -- Use pipeline register data
@@ -1006,7 +1004,9 @@ begin
   -- Control outputs (halt should be detected when WFI reaches WB stage)
   process(s_MEMWB_Inst)
   begin
-    if s_MEMWB_Inst(6 downto 0) = "1110011" then
+    -- Only halt on specific WFI instruction encoding: 0x10500073
+    -- This prevents false halts from uninitialized or other system instructions
+    if s_MEMWB_Inst = x"10500073" then
       s_Halt <= '1';
     else
       s_Halt <= '0';
