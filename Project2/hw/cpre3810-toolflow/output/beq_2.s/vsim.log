@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 23:07:47 on Dec 08,2025
+# Start time: 23:26:51 on Dec 08,2025
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2025.1_2 linux_x86_64 Apr  7 2025
@@ -72,27 +72,23 @@ Reading pref.tcl
 #    Time: 0 ns  Iteration: 2  Instance: /tb/MyRiscv
 # ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
 #    Time: 0 ns  Iteration: 2  Instance: /tb/MyRiscv
-#############  Autofindloop Analysis  ###############
-#############  Loop found at time 120 ns ###############
-#       Signal: /tb/MyRiscv/s_Branch @ sub-iteration 0 at Value Z (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd:302)
-#       Signal: /tb/MyRiscv/u_fetch/s_NextPC @ sub-iteration 0 at Value unknown (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/fetch.vhd:66)
-#   Active process: /tb/MyRiscv/line__849 @ sub-iteration 1
-#     Source: /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd:62
-#   Active process: /tb/MyRiscv/line__929 @ sub-iteration 1
-#     Source: /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd:62
-#   Active process: /tb/MyRiscv/line__977 @ sub-iteration 1
-#     Source: /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd:62
-#       Signal: /tb/MyRiscv/s_ControlMux @ sub-iteration 2 at Value Z (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd:292)
-#       Signal: /tb/MyRiscv/s_IFID_Write @ sub-iteration 2 at Value X (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd:287)
-#       Signal: /tb/MyRiscv/s_PCWrite @ sub-iteration 2 at Value X (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd:286)
-#       Signal: /tb/MyRiscv/s_Stall @ sub-iteration 2 at Value Z (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd:282)
-#   Active process: /tb/MyRiscv/u_fetch/u_mux_stall/line__17 @ sub-iteration 3
-#     Source: /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/fetch.vhd:86
-#   Active process: /tb/MyRiscv/line__478 @ sub-iteration 3
-#     Source: /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd:62
-#       Signal: /tb/MyRiscv/s_Branch @ sub-iteration 4 at Value X (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd:302)
-#       Signal: /tb/MyRiscv/u_fetch/s_NextPC @ sub-iteration 4 at Value unknown (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/fetch.vhd:66)
-################# END OF LOOP #################
-# ** Error (suppressible): (vsim-3601) Iteration limit 10000000 reached at time 120 ns.
-# End time: 23:07:52 on Dec 08,2025, Elapsed time: 0:00:05
-# Errors: 1, Warnings: 12
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 360 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 360 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 380 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 380 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 400 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 400 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Note: Data structure takes 53852680 bytes of memory
+#          Process time 0.04 seconds
+#          stop
+#    Time: 420 ns  Iteration: 1  Instance: /tb
+# Break in Process P_DUMP_STATE at /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd line 150
+# Stopped at /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/internal/testpy/tb.vhd line 150
+# End time: 23:26:52 on Dec 08,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 18
