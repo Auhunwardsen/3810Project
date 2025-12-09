@@ -962,15 +962,15 @@ begin
   -- Flush all pipeline registers except WB when branch/jump is taken
   -- Robust branch/jump control hazard logic
   process(s_Branch, s_BranchTaken, s_IFID_Inst)
+    variable v_Jump : std_logic;
   begin
     -- Detect JAL/JALR in IFID
-    variable v_Jump : std_logic;
     v_Jump := '0';
-    if s_IFID_Inst(6 downto 0) = "1101111" or s_IFID_Inst(6 downto 0) = "1100111" then
+    if (s_IFID_Inst(6 downto 0) = "1101111") or (s_IFID_Inst(6 downto 0) = "1100111") then
       v_Jump := '1';
     end if;
     -- Flush IFID/IDEX if branch taken or jump detected in ID
-    if (s_Branch = '1' and s_BranchTaken = '1') or v_Jump = '1' then
+    if ((s_Branch = '1' and s_BranchTaken = '1') or (v_Jump = '1')) then
       s_IFID_Flush   <= '1';
       s_IDEX_Flush   <= '1';
       s_EXMEM_Flush  <= '0';
