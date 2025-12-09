@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 15:01:22 on Dec 09,2025
+# Start time: 15:16:41 on Dec 09,2025
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2025.1_2 linux_x86_64 Apr  7 2025
@@ -115343,10 +115343,119 @@ Reading pref.tcl
 #    Time: 9990040 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 9990040 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
-Signal SIGTERM caught... Closing vish.
-writing stack trace to vish_stacktrace.vstf
-Fatal: vsim caught SIGTERM. Closing vsimk kernel.
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 9990060 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 9990060 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9991080 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9991080 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9991080 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9991080 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9991100 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9991100 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9992120 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9992120 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9992120 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9992120 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9992140 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9992140 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9993160 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9993160 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9993160 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9993160 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9993180 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9993180 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9994200 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9994200 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9994200 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9994200 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9994220 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9994220 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9995240 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9995240 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9995240 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9995240 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9995260 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9995260 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9996280 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9996280 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9996280 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9996280 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9996300 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9996300 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9997320 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9997320 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9997320 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9997320 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9997340 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9997340 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9998360 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9998360 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9998360 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9998360 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9998380 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9998380 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9999400 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9999400 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9999400 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9999400 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9999420 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXA
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 9999420 ns  Iteration: 5  Instance: /tb/MyRiscv/u_regfile/MUXB
+# End time: 15:17:10 on Dec 09,2025, Elapsed time: 0:00:29
+# Errors: 0, Warnings: 57702
+Signal SIGTERM caught... Closing vish.
+writing stack trace to vish_stacktrace.vstf
