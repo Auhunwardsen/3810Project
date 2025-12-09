@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 21:22:22 on Dec 08,2025
+# Start time: 22:36:54 on Dec 08,2025
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2025.1_2 linux_x86_64 Apr  7 2025
@@ -94,5 +94,5 @@ Reading pref.tcl
 #       Signal: /tb/MyRiscv/u_fetch/s_NextPC @ sub-iteration 4 at Value unknown (/home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/fetch.vhd:66)
 ################# END OF LOOP #################
 # ** Error (suppressible): (vsim-3601) Iteration limit 10000000 reached at time 120 ns.
-# End time: 21:22:26 on Dec 08,2025, Elapsed time: 0:00:04
+# End time: 22:36:58 on Dec 08,2025, Elapsed time: 0:00:04
 # Errors: 1, Warnings: 12
