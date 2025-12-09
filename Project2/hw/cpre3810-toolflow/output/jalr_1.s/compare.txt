@@ -1,15 +1,15 @@
 Oh no...
 
-Cycle: 7
+Cycle: 8
 RARS instruction number: 4	Instruction: addi x5,x0,1
 Expected:	Register Write to Reg: 0x05 Val: 0x00000001
 Got     :	Register Write to Reg: 0x01 Val: 0x0040000C
 Incorrect write
 
-Cycle: 8
+Cycle: 10
 RARS instruction number: na	Instruction: na
 Expected:	Execution stopped
-Got     :	Register Write to Reg: 0x01 Val: 0x0040000C
+Got     :	Register Write to Reg: 0x05 Val: 0x00000001
 Student execution improperly continued
 
 Almost! your processor completed the program with  2/3 allowed mismatches

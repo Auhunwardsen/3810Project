@@ -2,3 +2,20 @@ In clock cycle: 4
 Register Write to Reg: 0x01 Val: 0x00000005
 In clock cycle: 5
 Register Write to Reg: 0x02 Val: 0x00000005
+In clock cycle: 9
+Register Write to Reg: 0x04 Val: 0x0000000A
+In clock cycle: 10
+Register Write to Reg: 0x05 Val: 0x00000007
+In clock cycle: 11
+Register Write to Reg: 0x06 Val: 0x00000003
+In clock cycle: 14
+Register Write to Reg: 0x07 Val: 0x0000000F
+In clock cycle: 15
+Register Write to Reg: 0x08 Val: 0x00000014
+In clock cycle: 16
+Register Write to Reg: 0x09 Val: 0x00000019
+In clock cycle: 17
+Register Write to Reg: 0x0A Val: 0x00400030
+In clock cycle: 19
+Register Write to Reg: 0x0C Val: 0x0000001E
+Execution is stopping! Clock Cycle: 20
