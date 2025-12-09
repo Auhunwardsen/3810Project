@@ -7,5 +7,5 @@ Memory Write to Addr: 0x10000000 Val: 0x00000001
 In clock cycle: 7
 Register Write to Reg: 0x03 Val: 0x00000001
 In clock cycle: 8
-Memory Write to Addr: 0x10000008 Val: 0x10000000
+Memory Write to Addr: 0x10000008 Val: 0x00000001
 Execution is stopping! Clock Cycle: 10
