@@ -717,7 +717,7 @@ begin
     port map (
       i_CLK        => iCLK,
       i_RST        => iRST,
-      i_WE         => s_PCWrite,  -- Use hardware scheduling control for stalls
+      i_WE         => '1',  -- Always advance (no stalling at this stage)
       i_flush      => s_EXMEM_Flush,  -- Use flush signal for control hazards
       i_RegWrite   => s_IDEX_RegWrite,
       i_MemToReg   => s_IDEX_MemToReg,
@@ -765,7 +765,7 @@ begin
     port map (
       i_CLK        => iCLK,
       i_RST        => iRST,
-      i_WE         => s_PCWrite,  -- Use hardware scheduling control for stalls
+      i_WE         => '1',  -- Always advance (no stalling at this stage)
       i_flush      => s_MEMWB_Flush,  -- Use flush signal for control hazards
       i_RegWrite   => s_EXMEM_RegWrite,
       i_MemToReg   => s_EXMEM_MemToReg,
@@ -871,9 +871,9 @@ begin
     end if;
   end process;
   
-  -- Branch condition evaluation (ID stage for software-scheduled pipeline)
+  -- Branch condition evaluation (ID stage for hardware-scheduled pipeline)
   -- Compares RS1 and RS2 to determine if branch should be taken
-  process(s_Branch, s_IFID_Inst, s_RS1Data_final, s_RS2Data_final)
+  process(s_Branch_ID, s_IFID_Inst, s_RS1Data_final, s_RS2Data_final)
     variable v_BranchCond : std_logic;  -- Final branch decision (1=take branch, 0=don't take)
     variable v_Zero : std_logic;        -- 1 if RS1 == RS2 (for BEQ/BNE)
     variable v_LT : std_logic;          -- 1 if RS1 < RS2 (signed comparison, for BLT/BGE)
@@ -902,7 +902,7 @@ begin
     end if;
     
     -- If this is a branch instruction, determine which condition to use
-    if s_Branch = '1' then
+    if s_Branch_ID = '1' then
       case s_IFID_Inst(14 downto 12) is  -- funct3 field determines branch type
         when "000" =>  -- BEQ: Branch if Equal
           v_BranchCond := v_Zero;           -- Take if RS1 == RS2
