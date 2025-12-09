@@ -285,8 +285,10 @@ architecture structure of RISCV_Processor is
   -- Hardware scheduling signals
   signal s_PCWrite     : std_logic;  -- PC write enable from hazard detection
   signal s_IFID_Write  : std_logic;  -- IF/ID write enable from hazard detection
-  signal s_IFID_Flush  : std_logic;  -- IF/ID flush from control hazard
-  signal s_IDEX_Flush  : std_logic;  -- ID/EX flush from control hazard
+  signal s_IFID_Flush   : std_logic;  -- IF/ID flush from control hazard
+  signal s_IDEX_Flush   : std_logic;  -- ID/EX flush from control hazard
+  signal s_EXMEM_Flush  : std_logic;  -- EX/MEM flush from control hazard
+  signal s_MEMWB_Flush  : std_logic;  -- MEM/WB flush from control hazard
   signal s_ControlMux  : std_logic;  -- Control mux for load-use stall
   signal s_Jump       : std_logic;  -- Jump signal
   
@@ -689,7 +691,7 @@ begin
       i_CLK        => iCLK,
       i_RST        => iRST,
       i_WE         => s_PCWrite,  -- Use hardware scheduling control for stalls
-      i_flush      => s_IDEX_Flush,  -- Use flush signal for control hazards
+      i_flush      => s_EXMEM_Flush,  -- Use flush signal for control hazards
       i_RegWrite   => s_IDEX_RegWrite,
       i_MemToReg   => s_IDEX_MemToReg,
       i_MemWrite   => s_IDEX_MemWrite,
@@ -737,7 +739,7 @@ begin
       i_CLK        => iCLK,
       i_RST        => iRST,
       i_WE         => s_PCWrite,  -- Use hardware scheduling control for stalls
-      i_flush      => s_EXMEM_BranchTaken,  -- Flush on branch taken
+      i_flush      => s_MEMWB_Flush,  -- Use flush signal for control hazards
       i_RegWrite   => s_EXMEM_RegWrite,
       i_MemToReg   => s_EXMEM_MemToReg,
       i_ALUResult  => s_EXMEM_ALUResult,
@@ -976,17 +978,20 @@ begin
   end process;
   
   -- Control hazard detection (branch/jump flush)
-  -- Flush when branch/jump is taken
+  -- Flush all pipeline registers except WB when branch/jump is taken
   process(s_Branch, s_BranchTaken, s_IsJAL, s_IsJALR)
   begin
     s_Jump <= s_IsJAL or s_IsJALR;  -- Combine JAL and JALR as jump
-    
     if ((s_Branch = '1' and s_BranchTaken = '1') or s_Jump = '1') then
-      s_IFID_Flush <= '1';   -- Flush IF/ID register
-      s_IDEX_Flush <= '1';   -- Flush ID/EX register
+      s_IFID_Flush   <= '1';   -- Flush IF/ID register
+      s_IDEX_Flush   <= '1';   -- Flush ID/EX register
+      s_EXMEM_Flush  <= '1';   -- Flush EX/MEM register
+      s_MEMWB_Flush  <= '1';   -- Flush MEM/WB register
     else
-      s_IFID_Flush <= '0';
-      s_IDEX_Flush <= '0';
+      s_IFID_Flush   <= '0';
+      s_IDEX_Flush   <= '0';
+      s_EXMEM_Flush  <= '0';
+      s_MEMWB_Flush  <= '0';
     end if;
   end process;
   
