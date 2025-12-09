@@ -63,8 +63,9 @@ begin
   o_ControlMux <= s_DataHazard and not s_ControlHazard;  -- Insert NOP for data hazards, not control hazards
 
   -- Flush pipeline stages on control hazards
-  -- For jumps and branches: flush both IF/ID and ID/EX to prevent wrong instruction from writing back
+  -- For jumps: flush only IF/ID (let jump complete to write return address)
+  -- For branches: flush both IF/ID and ID/EX
   o_IFID_Flush <= s_ControlHazard;
-  o_IDEX_Flush <= s_ControlHazard;
+  o_IDEX_Flush <= s_ControlHazard and not i_Jump;  -- Flush ID/EX only for branches, not jumps
 
 end behavioral;
