@@ -1,0 +1,37 @@
+[inst #1] addi x1,x0,5
+Register Write to Reg: 0x01 Val: 0x00000005
+[inst #2] addi x2,x0,10
+Register Write to Reg: 0x02 Val: 0x0000000A
+[inst #3] add x3,x1,x2
+Register Write to Reg: 0x03 Val: 0x0000000F
+[inst #4] sub x4,x3,x1
+Register Write to Reg: 0x04 Val: 0x0000000A
+[inst #5] and x5,x3,x4
+Register Write to Reg: 0x05 Val: 0x0000000A
+[inst #6] or x6,x1,x2
+Register Write to Reg: 0x06 Val: 0x0000000F
+[inst #7] xor x7,x3,x4
+Register Write to Reg: 0x07 Val: 0x00000005
+[inst #8] slli x8,x1,2
+Register Write to Reg: 0x08 Val: 0x00000014
+[inst #9] srli x9,x8,1
+Register Write to Reg: 0x09 Val: 0x0000000A
+[inst #10] auipc x10,64528
+Register Write to Reg: 0x0A Val: 0x10010024
+[inst #11] addi x10,x10,-36
+Register Write to Reg: 0x0A Val: 0x10010000
+[inst #12] lw x11,0(x10)
+Register Write to Reg: 0x0B Val: 0x00000005
+[inst #13] lw x12,4(x10)
+Register Write to Reg: 0x0C Val: 0x0000000A
+[inst #14] add x13,x11,x12
+Register Write to Reg: 0x0D Val: 0x0000000F
+[inst #15] sw x13,20(x10)
+Memory Write to Addr: 0x10010014 Val: 0x0000000F
+[inst #16] beq x1,x1,8
+[inst #17] bne x1,x2,8
+[inst #18] slt x15,x1,x2
+Register Write to Reg: 0x0F Val: 0x00000001
+[inst #19] wfi 
+
+Program terminated by dropping off the bottom.
