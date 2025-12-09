@@ -509,11 +509,33 @@ begin
       o_imm => s_Immediate
     );
 
-  -- No WB→ID Forwarding for software-scheduled pipeline
-  -- Software scheduler inserts NOPs to avoid all hazards, so forwarding should not be needed
-  -- This simplifies the design and avoids timing issues
-  s_RS1Data_final <= s_RS1Data;
-  s_RS2Data_final <= s_RS2Data;
+  -- ID Stage Forwarding: MEM→ID and WB→ID only 
+  -- EX→ID forwarding creates combinational loops, so we rely on stalls for EX hazards
+  process(s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_RegWr, s_RegWrAddr, s_RegWrData, 
+          s_IFID_Inst, s_RS1Data, s_RS2Data, s_EXMEM_ALUResult)
+  begin
+    -- RS1 Forwarding with priority: MEM→ID > WB→ID
+    if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr /= "00000" and 
+        s_EXMEM_RDAddr = s_IFID_Inst(19 downto 15)) then
+      s_RS1Data_final <= s_EXMEM_ALUResult;  -- MEM→ID forwarding (higher priority)
+    elsif (s_RegWr = '1' and s_RegWrAddr /= "00000" and 
+           s_RegWrAddr = s_IFID_Inst(19 downto 15)) then
+      s_RS1Data_final <= s_RegWrData;  -- WB→ID forwarding
+    else
+      s_RS1Data_final <= s_RS1Data;  -- No forwarding needed
+    end if;
+    
+    -- RS2 Forwarding with priority: MEM→ID > WB→ID
+    if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr /= "00000" and 
+        s_EXMEM_RDAddr = s_IFID_Inst(24 downto 20)) then
+      s_RS2Data_final <= s_EXMEM_ALUResult;  -- MEM→ID forwarding (higher priority)
+    elsif (s_RegWr = '1' and s_RegWrAddr /= "00000" and 
+           s_RegWrAddr = s_IFID_Inst(24 downto 20)) then
+      s_RS2Data_final <= s_RegWrData;  -- WB→ID forwarding
+    else
+      s_RS2Data_final <= s_RS2Data;  -- No forwarding needed
+    end if;
+  end process;
 
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: ID/EX
@@ -757,12 +779,22 @@ begin
     );
 
   -------------------------------------------------------------------------
-  -- MEM STAGE CONNECTIONS
+  -- MEM STAGE CONNECTIONS  
   -------------------------------------------------------------------------
   -- Data memory signals driven by EX/MEM pipeline register outputs
   s_DMemAddr <= s_EXMEM_ALUResult;   -- Memory address from ALU
-  s_DMemData <= s_EXMEM_RS2Data;     -- Write data for stores
   s_DMemWr   <= s_EXMEM_MemWrite;    -- Write enable
+  
+  -- Store data forwarding: Apply WB→MEM forwarding for store data
+  process(s_MEMWB_RegWrite, s_MEMWB_RDAddr, s_EXMEM_RS2Addr, s_WriteData, s_EXMEM_RS2Data)
+  begin
+    if (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr /= "00000" and 
+        s_MEMWB_RDAddr = s_EXMEM_RS2Addr) then
+      s_DMemData <= s_WriteData;  -- Forward from WB stage
+    else
+      s_DMemData <= s_EXMEM_RS2Data;  -- Use pipeline register data
+    end if;
+  end process;
   
   -- Data memory base address translation: 0x10000000 -> 0x00000000
   s_DMemAddr_offset <= std_logic_vector(unsigned(s_DMemAddr) - unsigned'(x"10000000"));
@@ -894,17 +926,37 @@ begin
   -- HARDWARE SCHEDULING: Hazard Detection and Pipeline Control
   -------------------------------------------------------------------------
   
-  -- Load-use stall detection
-  -- Stall when: instruction in EX is a load AND (RS1 or RS2 matches load destination)
-  process(s_IDEX_MemRead, s_IDEX_RDAddr, s_IFID_Inst)
+  -- Comprehensive stall detection: Load-use hazards and Branch-ALU hazards
+  -- Stall when: 1) Load-use hazard, OR 2) Branch needs result from EX stage ALU
+  process(s_IDEX_MemRead, s_IDEX_RegWrite, s_IDEX_RDAddr, s_IFID_Inst, s_Branch)
     variable v_RS1_addr : std_logic_vector(4 downto 0);
     variable v_RS2_addr : std_logic_vector(4 downto 0);
+    variable v_IsBranch : std_logic;
+    variable v_LoadUseHazard : std_logic;
+    variable v_BranchALUHazard : std_logic;
   begin
     v_RS1_addr := s_IFID_Inst(19 downto 15);
     v_RS2_addr := s_IFID_Inst(24 downto 20);
+    v_IsBranch := s_Branch;
     
+    -- Check for load-use hazard (instruction in EX is load AND current uses its result)
     if (s_IDEX_MemRead = '1' and s_IDEX_RDAddr /= "00000" and 
         (s_IDEX_RDAddr = v_RS1_addr or s_IDEX_RDAddr = v_RS2_addr)) then
+      v_LoadUseHazard := '1';
+    else
+      v_LoadUseHazard := '0';
+    end if;
+    
+    -- Check for branch-ALU hazard (branch needs result from ALU in EX stage)
+    if (v_IsBranch = '1' and s_IDEX_RegWrite = '1' and s_IDEX_RDAddr /= "00000" and
+        (s_IDEX_RDAddr = v_RS1_addr or s_IDEX_RDAddr = v_RS2_addr)) then
+      v_BranchALUHazard := '1';
+    else
+      v_BranchALUHazard := '0';
+    end if;
+    
+    -- Stall if any hazard detected
+    if (v_LoadUseHazard = '1' or v_BranchALUHazard = '1') then
       s_Stall <= '1';
       s_PCWrite <= '0';      -- Don't update PC
       s_IFID_Write <= '0';   -- Don't update IF/ID
