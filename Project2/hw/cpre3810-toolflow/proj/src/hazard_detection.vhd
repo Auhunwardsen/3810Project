@@ -5,6 +5,7 @@ use IEEE.std_logic_1164.all;
 
 entity hazard_detection is
   port(
+    i_CLK          : in std_logic;  -- Clock input for delayed flush
     -- From ID/EX register
     i_IDEX_MemRead  : in std_logic;
     i_IDEX_RD       : in std_logic_vector(4 downto 0);
@@ -58,7 +59,7 @@ begin
   s_ControlHazard <= i_Branch or i_Jump;
 
   -- Delay jump flush by one cycle
-  process (i_Jump, i_Branch, i_Branch_ID, i_IDEX_MemRead, i_IDEX_RD, i_IDEX_RegWrite, i_IFID_RS1, i_IFID_RS2, i_CLK)
+  process (i_CLK)
   begin
     if rising_edge(i_CLK) then
       s_Jump_d <= i_Jump;
