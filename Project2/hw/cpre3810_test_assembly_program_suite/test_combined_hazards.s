@@ -2,9 +2,9 @@
 # Combined Hazards Debug Test
 # Enhanced for step-by-step debugging and value tracing
 .text
-.globl _start
+.globl main
 
-_start:
+main:
     # Setup data
     addi x1, x0, 0x100 # x1 = memory address
     addi x2, x0, 42    # x2 = test value

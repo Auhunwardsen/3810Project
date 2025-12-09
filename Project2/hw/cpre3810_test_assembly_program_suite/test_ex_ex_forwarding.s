@@ -2,9 +2,9 @@
 # EX-EX Data Forwarding Debug Test
 # Enhanced for step-by-step debugging and value tracing
 .text
-.globl _start
+.globl main
 
-_start:
+main:
     # EX-EX forwarding scenario
     addi x1, x0, 0x64    # x1 = 100
     addi x2, x0, 0x32    # x2 = 50

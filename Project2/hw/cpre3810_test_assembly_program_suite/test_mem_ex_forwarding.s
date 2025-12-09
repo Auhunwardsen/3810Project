@@ -2,9 +2,9 @@
 # MEM-EX Data Forwarding Debug Test
 # Enhanced for step-by-step debugging and value tracing
 .text
-.globl _start
+.globl main
 
-_start:
+main:
     # MEM-EX forwarding scenario
     addi x1, x0, 0xC8    # x1 = 200 (unique value)
     addi x2, x0, 0x4B    # x2 = 75 (unique value)

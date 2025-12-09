@@ -2,9 +2,9 @@
 # Control Hazard Branch Debug Test
 # Enhanced for step-by-step debugging and value tracing
 .text
-.globl _start
+.globl main
 
-_start:
+main:
     # Test taken branch - should flush IF/ID and ID/EX
     addi x1, x0, 0x0A    # x1 = 10
     addi x2, x0, 0x0A    # x2 = 10

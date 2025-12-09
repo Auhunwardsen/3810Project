@@ -2,9 +2,9 @@
 # Load-Use Hazard Stall Debug Test
 # Enhanced for step-by-step debugging and value tracing
 .text
-.globl _start
+.globl main
 
-_start:
+main:
     # Set up some data in memory first
     addi x1, x0, 0x100 # x1 = address 0x100
     addi x2, x0, 42    # x2 = data value 42

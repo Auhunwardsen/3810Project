@@ -8,15 +8,17 @@ entity hazard_detection is
     -- From ID/EX register
     i_IDEX_MemRead  : in std_logic;
     i_IDEX_RD       : in std_logic_vector(4 downto 0);
-    
-    -- From IF/ID register  
+    i_IDEX_RegWrite : in std_logic;  -- Added: to detect any EX stage write
+
+    -- From IF/ID register
     i_IFID_RS1      : in std_logic_vector(4 downto 0);
     i_IFID_RS2      : in std_logic_vector(4 downto 0);
-    
+
     -- Control hazard signals
     i_Branch        : in std_logic;
     i_Jump          : in std_logic;
-    
+    i_Branch_ID     : in std_logic;  -- Added: indicates branch in ID stage
+
     -- Output control signals
     o_PCWrite       : out std_logic;  -- Enable PC update
     o_IFID_Write    : out std_logic;  -- Enable IF/ID register write
@@ -28,9 +30,11 @@ end hazard_detection;
 
 architecture behavioral of hazard_detection is
   signal s_LoadUseHazard : std_logic;
+  signal s_BranchDataHazard : std_logic;
   signal s_ControlHazard : std_logic;
+  signal s_DataHazard : std_logic;
 begin
-  
+
   -- Load-use hazard detection
   -- Occurs when current instruction uses result of previous load instruction
   s_LoadUseHazard <= '1' when (i_IDEX_MemRead = '1' and
@@ -38,17 +42,28 @@ begin
                                (i_IDEX_RD = i_IFID_RS2 and i_IFID_RS2 /= "00000")))
                      else '0';
 
+  -- Branch data hazard detection
+  -- Occurs when a branch in ID stage depends on a result in EX stage
+  -- We can forward from MEM and WB stages, but not from EX stage (timing)
+  s_BranchDataHazard <= '1' when (i_Branch_ID = '1' and i_IDEX_RegWrite = '1' and
+                                  ((i_IDEX_RD = i_IFID_RS1 and i_IFID_RS1 /= "00000") or
+                                   (i_IDEX_RD = i_IFID_RS2 and i_IFID_RS2 /= "00000")))
+                        else '0';
+
+  -- Combined data hazard signal
+  s_DataHazard <= s_LoadUseHazard or s_BranchDataHazard;
+
   -- Control hazard from external signal (branch taken or jump)
   s_ControlHazard <= i_Branch or i_Jump;
 
-  -- Output logic - prioritize control hazard over load-use stall
+  -- Output logic - prioritize control hazard over data stalls
   -- When control hazard occurs, allow PC update to jump/branch target
-  o_PCWrite <= not s_LoadUseHazard or s_ControlHazard;
-  o_IFID_Write <= not s_LoadUseHazard or s_ControlHazard;
-  o_ControlMux <= s_LoadUseHazard and not s_ControlHazard;  -- Insert NOP only for load-use, not control hazard
+  o_PCWrite <= not s_DataHazard or s_ControlHazard;
+  o_IFID_Write <= not s_DataHazard or s_ControlHazard;
+  o_ControlMux <= s_DataHazard and not s_ControlHazard;  -- Insert NOP for data hazards, not control hazards
 
   -- Flush pipeline stages on control hazards
   o_IFID_Flush <= s_ControlHazard;
   o_IDEX_Flush <= s_ControlHazard;
-  
+
 end behavioral;

@@ -278,10 +278,12 @@ architecture structure of RISCV_Processor is
     port(
       i_IDEX_MemRead  : in  std_logic;
       i_IDEX_RD       : in  std_logic_vector(4 downto 0);
+      i_IDEX_RegWrite : in  std_logic;
       i_IFID_RS1      : in  std_logic_vector(4 downto 0);
       i_IFID_RS2      : in  std_logic_vector(4 downto 0);
       i_Branch        : in  std_logic;
       i_Jump          : in  std_logic;
+      i_Branch_ID     : in  std_logic;
       o_PCWrite       : out std_logic;
       o_IFID_Write    : out std_logic;
       o_ControlMux    : out std_logic;
@@ -588,7 +590,7 @@ begin
     port map (
       i_CLK       => iCLK,
       i_RST       => iRST,
-      i_WE        => s_IFID_Write,  -- Use hardware scheduling control for stalls
+      i_WE        => '1',  -- Always advance (stalls handled by ControlMux inserting NOPs)
       i_flush     => s_IDEX_Flush,  -- Hardware control hazard flush
       i_RegWrite  => s_RegWrite,
       i_MemToReg  => s_MemToReg,
@@ -963,10 +965,12 @@ begin
     port map(
       i_IDEX_MemRead  => s_IDEX_MemRead,
       i_IDEX_RD       => s_IDEX_RDAddr,
+      i_IDEX_RegWrite => s_IDEX_RegWrite,  -- For branch data hazard detection
       i_IFID_RS1      => s_IFID_Inst(19 downto 15),
       i_IFID_RS2      => s_IFID_Inst(24 downto 20),
       i_Branch        => s_ControlHazard,  -- Flush only when control hazard occurs
       i_Jump          => '0',  -- Already included in s_ControlHazard
+      i_Branch_ID     => s_Branch_ID,      -- Indicates branch in ID stage
       o_PCWrite       => s_PCWrite,
       o_IFID_Write    => s_IFID_Write,
       o_ControlMux    => s_ControlMux,
@@ -986,16 +990,10 @@ begin
   
   -- Register write outputs for testbench -- Update by the group: use WB stage signals
   -- RISC-V x0 is hardwired to zero - block writes to register 0
-  process(s_MEMWB_RegWrite, s_MEMWB_RDAddr)
-  begin
-    if s_MEMWB_RDAddr /= "00000" then
-      s_RegWr <= s_MEMWB_RegWrite;
-    else
-      s_RegWr <= '0';
-    end if;
-  end process;
-  s_RegWrAddr <= s_MEMWB_RDAddr;  -- Update by the group: change to s_MEMWB_RDAddr
-  s_RegWrData <= s_WriteData; -- Update by the group: ensure this uses final WB stage data
+  -- Using concurrent conditional assignment for zero-latency propagation
+  s_RegWr     <= s_MEMWB_RegWrite when (s_MEMWB_RDAddr /= "00000") else '0';
+  s_RegWrAddr <= s_MEMWB_RDAddr;
+  s_RegWrData <= s_WriteData;
   
   -- Control outputs (halt should be detected when WFI reaches WB stage)
   process(s_MEMWB_Inst)
