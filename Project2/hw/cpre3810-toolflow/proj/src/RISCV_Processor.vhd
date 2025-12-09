@@ -1005,8 +1005,8 @@ begin
   process(s_MEMWB_Inst)
   begin
     -- Only halt on specific WFI instruction encoding: 0x10500073
-    -- Do not assert halt if pipeline is flushed or MEMWB is a bubble/NOP
-    if s_MEMWB_Inst = x"10500073" then
+    -- Do not assert halt if MEMWB is a bubble/NOP (all zeros)
+    if s_MEMWB_Inst = x"10500073" and s_MEMWB_Inst /= x"00000000" then
       s_Halt <= '1';
     else
       s_Halt <= '0';
