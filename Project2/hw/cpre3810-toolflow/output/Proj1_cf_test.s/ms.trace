@@ -14,9 +14,7 @@ In clock cycle: 12
 Memory Write to Addr: 0x7FFFFFFC Val: 0x00400014
 In clock cycle: 14
 Register Write to Reg: 0x01 Val: 0x00400030
-In clock cycle: 15
-Register Write to Reg: 0x01 Val: 0x00400014
 In clock cycle: 18
 Register Write to Reg: 0x02 Val: 0x7FFFFFE0
 In clock cycle: 18
-Memory Write to Addr: 0x7FFFFFEC Val: 0x00400014
+Memory Write to Addr: 0x7FFFFFEC Val: 0x00400030
