@@ -545,7 +545,7 @@ begin
     port map (
       i_CLK       => iCLK,
       i_RST       => iRST,
-      i_WE        => '1',  -- Always enabled (stalls handled by control mux)
+      i_WE        => s_IFID_Write,  -- Use hardware scheduling control for stalls
       i_flush     => s_IDEX_Flush,  -- Hardware control hazard flush
       i_RegWrite  => s_RegWrite,
       i_MemToReg  => s_MemToReg,
@@ -688,8 +688,8 @@ begin
     port map (
       i_CLK        => iCLK,
       i_RST        => iRST,
-      i_WE         => '1',  -- Always enabled for software-scheduled pipeline
-      i_flush      => '0',  -- No flushing in software-scheduled pipeline
+      i_WE         => s_PCWrite,  -- Use hardware scheduling control for stalls
+      i_flush      => s_IDEX_Flush,  -- Use flush signal for control hazards
       i_RegWrite   => s_IDEX_RegWrite,
       i_MemToReg   => s_IDEX_MemToReg,
       i_MemWrite   => s_IDEX_MemWrite,
@@ -736,8 +736,8 @@ begin
     port map (
       i_CLK        => iCLK,
       i_RST        => iRST,
-      i_WE         => '1',  -- Always enabled for software-scheduled pipeline
-      i_flush      => '0',  -- No flushing in software-scheduled pipeline
+      i_WE         => s_PCWrite,  -- Use hardware scheduling control for stalls
+      i_flush      => s_EXMEM_BranchTaken,  -- Flush on branch taken
       i_RegWrite   => s_EXMEM_RegWrite,
       i_MemToReg   => s_EXMEM_MemToReg,
       i_ALUResult  => s_EXMEM_ALUResult,
