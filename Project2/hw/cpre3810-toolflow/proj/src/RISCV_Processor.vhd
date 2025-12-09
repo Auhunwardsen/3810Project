@@ -276,6 +276,7 @@ architecture structure of RISCV_Processor is
 
   component hazard_detection is
     port(
+      i_CLK           : in  std_logic;
       i_IDEX_MemRead  : in  std_logic;
       i_IDEX_RD       : in  std_logic_vector(4 downto 0);
       i_IDEX_RegWrite : in  std_logic;
@@ -964,19 +965,21 @@ begin
   s_Jump <= '1' when (s_IFID_Inst(6 downto 0) = "1101111") or
                      (s_IFID_Inst(6 downto 0) = "1100111") else '0';
 
-  -- Control hazard signal: flush only when branch is actually taken or a jump is executed
-  -- This prevents over-flushing and only neutralizes wrong-path instructions
-  s_ActualControlHazard <= ((s_Branch_ID and s_BranchTaken) or s_Jump);
+  -- Control hazard signal: flush when branch is taken OR jump occurs
+  -- Jumps flush only IF/ID (handled in hazard detection unit)
+  -- Branches flush both IF/ID and ID/EX (handled in hazard detection unit)
+  s_ControlHazard <= (s_Branch_ID and s_BranchTaken) or s_Jump;
 
   -- Hazard Detection Unit instantiation
   u_hazard_detection: hazard_detection
     port map(
+      i_CLK           => iCLK,
       i_IDEX_MemRead  => s_IDEX_MemRead,
       i_IDEX_RD       => s_IDEX_RDAddr,
       i_IDEX_RegWrite => s_IDEX_RegWrite,  -- For branch data hazard detection
       i_IFID_RS1      => s_IFID_Inst(19 downto 15),
       i_IFID_RS2      => s_IFID_Inst(24 downto 20),
-      i_Branch        => s_ActualControlHazard,  -- Only flush on actual control hazard
+      i_Branch        => s_ControlHazard,  -- Control hazard (branches + jumps)
       i_Jump          => s_Jump,           -- Jump signal for selective flush
       i_Branch_ID     => s_Branch_ID,      -- Indicates branch in ID stage
       o_PCWrite       => s_PCWrite,
