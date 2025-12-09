@@ -64,8 +64,9 @@ begin
 
   -- Flush pipeline stages on control hazards
   -- For jumps: flush only IF/ID (let jump complete to write return address)
-  -- For branches: flush both IF/ID and ID/EX (branch is in ID, need to flush after it)
+  -- For branches: flush only IF/ID (branch already in ID when taken)
+  -- NOTE: We only flush IF/ID for both cases - the instruction fetched after the jump/branch
   o_IFID_Flush <= s_ControlHazard;
-  o_IDEX_Flush <= i_Branch and not i_Jump;  -- Flush ID/EX only for branches, not jumps
+  o_IDEX_Flush <= '0';  -- Never flush ID/EX - jumps/branches need to complete
 
 end behavioral;

@@ -835,10 +835,12 @@ begin
   -- WB STAGE LOGIC
   -------------------------------------------------------------------------
   -- Write Data Selection: chooses between ALU result and memory data
-  process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_ALUResult, s_MEMWB_MemData, s_MEMWB_PCplus4)
+  process(s_MEMWB_Inst, s_MEMWB_MemToReg, s_MEMWB_ALUResult, s_MEMWB_MemData, s_MEMWB_PCplus4, s_MEMWB_RDAddr, s_MEMWB_RegWrite)
     variable v_LoadData : std_logic_vector(31 downto 0);
   begin
-    if s_MEMWB_Inst(6 downto 0) = "1101111" or s_MEMWB_Inst(6 downto 0) = "1100111" then
+    -- JAL/JALR write PC+4, but only if RD != x0 and RegWrite is asserted
+    if (s_MEMWB_Inst(6 downto 0) = "1101111" or s_MEMWB_Inst(6 downto 0) = "1100111") and
+       s_MEMWB_RDAddr /= "00000" and s_MEMWB_RegWrite = '1' then
       -- JAL/JALR write PC+4 to register (return address) - use PCplus4 from pipeline
       s_WriteData <= s_MEMWB_PCplus4;
     elsif s_MEMWB_MemToReg = '1' then
