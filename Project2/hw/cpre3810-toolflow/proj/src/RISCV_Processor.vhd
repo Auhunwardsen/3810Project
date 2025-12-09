@@ -986,7 +986,7 @@ begin
       s_IFID_Flush   <= '1';   -- Flush IF/ID register
       s_IDEX_Flush   <= '1';   -- Flush ID/EX register
       s_EXMEM_Flush  <= '1';   -- Flush EX/MEM register
-      s_MEMWB_Flush  <= '1';   -- Flush MEM/WB register
+      s_MEMWB_Flush  <= '0';   -- Do NOT flush MEM/WB register
     else
       s_IFID_Flush   <= '0';
       s_IDEX_Flush   <= '0';
