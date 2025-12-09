@@ -1,9 +1,6 @@
 ../cpre3810_test_assembly_program_suite/Proj1_base_test.s
-../cpre3810_test_assembly_program_suite/Proj1_cf_test copy.s
 ../cpre3810_test_assembly_program_suite/Proj1_cf_test.s
-../cpre3810_test_assembly_program_suite/Proj1_mergesort copy.s
 ../cpre3810_test_assembly_program_suite/Proj1_mergesort.s
-../cpre3810_test_assembly_program_suite/Proj1_mergesort_scheduled.s
 ../cpre3810_test_assembly_program_suite/add_1.s
 ../cpre3810_test_assembly_program_suite/add_2.s
 ../cpre3810_test_assembly_program_suite/add_3.s
@@ -18,3 +15,18 @@
 ../cpre3810_test_assembly_program_suite/andi2.s
 ../cpre3810_test_assembly_program_suite/andi3.s
 ../cpre3810_test_assembly_program_suite/auipc_3.s
+../cpre3810_test_assembly_program_suite/beq_1.s
+../cpre3810_test_assembly_program_suite/beq_3.s
+../cpre3810_test_assembly_program_suite/bge_3.s
+../cpre3810_test_assembly_program_suite/bgeu_1.s
+../cpre3810_test_assembly_program_suite/bgeu_2.s
+../cpre3810_test_assembly_program_suite/bgeu_3.s
+../cpre3810_test_assembly_program_suite/blt1.s
+../cpre3810_test_assembly_program_suite/blt2.s
+../cpre3810_test_assembly_program_suite/blt3.s
+../cpre3810_test_assembly_program_suite/bltu_test1.s
+../cpre3810_test_assembly_program_suite/bltu_test2.s
+../cpre3810_test_assembly_program_suite/bltu_test3.s
+../cpre3810_test_assembly_program_suite/bne_1.s
+../cpre3810_test_assembly_program_suite/bne_2.s
+../cpre3810_test_assembly_program_suite/bne_3.s
