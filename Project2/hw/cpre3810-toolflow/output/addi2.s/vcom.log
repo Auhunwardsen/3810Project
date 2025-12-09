@@ -1,6 +1,6 @@
 QuestaSim-64 vcom 2025.1_2 Compiler 2025.04 Apr  7 2025
-Start time: 19:32:35 on Dec 08,2025
-vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/addsub.vhd proj/src/hazard_detection.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/decoder5t32.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/RISCV_Processor_backup.vhd proj/src/alu.vhd proj/src/IFID_reg.vhd proj/src/EXMEM_reg.vhd proj/src/IDEX_reg.vhd proj/src/regfile.vhd proj/src/adder_n.vhd proj/src/mux3t1_n.vhd proj/src/control.vhd proj/src/MEMWB_reg.vhd proj/src/dffg.vhd proj/src/reg_n.vhd proj/src/mux2t1_n.vhd proj/src/RISCV_types.vhd proj/src/fetch.vhd proj/src/mem.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/forwarding_unit.vhd 
+Start time: 19:40:25 on Dec 08,2025
+vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd internal/testpy/tb.vhd proj/src/addsub.vhd proj/src/hazard_detection.vhd proj/src/mux32_1.vhd proj/src/barrelshifter.vhd proj/src/decoder5t32.vhd proj/src/RISCV_Processor.vhd proj/src/zero_extender.vhd proj/src/sign_extender.vhd proj/src/RISCV_Processor_backup.vhd proj/src/alu.vhd proj/src/IFID_reg.vhd proj/src/EXMEM_reg.vhd proj/src/IDEX_reg.vhd proj/src/regfile.vhd proj/src/adder_n.vhd proj/src/mux3t1_n.vhd proj/src/control.vhd proj/src/MEMWB_reg.vhd proj/src/dffg.vhd proj/src/reg_n.vhd proj/src/mux2t1_n.vhd proj/src/RISCV_types.vhd proj/src/fetch.vhd proj/src/mem.vhd proj/src/immgen.vhd proj/src/alu_control.vhd proj/src/forwarding_unit.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
@@ -22,12 +22,18 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling architecture dataflow of barrelshifter
 -- Compiling entity decoder5t32
 -- Compiling architecture dataflow of decoder5t32
+-- Loading package RISCV_types
+** Warning: proj/src/RISCV_Processor.vhd(25): (vcom-1615) Existing entity 'RISCV_Processor' at /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor_backup.vhd(25) will be overwritten.
+-- Compiling entity RISCV_Processor
+** Warning: proj/src/RISCV_Processor.vhd(37): (vcom-1615) Existing architecture 'RISCV_Processor(structure)' at /home/auhun47/project1/3810Project1/Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor_backup.vhd(37) will be overwritten.
+-- Compiling architecture structure of RISCV_Processor
 -- Compiling entity zero_extender
 -- Compiling architecture rtl of zero_extender
 -- Compiling entity sign_extender
 -- Compiling architecture rtl of sign_extender
--- Loading package RISCV_types
+** Warning: proj/src/RISCV_Processor_backup.vhd(25): (vcom-1615) Existing entity 'RISCV_Processor' at proj/src/RISCV_Processor.vhd(25) will be overwritten.
 -- Compiling entity RISCV_Processor
+** Warning: proj/src/RISCV_Processor_backup.vhd(37): (vcom-1615) Existing architecture 'RISCV_Processor(structure)' at proj/src/RISCV_Processor.vhd(37) will be overwritten.
 -- Compiling architecture structure of RISCV_Processor
 -- Compiling entity alu
 -- Compiling architecture structural of alu
@@ -69,5 +75,5 @@ vcom -2008 -work internal/ModelSimContainer/work proj/src/RISCV_types.vhd intern
 -- Compiling architecture dataflow of alu_control
 -- Compiling entity forwarding_unit
 -- Compiling architecture behavioral of forwarding_unit
-End time: 19:32:35 on Dec 08,2025, Elapsed time: 0:00:00
-Errors: 0, Warnings: 2
+End time: 19:40:26 on Dec 08,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 6
