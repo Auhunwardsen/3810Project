@@ -965,8 +965,7 @@ begin
                      (s_IFID_Inst(6 downto 0) = "1100111") else '0';
 
   -- Control hazard signal: flush when branch is taken OR jump occurs
-  -- Jumps flush only IF/ID (handled in hazard detection unit)
-  -- Branches flush both IF/ID and ID/EX (handled in hazard detection unit)
+  -- Jumps and branches: flush IF/ID, ID/EX, and EX/MEM to fully neutralize pipeline after control hazard
   s_ControlHazard <= (s_Branch_ID and s_BranchTaken) or s_Jump;
 
   -- Hazard Detection Unit instantiation
@@ -990,8 +989,8 @@ begin
   -- Stall signal derived from PCWrite for compatibility
   s_Stall <= not s_PCWrite;
 
-  -- Flush signals for later stages (not needed for basic control hazards)
-  s_EXMEM_Flush  <= '0';
+  -- Flush EX/MEM on control hazards to fully neutralize pipeline
+  s_EXMEM_Flush  <= s_ControlHazard;
   s_MEMWB_Flush  <= '0';
   
   -- Output connections -- Update by the group: observe WB ALU result for validation
