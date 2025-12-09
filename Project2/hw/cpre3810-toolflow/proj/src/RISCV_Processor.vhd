@@ -907,16 +907,16 @@ begin
   begin
     -- JALR target = (rs1 + imm) with LSB set to 0
     v_JALRTarget := std_logic_vector(unsigned(s_RS1Data_final) + unsigned(s_Immediate)) and (x"FFFFFFFE");
-    
-    if s_IFID_Inst(6 downto 0) = "1101111" then  -- JAL
+    -- Prioritize branch/jump flush and PC update
+    if s_BranchTaken = '1' then
+      s_UseNextAdr <= '1';
+      s_NextAdr <= s_BranchAddr;  -- Branch to PC + immediate
+    elsif s_IFID_Inst(6 downto 0) = "1101111" then  -- JAL
       s_UseNextAdr <= '1';
       s_NextAdr <= s_BranchAddr;  -- JAL: PC + immediate
     elsif s_IFID_Inst(6 downto 0) = "1100111" then  -- JALR
       s_UseNextAdr <= '1';
       s_NextAdr <= v_JALRTarget;  -- JALR: RS1 + immediate
-    elsif s_BranchTaken = '1' then
-      s_UseNextAdr <= '1';
-      s_NextAdr <= s_BranchAddr;  -- Branch to PC + immediate
     else
       s_UseNextAdr <= '0';
       s_NextAdr <= s_PCplus4;     -- Normal PC + 4
@@ -956,8 +956,13 @@ begin
       v_BranchALUHazard := '0';
     end if;
     
-    -- Stall if any hazard detected
-    if (v_LoadUseHazard = '1' or v_BranchALUHazard = '1') then
+    -- Prioritize flush over stall
+    if s_IDEX_Flush = '1' or s_IFID_Flush = '1' then
+      s_Stall <= '0';
+      s_PCWrite <= '1';
+      s_IFID_Write <= '1';
+      s_ControlMux <= '0';
+    elsif (v_LoadUseHazard = '1' or v_BranchALUHazard = '1') then
       s_Stall <= '1';
       s_PCWrite <= '0';      -- Don't update PC
       s_IFID_Write <= '0';   -- Don't update IF/ID
