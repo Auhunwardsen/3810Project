@@ -77,10 +77,11 @@ begin
   o_ControlMux <= s_DataHazard;
 
   -- Flush logic:
-  -- - For branches: flush both IF/ID and ID/EX immediately (branch in ID becomes NOP)
-  -- - For jumps: flush IF/ID NEXT cycle (delayed) to kill sequential inst that latched
-  --              but DON'T flush ID/EX (let jump execute and write return address)
+  -- - For branches: flush IF/ID to kill wrong instruction from IF
+  --                 DON'T flush ID/EX (let branch continue as NOP - it doesn't write)
+  -- - For jumps: flush IF/ID next cycle to clear the wrong sequential instruction
+  --              DON'T flush ID/EX (let jump execute and write return address)
   o_IFID_Flush <= i_Branch or s_Jump_delayed;
-  o_IDEX_Flush <= i_Branch;  -- Only flush ID/EX for branches, not jumps
+  o_IDEX_Flush <= '0';  -- Never flush ID/EX for control hazards
 
 end behavioral;
