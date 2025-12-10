@@ -560,14 +560,17 @@ begin
   -- ID Stage Forwarding: MEM→ID and WB→ID with direct MEMWB signals
   -- Use MEMWB pipeline register directly for more reliable forwarding
   -- For JAL/JALR in MEM stage, forward PC+4 instead of ALU result
+  -- For LOAD in MEM stage, forward memory data output
   process(s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_MEMWB_RegWrite, s_MEMWB_RDAddr,
           s_IFID_Inst, s_RS1Data, s_RS2Data, s_EXMEM_ALUResult, s_EXMEM_PCplus4,
-          s_EXMEM_Inst, s_WriteData)
+          s_EXMEM_Inst, s_EXMEM_MemToReg, s_DMemOut, s_WriteData)
     variable v_EXMEM_ForwardData : std_logic_vector(31 downto 0);
   begin
-    -- Select correct forward data from MEM stage (PC+4 for JAL/JALR, ALU result otherwise)
+    -- Select correct forward data from MEM stage
     if (s_EXMEM_Inst(6 downto 0) = "1101111" or s_EXMEM_Inst(6 downto 0) = "1100111") then
       v_EXMEM_ForwardData := s_EXMEM_PCplus4;  -- JAL/JALR: forward PC+4
+    elsif s_EXMEM_MemToReg = '1' then
+      v_EXMEM_ForwardData := s_DMemOut;  -- LOAD: forward memory data (available in MEM stage)
     else
       v_EXMEM_ForwardData := s_EXMEM_ALUResult;  -- Other instructions: forward ALU result
     end if;
