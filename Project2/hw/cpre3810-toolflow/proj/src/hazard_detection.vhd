@@ -18,6 +18,7 @@ entity hazard_detection is
     -- Control hazard signals
     i_Branch        : in std_logic;
     i_Jump          : in std_logic;
+    i_JALR          : in std_logic;  -- JALR instruction in ID (needs RS1)
     i_Branch_ID     : in std_logic;  -- Added: indicates branch in ID stage
 
     -- Output control signals
@@ -52,11 +53,10 @@ begin
                                    (i_IDEX_RD = i_IFID_RS2 and i_IFID_RS2 /= "00000")))
                         else '0';
 
-  -- Jump data hazard detection (for JALR)
+  -- Jump data hazard detection (for JALR only)
   -- JALR reads RS1 to compute jump target, needs to stall if RS1 is in EX stage
-  -- Note: i_Jump is '1' for both JAL and JALR, but only JALR reads RS1
-  -- JALR has opcode 1100111, RS1 is in bits [19:15]
-  s_JumpDataHazard <= '1' when (i_Jump = '1' and i_IDEX_RegWrite = '1' and
+  -- JAL doesn't read RS1 (immediate encoded in instruction), so no stall needed
+  s_JumpDataHazard <= '1' when (i_JALR = '1' and i_IDEX_RegWrite = '1' and
                                 (i_IDEX_RD = i_IFID_RS1 and i_IFID_RS1 /= "00000"))
                       else '0';
 

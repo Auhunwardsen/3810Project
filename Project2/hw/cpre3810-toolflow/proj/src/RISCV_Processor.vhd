@@ -333,7 +333,8 @@ architecture structure of RISCV_Processor is
   signal s_EXMEM_Flush  : std_logic;  -- EX/MEM flush from control hazard
   signal s_MEMWB_Flush  : std_logic;  -- MEM/WB flush from control hazard
   signal s_ControlMux  : std_logic;  -- Control mux for load-use stall
-  signal s_Jump       : std_logic;  -- Jump signal
+  signal s_Jump       : std_logic;  -- Jump signal (JAL or JALR)
+  signal s_JALR       : std_logic;  -- JALR signal (only JALR, not JAL)
   signal s_ControlHazard : std_logic;  -- Combined control hazard signal (branch taken or jump)
   
   -- Control signals (before mux)
@@ -967,6 +968,9 @@ begin
   s_Jump <= '1' when (s_IFID_Inst(6 downto 0) = "1101111") or
                      (s_IFID_Inst(6 downto 0) = "1100111") else '0';
 
+  -- Detect JALR specifically (needs RS1 forwarding/stalling)
+  s_JALR <= '1' when (s_IFID_Inst(6 downto 0) = "1100111") else '0';
+
   -- Control hazard signal: flush when branch is taken OR jump occurs
   -- Jumps flush only IF/ID (handled in hazard detection unit)
   -- Branches flush both IF/ID and ID/EX (handled in hazard detection unit)
@@ -982,7 +986,8 @@ begin
       i_IFID_RS1      => s_IFID_Inst(19 downto 15),
       i_IFID_RS2      => s_IFID_Inst(24 downto 20),
       i_Branch        => (s_Branch_ID and s_BranchTaken),  -- Only taken branches
-      i_Jump          => s_Jump,           -- Jump signal
+      i_Jump          => s_Jump,           -- Jump signal (JAL or JALR)
+      i_JALR          => s_JALR,           -- JALR signal (only JALR, not JAL)
       i_Branch_ID     => s_Branch_ID,      -- Indicates branch in ID stage
       o_PCWrite       => s_PCWrite,
       o_IFID_Write    => s_IFID_Write,
