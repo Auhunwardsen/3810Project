@@ -979,8 +979,8 @@ begin
       i_IDEX_RegWrite => s_IDEX_RegWrite,  -- For branch data hazard detection
       i_IFID_RS1      => s_IFID_Inst(19 downto 15),
       i_IFID_RS2      => s_IFID_Inst(24 downto 20),
-      i_Branch        => s_ControlHazard,  -- Control hazard (branches + jumps)
-      i_Jump          => s_Jump,           -- Jump signal for selective flush
+      i_Branch        => (s_Branch_ID and s_BranchTaken),  -- Only taken branches
+      i_Jump          => s_Jump,           -- Jump signal
       i_Branch_ID     => s_Branch_ID,      -- Indicates branch in ID stage
       o_PCWrite       => s_PCWrite,
       o_IFID_Write    => s_IFID_Write,
