@@ -883,7 +883,8 @@ begin
   
   -- Branch condition evaluation (ID stage for hardware-scheduled pipeline)
   -- Compares RS1 and RS2 to determine if branch should be taken
-  process(s_Branch_ID, s_IFID_Inst, s_RS1Data_final, s_RS2Data_final)
+  -- IMPORTANT: Use s_Branch (after ControlMux) not s_Branch_ID to respect stalls
+  process(s_Branch, s_IFID_Inst, s_RS1Data_final, s_RS2Data_final)
     variable v_BranchCond : std_logic;  -- Final branch decision (1=take branch, 0=don't take)
     variable v_Zero : std_logic;        -- 1 if RS1 == RS2 (for BEQ/BNE)
     variable v_LT : std_logic;          -- 1 if RS1 < RS2 (signed comparison, for BLT/BGE)
@@ -891,28 +892,29 @@ begin
   begin
     -- Default: don't take branch
     v_BranchCond := '0';
-    
+
     -- Compute all three comparison types in parallel
     if s_RS1Data_final = s_RS2Data_final then
       v_Zero := '1';
     else
       v_Zero := '0';
     end if;
-    
+
     if signed(s_RS1Data_final) < signed(s_RS2Data_final) then
       v_LT := '1';
     else
       v_LT := '0';
     end if;
-    
+
     if unsigned(s_RS1Data_final) < unsigned(s_RS2Data_final) then
       v_LTU := '1';
     else
       v_LTU := '0';
     end if;
-    
+
     -- If this is a branch instruction, determine which condition to use
-    if s_Branch_ID = '1' then
+    -- Use s_Branch (after mux) so stalls prevent branch from being taken
+    if s_Branch = '1' then
       case s_IFID_Inst(14 downto 12) is  -- funct3 field determines branch type
         when "000" =>  -- BEQ: Branch if Equal
           v_BranchCond := v_Zero;           -- Take if RS1 == RS2
