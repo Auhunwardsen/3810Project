@@ -1,21 +1,21 @@
 Oh no...
 
-Cycle: 13
+Cycle: 12
 RARS instruction number: 8	Instruction: sw x5,0(x5)
 Expected:	Memory Write to Addr: 0x10010000 Val: 0x10010000
-Got     :	Register Write to Reg: 0x07 Val: 0x00400028
+Got     :	Register Write to Reg: 0x07 Val: 0x00400010
 Wrote to incorrect structure
 
-Cycle: 14
+Cycle: 13
 RARS instruction number: 9	Instruction: addi x1,x7,12
 Expected:	Register Write to Reg: 0x01 Val: 0x00400028
-Got     :	Register Write to Reg: 0x01 Val: 0x0040001C
+Got     :	Register Write to Reg: 0x07 Val: 0x0040001C
 Incorrect write
 
-Cycle: 17
+Cycle: 14
 RARS instruction number: 11	Instruction: sw x1,0(x6)
 Expected:	Memory Write to Addr: 0x10010004 Val: 0x00400028
-Got     :	Register Write to Reg: 0x01 Val: 0x00400034
+Got     :	Register Write to Reg: 0x01 Val: 0x0040001C
 Wrote to incorrect structure
 
 You have reached the maximum mismatches (3)

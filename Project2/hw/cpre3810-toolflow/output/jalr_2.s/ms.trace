@@ -27,5 +27,7 @@ Register Write to Reg: 0x04 Val: 0x00400048
 In clock cycle: 23
 Register Write to Reg: 0x01 Val: 0x00400034
 In clock cycle: 25
-Memory Write to Addr: 0x10010000 Val: 0x00000001
+Register Write to Reg: 0x05 Val: 0x00000003
+In clock cycle: 25
+Memory Write to Addr: 0x10010000 Val: 0x00000003
 Execution is stopping! Clock Cycle: 27
