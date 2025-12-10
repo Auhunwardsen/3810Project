@@ -3,7 +3,7 @@ Reading pref.tcl
 # 2025.1_2
 
 # vsim -postsimdataflow -debugdb -c -voptargs=""+acc"" tb -do "modelsim_framework.do" -gOUTPUT_TRACE=ms.trace 
-# Start time: 16:27:12 on Dec 09,2025
+# Start time: 19:41:02 on Dec 09,2025
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2025.1_2 linux_x86_64 Apr  7 2025
@@ -2035,5 +2035,5 @@ Reading pref.tcl
 #    Time: 9995580 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXB
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 9995580 ns  Iteration: 2  Instance: /tb/MyRiscv/u_regfile/MUXA
-# End time: 16:27:16 on Dec 09,2025, Elapsed time: 0:00:04
+# End time: 19:41:05 on Dec 09,2025, Elapsed time: 0:00:03
 # Errors: 0, Warnings: 992
