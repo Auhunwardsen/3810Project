@@ -7,11 +7,28 @@
 
 -- RISCV_Processor.vhd
 -------------------------------------------------------------------------
--- DESCRIPTION: This file contains a skeleton of a RISCV_Processor  
--- implementation.
-
+-- DESCRIPTION: 5-stage pipelined RISC-V processor implementation
+--
+-- PIPELINE STAGES:
+--   1. IF  (Instruction Fetch)    - Fetch instruction from memory
+--   2. ID  (Instruction Decode)   - Decode, read registers, branch resolution
+--   3. EX  (Execute)              - ALU operations, forwarding
+--   4. MEM (Memory Access)        - Load/Store operations
+--   5. WB  (Write Back)           - Write result to register file
+--
+-- HAZARD HANDLING:
+--   - Data Hazards: Forwarding (EX→EX, MEM→EX, MEM→ID, WB→ID)
+--                   Stalling (load-use, branch/JALR with EX dependency)
+--   - Control Hazards: Early branch resolution in ID stage with flush
+--
+-- KEY FEATURES:
+--   - Hardware hazard detection and forwarding
+--   - Branch prediction: predict not-taken (flush on mispredict)
+--   - JAL/JALR: early resolution in ID with proper RS1 forwarding
+--   - Load-use stall: 1-cycle bubble for load followed by dependent instruction
+--
 -- 01/29/2019 by H3::Design created.
--- 04/10/2025 by AP::Coverted to RISC-V.
+-- 04/10/2025 by AP::Converted to RISC-V.
 -------------------------------------------------------------------------
 
 
@@ -470,57 +487,67 @@ begin
   -------------------------------------------------------------------------
   -- STAGE 1: INSTRUCTION FETCH (IF)
   -------------------------------------------------------------------------
-  -- Fetches instruction from memory and increments PC
+  -- Purpose: Fetch next instruction from instruction memory
+  -- Outputs: PC (current program counter), PC+4 (next sequential address), Instruction
+  -- Control: Can be stalled (for data hazards) or redirected (for branches/jumps)
   u_fetch: fetch
     port map (
       i_CLK        => iCLK,
       i_RST        => iRST,
-      i_UseNextAdr => s_UseNextAdr,
-      i_Stall      => s_Stall,
-      i_NextAdr    => s_NextAdr,
+      i_UseNextAdr => s_UseNextAdr,  -- 1 = jump/branch, 0 = PC+4
+      i_Stall      => s_Stall,       -- 1 = hold PC (data hazard)
+      i_NextAdr    => s_NextAdr,     -- Target address for jump/branch
       o_IMemAdr    => s_NextInstAddr,
-      i_IMemData   => s_Inst,  -- Instruction from memory
+      i_IMemData   => s_Inst,        -- Instruction from memory
       o_PC         => s_PC,
       o_PCplus4    => s_PCplus4,
-      o_Instr      => s_Instr_Fetch  -- Fetch unit output instruction
+      o_Instr      => s_Instr_Fetch
     );
 
   -------------------------------------------------------------------------
   -- PIPELINE REGISTER: IF/ID
   -------------------------------------------------------------------------
-  -- Latches PC, PC+4, and instruction between IF and ID stages
+  -- Purpose: Store instruction & PC between Fetch and Decode stages
+  -- Features: Write enable (for stalling), Flush (for branch misprediction)
   u_IFID: IFID_reg
     port map (
       i_CLK     => iCLK,
       i_RST     => iRST,
-      i_WE      => s_IFID_Write,  -- Hardware scheduling control
-      i_flush   => s_IFID_Flush,  -- Hardware control hazard flush
+      i_WE      => s_IFID_Write,   -- 0 = stall (freeze pipeline)
+      i_flush   => s_IFID_Flush,   -- 1 = insert NOP (wrong path instruction)
       i_PC      => s_PC,
       i_PCplus4 => s_PCplus4,
-      i_Instr   => s_Instr_Fetch,  -- Use fetch unit output
+      i_Instr   => s_Instr_Fetch,
       o_PC      => s_IFID_PC,
       o_PCplus4 => s_IFID_PCplus4,
-      o_Instr   => s_IFID_Inst
+      o_Instr   => s_IFID_Inst     -- Goes to decode stage
     );
 
   -------------------------------------------------------------------------
   -- STAGE 2: INSTRUCTION DECODE (ID)
   -------------------------------------------------------------------------
-  -- Decodes instruction, reads registers, generates control signals
-  -- Control Unit: generates all control signals based on opcode
+  -- Purpose: Decode instruction, read registers, generate control signals
+  -- Key activities:
+  --   1. Control unit generates signals from opcode
+  --   2. Register file reads RS1 and RS2
+  --   3. Immediate generator extracts immediate value
+  --   4. Branch/jump conditions evaluated here (early resolution)
+
+  -- 2.1: Control Unit - generates control signals from opcode
   u_control: control
     port map (
-      i_opcode   => s_IFID_Inst(6 downto 0),
+      i_opcode   => s_IFID_Inst(6 downto 0),  -- Opcode bits
       o_branch   => s_Branch_ID,
       o_memRead  => s_MemRead_ID,
-      o_memToReg => s_MemToReg,
-      o_ALUOp    => s_ALUOp,
+      o_memToReg => s_MemToReg,               -- 1 = write mem data to reg
+      o_ALUOp    => s_ALUOp,                  -- ALU operation type
       o_memWrite => s_MemWrite_ID,
-      o_ALUSrc   => s_ALUSrc,
+      o_ALUSrc   => s_ALUSrc,                 -- 1 = use immediate, 0 = use RS2
       o_regWrite => s_RegWrite_ID
     );
     
-  -- Control Mux: Insert NOP when stalling for load-use hazard
+  -- 2.2: Control Hazard Mux - converts control signals to NOP during stalls
+  -- When hazard unit detects data hazard, we insert a "bubble" (NOP) into pipeline
   process(s_ControlMux, s_RegWrite_ID, s_MemWrite_ID, s_MemRead_ID, s_Branch_ID)
   begin
     if s_ControlMux = '1' then  -- Stall: insert NOP (all control signals = 0)
@@ -536,63 +563,67 @@ begin
     end if;
   end process;
 
-  -- Register File: reads two source registers
+  -- 2.3: Register File - reads two source registers (RS1, RS2)
   u_regfile: regfile
     port map (
       i_CLK       => iCLK,
       i_RST       => iRST,
-      i_WE        => s_RegWr,
-      i_RS1       => s_IFID_Inst(19 downto 15),
-      i_RS2       => s_IFID_Inst(24 downto 20),
-      i_RD        => s_RegWrAddr,
-      i_WriteData => s_RegWrData,
+      i_WE        => s_RegWr,                    -- Write enable from WB stage
+      i_RS1       => s_IFID_Inst(19 downto 15),  -- Source register 1 address
+      i_RS2       => s_IFID_Inst(24 downto 20),  -- Source register 2 address
+      i_RD        => s_RegWrAddr,                -- Destination register (from WB)
+      i_WriteData => s_RegWrData,                -- Write data (from WB)
       o_RS1Data   => s_RS1Data,
       o_RS2Data   => s_RS2Data
     );
 
-  -- Immediate Generator: extracts and sign-extends immediate values
+  -- 2.4: Immediate Generator - extracts and sign-extends immediate from instruction
   u_immgen: immgen
     port map (
       i_instr     => s_IFID_Inst,
       o_imm => s_Immediate
     );
 
-  -- ID Stage Forwarding: MEM→ID and WB→ID with direct MEMWB signals
-  -- Use MEMWB pipeline register directly for more reliable forwarding
-  -- For JAL/JALR in MEM stage, forward PC+4 instead of ALU result
-  -- For LOAD in MEM stage, forward memory data output
+  -- 2.5: ID Stage Forwarding (MEM→ID and WB→ID)
+  -- Critical for branches/JALR that need most recent register values
+  -- Forward paths:
+  --   Priority 1: MEM stage result (1 instruction ahead)
+  --   Priority 2: WB stage result (2 instructions ahead)
+  -- Special cases:
+  --   JAL/JALR: forward PC+4 (link register value)
+  --   LOAD: forward memory data (not ALU result which is just the address)
   process(s_EXMEM_RegWrite, s_EXMEM_RDAddr, s_MEMWB_RegWrite, s_MEMWB_RDAddr,
           s_IFID_Inst, s_RS1Data, s_RS2Data, s_EXMEM_ALUResult, s_EXMEM_PCplus4,
           s_EXMEM_Inst, s_EXMEM_MemToReg, s_DMemOut, s_WriteData)
     variable v_EXMEM_ForwardData : std_logic_vector(31 downto 0);
   begin
-    -- Select correct forward data from MEM stage
+    -- Select correct data to forward from MEM stage
     if (s_EXMEM_Inst(6 downto 0) = "1101111" or s_EXMEM_Inst(6 downto 0) = "1100111") then
       v_EXMEM_ForwardData := s_EXMEM_PCplus4;  -- JAL/JALR: forward PC+4
     elsif s_EXMEM_MemToReg = '1' then
-      v_EXMEM_ForwardData := s_DMemOut;  -- LOAD: forward memory data (available in MEM stage)
+      v_EXMEM_ForwardData := s_DMemOut;  -- LOAD: forward loaded data from memory
     else
-      v_EXMEM_ForwardData := s_EXMEM_ALUResult;  -- Other instructions: forward ALU result
+      v_EXMEM_ForwardData := s_EXMEM_ALUResult;  -- Others: forward ALU result
     end if;
 
-    -- RS1 Forwarding with priority: MEM→ID > WB→ID
+    -- Forward RS1 (check MEM stage first, then WB stage, then regfile)
     if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr /= "00000" and
         s_EXMEM_RDAddr = s_IFID_Inst(19 downto 15)) then
-      s_RS1Data_final <= v_EXMEM_ForwardData;  -- MEM→ID forwarding (higher priority)
+      s_RS1Data_final <= v_EXMEM_ForwardData;  -- MEM→ID (most recent)
     elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr /= "00000" and
            s_MEMWB_RDAddr = s_IFID_Inst(19 downto 15)) then
-      s_RS1Data_final <= s_WriteData;  -- WB→ID forwarding using MEMWB directly
+      s_RS1Data_final <= s_WriteData;  -- WB→ID (next most recent)
     else
-      s_RS1Data_final <= s_RS1Data;  -- No forwarding needed
+      s_RS1Data_final <= s_RS1Data;  -- No hazard - use regfile value
     end if;
 
-    -- RS2 Forwarding with priority: MEM→ID > WB→ID
+    -- Forward RS2 (check MEM stage first, then WB stage, then regfile)
     if (s_EXMEM_RegWrite = '1' and s_EXMEM_RDAddr /= "00000" and
         s_EXMEM_RDAddr = s_IFID_Inst(24 downto 20)) then
-      s_RS2Data_final <= v_EXMEM_ForwardData;  -- MEM→ID forwarding (higher priority)
+      s_RS2Data_final <= v_EXMEM_ForwardData;  -- MEM→ID (most recent)
     elsif (s_MEMWB_RegWrite = '1' and s_MEMWB_RDAddr /= "00000" and
            s_MEMWB_RDAddr = s_IFID_Inst(24 downto 20)) then
-      s_RS2Data_final <= s_WriteData;  -- WB→ID forwarding using MEMWB directly
+      s_RS2Data_final <= s_WriteData;  -- WB→ID (next most recent)
     else
       s_RS2Data_final <= s_RS2Data;  -- No forwarding needed
     end if;
@@ -645,42 +676,45 @@ begin
   -------------------------------------------------------------------------
   -- STAGE 3: EXECUTE (EX)
   -------------------------------------------------------------------------
-  -- Performs ALU operations and computes branch target address
-  
-  -- ALU Control: generates ALU operation code from instruction fields
+  -- Purpose: Perform ALU operations and compute addresses
+  -- Key activities:
+  --   1. ALU control decodes funct3/funct7 to determine ALU operation
+  --   2. Forwarding unit detects EX→EX and MEM→EX hazards
+  --   3. Forward MUXes select most recent data for ALU inputs
+  --   4. ALU performs computation (add, sub, and, or, slt, shifts, etc.)
+
+  -- 3.1: ALU Control - decodes instruction fields to ALU control signal
   u_alu_control: alu_control
     port map (
-      i_ALUOp    => s_IDEX_ALUOp,
-      i_Funct3   => s_IDEX_Instr(14 downto 12),
-      i_Funct7_5 => s_IDEX_Instr(30),
-      o_ALUCtrl  => s_ALUCtrl
+      i_ALUOp    => s_IDEX_ALUOp,                 -- From control unit
+      i_Funct3   => s_IDEX_Instr(14 downto 12),  -- Instruction bits
+      i_Funct7_5 => s_IDEX_Instr(30),            -- Bit 30 (for sub/sra)
+      o_ALUCtrl  => s_ALUCtrl                    -- 4-bit ALU control
     );
 
-  -------------------------------------------------------------------------
-  -- FORWARDING UNIT: Detects and resolves data hazards
-  -------------------------------------------------------------------------
-  -- Instantiate forwarding unit to generate forwarding control signals
+  -- 3.2: Forwarding Unit - detects when EX needs data from MEM or WB stages
+  -- Handles EX→EX (MEM→EX) and MEM→EX (WB→EX) data hazards
   u_forwarding_unit: forwarding_unit
     port map(
-      i_IDEX_RS1      => s_IDEX_RS1Addr,
-      i_IDEX_RS2      => s_IDEX_RS2Addr,
-      i_EXMEM_RD      => s_EXMEM_RDAddr,
-      i_MEMWB_RD      => s_MEMWB_RDAddr,
-      i_EXMEM_RegWrite => s_EXMEM_RegWrite,
-      i_MEMWB_RegWrite => s_MEMWB_RegWrite,
-      o_Forward_A     => s_ForwardA,
-      o_Forward_B     => s_ForwardB
+      i_IDEX_RS1      => s_IDEX_RS1Addr,        -- RS1 addr in EX stage
+      i_IDEX_RS2      => s_IDEX_RS2Addr,        -- RS2 addr in EX stage
+      i_EXMEM_RD      => s_EXMEM_RDAddr,        -- Destination in MEM stage
+      i_MEMWB_RD      => s_MEMWB_RDAddr,        -- Destination in WB stage
+      i_EXMEM_RegWrite => s_EXMEM_RegWrite,     -- MEM writing to reg?
+      i_MEMWB_RegWrite => s_MEMWB_RegWrite,     -- WB writing to reg?
+      o_Forward_A     => s_ForwardA,            -- Forward control for RS1
+      o_Forward_B     => s_ForwardB             -- Forward control for RS2
     );
 
-  -- Forwarding MUX A (ALU Input A)
+  -- 3.3: Forward MUX A - selects data for ALU input A (RS1)
   u_forward_mux_a: mux3t1_n
     generic map(N => 32)
     port map(
-      i_S  => s_ForwardA,
-      i_D0 => s_IDEX_RS1Data,       -- 00: No forwarding
-      i_D1 => s_WriteData,          -- 01: Forward from MEM/WB (WB→EX)
-      i_D2 => s_EXMEM_ALUResult,    -- 10: Forward from EX/MEM (MEM→EX)
-      o_O  => s_ALUIn1_fwd
+      i_S  => s_ForwardA,           -- 00=no forward, 01=WB, 10=MEM
+      i_D0 => s_IDEX_RS1Data,       -- From ID/EX register (no hazard)
+      i_D1 => s_WriteData,          -- From WB stage (WB→EX forward)
+      i_D2 => s_EXMEM_ALUResult,    -- From MEM stage (MEM→EX forward)
+      o_O  => s_ALUIn1_fwd          -- Forwarded RS1 value
     );
 
   -- Forwarding MUX B (ALU Input B before ALUSrc mux)
@@ -804,11 +838,12 @@ begin
   -------------------------------------------------------------------------
   -- STAGE 5: WRITE BACK (WB)
   -------------------------------------------------------------------------
-  -- Selects data to write back to register file
-  -- Write-back connections defined at end of file:
-  --   s_RegWr     <= s_MEMWB_RegWrite
-  --   s_RegWrAddr <= s_MEMWB_RDAddr
-  --   s_RegWrData <= memory data OR ALU result (based on MemToReg)
+  -- Purpose: Select final value to write back to register file
+  -- Data sources:
+  --   - Memory data (for LOAD instructions)
+  --   - ALU result (for arithmetic/logic operations)
+  --   - PC+4 (for JAL/JALR link register)
+  -- The write-back MUX logic is at the end of this file (line ~870)
 
   -------------------------------------------------------------------------
   -- ID/EX STAGE COMPONENTS (Branch Resolution)
