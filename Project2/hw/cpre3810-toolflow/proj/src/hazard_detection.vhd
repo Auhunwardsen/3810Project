@@ -32,6 +32,7 @@ end hazard_detection;
 architecture behavioral of hazard_detection is
   signal s_LoadUseHazard : std_logic;
   signal s_BranchDataHazard : std_logic;
+  signal s_JumpDataHazard : std_logic;
   signal s_ControlHazard : std_logic;
   signal s_DataHazard : std_logic;
 begin
@@ -51,8 +52,16 @@ begin
                                    (i_IDEX_RD = i_IFID_RS2 and i_IFID_RS2 /= "00000")))
                         else '0';
 
+  -- Jump data hazard detection (for JALR)
+  -- JALR reads RS1 to compute jump target, needs to stall if RS1 is in EX stage
+  -- Note: i_Jump is '1' for both JAL and JALR, but only JALR reads RS1
+  -- JALR has opcode 1100111, RS1 is in bits [19:15]
+  s_JumpDataHazard <= '1' when (i_Jump = '1' and i_IDEX_RegWrite = '1' and
+                                (i_IDEX_RD = i_IFID_RS1 and i_IFID_RS1 /= "00000"))
+                      else '0';
+
   -- Combined data hazard signal
-  s_DataHazard <= s_LoadUseHazard or s_BranchDataHazard;
+  s_DataHazard <= s_LoadUseHazard or s_BranchDataHazard or s_JumpDataHazard;
 
   -- Control hazard: any branch or jump that redirects PC
   s_ControlHazard <= i_Branch or i_Jump;
