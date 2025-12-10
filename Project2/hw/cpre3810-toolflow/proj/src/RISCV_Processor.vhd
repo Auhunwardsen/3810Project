@@ -284,6 +284,7 @@ architecture structure of RISCV_Processor is
       i_IFID_RS2      : in  std_logic_vector(4 downto 0);
       i_Branch        : in  std_logic;
       i_Jump          : in  std_logic;
+      i_JALR          : in  std_logic;
       i_Branch_ID     : in  std_logic;
       o_PCWrite       : out std_logic;
       o_IFID_Write    : out std_logic;
