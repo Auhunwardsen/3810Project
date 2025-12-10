@@ -66,9 +66,10 @@ begin
   -- Control hazard: any branch or jump that redirects PC
   s_ControlHazard <= i_Branch or i_Jump;
 
-  -- Output logic - prioritize control hazard over data stalls
-  -- When control hazard occurs, allow PC update to jump/branch target
-  o_PCWrite <= not s_DataHazard or s_ControlHazard;
+  -- Output logic - control hazards allow PC update, except when there's a data hazard
+  -- that affects the control decision (JALR target or branch condition)
+  -- JALR and branch data hazards must stall to get correct register values
+  o_PCWrite <= not s_DataHazard;
 
   -- IFID_Write: disable when stalling for data hazards
   o_IFID_Write <= not s_DataHazard;
@@ -78,10 +79,12 @@ begin
 
   -- Flush logic for hardware-scheduled pipeline:
   -- When branch/jump is detected in ID stage, the next sequential instruction
-  -- has already been fetched and will latch into IFID on the next rising edge.
-  -- We need to flush IFID immediately to prevent this wrong instruction from entering.
-  -- The branch/jump itself continues through the pipeline (jumps write PC+4, branches are NOPs)
-  o_IFID_Flush <= s_ControlHazard;  -- Flush immediately for both branches and jumps
-  o_IDEX_Flush <= '0';  -- Never flush ID/EX for control hazards
+  -- has already been fetched and is in IF stage. On the next clock edge:
+  --   - PC will be updated to jump/branch target
+  --   - IF/ID flush will prevent the wrong instruction from entering the pipeline
+  --   - The branch/jump itself must continue through to complete (jumps write link register)
+  -- Exception: don't flush if we're stalling due to a data hazard
+  o_IFID_Flush <= s_ControlHazard and not s_DataHazard;  -- Flush only when not stalling
+  o_IDEX_Flush <= '0';  -- Never flush ID/EX (let control instruction complete)
 
 end behavioral;
