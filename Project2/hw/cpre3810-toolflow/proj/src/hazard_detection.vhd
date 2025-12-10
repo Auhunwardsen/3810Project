@@ -34,7 +34,7 @@ architecture behavioral of hazard_detection is
   signal s_BranchDataHazard : std_logic;
   signal s_ControlHazard : std_logic;
   signal s_DataHazard : std_logic;
-  signal s_Jump_d : std_logic := '0';
+  signal s_Jump_delayed : std_logic := '0';
 begin
 
   -- Load-use hazard detection
@@ -58,23 +58,29 @@ begin
   -- Control hazard: any branch or jump that redirects PC
   s_ControlHazard <= i_Branch or i_Jump;
 
-  -- Delay jump flush by one cycle
-  process (i_CLK)
+  -- Delay jump signal by one cycle to flush the instruction that latched after jump
+  process(i_CLK)
   begin
     if rising_edge(i_CLK) then
-      s_Jump_d <= i_Jump;
+      s_Jump_delayed <= i_Jump;
     end if;
   end process;
 
   -- Output logic - prioritize control hazard over data stalls
   -- When control hazard occurs, allow PC update to jump/branch target
   o_PCWrite <= not s_DataHazard or s_ControlHazard;
-  o_IFID_Write <= not s_DataHazard;  -- Disable write only for data hazards
-  o_ControlMux <= s_DataHazard;  -- Insert NOP for data hazards only
 
-  -- Nuanced flush: flush both IF/ID and ID/EX on taken branch, only IF/ID on jump (delayed)
-  -- i_Branch = (branch taken), s_Jump_d = (JAL/JALR delayed)
-  o_IFID_Flush <= i_Branch or s_Jump_d;
-  o_IDEX_Flush <= i_Branch;  -- Only flush ID/EX for taken branches, not for jumps
+  -- IFID_Write: disable when stalling for data hazards
+  o_IFID_Write <= not s_DataHazard;
+
+  -- ControlMux: Insert NOP for data hazards only
+  o_ControlMux <= s_DataHazard;
+
+  -- Flush logic:
+  -- - For branches: flush both IF/ID and ID/EX immediately (branch in ID becomes NOP)
+  -- - For jumps: flush IF/ID NEXT cycle (delayed) to kill sequential inst that latched
+  --              but DON'T flush ID/EX (let jump execute and write return address)
+  o_IFID_Flush <= i_Branch or s_Jump_delayed;
+  o_IDEX_Flush <= i_Branch;  -- Only flush ID/EX for branches, not jumps
 
 end behavioral;
