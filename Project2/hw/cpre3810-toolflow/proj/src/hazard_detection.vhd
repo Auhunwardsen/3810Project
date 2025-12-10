@@ -34,7 +34,6 @@ architecture behavioral of hazard_detection is
   signal s_BranchDataHazard : std_logic;
   signal s_ControlHazard : std_logic;
   signal s_DataHazard : std_logic;
-  signal s_Jump_delayed : std_logic := '0';
 begin
 
   -- Load-use hazard detection
@@ -58,14 +57,6 @@ begin
   -- Control hazard: any branch or jump that redirects PC
   s_ControlHazard <= i_Branch or i_Jump;
 
-  -- Delay jump signal by one cycle to flush the instruction that latched after jump
-  process(i_CLK)
-  begin
-    if rising_edge(i_CLK) then
-      s_Jump_delayed <= i_Jump;
-    end if;
-  end process;
-
   -- Output logic - prioritize control hazard over data stalls
   -- When control hazard occurs, allow PC update to jump/branch target
   o_PCWrite <= not s_DataHazard or s_ControlHazard;
@@ -76,12 +67,12 @@ begin
   -- ControlMux: Insert NOP for data hazards only
   o_ControlMux <= s_DataHazard;
 
-  -- Flush logic:
-  -- - For branches: flush IF/ID to kill wrong instruction from IF
-  --                 DON'T flush ID/EX (let branch continue as NOP - it doesn't write)
-  -- - For jumps: flush IF/ID next cycle to clear the wrong sequential instruction
-  --              DON'T flush ID/EX (let jump execute and write return address)
-  o_IFID_Flush <= i_Branch or s_Jump_delayed;
+  -- Flush logic for hardware-scheduled pipeline:
+  -- When branch/jump is detected in ID stage, the next sequential instruction
+  -- has already been fetched and will latch into IFID on the next rising edge.
+  -- We need to flush IFID immediately to prevent this wrong instruction from entering.
+  -- The branch/jump itself continues through the pipeline (jumps write PC+4, branches are NOPs)
+  o_IFID_Flush <= s_ControlHazard;  -- Flush immediately for both branches and jumps
   o_IDEX_Flush <= '0';  -- Never flush ID/EX for control hazards
 
 end behavioral;
