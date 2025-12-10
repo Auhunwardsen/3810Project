@@ -1000,9 +1000,9 @@ begin
   -- Stall signal derived from PCWrite for compatibility
   s_Stall <= not s_PCWrite;
 
-  -- Flush signals for later stages (not needed for basic control hazards)
-  s_EXMEM_Flush  <= '0';
-  s_MEMWB_Flush  <= '0';
+  -- Flush signals for later stages (needed for control hazards: branch taken or jump)
+  s_EXMEM_Flush  <= s_ControlHazard;
+  s_MEMWB_Flush  <= s_ControlHazard;
   
   -- Output connections -- Update by the group: observe WB ALU result for validation
   oALUOut <= s_MEMWB_ALUResult; 
