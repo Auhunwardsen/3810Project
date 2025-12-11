@@ -250,4 +250,65 @@ A: No. Load-use hazards require at least 1-cycle stall because memory data isn't
 - HW processor: `Project2/hw/cpre3810-toolflow/proj/src/RISCV_Processor.vhd`
 
 
+Your Hazard Detection Design
+1. You Have a Dedicated Hazard Detection Unit (hazard_detection.vhd)
+Yes, you use signal variables to detect hazards, then output control signals.
 
+2. Three Types of Data Hazards Detected
+-- Internal signals that detect hazards:
+s_LoadUseHazard      -- Load followed by use
+s_BranchDataHazard   -- Branch depends on data in EX stage
+s_JumpDataHazard     -- JALR depends on RS1 in EX stage
+
+-- Combined into one signal:
+s_DataHazard <= s_LoadUseHazard or s_BranchDataHazard or s_JumpDataHazard;
+
+3. How Each Hazard is Detected
+Load-Use Hazard (lines 61-64):
+s_LoadUseHazard <= '1' when (i_IDEX_MemRead = '1' and
+                            ((i_IDEX_RD = i_IFID_RS1) or
+                             (i_IDEX_RD = i_IFID_RS2)))
+Checks if instruction in EX is a load (MemRead = '1')
+Checks if instruction in ID needs that loaded register
+Branch Data Hazard (lines 71-74):
+s_BranchDataHazard <= '1' when (i_Branch_ID = '1' and i_IDEX_RegWrite = '1' and
+                                ((i_IDEX_RD = i_IFID_RS1) or
+                                 (i_IDEX_RD = i_IFID_RS2)))
+Checks if instruction in ID is a branch (i_Branch_ID = '1')
+Checks if instruction in EX is writing to a register the branch needs
+JALR Data Hazard (lines 81-83):
+s_JumpDataHazard <= '1' when (i_JALR = '1' and i_IDEX_RegWrite = '1' and
+                              (i_IDEX_RD = i_IFID_RS1))
+JALR needs RS1 for the jump target
+Checks if that register is being written in EX
+
+4. Control Hazard Detection
+In RISCV_Processor.vhd (line 1026):
+s_ControlHazard <= (s_Branch_ID and s_BranchTaken) or s_Jump;
+s_Branch_ID indicates what kind of instruction is in ID:
+If it's a branch instruction AND the branch is taken → control hazard
+If it's a jump (JAL/JALR) → control hazard
+
+5. Output Signals Control the Pipeline
+The hazard detection unit outputs these control signals:
+o_PCWrite       -- 0 = stall PC (freeze)
+o_IFID_Write    -- 0 = freeze IF/ID register
+o_ControlMux    -- 1 = insert NOP (zero out control signals)
+o_IFID_Flush    -- 1 = flush IF/ID to NOP
+o_IDEX_Flush    -- 1 = flush ID/EX to NOP (currently always 0 in your design)
+Key Logic (lines 94-110):
+-- Stall when there's a data hazard:
+o_PCWrite    <= not s_DataHazard;
+o_IFID_Write <= not s_DataHazard;
+o_ControlMux <= s_DataHazard;  -- Insert NOP bubble
+
+-- Flush when control hazard AND not stalling:
+o_IFID_Flush <= s_ControlHazard and not s_DataHazard;
+
+6. So To Answer Your Question:
+Yes, you use signal variables to track hazards:
+s_DataHazard = any data hazard detected
+s_ControlHazard = branch taken or jump
+i_Branch_ID (input to hazard unit) tells it "there's a branch instruction in ID stage". The hazard unit uses this to:
+Check if that branch has a data dependency → stall
+Check if that branch is taken → flush
