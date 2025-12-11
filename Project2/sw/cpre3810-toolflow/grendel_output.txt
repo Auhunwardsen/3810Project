@@ -1,4 +1,0 @@
-RARS 1.6  Copyright 2003-2019 Pete Sanderson and Kenneth Vollmar
-
-
-Program terminated by dropping off the bottom.
