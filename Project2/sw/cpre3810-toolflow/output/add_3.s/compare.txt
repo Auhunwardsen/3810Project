@@ -15,7 +15,7 @@ Incorrect write
 Cycle: 7
 RARS instruction number: 4	Instruction: add x1,x1,x1
 Expected:	Register Write to Reg: 0x01 Val: 0x00000008
-Got     :	Register Write to Reg: 0x01 Val: 0x00000000
+Got     :	Register Write to Reg: 0x01 Val: 0x00000002
 Incorrect write
 
 You have reached the maximum mismatches (3)

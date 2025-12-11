@@ -1,11 +1,5 @@
 Oh no...
 
-Cycle: 8
-RARS instruction number: 5	Instruction: sub x5,x5,x6
-Expected:	Register Write to Reg: 0x05 Val: 0x0000003B
-Got     :	Register Write to Reg: 0x05 Val: 0x0000002A
-Incorrect write
-
 Cycle: 9
 RARS instruction number: 6	Instruction: xori x28,x9,-1
 Expected:	Register Write to Reg: 0x1C Val: 0x00000010
@@ -16,6 +10,12 @@ Cycle: 10
 RARS instruction number: 7	Instruction: addi x28,x28,1
 Expected:	Register Write to Reg: 0x1C Val: 0x00000011
 Got     :	Register Write to Reg: 0x1C Val: 0x00000001
+Incorrect write
+
+Cycle: 11
+RARS instruction number: 8	Instruction: add x29,x8,x28
+Expected:	Register Write to Reg: 0x1D Val: 0x0000003B
+Got     :	Register Write to Reg: 0x1D Val: 0x0000002A
 Incorrect write
 
 You have reached the maximum mismatches (3)

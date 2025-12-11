@@ -12,13 +12,7 @@ Expected:	Register Write to Reg: 0x06 Val: 0xC0000000
 Got     :	Register Write to Reg: 0x06 Val: 0x00000000
 Incorrect write
 
-Cycle: 7
-RARS instruction number: 4	Instruction: srai x6,x5,2
-Expected:	Register Write to Reg: 0x06 Val: 0xE0000000
-Got     :	Register Write to Reg: 0x06 Val: 0x00000000
-Incorrect write
-
-You have reached the maximum mismatches (3)
+Almost! your processor completed the program with  2/3 allowed mismatches
 
 Helpful resources for Debugging:
 ms.trace : output from the VHDL testbench during program execution on your processor

@@ -23,12 +23,12 @@ use work.RISCV_types.all;
 
 entity RISCV_Processor is
   generic(N : integer := DATA_WIDTH);
-  port(iCLK            : in std_logic;
-       iRST            : in std_logic;
-       iInstLd         : in std_logic;
-       iInstAddr       : in std_logic_vector(N-1 downto 0);
-       iInstExt        : in std_logic_vector(N-1 downto 0);
-       oALUOut         : out std_logic_vector(N-1 downto 0)); -- TODO: Hook this up to the output of the ALU. It is important for synthesis that you have this output that can effectively be impacted by all other components so they are not optimized away.
+        port(iCLK            : in std_logic;
+          iRST            : in std_logic;
+          iInstLd         : in std_logic;
+          iInstAddr       : in std_logic_vector(N-1 downto 0);
+          iInstExt        : in std_logic_vector(N-1 downto 0);
+          oALUOut         : out std_logic_vector(N-1 downto 0)); -- TODO: Hook this up to the output of the ALU. It is important for synthesis that you have this output that can effectively be impacted by all other components so they are not optimized away.
 
 end  RISCV_Processor;
 

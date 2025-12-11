@@ -9,7 +9,7 @@ Incorrect write
 Cycle: 9
 RARS instruction number: 7	Instruction: sw x5,0(x3)
 Expected:	Memory Write to Addr: 0x10010000 Val: 0x00000000
-Got     :	Memory Write to Addr: 0x10010008 Val: 0x00000000
+Got     :	Memory Write to Addr: 0xFFFFFFF8 Val: 0x00000000
 Incorrect write
 
 Cycle: 12
