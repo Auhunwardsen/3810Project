@@ -6,13 +6,7 @@ Expected:	Register Write to Reg: 0x06 Val: 0x55554FFF
 Got     :	Register Write to Reg: 0x06 Val: 0xFFFFFFFF
 Incorrect write
 
-Cycle: 1028
-RARS instruction number: na	Instruction: na
-Expected:	Execution stopped
-Got     :	Register Write to Reg: 0x05 Val: 0x55555000
-Student execution improperly continued
-
-Almost! your processor completed the program with  2/3 allowed mismatches
+Almost! your processor completed the program with  1/3 allowed mismatches
 
 Helpful resources for Debugging:
 ms.trace : output from the VHDL testbench during program execution on your processor

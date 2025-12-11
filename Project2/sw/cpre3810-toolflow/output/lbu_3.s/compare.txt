@@ -13,9 +13,9 @@ Got     :	Register Write to Reg: 0x07 Val: 0x00000000
 Incorrect write
 
 Cycle: 8
-RARS instruction number: 5	Instruction: lbu x6,4(x5)
-Expected:	Register Write to Reg: 0x06 Val: 0x000000CD
-Got     :	Register Write to Reg: 0x06 Val: 0x0012EFCD
+RARS instruction number: 6	Instruction: sw x6,0(x7)
+Expected:	Memory Write to Addr: 0x10010008 Val: 0x000000CD
+Got     :	Memory Write to Addr: 0x10010008 Val: 0x00000000
 Incorrect write
 
 You have reached the maximum mismatches (3)

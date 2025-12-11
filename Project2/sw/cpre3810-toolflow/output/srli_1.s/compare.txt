@@ -15,7 +15,7 @@ Incorrect write
 Cycle: 7
 RARS instruction number: 4	Instruction: srli x5,x5,4
 Expected:	Register Write to Reg: 0x05 Val: 0x000FFFFF
-Got     :	Register Write to Reg: 0x05 Val: 0x00000000
+Got     :	Register Write to Reg: 0x05 Val: 0x0FFFFF00
 Incorrect write
 
 You have reached the maximum mismatches (3)

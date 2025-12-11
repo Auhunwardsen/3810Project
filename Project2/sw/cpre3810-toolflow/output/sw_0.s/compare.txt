@@ -9,16 +9,10 @@ Incorrect write
 Cycle: 6
 RARS instruction number: 4	Instruction: sw x5,4(x8)
 Expected:	Memory Write to Addr: 0x10010004 Val: 0x0000002A
-Got     :	Memory Write to Addr: 0x00000004 Val: 0x00000000
+Got     :	Memory Write to Addr: 0x10010004 Val: 0x00000000
 Incorrect write
 
-Cycle: 7
-RARS instruction number: 5	Instruction: sw x5,8(x8)
-Expected:	Memory Write to Addr: 0x10010008 Val: 0x0000002A
-Got     :	Memory Write to Addr: 0x10010008 Val: 0x00000000
-Incorrect write
-
-You have reached the maximum mismatches (3)
+Almost! your processor completed the program with  2/3 allowed mismatches
 
 Helpful resources for Debugging:
 ms.trace : output from the VHDL testbench during program execution on your processor

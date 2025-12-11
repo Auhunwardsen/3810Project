@@ -12,10 +12,10 @@ Expected:	Register Write to Reg: 0x05 Val: 0x7FFFF7FF
 Got     :	Register Write to Reg: 0x05 Val: 0x800007FF
 Incorrect write
 
-Cycle: 44
-RARS instruction number: 41	Instruction: slt x7,x5,x6
-Expected:	Register Write to Reg: 0x07 Val: 0x00000000
-Got     :	Register Write to Reg: 0x07 Val: 0x00000001
+Cycle: 46
+RARS instruction number: 43	Instruction: xor x29,x7,x28
+Expected:	Register Write to Reg: 0x1D Val: 0x00000000
+Got     :	Register Write to Reg: 0x1D Val: 0x00000001
 Incorrect write
 
 You have reached the maximum mismatches (3)

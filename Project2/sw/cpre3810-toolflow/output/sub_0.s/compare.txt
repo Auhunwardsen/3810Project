@@ -9,7 +9,7 @@ Incorrect write
 Cycle: 11
 RARS instruction number: 8	Instruction: sub x3,x3,x4
 Expected:	Register Write to Reg: 0x03 Val: 0x1110F000
-Got     :	Register Write to Reg: 0x03 Val: 0x00000000
+Got     :	Register Write to Reg: 0x03 Val: 0x7FAB0000
 Incorrect write
 
 Cycle: 14

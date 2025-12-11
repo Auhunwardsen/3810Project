@@ -9,13 +9,13 @@ Incorrect write
 Cycle: 8
 RARS instruction number: 5	Instruction: or x29,x5,x28
 Expected:	Register Write to Reg: 0x1D Val: 0xFFFFFFFF
-Got     :	Register Write to Reg: 0x1D Val: 0x00000000
+Got     :	Register Write to Reg: 0x1D Val: 0x80000000
 Incorrect write
 
-Cycle: 13
-RARS instruction number: 10	Instruction: xor x18,x9,x5
-Expected:	Register Write to Reg: 0x12 Val: 0x00000000
-Got     :	Register Write to Reg: 0x12 Val: 0x80000000
+Cycle: 9
+RARS instruction number: 6	Instruction: xor x30,x29,x6
+Expected:	Register Write to Reg: 0x1E Val: 0x00000000
+Got     :	Register Write to Reg: 0x1E Val: 0xFFFFFFFF
 Incorrect write
 
 You have reached the maximum mismatches (3)

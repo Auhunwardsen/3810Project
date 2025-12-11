@@ -3,7 +3,7 @@ Oh no...
 Cycle: 8
 RARS instruction number: 5	Instruction: or x19,x8,x9
 Expected:	Register Write to Reg: 0x13 Val: 0x00FF000F
-Got     :	Register Write to Reg: 0x13 Val: 0x00000000
+Got     :	Register Write to Reg: 0x13 Val: 0x0000000F
 Incorrect write
 
 Cycle: 9

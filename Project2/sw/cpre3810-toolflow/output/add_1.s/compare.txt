@@ -9,7 +9,7 @@ Incorrect write
 Cycle: 10
 RARS instruction number: 7	Instruction: add x5,x4,x2
 Expected:	Register Write to Reg: 0x05 Val: 0x00000004
-Got     :	Register Write to Reg: 0x05 Val: 0x00000000
+Got     :	Register Write to Reg: 0x05 Val: 0x00000007
 Incorrect write
 
 Cycle: 11
