@@ -23,5 +23,4 @@ _start:
     
     # End program
     addi x0, x0, 0     # NOP
-    halt:
-        beq x0, x0, halt
+    wfi
